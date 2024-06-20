@@ -5,7 +5,7 @@ import { PiPlusThin } from "react-icons/pi";
 const Explore = () => {
     return (
         <div>
-            <span className="flex justify-center items-center text-5xl font-bold p-20">Discover Different Neighbourhoods</span><br/>
+            <div className="text-xl xs-text-3xl text-center sm:text-5xl font-bold xs:p-10 sm:p-20">Discover Different Neighbourhoods</div>
             <div className="sm:flex sm:h-64 sm:overflow-hidden">
                 <div className="group sm:h-full sm:w-1/4 relative"> 
                     <div className="overflow-hidden bg-black h-full sm:absolute sm:inset-0">
