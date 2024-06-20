@@ -7,3 +7,8 @@
 body {
     font-family: "Poppins", sans-serif;
 }
+
+
+.tag {
+    @apply bg-white border border-gray-200 rounded-lg px-3 py-2 shadow-md font-light hover:text-primary
+}
