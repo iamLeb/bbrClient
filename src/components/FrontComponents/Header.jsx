@@ -5,10 +5,10 @@ import { PiLineVerticalThin } from "react-icons/pi";
 
 const Header = () => {
     return (
-        <header className={'bg-white shadow-md p-3 py-6'}>
+        <header className={'bg-white shadow-md p-3 py-6 sm:py-3'}>
             <div className={'container mx-auto flex justify-between items-center'}>
                 <div>
-                    <h1 className={'text-3xl md:text-5xl text-primary font-bold'}>logo</h1>
+                    <h1 className={'text-3xl text-primary font-bold'}>logo</h1>
                 </div>
 
                 <div className={'hidden md:block text-md font-medium'}>
