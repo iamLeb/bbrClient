@@ -66,6 +66,9 @@ const Explore = () => {
                         <p>Fort Richmond</p>
                         <p className="text-xs">4 properties</p>
                     </div>
+                    <div className="transition-all duration-500 h-full flex flex-col justify-center items-center absolute inset-0 opacity-0 group-hover:opacity-100 p-5 sm:inset-0 text-white">
+                        <PiPlusThin className="text-6xl"/>
+                    </div>
                 </div>
                 <div className="group sm:h-full sm:w-1/4 relative"> 
                     <div className="overflow-hidden bg-black h-full sm:absolute sm:inset-0">
