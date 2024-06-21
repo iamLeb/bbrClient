@@ -98,7 +98,7 @@ const Featured = () => {
         },
     ];
     return (
-        <section className={'mt-2'}>
+        <section className={'mt-2 py-9'}>
             <div className={'flex flex-col justify-center items-center gap-5'}>
                 <div className={'flex flex-col justify-between gap-4 text-center'}>
                     <h1 className={'font-bold text-4xl sm:text-5xl'}>Featured Properties</h1>
