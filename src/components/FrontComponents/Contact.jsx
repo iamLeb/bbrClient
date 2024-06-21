@@ -10,7 +10,7 @@ import {RiMailSendLine} from "react-icons/ri";
 
 const Contact = () => {
     return (
-        <section className={'py-4 px-5'}>
+        <section className={'py-9 px-5'}>
             <p className={'text-center'}>Become our next customer, and find your dream home <span className={'text-primary underline'}>Contact us: 314-555-0123</span></p>
 
             <div className={'flex flex-col lg:flex-row justify-around items-center pt-12 space-y-10'}>
@@ -25,7 +25,7 @@ const Contact = () => {
                     </div>
 
                     <div className={'flex flex-col space-y-2'}>
-                        <div className={'flex flex-row  space-x-4'}>
+                        <div className={'flex flex-row'}>
                             <div>
                                 <GrMapLocation size={36}/>
                             </div>
@@ -38,7 +38,7 @@ const Contact = () => {
                             </div>
                         </div>
 
-                        <div className={'flex flex-row  space-x-4'}>
+                        <div className={'flex flex-row'}>
                             <div>
                                 <MdOutlinePermPhoneMsg size={36}/>
                             </div>
@@ -51,7 +51,7 @@ const Contact = () => {
                             </div>
                         </div>
 
-                        <div className={'flex flex-row  space-x-4'}>
+                        <div className={'flex flex-row'}>
                             <div>
                                 <RiMailSendLine size={36}/>
                             </div>
@@ -67,7 +67,7 @@ const Contact = () => {
                 </div>
 
                 <div className={'flex-1 w-full'}>
-                    <div className={'bg-white rounded-lg shadow-2xl p-7'}>
+                    <div className={'bg-white rounded-lg shadow-2xl p-10'}>
                         <div className={'flex justify-between items-center space-x-4'}>
                             <div>
                                 <h1 className={'text-3xl font-bold'}>Contact us</h1>
