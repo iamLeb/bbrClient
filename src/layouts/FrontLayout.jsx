@@ -7,7 +7,7 @@ const FrontLayout = () => {
     return (
         <>
             <Header />
-            <div className={'pt-5'}>
+            <div className={'pt-20'}>
                 <Outlet /> {/*This is the children that will inherit the header & footer*/}
             </div>
             <Footer />
