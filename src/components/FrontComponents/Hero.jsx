@@ -25,7 +25,8 @@ const Hero = () => {
 
             {/*top div*/}
             <div className={'flex flex-col space-y-4 mt-10 sm:mt-0'}>
-                <p className={'tracking-wide text-5xl md:text-7xl font-bold md:w-1/2'}>We'll help you find a place
+                <p className={'tracking-wide text-4xl md:text-6xl lg:text-7xl font-bold lg:w-1/2'}>We'll help you find a
+                    place
                     you'll love
                 </p>
                 <p> With the most complete source of homes for sale & properties near you.</p>
