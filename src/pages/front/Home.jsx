@@ -6,9 +6,6 @@ const Home = () => {
     return (
         <div>
             Home page
-            <Featured />
-            <Sale />
-            <Rent />
         </div>
     );
 };
