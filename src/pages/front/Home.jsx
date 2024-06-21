@@ -1,15 +1,12 @@
 import React from 'react';
-import Explore from '../../components/FrontComponents/Explore.jsx';
-
+import Featured from "../../components/FrontComponents/Featured.jsx";
 
 const Home = () => {
     return (
         <div>
             Home page
-
-            <Explore />
+            <Featured />
         </div>
-
     );
 };
 

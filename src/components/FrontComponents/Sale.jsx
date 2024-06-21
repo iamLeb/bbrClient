@@ -6,7 +6,7 @@ import { FaArrowRightArrowLeft } from "react-icons/fa6";
 import { IoBookmarkOutline } from "react-icons/io5";
 import { IoIosSearch } from "react-icons/io";
 
-const Featured = () => {
+const Sale = () => {
     const featured = [
         {
             id:0,
@@ -51,78 +51,22 @@ const Featured = () => {
             beds: 1,
             baths: 1,
             sqft: 600,
-        },
-        {
-            id:4,
-            featured: true,
-            image: 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            amount: '$106,000',
-            title: 'Garden City',
-            address: '888 Garden City, Winnipeg, Manitoba',
-            beds: 2,
-            baths: 2,
-            sqft: 600,
-        },
-        {
-            id:5,
-            featured: true,
-            image: 'https://images.pexels.com/photos/1732414/pexels-photo-1732414.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            amount: '$900,000',
-            title: 'Portage Place',
-            address: '323 Portage Ave, Winnipeg, Manitoba',
-            beds: 4,
-            baths: 4,
-            sqft: 900,
-        },
-        {
-            id:6,
-            featured: true,
-            image: 'https://images.pexels.com/photos/280221/pexels-photo-280221.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            amount: '$600,000',
-            title: 'Smith West Place',
-            address: '323 Smith West PL, Winnipeg, Manitoba',
-            beds: 4,
-            baths: 4,
-            sqft: 900,
-        },
-        {
-            id:7,
-            featured: true,
-            image: 'https://images.pexels.com/photos/1481105/pexels-photo-1481105.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            amount: '$190,000',
-            title: 'The Place',
-            address: '323 The Place RD, Winnipeg, Manitoba',
-            beds: 6,
-            baths: 6,
-            sqft: '1,800',
-        },
+        }
     ];
     return (
         <section className={'mt-2'}>
             <div className={'flex flex-col justify-center items-center gap-5'}>
                 <div className={'flex flex-col justify-between gap-4 text-center'}>
-                    <h1 className={'font-bold text-4xl sm:text-5xl'}>Featured Properties</h1>
-                    <p className={'font-light text-sm'}>Explore all the different types of properties so you can choose
-                        the best option for you.</p>
+                    <h1 className={'font-bold text-4xl sm:text-5xl'}>Properties For Sale</h1>
+                    <p className={'font-light text-sm'}>Search over 1000 properties to sell from the top agents in the country</p>
                 </div>
-
-                <div className={'grid grid-cols-3 md:grid-cols-7 gap-4 font-light text-sm text-center justify-center'}>
-                    <button className={'tag text-primary'}>All</button>
-                    <button className={'tag'}>Apartments</button>
-                    <button className={'tag'}>Bungalow</button>
-                    <button className={'tag'}>House</button>
-                    <button className={'tag'}>Office</button>
-                    <button className={'tag'}>Smart Home</button>
-                    <button className={'tag'}>Villa</button>
-                </div>
-
             </div>
 
             {/*Featured Properties*/}
             <div className={'px-3 mt-5'}>
                 <div className={'grid grid-cols-1 sm:grid-cols-2 md:grid-col-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'}>
                     {featured.map(feat => (
-                        <div key={feat.id} className={'border border-gray-200 bg-white p-5 rounded-lg'}>
+                        <div key={feat.id} className={'border border-gray-200 p-5 rounded-lg'}>
                             <div className={'flex flex-col gap-3 justify-center'}>
                                 <div className={'relative overflow-hidden rounded-lg h-56'}>
                                     <img
@@ -164,7 +108,7 @@ const Featured = () => {
                                     <IoLocationOutline/>
                                     <span>{feat.address} </span>
                                 </div>
-                                <ul className={'flex justify-between items-center text-gray-500 text-sm'}>
+                                <ul className={'flex justify-start space-x-4 sm:space-x-0 sm:justify-between  items-center text-gray-500 text-sm'}>
                                     <li>
                                         <div className={'flex items-center space-x-2'}>
                                             <LiaBedSolid/>
@@ -214,4 +158,4 @@ const Featured = () => {
     );
 };
 
-export default Featured;
+export default Sale;
