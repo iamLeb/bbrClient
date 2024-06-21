@@ -13,7 +13,7 @@ const Explore = () => {
     return (
         <div>
             <div className="text-center font-bold text-xl sm:text-3xl p-[30px]">Discover The Perfect Neighbourhood</div>
-            <div className="grid grid-cols-1 md:grid-cols-2 h-[160rem] lg:grid-cols-4 md:h-[75rem] lg:h-[35rem]">
+            <div className="grid grid-cols-1 md:grid-cols-2 h-[150rem] lg:grid-cols-4 md:h-[75rem] lg:h-[35rem]">
                 <div className="group h-full w-full relative overflow-hidden hover:cursor-pointer"> 
                     <div className="overflow-hidden w-full bg-black h-full sm:absolute sm:inset-0">
                         <img className="object-cover h-full w-full transition-all duration-500 group-hover:scale-110 group-hover:opacity-50" src={one} alt =''/>
@@ -26,7 +26,7 @@ const Explore = () => {
                         <PiPlusThin className="text-6xl"/>
                     </div>
                 </div>
-                <div className="group sm:h-full sm:w-full relative overflow-hidden hover:cursor-pointer"> 
+                <div className="group h-full sm:w-full relative overflow-hidden hover:cursor-pointer"> 
                     <div className="overflow-hidden w-full bg-black h-full sm:absolute sm:inset-0">
                         <img className="object-cover h-full w-full transition-all duration-500 group-hover:scale-110 group-hover:opacity-50" src={two} alt =''/>
                     </div> 
@@ -38,7 +38,7 @@ const Explore = () => {
                         <PiPlusThin className="text-6xl"/>
                     </div>
                 </div>
-                <div className="group sm:h-full sm:w-full relative overflow-hidden hover:cursor-pointer"> 
+                <div className="group h-full w-full relative overflow-hidden hover:cursor-pointer"> 
                     <div className="overflow-hidden w-full bg-black h-full sm:absolute sm:inset-0">
                         <img className="object-cover h-full w-full transition-all duration-500 group-hover:scale-110 group-hover:opacity-50" src={three} alt =''/>
                     </div> 
@@ -50,7 +50,7 @@ const Explore = () => {
                         <PiPlusThin className="text-6xl"/>
                     </div>
                 </div>
-                <div className="group sm:h-full sm:w-full relative overflow-hidden hover:cursor-pointer"> 
+                <div className="group h-full w-full relative overflow-hidden hover:cursor-pointer"> 
                     <div className="overflow-hidden w-full bg-black h-full sm:absolute sm:inset-0">
                         <img className="object-cover h-full w-full transition-all duration-500 group-hover:scale-110 group-hover:opacity-50" src={four} alt =''/>
                     </div> 
@@ -58,11 +58,11 @@ const Explore = () => {
                         <p>Down Town</p>
                         <p className="text-xs">4 properties</p>
                     </div>
-                    <div className="transition-all duration-500 h-full flex flex-col justify-center items-center absolute inset-0 opacity-0 group-hover:opacity-100 p-5 sm:inset-0 text-white">
+                    <div className="transition-all duration-500 h-full flex justify-center items-center absolute inset-0 opacity-0 group-hover:opacity-100 p-5 sm:inset-0 text-white">
                         <PiPlusThin className="text-6xl"/>
                     </div>
                 </div>
-                <div className="group sm:h-full sm:w-full relative overflow-hidden hover:cursor-pointer"> 
+                <div className="group h-full w-full relative overflow-hidden hover:cursor-pointer"> 
                     <div className="overflow-hidden w-full bg-black h-full sm:absolute sm:inset-0">
                         <img className="object-cover h-full w-full transition-all duration-500 group-hover:scale-110 group-hover:opacity-50" src={five} alt =''/>
                     </div> 
@@ -74,7 +74,7 @@ const Explore = () => {
                         <PiPlusThin className="text-6xl"/>
                     </div>
                 </div>
-                <div className="group sm:h-full sm:w-full relative overflow-hidden hover:cursor-pointer"> 
+                <div className="group h-full w-full relative overflow-hidden hover:cursor-pointer"> 
                     <div className="overflow-hidden w-full bg-black h-full sm:absolute sm:inset-0">
                         <img className="object-cover h-full w-full transition-all duration-500 group-hover:scale-110 group-hover:opacity-50" src={six} alt =''/>
                     </div> 
@@ -86,7 +86,7 @@ const Explore = () => {
                         <PiPlusThin className="text-6xl"/>
                     </div>
                 </div>
-                <div className="group sm:h-full sm:w-full relative overflow-hidden hover:cursor-pointer"> 
+                <div className="group h-full w-full relative overflow-hidden hover:cursor-pointer"> 
                     <div className="overflow-hidden w-full bg-black h-full sm:absolute sm:inset-0">
                         <img className="object-cover h-full w-full transition-all duration-500 group-hover:scale-110 group-hover:opacity-50" src={seven} alt =''/>
                     </div> 
@@ -98,7 +98,7 @@ const Explore = () => {
                         <PiPlusThin className="text-6xl"/>
                     </div>
                 </div>
-                <div className="group sm:h-full sm:w-full relative overflow-hidden hover:cursor-pointer"> 
+                <div className="group h-full w-full relative overflow-hidden hover:cursor-pointer"> 
                     <div className="overflow-hidden w-full bg-black h-full sm:absolute sm:inset-0">
                         <img className="object-cover h-full w-full transition-all duration-500 group-hover:scale-110 group-hover:opacity-50" src={eight} alt =''/>
                     </div> 
