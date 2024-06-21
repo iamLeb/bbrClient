@@ -21,11 +21,11 @@ const Hero = () => {
 
     return (//parent div
         <div
-            className={'h-screen flex flex-col justify-center space-y-10 p-5 bg-gradient-to-br from-white to-[#fdeccf] to-100%'}>
+            className={'h-screen flex flex-col justify-center space-y-12 p-5 lg:pl-20 bg-gradient-to-br from-white to-[#fdeccf] to-100%'}>
 
             {/*top div*/}
             <div className={'flex flex-col space-y-4 mt-10 sm:mt-0'}>
-                <p className={'tracking-wide text-4xl md:text-7xl font-bold md:w-1/2'}>We'll help you find a place
+                <p className={'tracking-wide text-5xl md:text-7xl font-bold md:w-1/2'}>We'll help you find a place
                     you'll love
                 </p>
                 <p> With the most complete source of homes for sale & properties near you.</p>
@@ -55,10 +55,10 @@ const Hero = () => {
                             <FaSortAmountDownAlt/>
                         </li>
 
-                        <li className={'flex-1 lg:flex-none border rounded-lg'}>
-                            <input id="searchKey" className={'focus:outline-primary rounded-lg p-3 w-[100%]'}
+                        <li className={'flex-1 lg:flex-none border rounded-lg lg:w-1/4'}>
+                            <input id="searchKey" className={'px-7 focus:outline-primary rounded-lg p-3 w-[100%] '}
                                    type={"text"}
-                                   placeholder={"  Enter keyword..."}/>
+                                   placeholder={"Enter keyword..."}/>
                         </li>
 
 
