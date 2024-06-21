@@ -122,7 +122,7 @@ const Featured = () => {
             <div className={'px-3 mt-5'}>
                 <div className={'grid grid-cols-1 sm:grid-cols-2 md:grid-col-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'}>
                     {featured.map(feat => (
-                        <div key={feat.id} className={'border border-gray-200 p-5 rounded-lg'}>
+                        <div key={feat.id} className={'border border-gray-200 bg-white p-5 rounded-lg'}>
                             <div className={'flex flex-col gap-3 justify-center'}>
                                 <div className={'relative overflow-hidden rounded-lg h-56'}>
                                     <img
