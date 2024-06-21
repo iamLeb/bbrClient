@@ -1,6 +1,6 @@
-import React from 'react';
 import Sale from "../../components/FrontComponents/Sale.jsx";
 import Featured from "../../components/FrontComponents/Featured.jsx";
+import Rent from "../../components/FrontComponents/Rent.jsx";
 
 const Home = () => {
     return (
@@ -8,6 +8,7 @@ const Home = () => {
             Home page
             <Featured />
             <Sale />
+            <Rent />
         </div>
     );
 };
