@@ -5,19 +5,21 @@ import {MdOutlineEmail} from "react-icons/md";
 import {FaPhoneAlt} from "react-icons/fa";
 import {GrMapLocation} from "react-icons/gr";
 import {RxSlash} from "react-icons/rx";
-import { MdOutlinePermPhoneMsg } from "react-icons/md";
-import { RiMailSendLine } from "react-icons/ri";
+import {MdOutlinePermPhoneMsg} from "react-icons/md";
+import {RiMailSendLine} from "react-icons/ri";
 
 const Contact = () => {
     return (
         <section className={'py-4 px-5'}>
-            <p className={'text-center text-primary'}>Become our next customer, and find your dream home Contact us: 314-555-0123</p>
+            <p className={'text-center'}>Become our next customer, and find your dream home <span className={'text-primary underline'}>Contact us: 314-555-0123</span>
+            </p>
 
             <div className={'flex flex-col lg:flex-row justify-around items-center pt-12 space-y-10'}>
 
                 <div className={'flex flex-1 flex-col space-y-12 md:pl-20 lg:pl-24'}>
                     <div className={'flex flex-col justify-center w-full'}>
-                        <h1 className={'text-black  text-3xl md:text-4xl lg:text-5xl font-semibold'}>We Provide The Most Suitable And Quality Real
+                        <h1 className={'text-black  text-3xl md:text-4xl lg:text-5xl font-semibold'}>We Provide The Most
+                            Suitable And Quality Real
                             Estate.</h1>
                         <p className={'font-light'}>Our team of experts will help you find the best property that suits
                             your needs.</p>
@@ -52,7 +54,7 @@ const Contact = () => {
 
                         <div className={'flex flex-row  space-x-4'}>
                             <div>
-                                <RiMailSendLine size={36} />
+                                <RiMailSendLine size={36}/>
                             </div>
                             <div>
                                 <RxSlash size={36}/>
