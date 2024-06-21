@@ -1,11 +1,11 @@
 import React from 'react';
-import Featured from "../../components/FrontComponents/Featured.jsx";
+import Sale from "../../components/FrontComponents/Sale.jsx";
 
 const Home = () => {
     return (
         <div>
             Home page
-            <Featured />
+            <Sale />
         </div>
     );
 };
