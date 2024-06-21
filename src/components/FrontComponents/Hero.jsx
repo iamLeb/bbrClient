@@ -24,17 +24,21 @@ const Hero = () => {
     }
 
     return (
+        //parent div
         <div
-            className={'h-screen flex flex-col justify-center space-y-10 p-5 bg-gradient-to-bl from-[#FEFEFC] from-20% to-[#F3D895] to-100%'}>
+            className={'sm:h-screen flex flex-col justify-center space-y-10 p-5 bg-gradient-to-bl from-[#FEFEFC] from-20% to-[#F3D895] to-100%'}>
 
+            {/*top div*/}
             <div className={'flex flex-col space-y-4'}>
                 <p
                     className={'text-5xl md:text-7xl font-bold md:w-1/2'}>We'll help you find a place you'll love</p>
                 <p> With the most complete source of homes for sale & properties near you.</p>
             </div>
 
-
+            {/*middle div*/}
             <div className={'flex flex-col space-y-1'}>
+
+                {/*for rent and for sale div*/}
                 <div>
                     <ul className={'flex font-semibold'}>
                         <li><span className={'text-white bg-primary rounded-l-lg p-2'}>For Rent</span></li>
@@ -78,7 +82,7 @@ const Hero = () => {
                     </ul>
 
                     <div
-                        className={toggle1 ? 'block bg-white rounded-r-lg rounded-bl-lg md:w-2/3 p-8 space-y-2' : 'hidden'}>
+                        className={toggle1 ? 'block' : 'hidden'}>
                         <ul className={'flex flex-col space-y-2 md:hidden'}>
                             <li><PropertyType/></li>
                             <li><Province/></li>
@@ -91,7 +95,7 @@ const Hero = () => {
                     </div>
                 </div>
 
-                <div className={toggle2 ? 'block bg-white rounded-md md:w-2/3 p-10 space-y-2' : 'hidden'}>
+                <div className={toggle2 ? 'block bg-white rounded-md md:w-2/3 p-10 space-y-2 hidden md:block' : 'hidden'}>
                     <ul className={'flex space-x-4 w-full'}>
                         <li className={'w-1/4'}><Room/></li>
                         <li className={'w-1/4'}><Bath/></li>
@@ -103,6 +107,7 @@ const Hero = () => {
                 </div>
             </div>
 
+            {/*bottom div*/}
             <div>
                 <ul className={'flex items-center'}>
                     <li className={'flex flex-col'}>
@@ -118,7 +123,6 @@ const Hero = () => {
                         <span className={'font-bold text-3xl'}>100+</span>
                         <span className={'opacity-50'}>Happy customers</span>
                     </li>
-
                 </ul>
             </div>
 
