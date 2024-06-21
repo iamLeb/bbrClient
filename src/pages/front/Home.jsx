@@ -4,6 +4,7 @@ import Featured from "../../components/FrontComponents/Featured.jsx";
 import Explore from "../../components/FrontComponents/Explore.jsx";
 import Rent from "../../components/FrontComponents/Rent.jsx";
 import Testimonials from '../../components/FrontComponents/Testimonials.jsx';
+import Contact from "../../components/FrontComponents/Contact.jsx";
 
 const Home = () => {
     return (
@@ -11,6 +12,8 @@ const Home = () => {
             <Hero />
             <Featured />
             <Explore />
+            <Contact />
+
             <Rent />
             <Testimonials />
         </div>
