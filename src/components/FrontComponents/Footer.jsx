@@ -80,7 +80,9 @@ const Footer = () => {
                                 <LiaPhoneVolumeSolid size={36}/>
                                 <div>
                                     <p>Hotline:</p>
-                                    <span className={'text-white'}>(201) 555-0124</span>
+                                    <span className={'text-white'}>
+                                        <a href="tel:2015550124">(201) 555-0124</a>
+                                    </span>
                                 </div>
                             </div>
                         </li>
@@ -90,7 +92,9 @@ const Footer = () => {
                                 <MdOutlineMarkEmailRead size={36}/>
                                 <div>
                                     <p>Email:</p>
-                                    <span className={'text-white'}>(201) 555-0124</span>
+                                    <span className={'text-white'}>
+                                        <a target='_blank' href="mailto:contact@bbr.ca">contact@bbr.ca</a>
+                                    </span>
                                 </div>
                             </div>
                         </li>
@@ -103,31 +107,14 @@ const Footer = () => {
                         <li>
                             <div className={'flex items-center space-x-2 hover:text-primary cursor-pointer'}>
                                 <RxCaretRight className={'text-primary'}/>
-                                <span className={'text-sm text-white'}>Property For Sale</span>
+                                <span className={'text-sm text-white'}>Home</span>
                             </div>
                         </li>
-                        <li>
-                            <div className={'flex items-center space-x-2 hover:text-primary cursor-pointer'}>
-                                <RxCaretRight className={'text-primary'}/>
-                                <span className={'text-sm text-white'}>Property For Rent</span>
-                            </div>
-                        </li>
+
                         <li>
                             <div className={'flex items-center space-x-2 hover:text-primary cursor-pointer'}>
                                 <RxCaretRight className={'text-primary'}/>
                                 <span className={'text-sm text-white'}>About Us</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div className={'flex items-center space-x-2 hover:text-primary cursor-pointer'}>
-                                <RxCaretRight className={'text-primary'}/>
-                                <span className={'text-sm text-white'}> Our Agents</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div className={'flex items-center space-x-2 hover:text-primary cursor-pointer'}>
-                                <RxCaretRight className={'text-primary'}/>
-                                <span className={'text-sm text-white'}>Our Agency</span>
                             </div>
                         </li>
                         <li>

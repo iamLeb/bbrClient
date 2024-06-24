@@ -2,8 +2,42 @@ import { FiMenu } from "react-icons/fi";
 import { IoIosArrowDown } from "react-icons/io";
 import { TbHomeDollar } from "react-icons/tb";
 import { PiLineVerticalThin } from "react-icons/pi";
+import {useNavigate} from "react-router-dom";
 
 const Header = () => {
+    const navigate = useNavigate();
+
+    const links = [
+        {
+            id: 0,
+            name: 'Home',
+            active: true,
+            onClick: () => navigate('/'),
+        },
+        {
+            id: 1,
+            name: 'About',
+            onClick: () => navigate('/about'),
+
+        },
+        {
+            id: 2,
+            name: 'Blog',
+            onClick: () => navigate('/'),
+
+        },
+        {
+            id: 3,
+            name: 'Contact',
+            onClick: () => navigate('/'),
+        },
+        {
+            id: 4,
+            name: 'Listings',
+            onClick: () => navigate('/properties/listing'),
+        },
+
+    ];
     return (
         <header className={'fixed w-full z-20 bg-white shadow-md p-3 py-6 sm:py-3'}>
             <div className={'container mx-auto flex justify-between items-center'}>
@@ -13,39 +47,19 @@ const Header = () => {
 
                 <div className={'hidden md:block text-md font-medium'}>
                     <ul className={'flex space-x-4 items-center'}>
-                        <li>
-                            <div className={'flex items-center space-x-1 hover:cursor-pointer text-primary'}>
-                                <span>Home</span>
-                                <IoIosArrowDown size={12}/>
-                            </div>
+                        {links.map(link => (
+                            <li onClick={() => link.onClick()} key={link.id}>
+                                <div className={`flex items-center space-x-1 hover:cursor-pointer hover:text-primary ${link.active && 'text-primary'} `}>
+                                    <span>{link.name}</span>
+                                </div>
 
-                        </li>
-                        <li>
-                            <div className={'flex items-center space-x-1 hover:cursor-pointer hover:text-primary'}>
-                                <span>Page</span>
-                                <IoIosArrowDown size={12}/>
-                            </div>
-                        </li>
-                        <li>
-                            <div className={'flex items-center space-x-1 hover:cursor-pointer hover:text-primary'}>
-                                <span>Real Estate</span>
-                                <IoIosArrowDown size={12}/>
-                            </div>
-                        </li>
-                        <li>
-                            <div className={'flex items-center space-x-1 hover:cursor-pointer hover:text-primary'}>
-                                <span>Blog</span>
-                                <IoIosArrowDown size={12}/>
-                            </div>
-                        </li>
-                        <li>
-                            <span className={'hover:cursor-pointer hover:text-primary'}>Contact</span>
-                        </li>
+                            </li>
+                        ))}
 
                         <li>
                             <ul className={'flex items-center space-x-1 bg-primary p-4 rounded-lg font-semibold text-white'}>
                                 <li>
-                                    <TbHomeDollar/>
+                                <TbHomeDollar/>
                                 </li>
                                 <li>
                                     <PiLineVerticalThin/>
