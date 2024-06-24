@@ -19,11 +19,11 @@ const AboutHero = () => {
             </div>
 
             <div className={'relative md:w-1/2'}>
-                <div className={'overflow-hidden w-full md:h-96'}>
+                <div className={'overflow-hidden w-full md:h-full lg:h-96'}>
                     <img className={'h-full w-full rounded-lg object-cover object-center'}
                          src={'src/assets/images/img.png'}/>
                 </div>
-                <div className={'hover:cursor-pointer absolute left-1/2 top-1/2 -translate-x-1/2 md:top-[40%] lg:top-[35%]'}>
+                <div className={'hover:cursor-pointer absolute left-1/2 top-1/2 -translate-x-1/2 md:top-[50%] lg:top-[35%]'}>
                     <CiPlay1 className={'p-2.5 text-primary bg-white rounded-full hover:bg-primary hover:text-white'}
                              size={48}/>
                 </div>
