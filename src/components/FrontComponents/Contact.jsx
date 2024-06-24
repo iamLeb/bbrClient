@@ -11,7 +11,8 @@ import {RiMailSendLine} from "react-icons/ri";
 const Contact = () => {
     return (
         <section className={'py-9 px-5'}>
-            <p className={'text-center'}>Become our next customer, and find your dream home <span className={'text-primary underline'}>Contact us: 314-555-0123</span></p>
+            <p className={'text-center'}>Become our next customer, and find your dream home <span
+                className={'text-primary underline'}>Contact us: 314-555-0123</span></p>
 
             <div className={'flex flex-col lg:flex-row justify-around items-center pt-12 space-y-10'}>
 
@@ -90,31 +91,31 @@ const Contact = () => {
                                 </div>
                             </div>
 
-                            <div className={'flex space-x-4'}>
-                                <div className={'flex-1'}>
-                                    <div className={'font-medium pt-2'}>Email</div>
-                                    <div className={'relative'}>
+
+                            <div className={'flex-1'}>
+                                <div className={'font-medium pt-2'}>Email</div>
+                                <div className={'relative'}>
                                          <span
                                              className={'absolute text-primary flex items-center top-1/2 -translate-y-1/2 left-1'}>  <MdOutlineEmail
                                              size={18}/></span>
-                                        <input
-                                            className={'px-9 focus:outline-primary border rounded-lg py-4 w-full placeholder:text-gray-500 text-sm'}
-                                            type="text" placeholder={"Your email"}/>
-                                    </div>
+                                    <input
+                                        className={'px-9 focus:outline-primary border rounded-lg py-4 w-full placeholder:text-gray-500 text-sm'}
+                                        type="text" placeholder={"Your email"}/>
                                 </div>
+                            </div>
 
-                                <div className={'flex-1'}>
-                                    <div className={'font-medium pt-2'}>Phone</div>
-                                    <div className={'relative'}>
+                            <div className={'flex-1'}>
+                                <div className={'font-medium pt-2'}>Phone</div>
+                                <div className={'relative'}>
                                         <span
                                             className={'absolute text-primary flex items-center top-1/2 -translate-y-1/2 left-1'}> <FaPhoneAlt
                                             size={18}/></span>
-                                        <input
-                                            className={'px-9 focus:outline-primary border rounded-lg py-4 w-full placeholder:text-gray-500 text-sm'}
-                                            type="text" placeholder={"Your phone"}/>
-                                    </div>
+                                    <input
+                                        className={'px-9 focus:outline-primary border rounded-lg py-4 w-full placeholder:text-gray-500 text-sm'}
+                                        type="text" placeholder={"Your phone"}/>
                                 </div>
                             </div>
+
 
                             <div className={'flex-1'}>
                                 <div className={'font-medium pt-2 w-full'}>Property Type</div>
@@ -131,7 +132,7 @@ const Contact = () => {
                             <div className={'flex-1'}>
                                 <div className={'font-medium pt-2'}>Message</div>
                                 <textarea
-                                    className={'px-3 focus:outline-primary w-full border rounded-lg py-4 w-full placeholder:text-gray-500 text-sm'}
+                                    className={'resize-none px-3 focus:outline-primary w-full border rounded-lg py-4 w-full placeholder:text-gray-500 text-sm'}
                                     cols="30"
                                     rows="5" placeholder={"Your message"}></textarea>
                             </div>
