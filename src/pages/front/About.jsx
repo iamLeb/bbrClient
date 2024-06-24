@@ -1,8 +1,9 @@
+import AboutHero from "../../components/FrontComponents/AboutHero.jsx";
 
 const About = () => {
     return (
         <section className={''}>
-                Hello world
+            <AboutHero />
         </section>
     );
 };
