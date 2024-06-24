@@ -39,24 +39,6 @@ const Photo = () => {
     return (
         <section>
             <div className={'container mx-auto flex flex-col text-xs'}>
-                <ul className={'flex space-x-4 text-gray-500 border-b p-5'}>
-                    <li>
-                        <div className={'flex items-center space-x-2 text-primary cursor-pointer'}>
-                            <span>Home</span>
-                            <RxCaretRight/>
-                        </div>
-                    </li>
-                    <li>
-                        <div className={'flex items-center space-x-2 cursor-pointer'}>
-                            <span>Listings</span>
-                            <RxCaretRight/>
-                        </div>
-                    </li>
-                    <li>
-                        <span>8329 South Santa Clara</span>
-                    </li>
-                </ul>
-
                 <div className={'md:flex justify-between items-center py-9'}>
                     <div className={'flex flex-col gap-2'}>
                         <h1 className={'text-3xl font-medium p-1'}>8329 South Santa Clara</h1>
