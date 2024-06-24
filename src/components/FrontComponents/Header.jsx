@@ -29,7 +29,7 @@ const Header = () => {
         {
             id: 3,
             name: 'Contact',
-            onClick: () => navigate('/'),
+            onClick: () => navigate('/contact'),
         },
         {
             id: 4,

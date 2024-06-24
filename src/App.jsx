@@ -7,6 +7,7 @@ import Index from "./pages/front/properties/index.jsx";
 import BlogSingle from "./pages/front/blog/Single.jsx";
 import Blog from "./pages/front/blog/Blog.jsx";
 import Single from "./pages/front/properties/Single.jsx";
+import ContactUs from "./pages/front/ContactUs.jsx";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             {/*  <Route path={'/about'} element={<About />} />*/}
             {/*Route Example Ends*/}
               <Route path={'/about'} element={<About />} />
+              <Route path={'/contact'} element={<ContactUs />} />
               <Route path={'/blog'} element={<Blog />} />
               <Route path={'/blog/:id'} element={<BlogSingle />} />
               <Route path={'/properties/listing'} element={<Index />} />
