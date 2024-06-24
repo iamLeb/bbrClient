@@ -23,7 +23,7 @@ const AboutHero = () => {
                     <img className={'h-full w-full rounded-lg object-cover object-center'}
                          src={'src/assets/images/img.png'}/>
                 </div>
-                <div className={'hover:cursor-pointer absolute left-1/2 top-1/2 -translate-x-1/2 md:top-[40%] lg:top-[30%]'}>
+                <div className={'hover:cursor-pointer absolute left-1/2 top-1/2 -translate-x-1/2 md:top-[40%] lg:top-[35%]'}>
                     <CiPlay1 className={'p-2.5 text-primary bg-white rounded-full hover:bg-primary hover:text-white'}
                              size={48}/>
                 </div>
