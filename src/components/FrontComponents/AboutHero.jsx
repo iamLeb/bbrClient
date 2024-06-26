@@ -3,37 +3,9 @@ import {MdOutlineHandshake} from "react-icons/md";
 
 const AboutHero = () => {
     return (
-        <div
-            className={'flex flex-col md:flex-row  space-y-12 md:space-x-0 py-5 px-3 md:px-2 md:py-28 lg:p-20'}>
-            <div className={'md:w-1/2 flex flex-col  text-black space-y-2 md:space-y-8 p-4 '}>
-                <h1 className={'font-bold text-3xl md:text-4xl lg:text-5xl text-primary'}>Mission</h1>
+        <div className={'flex flex-col md:flex-row space-y-12 md:space-x-0 py-5 px-3 md:px-2 md:py-20 lg:px-20 lg:py-10 items-center justify-center'}>
 
-                <div className={'p-4 relative h-96 bg-primary rounded-lg sm:rounded-r-lg flex flex-col space-y-8'}>
-                    <div className={'pt-3 sm:pt-8 flex flex-col font-semibold space-y-2'}>
-                        <p className={'text-white'}>Trusted partner</p>
-                        <p className={'font-light'}>In realizing our clients' real estate dreams</p>
-                    </div>
-
-                    <div className={'flex flex-col font-semibold space-y-2'}>
-                        <p className={'text-white'}>Unwavering Support</p>
-                        <p className={'font-light'}>To exceeding expectations by offering tailored solutions through
-                            expert guidance</p>
-                    </div>
-
-                    <div className={'flex flex-col font-semibold space-y-2'}>
-                        <p className={'text-white'}>Commitment</p>
-                        <p className={'font-light'}>Throughout every step of the journey.</p>
-                    </div>
-
-                    <div className={'absolute bottom-0 right-0'}>
-                        <MdOutlineHandshake size={50} sm:size={60} className={'text-white'}/>
-                    </div>
-                </div>
-            </div>
-
-
-            <div className={'md:w-1/2 p-4 relative'}>
-
+            <div className={'md:w-1/2 p-4 md:pt-20 relative'}>
                 <div>
                     <p className={'font-semibold text-xl lg:text-3xl text-black'}>Your trusted partner in real
                         estate</p>
@@ -57,17 +29,32 @@ const AboutHero = () => {
                 </div>
 
             </div>
-            {/*<div className={'relative md:w-1/2'}>*/}
-            {/*    <div className={'overflow-hidden w-full md:h-full lg:h-96'}>*/}
-            {/*        <img className={'h-full w-full rounded-lg object-cover object-center'}*/}
-            {/*             src={'src/assets/images/img.png'}/>*/}
-            {/*    </div>*/}
-            {/*    <div*/}
-            {/*        className={'hover:cursor-pointer absolute left-1/2 top-1/2 -translate-x-1/2 md:top-[50%] lg:top-[35%]'}>*/}
-            {/*        <CiPlay1 className={'p-2.5 text-primary bg-white rounded-full hover:bg-primary hover:text-white'}*/}
-            {/*                 size={48}/>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
+
+            <div className={'md:w-1/2 flex flex-col text-black space-y-2 md:space-y-4 p-4 justify-center'}>
+                <h1 className={'font-bold text-3xl md:text-4xl lg:text-5xl text-primary'}>Mission</h1>
+
+                <div className={'p-4 relative h-96 bg-primary rounded-lg sm:rounded-r-lg flex flex-col space-y-8'}>
+                    <div className={'pt-3 sm:pt-8 flex flex-col font-semibold space-y-2'}>
+                        <p className={'text-white'}>Trusted partner</p>
+                        <p className={'font-light'}>In realizing our clients' real estate dreams</p>
+                    </div>
+
+                    <div className={'flex flex-col font-semibold space-y-2'}>
+                        <p className={'text-white'}>Unwavering Support</p>
+                        <p className={'font-light'}>To exceeding expectations by offering tailored solutions through
+                            expert guidance</p>
+                    </div>
+
+                    <div className={'flex flex-col font-semibold space-y-2'}>
+                        <p className={'text-white'}>Commitment</p>
+                        <p className={'font-light'}>Throughout every step of the journey.</p>
+                    </div>
+
+                    <div className={'absolute bottom-0 right-0'}>
+                        <MdOutlineHandshake size={60} sm:size={40} className={'text-white'}/>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }
