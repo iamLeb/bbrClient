@@ -1,4 +1,4 @@
-const ForgotPwd = () => {
+const ResetPwd = () => {
     return (
         <div className={'flex'}>
 
@@ -9,11 +9,17 @@ const ForgotPwd = () => {
             </div>
 
             <div className={'w-full md:w-2/3 flex flex-col space-y-8 p-8'}>
-                <h1 className={'text-3xl font-bold text-black'}>Forgot your password?</h1>
+                <h1 className={'text-3xl font-bold text-black'}>Reset your password</h1>
                 <div>
                     <input
                         className={'px-5 focus:outline-primary border rounded-lg py-4 w-full placeholder:text-gray-500 text-sm'}
-                        type="text" placeholder={"Enter your email"}/>
+                        type="text" placeholder={"New password"}/>
+                </div>
+
+                <div>
+                    <input
+                        className={'px-5 focus:outline-primary border rounded-lg py-4 w-full placeholder:text-gray-500 text-sm'}
+                        type="text" placeholder={"Confirm new password"}/>
                 </div>
 
                 <div>
@@ -21,13 +27,9 @@ const ForgotPwd = () => {
                         <span className={'text-white font-bold'}>Reset Password</span>
                     </button>
                 </div>
-
-                <div>
-                    <a>Back to login</a>
-                </div>
             </div>
         </div>
     )
 }
 
-export default ForgotPwd;
+export default ResetPwd;

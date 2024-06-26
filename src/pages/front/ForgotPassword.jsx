@@ -1,4 +1,4 @@
-import ForgotPwd from "../../components/FrontComponents/ForgotPwd.jsx";
+import ForgotPwd from "../../components/FrontComponents/Auth/ForgotPwd.jsx";
 
 const ForgotPassword= () => {
     return (
