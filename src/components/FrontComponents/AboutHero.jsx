@@ -4,7 +4,7 @@ import {MdOutlineHandshake} from "react-icons/md";
 const AboutHero = () => {
     return (
         <div
-            className={'lg:h-screen flex flex-col md:flex-row  space-y-12 md:space-x-0 py-5 px-3 md:px-2 md:py-28 lg:p-20'}>
+            className={'flex flex-col md:flex-row  space-y-12 md:space-x-0 py-5 px-3 md:px-2 md:py-28 lg:p-20'}>
             <div className={'md:w-1/2 flex flex-col  text-black space-y-2 md:space-y-8 p-4 '}>
                 <h1 className={'font-bold text-3xl md:text-4xl lg:text-5xl text-primary'}>Mission</h1>
 
