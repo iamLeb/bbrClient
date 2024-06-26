@@ -1,4 +1,4 @@
-const ForgotPassword = () => {
+const ForgotPwd = () => {
     return (
         <div className={'flex'}>
 
@@ -30,4 +30,4 @@ const ForgotPassword = () => {
     )
 }
 
-export default ForgotPassword;
+export default ForgotPwd;
