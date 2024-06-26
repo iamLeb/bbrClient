@@ -5,7 +5,7 @@ const AboutHero = () => {
     return (
         <div className={'flex flex-col md:flex-row space-y-12 md:space-x-0 py-5 px-3 md:px-2 md:py-20 lg:px-20 lg:py-10 items-center justify-center'}>
 
-            <div className={'md:w-1/2 p-4 md:pt-20 relative'}>
+            <div className={'md:w-1/2 p-4 md:pt-20 relative flex flex-col space-y-2'}>
                 <div>
                     <p className={'font-semibold text-xl lg:text-3xl text-black'}>Your trusted partner in real
                         estate</p>
