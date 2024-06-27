@@ -8,6 +8,8 @@ import BlogSingle from "./pages/front/blog/Single.jsx";
 import Blog from "./pages/front/blog/Blog.jsx";
 import Single from "./pages/front/properties/Single.jsx";
 import Login from "./pages/front/auth/login.jsx";
+import Contact from "./components/FrontComponents/Contact.jsx";
+import ContactUs from "./pages/front/ContactUs.jsx";
 
 function App() {
   return (
@@ -21,6 +23,7 @@ function App() {
               <Route path={'/about'} element={<About />} />
               <Route path={'/blog'} element={<Blog />} />
               <Route path={'/blog/:id'} element={<BlogSingle />} />
+              <Route path={'/contact'} element={<ContactUs />} />
               <Route path={'/properties/listing'} element={<Index />} />
               <Route path={'/properties/listing/1'} element={<Single />} />
               <Route path={'/auth/login'} element={<Login />} />
