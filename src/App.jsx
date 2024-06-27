@@ -8,6 +8,7 @@ import BlogSingle from "./pages/front/blog/Single.jsx";
 import Blog from "./pages/front/blog/Blog.jsx";
 import Single from "./pages/front/properties/Single.jsx";
 import Login from "./pages/front/auth/login.jsx";
+import Register from "./pages/front/auth/register.jsx";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
               <Route path={'/properties/listing'} element={<Index />} />
               <Route path={'/properties/listing/1'} element={<Single />} />
               <Route path={'/auth/login'} element={<Login />} />
+              <Route path={'/auth/register'} element={<Register />} />
             {/*Page Not Found*/}
             <Route path={'*'} element={<PageNotFound />} />
           </Route>
