@@ -23,13 +23,13 @@ const Header = () => {
         {
             id: 2,
             name: 'Blog',
-            onClick: () => navigate('/'),
+            onClick: () => navigate('/blog'),
 
         },
         {
             id: 3,
             name: 'Contact',
-            onClick: () => navigate('/'),
+            onClick: () => navigate('/contact'),
         },
         {
             id: 4,
