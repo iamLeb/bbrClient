@@ -11,6 +11,7 @@ import Login from "./pages/front/auth/Login.jsx";
 import Forgot from "./pages/front/auth/Forgot.jsx";
 import Reset from "./pages/front/auth/Reset.jsx";
 import Register from "./pages/front/auth/register.jsx";
+import ContactUs from "./pages/front/ContactUs.jsx";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
               <Route path={'/about'} element={<About />} />
               <Route path={'/blog'} element={<Blog />} />
               <Route path={'/blog/:id'} element={<BlogSingle />} />
+              <Route path={'/contact'} element={<ContactUs />} />
               <Route path={'/properties/listing'} element={<Index />} />
               <Route path={'/properties/listing/1'} element={<Single />} />
               <Route path={'/auth/login'} element={<Login />} />
