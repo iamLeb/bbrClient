@@ -2,8 +2,8 @@ import one from "../../../assets/images/Register.jpg"
 
 const RegistrationHero = () => {
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-2 justify-between m-20 gap-x-5">
-                <div className="hidden w-full object-cover  lg:flex items-center h-full ">
+        <div className="grid grid-cols-1 lg:grid-cols-2 justify-between border rounded-lg m-10 gap-x-5">
+                <div className="hidden w-full object-cover p-5 lg:flex items-center h-full ">
                     <img className="w-full rounded-lg " src={one} alt=""/>
                 </div>
                 <div className="w-full p-5 space-y-7 ">
