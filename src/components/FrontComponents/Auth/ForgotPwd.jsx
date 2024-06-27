@@ -1,32 +1,27 @@
 const ForgotPwd = () => {
     return (
-        <div className={'flex'}>
+        <section className={'py-9 container mx-auto'}>
+            <div className={'hidden lg:flex flex bg-white shadow-lg gap-4 items-center rounded-lg border'}>
+                <div className={'overflow-hidden flex-1 h-full rounded-l-lg'}>
+                    <img
+                        className={'object-center object-cover'}
+                        src="https://images.pexels.com/photos/1546168/pexels-photo-1546168.jpeg?auto=compress&cs=tinysrgb&w=800"
+                        alt="photo"/>
+                </div>
 
-            <div className={'hidden md:block w-1/3'}>
-                <div className={'h-full overflow-hidden'}>
-                    <img className={'h-full w-full rounded-l-lg object-cover object-center'} src={'src/assets/images/img.png'}/>
+                <div className={'flex-1'}>
+                    <h1 className={'text-3xl text-center font-bold py-5 text-primary'}>Forgot your password?</h1>
+                    <form className={'flex flex-col gap-4 px-5'}>
+                        <input
+                            className={'w-full p-5 bg-gray-100 rounded-br-lg rounded-tl-lg outline-none'}
+                            placeholder={'Enter Email'}
+                            type="text"/>
+
+                        <button className={'bg-primary py-5 font-bold text-white rounded-br-lg rounded-tl-lg'}>Send Reset Email</button>
+                    </form>
                 </div>
             </div>
-
-            <div className={'w-full md:w-2/3 flex flex-col space-y-8 p-8'}>
-                <h1 className={'text-3xl font-bold text-black'}>Forgot your password?</h1>
-                <div>
-                    <input
-                        className={'px-5 focus:outline-primary border rounded-lg py-4 w-full placeholder:text-gray-500 text-sm'}
-                        type="text" placeholder={"Enter your email"}/>
-                </div>
-
-                <div>
-                    <button className={'w-1/2 border  bg-primary rounded-lg py-4 w-full'}>
-                        <span className={'text-white font-bold'}>Forgot Password</span>
-                    </button>
-                </div>
-
-                <div>
-                    <a>Back to login</a>
-                </div>
-            </div>
-        </div>
+        </section>
     )
 }
 

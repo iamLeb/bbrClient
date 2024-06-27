@@ -7,8 +7,9 @@ import Index from "./pages/front/properties/index.jsx";
 import BlogSingle from "./pages/front/blog/Single.jsx";
 import Blog from "./pages/front/blog/Blog.jsx";
 import Single from "./pages/front/properties/Single.jsx";
-import Login from "./pages/front/auth/login.jsx";
-import Forgot from "./pages/front/auth/forgot.jsx";
+import Login from "./pages/front/auth/Login.jsx";
+import Forgot from "./pages/front/auth/Forgot.jsx";
+import Reset from "./pages/front/auth/Reset.jsx";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Route path={'/properties/listing/1'} element={<Single />} />
               <Route path={'/auth/login'} element={<Login />} />
               <Route path={'/auth/forgot'} element={<Forgot />} />
+            <Route path={'/auth/reset'} element={<Reset />} />
             {/*Page Not Found*/}
             <Route path={'*'} element={<PageNotFound />} />
           </Route>
