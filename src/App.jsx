@@ -10,6 +10,7 @@ import Single from "./pages/front/properties/Single.jsx";
 import Login from "./pages/front/auth/Login.jsx";
 import Forgot from "./pages/front/auth/Forgot.jsx";
 import Reset from "./pages/front/auth/Reset.jsx";
+import Register from "./pages/front/auth/register.jsx";
 
 function App() {
   return (
@@ -27,7 +28,8 @@ function App() {
               <Route path={'/properties/listing/1'} element={<Single />} />
               <Route path={'/auth/login'} element={<Login />} />
               <Route path={'/auth/forgot'} element={<Forgot />} />
-            <Route path={'/auth/reset'} element={<Reset />} />
+              <Route path={'/auth/reset'} element={<Reset />} />
+              <Route path={'/auth/register'} element={<Register />} />
             {/*Page Not Found*/}
             <Route path={'*'} element={<PageNotFound />} />
           </Route>

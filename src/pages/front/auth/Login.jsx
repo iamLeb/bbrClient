@@ -3,7 +3,7 @@ const Login = () => {
     return (
         <section className={'py-9 container mx-auto'}>
             <div className={' md:flex bg-white shadow-lg gap-4 items-center rounded-lg border p-y'}>
-                <div className={'overflow-hidden hidden md:block flex-1 h-full rounded-l-lg'}>
+                <div className={'overflow-hidden hidden md:hidden lg:block flex-1 h-full rounded-l-lg'}>
                     <img
                         className={'object-center object-cover'}
                         src="https://images.pexels.com/photos/1546168/pexels-photo-1546168.jpeg?auto=compress&cs=tinysrgb&w=800"
