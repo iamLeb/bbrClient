@@ -1,15 +1,15 @@
 const ForgotPwd = () => {
     return (
         <section className={'py-9 container mx-auto'}>
-            <div className={'hidden lg:flex flex bg-white shadow-lg gap-4 items-center rounded-lg border'}>
-                <div className={'overflow-hidden flex-1 h-full rounded-l-lg'}>
+            <div className={'md:flex bg-white shadow-lg gap-4 items-center rounded-lg border p-y'}>
+                <div className={'hidden lg:block overflow-hidden flex-1 h-full rounded-l-lg'}>
                     <img
                         className={'object-center object-cover'}
                         src="https://images.pexels.com/photos/1546168/pexels-photo-1546168.jpeg?auto=compress&cs=tinysrgb&w=800"
                         alt="photo"/>
                 </div>
 
-                <div className={'flex-1'}>
+                <div className={'flex-1 pb-5'}>
                     <h1 className={'text-3xl text-center font-bold py-5 text-primary'}>Forgot your password?</h1>
                     <form className={'flex flex-col gap-4 px-5'}>
                         <input
