@@ -57,7 +57,7 @@ const Index = () => {
     ]
     return (
         <section className={'mt-2 py-9 '}>
-            <div className=" flex items-center justify-evenly p-8">
+            <div className=" flex items-center justify-evenly pb-3">
                 <ul className="flex gap-1">
                     <li className={'flex lg:flex-none border rounded-lg lg:w-1/2'}>
                         <input id="searchKey" className={'focus:outline-primary rounded-lg p-3'}
