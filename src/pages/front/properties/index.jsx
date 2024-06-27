@@ -78,9 +78,9 @@ const Index = () => {
                 </div>
                 
             </div>
-            <div className={' pl-10 gap-4 '}>
+            <div className={' px-3 gap-4 text-center'}>
                 <h1 className={'font-bold text-3xl sm:text-4xl'}>Property Listings</h1>
-                <p className={'font-light text-sm'}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda dolorum, error perspiciatis quas tempora velit?</p>
+                <p className={'font-light text-sm'}>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
             </div>
             {/*Featured Properties*/}
             <div className={'px-3 mt-5 flex justify-evenly'}>
