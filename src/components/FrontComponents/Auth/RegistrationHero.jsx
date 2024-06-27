@@ -1,9 +1,11 @@
 import one from "../../../assets/images/Register.jpg"
-import { useState } from "react";
+import {useContext, useEffect, useState} from "react";
 import api from "../../../services/api";
 import { useNavigate } from "react-router-dom";
+import UserContext from "../../../context/UserContext.js";
 
 const RegistrationHero = () => {
+    const {user, setUser} = useContext(UserContext);
     const navigate = useNavigate();
     const [values, setValues] = useState({
         name: "",
@@ -79,11 +81,21 @@ const RegistrationHero = () => {
         const res = await api.post('auth/register', values);
 
         if (res.status === 200) {
-            navigate('/auth/login');
+            navigate('/secure');
         } else {
             console.log('There was an error')
         }
     }
+
+    const authPage = () => {
+        return user && location.pathname.split("/")[1] === 'auth'
+    }
+
+    useEffect(() => {
+        if (authPage()) {
+            navigate('/secure');
+        }
+    })
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 justify-between border rounded-lg m-10 gap-x-5">

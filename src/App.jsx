@@ -12,6 +12,8 @@ import Forgot from "./pages/front/auth/Forgot.jsx";
 import Reset from "./pages/front/auth/Reset.jsx";
 import Register from "./pages/front/auth/register.jsx";
 import ContactUs from "./pages/front/ContactUs.jsx";
+import DashboardLayout from "./layouts/DashboardLayout.jsx";
+import Admin from "./pages/dashboard/Admin.jsx";
 
 function App() {
   return (
@@ -34,6 +36,12 @@ function App() {
               <Route path={'/auth/register'} element={<Register />} />
             {/*Page Not Found*/}
             <Route path={'*'} element={<PageNotFound />} />
+          </Route>
+
+
+          <Route path="/secure" element={<DashboardLayout />}>
+            <Route index element={<Admin />} />
+
           </Route>
         </Routes>
       </BrowserRouter>
