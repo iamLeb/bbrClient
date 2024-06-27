@@ -17,7 +17,7 @@ const Explore = () => {
                 <p className={'font-light text-sm'}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda dolorum, error perspiciatis quas tempora velit?</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 h-[160rem] lg:grid-cols-4 md:h-[75rem] lg:h-[35rem]">
+            <div className="grid grid-cols-1 md:grid-cols-2 h-[100rem] lg:grid-cols-4 md:h-[75rem] lg:h-[35rem] overflow-hidden">
                 <div className="group h-full w-full relative overflow-hidden hover:cursor-pointer">
                     <div className="overflow-hidden w-full bg-black h-full sm:absolute sm:inset-0">
                         <img
@@ -72,8 +72,7 @@ const Explore = () => {
                             className="object-cover h-full w-full transition-all duration-500 group-hover:scale-110 group-hover:opacity-50"
                             src={four} alt=''/>
                     </div>
-                    <div
-                        className=" sm:flex flex-col absolute bottom-0 justify-end p-5 sm:h-full bg-opacity-0 sm:relative text-white">
+                    <div className=" sm:flex flex-col absolute bottom-0 justify-end p-5 sm:h-full bg-opacity-0 sm:relative text-white">
                         <p>Down Town</p>
                         <p className="text-xs">4 properties</p>
                     </div>
