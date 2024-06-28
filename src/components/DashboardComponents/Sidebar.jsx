@@ -6,35 +6,45 @@ import { CiMap } from "react-icons/ci";
 import { IoMailOpenSharp } from "react-icons/io5";
 import { GrGallery } from "react-icons/gr";
 import { FaRegUserCircle } from "react-icons/fa";
+import {useNavigate} from "react-router-dom";
 
 const items = [
     {
         icon: <AiOutlineDashboard  />,
         name: 'Dashboard',
+        path: '',
     }, {
         icon: <IoLayersOutline />,
         name: 'My Categories',
+        path: 'category',
     }, {
         icon: <CiBoxList  />,
         name: 'My Listings',
+        path: 'listings',
     }, {
         icon: <IoCameraSharp />,
-        name: 'Blog'
+        name: 'Blog',
+        path: 'blog',
     }, {
         icon: <CiMap />,
-        name: 'Provinces'
+        name: 'Provinces',
+        path: 'provinces',
     },{
         icon: <IoMailOpenSharp  />,
-        name: 'Contacts'
+        name: 'Contacts',
+        path: 'contact',
     }, {
         icon: <GrGallery />,
-        name: 'Gallery'
+        name: 'Gallery',
+        path: 'gallery',
     },{
         icon: <FaRegUserCircle  />,
-        name: 'My Profile'
+        name: 'My Profile',
+        path: 'profile',
     }
 ];
 const Sidebar = () => {
+    const navigate = useNavigate();
     return (
         <aside className={'hidden md:block bg-neutral-800 text-white h-screen w-72'}>
             <div className={'py-5 text-center'}>
@@ -44,8 +54,8 @@ const Sidebar = () => {
             <ul className={'flex flex-col gap-2 pt-9'}>
                 {items.map(item => (
                     <li key={<item className="name"></item>}>
-                        <div className={'flex space-x-4 items-center cursor-pointer hover:bg-primary text-white p-4'}>
-                            <span className={'text-neutral-500 text-2xl'}>{item.icon}</span>
+                        <div onClick={() => navigate(item.path)} className={'flex space-x-4 items-center cursor-pointer hover:bg-primary text-white p-4'}>
+                            <span className={'text-neutral-500 text-xl'}>{item.icon}</span>
                             <span>{item.name}</span>
                         </div>
                     </li>

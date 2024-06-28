@@ -17,7 +17,7 @@ const DashboardLayout = () => {
             <div className={'flex-1'}>
                 <Header />
                     <Outlet />
-                <Footer />
+                {/*<Footer />*/}
             </div>
         </div>
     );

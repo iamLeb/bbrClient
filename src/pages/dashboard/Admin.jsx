@@ -64,7 +64,7 @@ const Admin = () => {
                     <div key={box.id} className={'bg-white p-4 rounded-md shadow-md flex-1 duration-300'}>
                         <div className={'flex justify-between'}>
                             <h3 className={'font-light'}>{box.title}</h3>
-                            <span className={'font-bold text-green-600'}>{box.increase}</span>
+                            <span className={'font-bold text-primary'}>{box.increase}</span>
                         </div>
 
                         <h1 className={'font-extrabold mt-3 text-xl'}>{box.count}</h1>
