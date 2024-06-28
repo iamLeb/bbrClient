@@ -41,11 +41,11 @@ const CategoryForm = () => {
     return (
         <section className="h-screen m-5">
             <div className="bg-white border border-gray-100 shadow-2xl">
-                <div className="p-4 border-b flex justify-between">
+                <div className="p-4 border-b flex items-center justify-between">
                     <h3 className="font-bold">Category</h3>
 
                     <div>
-                        <button onClick={addCategory} className={'bg-primary rounded-lg p-2 hover:cursor-pointer'}>+ Add
+                        <button onClick={addCategory} className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>+ Add
                             New
                             Category
                         </button>
