@@ -41,8 +41,8 @@ const CategoryForm = () => {
     };
 
     return (
-        <section className="h-screen m-5">
-            <div className="bg-white border border-gray-100 shadow-2xl">
+        <section className="h-screen m-5  mx-10">
+            <div className="bg-white border border-gray-100 shadow-2xl ">
                 <div className="p-4 border-b flex items-center justify-between">
                     <h3 className="font-bold">Category</h3>
 
@@ -59,7 +59,7 @@ const CategoryForm = () => {
                         <thead>
                         <tr className="text-left text-sm bg-gray-100">
                             <th className="px-4 py-2">Name</th>
-                            <th className="px-4 py-2">Action</th>
+                            <th className="text-right px-4 py-2">Action</th>
                         </tr>
                         </thead>
 
@@ -67,7 +67,7 @@ const CategoryForm = () => {
                         {categories.map((category, index) => (<tr className="text-left text-xs border-b" key={index}>
                             <td className="px-4 py-2">{category.name}</td>
                             <td className="px-4 py-2">
-                                <div className={'flex sm:block'}>
+                                <div className={'text-right '}>
                                     <button className="px-2 py-1 rounded bg-primary text-white">Edit</button>
                                     <button onClick={() => deleteCategory(category.name)}
                                             className="ml-2 px-2 py-1 rounded bg-red-500 text-white">Remove
