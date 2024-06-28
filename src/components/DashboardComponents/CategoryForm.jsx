@@ -34,7 +34,7 @@ const CategoryForm = () => {
         if (exist) {
             setCategories(categories.filter(category => category.name !== categoryName));
         } else {
-            alert('Category not found');
+            alert('Category1 not found');
         }
     };
 

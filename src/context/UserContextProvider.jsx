@@ -8,7 +8,6 @@ const UserContextProvider = ({ children }) => {
     const getUser = async () => {
         try {
             const user = await api.get('/auth/check');
-            console.log(user.data)
             setUser(user.data);
         } catch (e) {
             console.log(e)

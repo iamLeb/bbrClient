@@ -1,11 +1,12 @@
+import React from 'react';
 import CategoryForm from "../../components/DashboardComponents/CategoryForm.jsx";
 
-const Category = () => {
+const Categories = () => {
     return (
         <div>
-          <CategoryForm/>
+            <CategoryForm/>
         </div>
     );
 };
 
-export default Category;
+export default Categories;
