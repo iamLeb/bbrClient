@@ -53,7 +53,7 @@ const Province = () => {
     };
 
     return (
-        <section className="h-screen m-5">
+        <section className="h-screen m-5 mx-10">
             <div className="bg-white border border-gray-100 shadow-2xl">
                 <div className="p-4 border-b flex items-center justify-between">
                     <h3 className="font-bold">Province</h3>
@@ -71,18 +71,17 @@ const Province = () => {
                 <div className="overflow-x-auto">
                     <table className="table-auto w-full">
                         <thead>
-                        <tr className="text-left text-sm bg-gray-100">
-                            <th className="px-4 py-2">Name</th>
-                            <th className="px-4 py-2">Action</th>
+                        <tr className="text-sm bg-gray-100">
+                            <th className="text-left px-4 py-2">Name</th>
+                            <th className="text-right px-4 py-2">Action</th>
                         </tr>
                         </thead>
 
                         <tbody>
-                        {categories.map((category, index) => (<tr className="text-center text-xs border-b" key={index}>
+                        {categories.map((category, index) => (<tr className="text-xs border-b" key={index}>
                             <td className="px-4 py-2 text-left">{category.name}</td>
-                            {/*<td className="px-4 py-2 truncate">{category.dateCreated.toLocaleString()}</td>*/}
                             <td className="px-4 py-2">
-                                <div className={'flex sm:block text-left'}>
+                                <div className={'text-right flex justify-end'}>
                                     <button className="px-2 py-1 rounded bg-primary text-white">Edit</button>
                                     <button onClick={() => deleteCategory(category.name)}
                                             className="ml-2 px-2 py-1 rounded bg-red-500 text-white">Remove
