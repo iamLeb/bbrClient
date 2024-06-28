@@ -14,7 +14,7 @@ import Register from "./pages/front/auth/register.jsx";
 import ContactUs from "./pages/front/ContactUs.jsx";
 import DashboardLayout from "./layouts/DashboardLayout.jsx";
 import Admin from "./pages/dashboard/Admin.jsx";
-import TableComponent from "./components/DashboardComponents/TableComponent.jsx";
+import Properties from "./pages/dashboard/Properties.jsx";
 
 function App() {
   return (
@@ -41,8 +41,8 @@ function App() {
 
 
           <Route path="/secure" element={<DashboardLayout />}>
-            <Route index element={<TableComponent />} />
-                <Route path={'/secure/properties'} element={<TableComponent />} />
+            <Route index element={<Admin />} />
+                <Route path={'/secure/properties'} element={<Properties />} />
 
           </Route>
         </Routes>
