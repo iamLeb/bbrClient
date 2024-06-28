@@ -6,40 +6,36 @@ const Blog = () => {
                 <div className="p-4 border-b"><h3 className="font-bold">Add, Edit & Remove</h3></div>
                 <div className="p-3">
                     <div className="sm:flex justify-between items-center">
-                        <div className="relative mt-2 sm:mt-0">
-                            <input placeholder="Search..."
-                                   className="py-2 px-10 w-56 outline-none border rounded text-sm" type="text"/>
-                        </div>
                         <button className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>+ Create New Blog </button>
                     </div>
                 </div>
                 <div className="overflow-x-auto">
                     <table className="table-auto w-full">
                         <thead>
-                        <tr className="text-center text-sm bg-gray-100">
-                            <th className="px-4 py-2">Title</th>
-                            <th className="px-4 py-2 hidden lg:block">Content</th>
-                            <th className="px-4 py-2">Image</th>
-                            <th className="px-4 py-2">Category</th>
-                            <th className="px-4 py-2 hidden lg:block">Created</th>
-                            <th className="px-4 py-2">Action</th>
-                        </tr>
+                            <tr className="text-left lg:text-center text-sm bg-gray-100">
+                                <th className="px-4 py-2">Title</th>
+                                <th className="px-4 py-2 hidden lg:table-cell">Content</th>
+                                <th className="px-4 py-2 hidden lg:table-cell">Image</th>
+                                <th className="px-4 py-2 hidden lg:table-cell">Category</th>
+                                <th className="px-4 py-2 hidden lg:table-cell">Created</th>
+                                <th className="px-4 py-2 text-end lg:text-center">Action</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr className="text-center text-xs border-b">
+                        <tr className="text-left lg:text-center text-xs border-b ">
                             <td className="px-4 py-2">Post One</td>
                             <td className="px-4 py-2 truncate hidden lg:block">content for post one</td>
-                            <td className="px-4 py-2">img.png</td>
-                            <td className="px-4 py-2">
+                            <td className="px-4 py-2 hidden lg:table-cell">img.png</td>
+                            <td className="px-4 py-2 hidden lg:table-cell">
                                 <span className={`px-2 py-1 text-xs font-bold rounded `}>Apartment</span>
                             </td>
-                            <td className="px-4 py-2 ">
+                            <td className="px-4 py-2 hidden lg:block">
                                 <span>
                                     Jan 15, 2024
                                 </span>
                             </td>
                             <td className="px-4 py-2">
-                                <div className={'flex sm:block'}>
+                                <div className={'flex justify-end lg:justify-center text-end '}>
                                     <button className="px-2 py-1 rounded bg-green-500 text-white">Edit</button>
                                     <button className="ml-2 px-2 py-1 rounded bg-red-500 text-white">Remove</button>
                                 </div>
