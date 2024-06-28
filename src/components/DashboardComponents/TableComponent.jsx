@@ -73,11 +73,11 @@ const TableComponent = () => {
                             <table className="table-auto w-full">
                                 <thead>
                                 <tr className="text-center w-full text-[15px] bg-gray-100">
-                                    <th className="px-4 py-2 w-1/5 text-center ">Title</th>
-                                    <th className="px-4 py-2 w-1/5 text-center">Address</th>
-                                    <th className="px-4 py-2 w-1/5 text-center">Price</th>
-                                    <th className="px-4 py-2 w-1/5 text-center">Created</th>
-                                    <th className="px-4 py-2 w-1/5 text-center">Action</th>
+                                    <th className="px-4 py-2 w-1/5 text-center">Title</th>
+                                    <th className="px-4 py-2 w-1/5 text-center hidden sm:table-cell">Address</th>
+                                    <th className="px-4 py-2 w-1/5 text-center hidden sm:table-cell">Price</th>
+                                    <th className="px-4 py-2 w-1/5 text-center hidden sm:table-cell">Created</th>
+                                    <th className="px-4 py-2 w-1/5 text-center ">Action</th>
                                 </tr>
                                 </thead>
                             </table>
@@ -88,19 +88,19 @@ const TableComponent = () => {
                                 <tbody>
                                     <tr className="text-center text-[15px] w-full border-b">
                                         <td className="px-4 py-2 w-1/5 text-center">{feat.title}</td>
-                                        <td className=" py-2 w-1/5 text-center">{feat.address}</td>
-                                        <td className="px-4 py-2 w-1/5 text-center">{feat.amount}</td>
-                                        <td className="px-4 py-2 w-1/5">
+                                        <td className=" py-2 w-1/5 text-center hidden sm:table-cell">{feat.address}</td>
+                                        <td className="px-4 py-2 w-1/5 text-center hidden sm:table-cell">{feat.amount}</td>
+                                        <td className="px-4 py-2 w-1/5 hidden sm:table-cell">
                                             <span className={`px-2 py-1 text-xs font-bold
                                             rounded text-center`}>3
                                             Active
                                             </span>
                                         </td>
                                         <td className="px-4 py-2">
-                                            <div className={'flex sm:block'}>
-                                                <button className="px-2 py-1 rounded bg-green-500 text-white">Edit</button>
+                                            <div className={'flex justify-end sm:justify-center sm:block'}>
+                                                <button className="px-2 py-1 rounded bg-green-500 text-white text-center">Edit</button>
                                                 <button className="ml-2 px-2 py-1 rounded
-                                                bg-red-500 text-white">Remove</button>
+                                                bg-red-500 text-white text-center">Remove</button>
                                             </div>
                                         </td>
                                     </tr>

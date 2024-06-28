@@ -14,7 +14,7 @@ const Header = () => {
             <div className="bg-white w-full shadow-md">
                 <div className="flex justify-between items-center px-5">
                     {/* Mobile view toggle */}
-                    <div className="block md:hidden">
+                    <div className="block lg:hidden">
                         <GoArrowRight size={26} />
                     </div>
 

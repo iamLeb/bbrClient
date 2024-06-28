@@ -49,7 +49,7 @@ const Sidebar = () => {
     ];
 
     return (
-        <aside className={'hidden md:block bg-neutral-800 text-white h-screen w-80'}>
+        <aside className={'hidden lg:block bg-neutral-800 text-white h-screen w-80'}>
             <div className={'py-9 text-center border-b border-gray-50'}>
                 <h1 className={'text-3xl text-primary font-bold'}>logo</h1>
             </div>
