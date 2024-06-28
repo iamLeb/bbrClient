@@ -75,7 +75,7 @@ const TableComponent = () => {
                                 <tr className="text-center w-full text-[15px] bg-gray-100">
                                     <th className="px-4 py-2 lg:w-1/5 text-center sm:text-wrap">Title</th>
                                     <th className="px-4 py-2 md:w-1/4 lg:w-1/5 text-center hidden sm:table-cell">Address</th>
-                                    <th className="px-4 py-2 lg:w-1/5 text-center hidden sm:table-cell">Price</th>
+                                    <th className="px-4 py-2 lg:w-1/5 text-center hidden lg:table-cell">Price</th>
                                     <th className="px-4 py-2 lg:w-1/5 text-center hidden lg:table-cell">Created</th>
                                     <th className="px-4 py-2 lg:w-1/5 text-center ">Action</th>
                                 </tr>
@@ -87,10 +87,10 @@ const TableComponent = () => {
                             <table className='w-full'>
                                 <tbody>
                                     <tr className="text-center text-[15px] w-full border-b">
-                                        <td className="px-4 py-2 lg:w-1/5  sm:text-center">{feat.title}</td>
-                                        <td className=" py-2 md:w-1/4 lg:w-1/5 text-center hidden sm:table-cell">{feat.address}</td>
-                                        <td className="px-4 py-2 md:w-1/4  lg:w-1/5 text-center hidden sm:table-cell">{feat.amount}</td>
-                                        <td className="px-4 py-2 md:w-1/4  lg:w-1/5 hidden lg:table-cell">
+                                        <td className="px-4 py-2 xl:w-1/5 text-left  sm:text-center">{feat.title}</td>
+                                        <td className=" py-2 xl:w-1/5 text-center hidden sm:table-cell">{feat.address}</td>
+                                        <td className="px-4 py-2  xl:w-1/5 text-center hidden xl:table-cell">{feat.amount}</td>
+                                        <td className="px-4 py-2 xl:w-1/5 hidden xl:table-cell">
                                             <span className={`px-2py-1 text-xs font-bold
                                             rounded text-center`}>3
                                             Active
