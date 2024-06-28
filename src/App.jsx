@@ -14,10 +14,14 @@ import Register from "./pages/front/auth/Register.jsx";
 import ContactUs from "./pages/front/ContactUs.jsx";
 import DashboardLayout from "./layouts/DashboardLayout.jsx";
 import Admin from "./pages/dashboard/Admin.jsx";
-import Properties from "./pages/dashboard/Properties.jsx";
 import Categories from "./pages/dashboard/Categories.jsx";
+import {useContext} from "react";
+import UserContext from "./context/UserContext.js";
+import Gallery from "./pages/dashboard/Gallery.jsx";
+import Properties from "./pages/dashboard/Properties.jsx";
 
 function App() {
+  const { user } = useContext(UserContext);
   return (
       <BrowserRouter>
         <Routes>
@@ -40,14 +44,15 @@ function App() {
             <Route path={'*'} element={<PageNotFound />} />
           </Route>
 
-
-          <Route path="/secure" element={<DashboardLayout />}>
-            <Route index element={<Admin />} />
-                <Route path={'/secure/listings'} element={<Properties />} />
-
-            <Route path={'category'} element={<Categories/>} />
-            <Route path={'blog'} element={<Blog/>} />
-          </Route>
+          {user &&  (
+              <Route path="/secure" element={<DashboardLayout />}>
+                <Route index element={<Admin />} />
+                <Route path={'category'} element={<Categories/>} />
+                <Route path={'blog'} element={<Blog/>} />
+                <Route path={'gallery'} element={<Gallery/>} />
+              <Route path={'listings'} element={<Properties />} />
+              </Route>
+          )}
         </Routes>
       </BrowserRouter>
   )

@@ -1,5 +1,6 @@
+import React from 'react';
 
-const Blog = () => {
+const Gallery = () => {
     return (
         <section className="h-screen m-5">
             <div className="bg-white border border-gray-100 shadow-2xl">
@@ -10,7 +11,9 @@ const Blog = () => {
                             <input placeholder="Search..."
                                    className="py-2 px-10 w-56 outline-none border rounded text-sm" type="text"/>
                         </div>
-                        <button className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>+ Create New Blog </button>
+                        <button className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>+
+                            Create New Blog
+                        </button>
                     </div>
                 </div>
                 <div className="overflow-x-auto">
@@ -58,4 +61,4 @@ const Blog = () => {
     );
 };
 
-export default Blog;
+export default Gallery;
