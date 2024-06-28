@@ -8,37 +8,38 @@ import { GrGallery } from "react-icons/gr";
 import { FaRegUserCircle } from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
 
-const navigate = useNavigate();
-
-const items = [
-    {
-        icon: <AiOutlineDashboard  />,
-        name: 'Dashboard',
-    }, {
-        icon: <IoLayersOutline />,
-        name: 'My Categories',
-        onClick: () => navigate('/secure/category'),
-    }, {
-        icon: <CiBoxList  />,
-        name: 'My Listings',
-    }, {
-        icon: <IoCameraSharp />,
-        name: 'Blog'
-    }, {
-        icon: <CiMap />,
-        name: 'Provinces'
-    },{
-        icon: <IoMailOpenSharp  />,
-        name: 'Contacts'
-    }, {
-        icon: <GrGallery />,
-        name: 'Gallery'
-    },{
-        icon: <FaRegUserCircle  />,
-        name: 'My Profile'
-    }
-];
 const Sidebar = () => {
+    const navigate = useNavigate();
+
+    const items = [
+        {
+            icon: <AiOutlineDashboard  />,
+            name: 'Dashboard',
+        }, {
+            icon: <IoLayersOutline />,
+            name: 'My Categories',
+            onClick: () => navigate('/secure/category'),
+        }, {
+            icon: <CiBoxList  />,
+            name: 'My Listings',
+        }, {
+            icon: <IoCameraSharp />,
+            name: 'Blog'
+        }, {
+            icon: <CiMap />,
+            name: 'Provinces'
+        },{
+            icon: <IoMailOpenSharp  />,
+            name: 'Contacts'
+        }, {
+            icon: <GrGallery />,
+            name: 'Gallery'
+        },{
+            icon: <FaRegUserCircle  />,
+            name: 'My Profile'
+        }
+    ];
+
     return (
         <aside className={'hidden md:block bg-neutral-800 text-white h-screen w-80'}>
             <div className={'py-9 text-center border-b border-gray-50'}>
