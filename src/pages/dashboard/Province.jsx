@@ -81,7 +81,7 @@ const Province = () => {
                         {categories.map((category, index) => (<tr className="text-xs border-b" key={index}>
                             <td className="px-4 py-2 text-left">{category.name}</td>
                             <td className="px-4 py-2">
-                                <div className={'text-right'}>
+                                <div className={'text-right flex justify-end'}>
                                     <button className="px-2 py-1 rounded bg-primary text-white">Edit</button>
                                     <button onClick={() => deleteCategory(category.name)}
                                             className="ml-2 px-2 py-1 rounded bg-red-500 text-white">Remove
