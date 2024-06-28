@@ -41,7 +41,7 @@ const CategoryForm = () => {
     };
 
     return (
-        <section className="h-screen m-5  mx-10">
+        <section className="h-screen m-5 mx-10">
             <div className="bg-white border border-gray-100 shadow-2xl ">
                 <div className="p-4 border-b flex items-center justify-between">
                     <h3 className="font-bold">Category</h3>
@@ -57,15 +57,15 @@ const CategoryForm = () => {
                 <div className="overflow-x-auto">
                     <table className="table-auto w-full">
                         <thead>
-                        <tr className="text-left text-sm bg-gray-100">
-                            <th className="px-4 py-2">Name</th>
+                        <tr className="text-sm bg-gray-100">
+                            <th className="text-left px-4 py-2">Name</th>
                             <th className="text-right px-4 py-2">Action</th>
                         </tr>
                         </thead>
 
                         <tbody>
-                        {categories.map((category, index) => (<tr className="text-left text-xs border-b" key={index}>
-                            <td className="px-4 py-2">{category.name}</td>
+                        {categories.map((category, index) => (<tr className="text-xs border-b" key={index}>
+                            <td className="text-left px-4 py-2">{category.name}</td>
                             <td className="px-4 py-2">
                                 <div className={'text-right '}>
                                     <button className="px-2 py-1 rounded bg-primary text-white">Edit</button>
