@@ -60,7 +60,7 @@ const TableComponent = () => {
                                 </button>
                             </div>
                         </div>
-                        <div className="p-3">
+                        <div className="p-3 hidden sm:block">
                             <div className="sm:flex justify-between items-center">
                                 <div className="relative mt-2 sm:mt-0">
                                     <input
