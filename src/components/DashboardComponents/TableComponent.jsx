@@ -49,10 +49,16 @@ const TableComponent = () => {
 
     ]
     return (
-        <div>
+        <div className='m-3'>
             <div className="bg-white border w-full border-gray-100 shadow-2xl">
-                        <div className="p-4 border-b">
-                            <h3 className="font-bold">Add, Edit & Remove</h3>
+                        <div className="p-4 border-b flex justify-between items-center">
+                            <h3 className="font-bold">My listings</h3>
+                            <div>
+                                <button className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>+ Add
+                                    New
+                                    Category
+                                </button>
+                            </div>
                         </div>
                         <div className="p-3">
                             <div className="sm:flex justify-between items-center">
@@ -71,7 +77,7 @@ const TableComponent = () => {
                                     <th className="px-4 py-2 w-1/5 text-center">Address</th>
                                     <th className="px-4 py-2 w-1/5 text-center">Price</th>
                                     <th className="px-4 py-2 w-1/5 text-center">Created</th>
-                                    <th className="px-4 py-2 w-1/5 ">Action</th>
+                                    <th className="px-4 py-2 w-1/5 text-center">Action</th>
                                 </tr>
                                 </thead>
                             </table>
@@ -84,10 +90,9 @@ const TableComponent = () => {
                                         <td className="px-4 py-2 w-1/5 text-center">{feat.title}</td>
                                         <td className=" py-2 w-1/5 text-center">{feat.address}</td>
                                         <td className="px-4 py-2 w-1/5 text-center">{feat.amount}</td>
-                                        <td className="px-4 py-2 w-1/5 text-center">
-                                            <span
-                                            className={`px-2 py-1 text-xs font-bold
-                                            rounded `}>
+                                        <td className="px-4 py-2 w-1/5">
+                                            <span className={`px-2 py-1 text-xs font-bold
+                                            rounded text-center`}>3
                                             Active
                                             </span>
                                         </td>
@@ -113,6 +118,7 @@ const TableComponent = () => {
             </div>
         </div>
         </div>
+        
         
         
     );

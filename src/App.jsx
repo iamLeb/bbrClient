@@ -43,7 +43,7 @@ function App() {
 
           <Route path="/secure" element={<DashboardLayout />}>
             <Route index element={<Admin />} />
-                <Route path={'/secure/properties'} element={<Properties />} />
+                <Route path={'/secure/listings'} element={<Properties />} />
 
             <Route path={'category'} element={<Categories/>} />
             <Route path={'blog'} element={<Blog/>} />
