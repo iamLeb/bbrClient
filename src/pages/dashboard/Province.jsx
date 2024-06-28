@@ -3,34 +3,34 @@ import {useState} from "react";
 const Province = () => {
     const [categories, setCategories] = useState([
         {
-            name: "Alberta", dateCreated: new Date()
+            name: "Alberta"
         },
         {
-            name: "British Columbia", dateCreated: new Date()
+            name: "British Columbia"
         },
         {
-            name: "Manitoba", dateCreated: new Date()
+            name: "Manitoba"
         },
         {
-            name: "New Brunswick", dateCreated: new Date()
+            name: "New Brunswick"
         },
         {
-            name: "Newfoundland and Labrador", dateCreated: new Date()
+            name: "Newfoundland and Labrador"
         },
         {
-            name: "Nova Scotia", dateCreated: new Date()
+            name: "Nova Scotia"
         },
         {
-            name: "Ontario", dateCreated: new Date()
+            name: "Ontario"
         },
         {
-            name: "Prince Edward Island", dateCreated: new Date()
+            name: "Prince Edward Island"
         },
         {
-            name: "Quebec", dateCreated: new Date()
+            name: "Quebec"
         },
         {
-            name: "Saskatchewan", dateCreated: new Date()
+            name: "Saskatchewan"
         },
     ]);
     const [modal, setModal] = useState(false);
@@ -71,20 +71,19 @@ const Province = () => {
                 <div className="overflow-x-auto">
                     <table className="table-auto w-full">
                         <thead>
-                        <tr className="text-center text-sm bg-gray-100">
+                        <tr className="text-left text-sm bg-gray-100">
                             <th className="px-4 py-2">Name</th>
-                            <th className="px-4 py-2">Created</th>
                             <th className="px-4 py-2">Action</th>
                         </tr>
                         </thead>
 
                         <tbody>
                         {categories.map((category, index) => (<tr className="text-center text-xs border-b" key={index}>
-                            <td className="px-4 py-2">{category.name}</td>
-                            <td className="px-4 py-2 truncate">{category.dateCreated.toLocaleString()}</td>
+                            <td className="px-4 py-2 text-left">{category.name}</td>
+                            {/*<td className="px-4 py-2 truncate">{category.dateCreated.toLocaleString()}</td>*/}
                             <td className="px-4 py-2">
-                                <div className={'flex sm:block'}>
-                                    <button className="px-2 py-1 rounded bg-green-500 text-white">Edit</button>
+                                <div className={'flex sm:block text-left'}>
+                                    <button className="px-2 py-1 rounded bg-primary text-white">Edit</button>
                                     <button onClick={() => deleteCategory(category.name)}
                                             className="ml-2 px-2 py-1 rounded bg-red-500 text-white">Remove
                                     </button>
