@@ -71,16 +71,15 @@ const Province = () => {
                 <div className="overflow-x-auto">
                     <table className="table-auto w-full">
                         <thead>
-                        <tr className="text-left text-sm bg-gray-100">
-                            <th className="px-4 py-2">Name</th>
+                        <tr className="text-sm bg-gray-100">
+                            <th className="text-left px-4 py-2">Name</th>
                             <th className="text-right px-4 py-2">Action</th>
                         </tr>
                         </thead>
 
                         <tbody>
-                        {categories.map((category, index) => (<tr className="text-center text-xs border-b" key={index}>
+                        {categories.map((category, index) => (<tr className="text-xs border-b" key={index}>
                             <td className="px-4 py-2 text-left">{category.name}</td>
-                            {/*<td className="px-4 py-2 truncate">{category.dateCreated.toLocaleString()}</td>*/}
                             <td className="px-4 py-2">
                                 <div className={'text-right'}>
                                     <button className="px-2 py-1 rounded bg-primary text-white">Edit</button>
