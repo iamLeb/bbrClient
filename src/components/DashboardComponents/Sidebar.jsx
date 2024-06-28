@@ -15,28 +15,35 @@ const Sidebar = () => {
         {
             icon: <AiOutlineDashboard  />,
             name: 'Dashboard',
+            path: '',
         }, {
             icon: <IoLayersOutline />,
             name: 'My Categories',
-            onClick: () => navigate('/secure/category'),
+            path: 'category',
         }, {
             icon: <CiBoxList  />,
             name: 'My Listings',
+            path: 'listings',
         }, {
             icon: <IoCameraSharp />,
-            name: 'Blog'
+            name: 'Blog',
+            path: 'blog',
         }, {
             icon: <CiMap />,
-            name: 'Provinces'
+            name: 'Provinces',
+            path: 'provinces',
         },{
             icon: <IoMailOpenSharp  />,
-            name: 'Contacts'
+            name: 'Contacts',
+            path: 'contacts',
         }, {
             icon: <GrGallery />,
-            name: 'Gallery'
+            name: 'Gallery',
+            path: 'gallery',
         },{
             icon: <FaRegUserCircle  />,
-            name: 'My Profile'
+            name: 'My Profile',
+            path: 'profile',
         }
     ];
 
@@ -48,8 +55,8 @@ const Sidebar = () => {
 
             <ul className={'flex flex-col gap-2 pt-9'}>
                 {items.map(item => (
-                    <li onClick={() => item.onClick()} key={<item className="name"></item>}>
-                        <div className={'flex space-x-4 items-center cursor-pointer hover:bg-primary text-white p-4'}>
+                    <li key={<item className="name"></item>}>
+                        <div onClick={() => navigate(item.path)} className={'flex space-x-4 items-center cursor-pointer hover:bg-primary text-white p-4'}>
                             <span className={'text-neutral-500 text-2xl'}>{item.icon}</span>
                             <span>{item.name}</span>
                         </div>
