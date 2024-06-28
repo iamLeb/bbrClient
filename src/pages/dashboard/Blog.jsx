@@ -18,22 +18,22 @@ const Blog = () => {
                         <thead>
                         <tr className="text-center text-sm bg-gray-100">
                             <th className="px-4 py-2">Title</th>
-                            <th className="px-4 py-2">Content</th>
+                            <th className="px-4 py-2 hidden lg:block">Content</th>
                             <th className="px-4 py-2">Image</th>
                             <th className="px-4 py-2">Category</th>
-                            <th className="px-4 py-2">Created</th>
+                            <th className="px-4 py-2 hidden lg:block">Created</th>
                             <th className="px-4 py-2">Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr className="text-center text-xs border-b">
                             <td className="px-4 py-2">Post One</td>
-                            <td className="px-4 py-2 truncate">content for post one</td>
+                            <td className="px-4 py-2 truncate hidden lg:block">content for post one</td>
                             <td className="px-4 py-2">img.png</td>
                             <td className="px-4 py-2">
                                 <span className={`px-2 py-1 text-xs font-bold rounded `}>Apartment</span>
                             </td>
-                            <td className="px-4 py-2">
+                            <td className="px-4 py-2 ">
                                 <span>
                                     Jan 15, 2024
                                 </span>

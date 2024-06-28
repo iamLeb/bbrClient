@@ -1,24 +1,36 @@
 import {useState} from "react";
 
-const CategoryForm = () => {
+const Province = () => {
     const [categories, setCategories] = useState([
         {
-            name: "Apartment"
+            name: "Alberta"
         },
         {
-            name: "Bungalow"
+            name: "British Columbia"
         },
         {
-            name: "House"
+            name: "Manitoba"
         },
         {
-            name: "Office"
+            name: "New Brunswick"
         },
         {
-            name: "SmartHome"
+            name: "Newfoundland and Labrador"
         },
         {
-            name: "Villa"
+            name: "Nova Scotia"
+        },
+        {
+            name: "Ontario"
+        },
+        {
+            name: "Prince Edward Island"
+        },
+        {
+            name: "Quebec"
+        },
+        {
+            name: "Saskatchewan"
         },
     ]);
     const [modal, setModal] = useState(false);
@@ -41,15 +53,17 @@ const CategoryForm = () => {
     };
 
     return (
-        <section className="h-screen m-5  mx-10">
-            <div className="bg-white border border-gray-100 shadow-2xl ">
+        <section className="h-screen m-5 mx-10">
+            <div className="bg-white border border-gray-100 shadow-2xl">
                 <div className="p-4 border-b flex items-center justify-between">
-                    <h3 className="font-bold">Category</h3>
+                    <h3 className="font-bold">Province</h3>
 
                     <div>
-                        <button onClick={toggleModal} className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>+ Add
+                        <button onClick={toggleModal}
+                                className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>+
+                            Add
                             New
-                            Category
+                            Province
                         </button>
                     </div>
                 </div>
@@ -57,17 +71,17 @@ const CategoryForm = () => {
                 <div className="overflow-x-auto">
                     <table className="table-auto w-full">
                         <thead>
-                        <tr className="text-left text-sm bg-gray-100">
-                            <th className="px-4 py-2">Name</th>
+                        <tr className="text-sm bg-gray-100">
+                            <th className="text-left px-4 py-2">Name</th>
                             <th className="text-right px-4 py-2">Action</th>
                         </tr>
                         </thead>
 
                         <tbody>
-                        {categories.map((category, index) => (<tr className="text-left text-xs border-b" key={index}>
-                            <td className="px-4 py-2">{category.name}</td>
+                        {categories.map((category, index) => (<tr className="text-xs border-b" key={index}>
+                            <td className="px-4 py-2 text-left">{category.name}</td>
                             <td className="px-4 py-2">
-                                <div className={'text-right '}>
+                                <div className={'text-right flex justify-end'}>
                                     <button className="px-2 py-1 rounded bg-primary text-white">Edit</button>
                                     <button onClick={() => deleteCategory(category.name)}
                                             className="ml-2 px-2 py-1 rounded bg-red-500 text-white">Remove
@@ -92,15 +106,15 @@ const CategoryForm = () => {
                 <div
                     className={`bg-white m-2 sm:m-0 w-full sm:w-[35%] rounded-md shadow-lg transition-transform duration-300 transform`}>
                     <div className="bg-gray-100 p-3 flex items-center">
-                        <h2 className="font-extrabold">Create New Category</h2>
+                        <h2 className="font-extrabold">Create New Province</h2>
                     </div>
                     <div className="p-3">
                         <form>
                             <div className="mb-4">
-                                <label className="block text-sm font-bold mb-2">Category Name</label>
+                                <label className="block text-sm font-bold mb-2">Province Name</label>
                                 <input
                                     required={true}
-                                    placeholder="enter category name"
+                                    placeholder="enter province name"
                                     type="text"
                                     name="name"
                                     className="w-full p-2 border rounded"
@@ -112,7 +126,9 @@ const CategoryForm = () => {
                                         onClick={toggleModal}
                                         className="px-3 py-0 rounded bg-gray-100">Close
                                 </button>
-                                <button type="submit" className="px-4 py-2 rounded bg-primary text-white">Create Category</button>
+                                <button type="submit" className="px-4 py-2 rounded bg-primary text-white">Create
+                                    Province
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -122,4 +138,4 @@ const CategoryForm = () => {
     );
 };
 
-export default CategoryForm;
+export default Province;
