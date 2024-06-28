@@ -3,18 +3,19 @@ import FrontLayout from "./layouts/FrontLayout.jsx";
 import Home from "./pages/front/Home.jsx";
 import PageNotFound from "./pages/front/errors/PageNotFound.jsx";
 import About from "./pages/front/About.jsx";
-import Index from "./pages/front/properties/index.jsx";
+import Index from "./pages/front/properties/Index.jsx";
 import BlogSingle from "./pages/front/blog/Single.jsx";
-import Blog from "./pages/front/blog/Blog.jsx";
+import Blog from "./pages/dashboard/Blog.jsx";
 import Single from "./pages/front/properties/Single.jsx";
 import Login from "./pages/front/auth/Login.jsx";
 import Forgot from "./pages/front/auth/Forgot.jsx";
 import Reset from "./pages/front/auth/Reset.jsx";
-import Register from "./pages/front/auth/register.jsx";
+import Register from "./pages/front/auth/Register.jsx";
 import ContactUs from "./pages/front/ContactUs.jsx";
 import DashboardLayout from "./layouts/DashboardLayout.jsx";
 import Admin from "./pages/dashboard/Admin.jsx";
 import Properties from "./pages/dashboard/Properties.jsx";
+import Categories from "./pages/dashboard/Categories.jsx";
 
 function App() {
   return (
@@ -44,6 +45,8 @@ function App() {
             <Route index element={<Admin />} />
                 <Route path={'/secure/properties'} element={<Properties />} />
 
+            <Route path={'category'} element={<Categories/>} />
+            <Route path={'blog'} element={<Blog/>} />
           </Route>
         </Routes>
       </BrowserRouter>

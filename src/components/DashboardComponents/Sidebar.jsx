@@ -6,35 +6,47 @@ import { CiMap } from "react-icons/ci";
 import { IoMailOpenSharp } from "react-icons/io5";
 import { GrGallery } from "react-icons/gr";
 import { FaRegUserCircle } from "react-icons/fa";
+import {useNavigate} from "react-router-dom";
 
-const items = [
-    {
-        icon: <AiOutlineDashboard  />,
-        name: 'Dashboard',
-    }, {
-        icon: <IoLayersOutline />,
-        name: 'My Categories',
-    }, {
-        icon: <CiBoxList  />,
-        name: 'My Listings',
-    }, {
-        icon: <IoCameraSharp />,
-        name: 'Blog'
-    }, {
-        icon: <CiMap />,
-        name: 'Provinces'
-    },{
-        icon: <IoMailOpenSharp  />,
-        name: 'Contacts'
-    }, {
-        icon: <GrGallery />,
-        name: 'Gallery'
-    },{
-        icon: <FaRegUserCircle  />,
-        name: 'My Profile'
-    }
-];
 const Sidebar = () => {
+    const navigate = useNavigate();
+
+    const items = [
+        {
+            icon: <AiOutlineDashboard  />,
+            name: 'Dashboard',
+            path: '',
+        }, {
+            icon: <IoLayersOutline />,
+            name: 'My Categories',
+            path: 'category',
+        }, {
+            icon: <CiBoxList  />,
+            name: 'My Listings',
+            path: 'listings',
+        }, {
+            icon: <IoCameraSharp />,
+            name: 'Blog',
+            path: 'blog',
+        }, {
+            icon: <CiMap />,
+            name: 'Provinces',
+            path: 'provinces',
+        },{
+            icon: <IoMailOpenSharp  />,
+            name: 'Contacts',
+            path: 'contacts',
+        }, {
+            icon: <GrGallery />,
+            name: 'Gallery',
+            path: 'gallery',
+        },{
+            icon: <FaRegUserCircle  />,
+            name: 'My Profile',
+            path: 'profile',
+        }
+    ];
+
     return (
         <aside className={'hidden md:block bg-neutral-800 text-white h-screen w-80'}>
             <div className={'py-9 text-center border-b border-gray-50'}>
@@ -44,7 +56,7 @@ const Sidebar = () => {
             <ul className={'flex flex-col gap-2 pt-9'}>
                 {items.map(item => (
                     <li key={<item className="name"></item>}>
-                        <div className={'flex space-x-4 items-center cursor-pointer hover:bg-primary text-white p-4'}>
+                        <div onClick={() => navigate(item.path)} className={'flex space-x-4 items-center cursor-pointer hover:bg-primary text-white p-4'}>
                             <span className={'text-neutral-500 text-2xl'}>{item.icon}</span>
                             <span>{item.name}</span>
                         </div>
