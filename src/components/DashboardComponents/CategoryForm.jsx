@@ -3,22 +3,22 @@ import {useState} from "react";
 const CategoryForm = () => {
     const [categories, setCategories] = useState([
         {
-            name: "Apartment", dateCreated: new Date()
+            name: "Apartment"
         },
         {
-            name: "Bungalow", dateCreated: new Date()
+            name: "Bungalow"
         },
         {
-            name: "House", dateCreated: new Date()
+            name: "House"
         },
         {
-            name: "Office", dateCreated: new Date()
+            name: "Office"
         },
         {
-            name: "SmartHome", dateCreated: new Date()
+            name: "SmartHome"
         },
         {
-            name: "Villa", dateCreated: new Date()
+            name: "Villa"
         },
     ]);
     const [modal, setModal] = useState(false);
@@ -57,20 +57,18 @@ const CategoryForm = () => {
                 <div className="overflow-x-auto">
                     <table className="table-auto w-full">
                         <thead>
-                        <tr className="text-center text-sm bg-gray-100">
+                        <tr className="text-left text-sm bg-gray-100">
                             <th className="px-4 py-2">Name</th>
-                            <th className="px-4 py-2">Created</th>
                             <th className="px-4 py-2">Action</th>
                         </tr>
                         </thead>
 
                         <tbody>
-                        {categories.map((category, index) => (<tr className="text-center text-xs border-b" key={index}>
+                        {categories.map((category, index) => (<tr className="text-left text-xs border-b" key={index}>
                             <td className="px-4 py-2">{category.name}</td>
-                            <td className="px-4 py-2 truncate">{category.dateCreated.toLocaleString()}</td>
                             <td className="px-4 py-2">
                                 <div className={'flex sm:block'}>
-                                    <button className="px-2 py-1 rounded bg-green-500 text-white">Edit</button>
+                                    <button className="px-2 py-1 rounded bg-primary text-white">Edit</button>
                                     <button onClick={() => deleteCategory(category.name)}
                                             className="ml-2 px-2 py-1 rounded bg-red-500 text-white">Remove
                                     </button>
