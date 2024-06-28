@@ -15,6 +15,7 @@ import ContactUs from "./pages/front/ContactUs.jsx";
 import DashboardLayout from "./layouts/DashboardLayout.jsx";
 import Admin from "./pages/dashboard/Admin.jsx";
 import Categories from "./pages/dashboard/Categories.jsx";
+import Province from "./pages/dashboard/Province.jsx";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
             <Route index element={<Admin />} />
             <Route path={'category'} element={<Categories/>} />
             <Route path={'blog'} element={<Blog/>} />
+            <Route path={'provinces'} element={<Province/>} />
           </Route>
         </Routes>
       </BrowserRouter>
