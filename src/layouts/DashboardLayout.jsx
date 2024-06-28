@@ -10,9 +10,7 @@ const DashboardLayout = () => {
     const navigate = useNavigate();
 
     const {user} = useContext(UserContext);
-    useEffect(() => {
-        !user && navigate('/auth/login');
-    }, []);
+    !user && navigate('/auth/login');
     return (
         <div className={'flex'}>
             <Sidebar />

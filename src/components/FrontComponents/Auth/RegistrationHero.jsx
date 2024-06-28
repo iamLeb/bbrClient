@@ -81,6 +81,7 @@ const RegistrationHero = () => {
         const res = await api.post('auth/register', values);
 
         if (res.status === 200) {
+            setErrors(res.data);
             navigate('/secure');
         } else {
             console.log('There was an error')
