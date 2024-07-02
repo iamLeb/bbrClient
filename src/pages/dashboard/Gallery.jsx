@@ -61,14 +61,15 @@ const Gallery = () => {
             setErrors('Image name and province are required');
         } else {
             try {
-                const res = await api.post('/gallery/create', newGallery.image,newGallery.province);
+                const res = await api.post('/gallery/create', newGallery);
+
                 if (res.status === 201) {
                     setGalleries([...galleries, res.data]);
                     setNewGallery({ image: '', province: '' });
                     toggleModal();
                 }
             } catch (e) {
-                setErrors('There was an error creating the gallery');
+                setErrors(e.name);
             }
         }
     };
