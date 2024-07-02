@@ -12,6 +12,10 @@ export default {
         },
         secondary: {},
       },
+
+      backgroundImage: {
+        'banner': "url('https://tunatheme.com/tf/html/quarter-preview/quarter/img/slider/11.jpg')"
+      }
     },
   },
   plugins: [],
