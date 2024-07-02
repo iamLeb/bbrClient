@@ -1,44 +1,40 @@
 import {useState} from "react";
+import api from "../../services/api.js";
 
 const CategoryForm = () => {
-    const [categories, setCategories] = useState([
-        {
-            name: "Apartment"
-        },
-        {
-            name: "Bungalow"
-        },
-        {
-            name: "House"
-        },
-        {
-            name: "Office"
-        },
-        {
-            name: "SmartHome"
-        },
-        {
-            name: "Villa"
-        },
-    ]);
+    const [errors, setErrors] = useState('');
+    const [categories, setCategories] = useState([]);
     const [modal, setModal] = useState(false);
     const toggleModal = () => {
         setModal(!modal);
     }
-    const addCategory = () => {
-        const newCategory = prompt('Enter new category');
 
-        console.log(newCategory);
-    };
+    const handleChange = e => {
+        const value = e.target.value;
 
-    const deleteCategory = (categoryName) => {
-        const exist = categories.find(category => category.name === categoryName);
-        if (exist) {
-            setCategories(categories.filter(category => category.name !== categoryName));
-        } else {
-            alert('Category1 not found');
+        setCategories({
+            ...categories,
+            [e.target.name]: value
+        })
+    }
+
+    const handleSubmit = async e => {
+        e.preventDefault();
+
+        if (!categories.name) {
+            setErrors('All fields are required');
         }
-    };
+
+        try {
+            const res = await api.post('/categories', categories);
+            if (res.status === 201) {
+                setCategories([...categories, res.data]);
+                toggleModal();
+            }
+        } catch (e) {
+            setErrors('There was an error creating the category');
+        }
+    }
 
     return (
         <section className="h-screen m-5 mx-10">
@@ -47,9 +43,9 @@ const CategoryForm = () => {
                     <h3 className="font-bold">Category</h3>
 
                     <div>
-                        <button onClick={toggleModal} className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>+ Add
-                            New
-                            Category
+                        <button onClick={toggleModal}
+                                className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>+
+                            Add New Category
                         </button>
                     </div>
                 </div>
@@ -69,8 +65,7 @@ const CategoryForm = () => {
                             <td className="px-4 py-2">
                                 <div className={'text-right '}>
                                     <button className="px-2 py-1 rounded bg-primary text-white">Edit</button>
-                                    <button onClick={() => deleteCategory(category.name)}
-                                            className="ml-2 px-2 py-1 rounded bg-red-500 text-white">Remove
+                                    <button className="ml-2 px-2 py-1 rounded bg-red-500 text-white">Remove
                                     </button>
                                 </div>
                             </td>
@@ -95,11 +90,11 @@ const CategoryForm = () => {
                         <h2 className="font-extrabold">Create New Category</h2>
                     </div>
                     <div className="p-3">
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             <div className="mb-4">
                                 <label className="block text-sm font-bold mb-2">Category Name</label>
                                 <input
-                                    required={true}
+                                    onChange={handleChange}
                                     placeholder="enter category name"
                                     type="text"
                                     name="name"
@@ -108,11 +103,13 @@ const CategoryForm = () => {
                             </div>
 
                             <div className="flex justify-end space-x-2 text-xs">
-                                <button type="button"
+                                <button type="submit"
                                         onClick={toggleModal}
                                         className="px-3 py-0 rounded bg-gray-100">Close
                                 </button>
-                                <button type="submit" className="px-4 py-2 rounded bg-primary text-white">Create Category</button>
+                                <button type="submit" className="px-4 py-2 rounded bg-primary text-white">Create
+                                    Category
+                                </button>
                             </div>
                         </form>
                     </div>
