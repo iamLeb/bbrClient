@@ -42,9 +42,7 @@ const CategoryForm = () => {
             setErrors('There was an error deleting the category');
         }
     }
-
     
-
     const handleSubmit = async e => {
         e.preventDefault();
 
