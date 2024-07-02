@@ -6,6 +6,7 @@ import About from "./pages/front/About.jsx";
 import Index from "./pages/front/properties/Index.jsx";
 import BlogSingle from "./pages/front/blog/Single.jsx";
 import Blog from "./pages/dashboard/Blog.jsx";
+import BlogFront from "./pages/front/blog/Blog.jsx";
 import Single from "./pages/front/properties/Single.jsx";
 import Login from "./pages/front/auth/Login.jsx";
 import Forgot from "./pages/front/auth/Forgot.jsx";
@@ -29,7 +30,7 @@ function App() {
             {/*  <Route path={'/about'} element={<About />} />*/}
             {/*Route Example Ends*/}
               <Route path={'/about'} element={<About />} />
-              <Route path={'/blog'} element={<Blog />} />
+              <Route path={'/blog'} element={<BlogFront />} />
               <Route path={'/blog/:id'} element={<BlogSingle />} />
               <Route path={'/contact'} element={<ContactUs />} />
               <Route path={'/properties/listing'} element={<Index />} />

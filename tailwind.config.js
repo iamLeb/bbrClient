@@ -8,7 +8,7 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#FEB800', // default primary color
+          DEFAULT: "#57737A", // default primary color
         },
         secondary: {},
       },
@@ -16,3 +16,5 @@ export default {
   },
   plugins: [],
 }
+
+// FEB800

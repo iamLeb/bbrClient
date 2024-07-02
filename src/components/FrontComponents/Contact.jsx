@@ -10,7 +10,7 @@ import {RiMailSendLine} from "react-icons/ri";
 
 const Contact = () => {
     return (
-        <section className={'py-9 px-5'}>
+        <section className={'bg-[#C9FBFF] py-9 px-5'}>
             <p className={'text-center'}>Become our next customer, and find your dream home <span
                 className={'text-primary underline'}>Contact us: 314-555-0123</span></p>
 
