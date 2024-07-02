@@ -34,7 +34,7 @@ const CategoryForm = () => {
 
     const handleDelete = async id => {
         try {
-            const res = await api.delete(`/category/destroy/${id}`);
+            const res = await api.delete(`/category/${id}`);
             if (res.status === 200) {
                 setCategories(categories.filter(category => category._id !== id));
             }
@@ -42,6 +42,8 @@ const CategoryForm = () => {
             setErrors('There was an error deleting the category');
         }
     }
+
+    
 
     const handleSubmit = async e => {
         e.preventDefault();
