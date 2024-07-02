@@ -1,60 +1,81 @@
 import React from 'react';
+import {useLocation, useNavigate} from "react-router-dom";
+import api from "../../services/api.js";
 
 const TableComponent = () => {
-    const listings = [
-        {
-            id:0,
-            featured: true,
-            image: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            amount: '$146,000',
-            title: 'super duper long title',
-            address: '15 Berwickkhbfe wfbdequdbewdfuebdf crt, Winnipeg, MB',
-            beds: 4,
-            baths: 4,
-            sqft: 900,
-        },
-        {
-            id:0,
-            featured: true,
-            image: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            amount: '$146,000',
-            title: 'Lot 6',
-            address: '15 Berwick crt, Winnipeg, MB',
-            beds: 4,
-            baths: 4,
-            sqft: 900,
-        },
-        {
-            id:0,
-            featured: true,
-            image: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            amount: '$146,000',
-            title: 'Lot 6',
-            address: '15 Berwick crt, Winnipeg, MB',
-            beds: 4,
-            baths: 4,
-            sqft: 900,
-        },
-        {
-            id:0,
-            featured: true,
-            image: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            amount: '$146,000',
-            title: 'Lot 6',
-            address: '15 Berwick crt, Winnipeg, MB',
-            beds: 4,
-            baths: 4,
-            sqft: 900,
-        },
+    const navigate = useNavigate();
+    const [listings, setListings] = useState([]);
+    const [errors, setErrors] = useState('');
 
-    ]
+    // const listings = [
+    //     {
+    //         id:0,
+    //         featured: true,
+    //         image: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    //         amount: '$146,000',
+    //         title: 'super duper long title',
+    //         address: '15 Berwickkhbfe wfbdequdbewdfuebdf crt, Winnipeg, MB',
+    //         beds: 4,
+    //         baths: 4,
+    //         sqft: 900,
+    //     },
+    //     {
+    //         id:0,
+    //         featured: true,
+    //         image: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    //         amount: '$146,000',
+    //         title: 'Lot 6',
+    //         address: '15 Berwick crt, Winnipeg, MB',
+    //         beds: 4,
+    //         baths: 4,
+    //         sqft: 900,
+    //     },
+    //     {
+    //         id:0,
+    //         featured: true,
+    //         image: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    //         amount: '$146,000',
+    //         title: 'Lot 6',
+    //         address: '15 Berwick crt, Winnipeg, MB',
+    //         beds: 4,
+    //         baths: 4,
+    //         sqft: 900,
+    //     },
+    //     {
+    //         id:0,
+    //         featured: true,
+    //         image: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    //         amount: '$146,000',
+    //         title: 'Lot 6',
+    //         address: '15 Berwick crt, Winnipeg, MB',
+    //         beds: 4,
+    //         baths: 4,
+    //         sqft: 900,
+    //     },
+
+    // ]
+    const handlesubmit = () => {
+        navigate('/secure/addlistings');
+    }
+    const fetchListings = async () => {
+        try {
+            const res = await api.get('/listings');
+            setListings(res.data);
+        } catch (error) {
+            setErrors('There was an error fetching the listings');
+        }
+    };
+    useEffect(() => {
+        fetchListings();
+    }, []);
+
     return (
         <div className='m-3'>
             <div className="bg-white border w-full border-gray-100 shadow-2xl">
                         <div className="p-4 border-b flex justify-between items-center">
                             <h3 className="font-bold">My listings</h3>
                             <div>
-                                <button className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>+ Add
+                                <button onClick={handlesubmit} className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>+ Add
                                     New
                                     Category
                                 </button>
