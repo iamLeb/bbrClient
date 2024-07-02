@@ -21,7 +21,7 @@ const Province = () => {
     }
 
     useEffect(() => {
-        fetchProvinces();
+        fetchProvinces()
     });
 
     const handleChange = (e) => {
