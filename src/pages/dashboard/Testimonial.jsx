@@ -123,7 +123,7 @@ const Testimonials = () => {
                                 </thead>
                             </table>
             </div>
-            {testimonials.map(feat => (
+            {testimonials.map((feat, index) => (
                 <div key={index} className="m-5">
                             <table className='w-full'>
                                 <tbody>
