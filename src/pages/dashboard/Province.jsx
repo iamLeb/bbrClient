@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
 import api from "../../services/api.js";
 
 const Province = () => {
     const [provinces, setProvinces] = useState([]);
-    const [newProvince, setNewProvince] = useState({ name: '' });
+    const [newProvince, setNewProvince] = useState({name: ''});
     const [errors, setErrors] = useState('');
+    const [selectedProvince, setSelectedProvince] = useState(null); // State for the selected province
     const [modal, setModal] = useState(false);
 
     const toggleModal = () => {
@@ -22,10 +23,10 @@ const Province = () => {
 
     useEffect(() => {
         fetchProvinces()
-    });
+    }, []);
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
 
         setNewProvince({
             ...newProvince,
@@ -51,17 +52,32 @@ const Province = () => {
             setErrors('Province name is required');
         } else {
             try {
-                const res = await api.post('/province/create', newProvince);
-                if (res.status === 201) {
-                    setProvinces([...provinces, res.data]);
-                    setNewProvince({ name: '' });
-                    toggleModal();
+                if (selectedProvince) {
+                    // Update category
+                    const res = await api.put(`/province/${selectedProvince._id}`, newProvince);
+                    if (res.status === 200) {
+                        setProvinces(provinces.map(province => province._id === selectedProvince._id ? res.data : province));
+                        setSelectedProvince(null);
+                    }
+                } else {
+                    const res = await api.post('/province/create', newProvince);
+                    if (res.status === 201) {
+                        setProvinces([...provinces, res.data]);
+                    }
                 }
+                setNewProvince({name: ''});
+                toggleModal();
             } catch (e) {
-                setErrors('There was an error creating the province');
+                setErrors('There was an error creating/updating the province');
             }
         }
     }
+
+    const handleEdit = province => {
+        setSelectedProvince(province);
+        setNewProvince({ name: province.name });
+        toggleModal();
+    };
 
     return (
         <section className="h-screen m-5 mx-10">
@@ -92,7 +108,7 @@ const Province = () => {
                                 <td className="px-4 py-2 text-left">{province.name}</td>
                                 <td className="px-4 py-2">
                                     <div className={'text-right flex justify-end'}>
-                                        <button className="px-2 py-1 rounded bg-primary text-white">Edit</button>
+                                        <button onClick={() => handleEdit(province)} className="px-2 py-1 rounded bg-primary text-white">Edit</button>
                                         <button onClick={() => handleDelete(province._id)}
                                                 className="ml-2 px-2 py-1 rounded bg-red-500 text-white">Remove
                                         </button>
@@ -112,10 +128,12 @@ const Province = () => {
             </div>
 
             {modal && (
-                <div className={`fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300 opacity-100`}>
-                    <div className={`bg-white m-2 sm:m-0 w-full sm:w-[35%] rounded-md shadow-lg transition-transform duration-300 transform`}>
+                <div
+                    className={`fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300 opacity-100`}>
+                    <div
+                        className={`bg-white m-2 sm:m-0 w-full sm:w-[35%] rounded-md shadow-lg transition-transform duration-300 transform`}>
                         <div className="bg-gray-100 p-3 flex items-center">
-                            <h2 className="font-extrabold">Create New Province</h2>
+                            <h2 className="font-extrabold">{selectedProvince ? 'Update Province' : 'Create New Province'}</h2>
                         </div>
                         <div className="p-3">
                             <form onSubmit={handleSubmit}>
@@ -133,8 +151,11 @@ const Province = () => {
                                 </div>
 
                                 <div className="flex justify-end space-x-2 text-xs">
-                                    <button type="button" onClick={toggleModal} className="px-3 py-0 rounded bg-gray-100">Close</button>
-                                    <button type="submit" className="px-4 py-2 rounded bg-primary text-white">Create Province</button>
+                                    <button type="button" onClick={toggleModal}
+                                            className="px-3 py-0 rounded bg-gray-100">Close
+                                    </button>
+                                    <button type="submit" className="px-4 py-2 rounded bg-primary text-white">{selectedProvince ? 'Update Province' : 'Create Province'}
+                                    </button>
                                 </div>
                             </form>
                         </div>
