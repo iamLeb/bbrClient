@@ -1,38 +1,64 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import api from "../../services/api.js";
 
 const CategoryForm = () => {
     const [errors, setErrors] = useState('');
     const [categories, setCategories] = useState([]);
+    const [newCategory, setNewCategory] = useState({name: ''});
     const [modal, setModal] = useState(false);
     const toggleModal = () => {
         setModal(!modal);
     }
 
-    const handleChange = e => {
-        const value = e.target.value;
+    const fetchCategories = async () => {
+        try {
+            const res = await api.get('/category');
+            setCategories(res.data);
+        } catch (error) {
+            setErrors('There was an error fetching categories');
+        }
+    };
 
-        setCategories({
-            ...categories,
-            [e.target.name]: value
-        })
+    useEffect(() => {
+        fetchCategories();
+    })
+
+    const handleChange = e => {
+        const {name, value} = e.target;
+
+        setNewCategory({
+            ...newCategory,
+            [name]: value
+        });
+    };
+
+    const handleDelete = async id => {
+        try {
+            const res = await api.delete(`/category/destroy/${id}`);
+            if (res.status === 200) {
+                setCategories(categories.filter(category => category._id !== id));
+            }
+        } catch (e) {
+            setErrors('There was an error deleting the category');
+        }
     }
 
     const handleSubmit = async e => {
         e.preventDefault();
 
-        if (!categories.name) {
-            setErrors('All fields are required');
-        }
-
-        try {
-            const res = await api.post('/categories', categories);
-            if (res.status === 201) {
-                setCategories([...categories, res.data]);
-                toggleModal();
+        if (!newCategory.name) {
+            setErrors('Category name is required');
+        } else {
+            try {
+                const res = await api.post('/category/create', newCategory);
+                if (res.status === 201) {
+                    setCategories([...categories, res.data]);
+                    setNewCategory({name: ''});
+                    toggleModal();
+                }
+            } catch (e) {
+                setErrors('There was an error creating the category');
             }
-        } catch (e) {
-            setErrors('There was an error creating the category');
         }
     }
 
@@ -60,12 +86,12 @@ const CategoryForm = () => {
                         </thead>
 
                         <tbody>
-                        {categories.map((category, index) => (<tr className="text-xs border-b" key={index}>
+                        {categories.map((category) => (<tr className="text-xs border-b" key={category._id}>
                             <td className="text-left px-4 py-2">{category.name}</td>
                             <td className="px-4 py-2">
                                 <div className={'text-right '}>
                                     <button className="px-2 py-1 rounded bg-primary text-white">Edit</button>
-                                    <button className="ml-2 px-2 py-1 rounded bg-red-500 text-white">Remove
+                                    <button onClick={() => handleDelete(category._id)} className="ml-2 px-2 py-1 rounded bg-red-500 text-white">Remove
                                     </button>
                                 </div>
                             </td>
@@ -92,6 +118,9 @@ const CategoryForm = () => {
                     <div className="p-3">
                         <form onSubmit={handleSubmit}>
                             <div className="mb-4">
+
+                                {errors && <p className="text-red-500 text-xs mt-2">{errors}</p>}
+
                                 <label className="block text-sm font-bold mb-2">Category Name</label>
                                 <input
                                     onChange={handleChange}
