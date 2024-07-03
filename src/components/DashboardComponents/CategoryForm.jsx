@@ -39,7 +39,7 @@ const CategoryForm = () => {
 
         setLoading(true);
         try {
-            const res = await api.delete(`/category/${id}`);
+            const res = await api.delete(`/f/${id}`);
             if (res.status === 200) {
                 setLoading(false);
                 setCategories(categories.filter(category => category._id !== id));

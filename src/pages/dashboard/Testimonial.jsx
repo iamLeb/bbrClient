@@ -60,9 +60,9 @@ const Testimonials = () => {
             setErrors('all fields required');
         } else {
             try {
-                if (selectedTestiomnial) {
+                if (selectedTestimonial) {
                     // Update testimonial
-                    const res = await api.put(`/testimonial/${selectedTestiomnial._id}`, newTestimonial);
+                    const res = await api.put(`/testimonial/${selectedTestimonial._id}`, newTestimonial);
                     if (res.status === 200) {
                         setTestimonials(testimonials.map(testimonial => testimonial._id === selectedTestimonial._id ? res.data : testimonial));
                         setSelectedTestiomnial(null);
@@ -77,16 +77,23 @@ const Testimonials = () => {
                 setNewTestimonial({ name: '',message: '' });
                 toggleModal();
             } catch (e) {
+                console.log(e)
                 setErrors('There was an error creating/updating the testimonial');
             }
         }
         setLoading(false)
     };
 
+    const closeModal = () =>{
+        setNewTestimonial({ name: '' ,message: ''});
+        setSelectedTestiomnial(null);
+        toggleModal();
+    }
+
     const handleEdit = testimonial => {
         setLoading(true)
         setSelectedTestiomnial(testimonial);
-        setNewCategory({ name: testimonial.name });
+        setNewTestimonial({ name: testimonial.name, message :testimonial.message });
         toggleModal();
         setLoading(false)
     };
@@ -123,13 +130,13 @@ const Testimonials = () => {
                                 </thead>
                             </table>
             </div>
-            {testimonials.map((feat, index) => (
-                <div key={index} className="m-5">
+            {testimonials.map((testimonial) => (
+                <div key={testimonial._id} className="m-5">
                             <table className='w-full'>
                                 <tbody>
                                     <tr className="text-center text-[15px] w-full border-b">
-                                        <td className="px-4 py-2 lg:w-1/3  sm:text-center">{feat.name}</td>
-                                        <td className=" py-2 md:w-1/4 lg:w-1/3 text-center hidden sm:table-cell">{feat.message}</td>
+                                        <td className="px-4 py-2 lg:w-1/3  sm:text-center">{testimonial.name}</td>
+                                        <td className=" py-2 md:w-1/4 lg:w-1/3 text-center hidden sm:table-cell">{testimonial.message}</td>
                                         <td className="px-4 py-2">
                                             <div className={'flex justify-end sm:justify-center sm:block'}>
                                                 <button onClick={() => handleEdit(testimonial)} className="px-2 py-1 rounded bg-green-500 text-white text-center">Edit</button>
@@ -164,7 +171,7 @@ const Testimonials = () => {
                                     <input
                                         onChange={handleChange}
                                         value={newTestimonial.name}
-                                        placeholder="Enter name"
+                                        placeholder="Enter your name"
                                         type="text"
                                         name="name"
                                         className="w-full p-2 border rounded"
@@ -176,14 +183,14 @@ const Testimonials = () => {
                                     <input
                                         onChange={handleChange}
                                         value={newTestimonial.message}
-                                        placeholder="Enter message"
+                                        placeholder="Enter the message"
                                         type="text"
                                         name="message"
                                         className="w-full p-2 border rounded"
                                     />
                                 </div>
                                 <div className="flex justify-end space-x-2 text-xs">
-                                    <button type="button" onClick={toggleModal} className="px-3 py-0 rounded bg-gray-100">Close</button>
+                                    <button type="button" onClick={closeModal} className="px-3 py-0 rounded bg-gray-100">Close</button>
                                     <button type="submit" className="px-4 py-2 rounded bg-primary text-white">{selectedTestimonial ? 'Update Category' : 'Create Category'}</button>
                                 </div>
                             </form>
