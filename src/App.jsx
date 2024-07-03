@@ -18,6 +18,7 @@ import Categories from "./pages/dashboard/Categories.jsx";
 import Province from "./pages/dashboard/Province.jsx";
 import Properties from "./pages/dashboard/Properties.jsx";
 import Gallery from "./pages/dashboard/Gallery.jsx";
+import Profile from "./pages/dashboard/Profile.jsx";
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
             <Route path={'provinces'} element={<Province/>} />
             <Route path={'listings'} element={<Properties/>} />
             <Route path={'gallery'} element={<Gallery/>} />
+            <Route path={'profile'} element={<Profile/>} />
           </Route>
         </Routes>
       </BrowserRouter>
