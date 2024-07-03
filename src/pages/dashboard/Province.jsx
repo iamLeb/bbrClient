@@ -45,6 +45,12 @@ const Province = () => {
         }
     }
 
+    const handleClose = () => {
+        setSelectedProvince(null)
+        setNewProvince({ name: '' });
+        toggleModal();
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -151,7 +157,7 @@ const Province = () => {
                                 </div>
 
                                 <div className="flex justify-end space-x-2 text-xs">
-                                    <button type="button" onClick={toggleModal}
+                                    <button type="button" onClick={handleClose}
                                             className="px-3 py-0 rounded bg-gray-100">Close
                                     </button>
                                     <button type="submit" className="px-4 py-2 rounded bg-primary text-white">{selectedProvince ? 'Update Province' : 'Create Province'}

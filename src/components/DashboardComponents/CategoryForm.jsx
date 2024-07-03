@@ -78,6 +78,12 @@ const CategoryForm = () => {
         toggleModal();
     };
 
+    const handleClose = () => {
+        setSelectedCategory(null)
+        setNewCategory({ name: '' });
+        toggleModal();
+    };
+
     return (
         <section className="h-screen m-5 mx-10">
             <div className="bg-white border border-gray-100 shadow-2xl">
@@ -137,7 +143,7 @@ const CategoryForm = () => {
                                     />
                                 </div>
                                 <div className="flex justify-end space-x-2 text-xs">
-                                    <button type="button" onClick={toggleModal} className="px-3 py-0 rounded bg-gray-100">Close</button>
+                                    <button type="button" onClick={handleClose} className="px-3 py-0 rounded bg-gray-100">Close</button>
                                     <button type="submit" className="px-4 py-2 rounded bg-primary text-white">{selectedCategory ? 'Update Category' : 'Create Category'}</button>
                                 </div>
                             </form>
