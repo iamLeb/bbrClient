@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
 import api from "../../services/api.js";
 
 const Gallery = () => {
     const [galleries, setGalleries] = useState([]);
     const [provinces, setProvinces] = useState([]);
-    const [newGallery, setNewGallery] = useState({ image: '', province: '' });
+    const [newGallery, setNewGallery] = useState({image: '', province: ''});
     const [errors, setErrors] = useState('');
     const [modal, setModal] = useState(false);
+    const [selectedGallery, setSelectedGallery] = useState(null); // State for the selected gallery
 
     const toggleModal = () => {
         setModal(!modal);
@@ -36,7 +37,7 @@ const Gallery = () => {
     }, []);
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setNewGallery({
             ...newGallery,
             [name]: value
@@ -61,15 +62,24 @@ const Gallery = () => {
             setErrors('Image name and province are required');
         } else {
             try {
-                const res = await api.post('/gallery/create', newGallery);
-
-                if (res.status === 201) {
-                    setGalleries([...galleries, res.data]);
-                    setNewGallery({ image: '', province: '' });
-                    toggleModal();
+                if (selectedGallery) {
+                    // Update gallery
+                    const res = await api.put(`/gallery/${selectedGallery._id}`, newGallery);
+                    if (res.status === 200) {
+                        setGalleries(galleries.map(gallery => gallery._id === selectedGallery._id ? res.data : gallery));
+                        setSelectedGallery(null);
+                    }
+                } else {
+                    // Create gallery
+                    const res = await api.post(`/gallery/create`, newGallery);
+                    if (res.status === 201) {
+                        setGalleries([...galleries, res.data]);
+                    }
                 }
+                setNewGallery({image: '', province: ''});
+                toggleModal();
             } catch (e) {
-                setErrors(e.response.data.error);
+                setErrors('There was an error creating/updating the gallery');
             }
         }
     };
@@ -79,6 +89,18 @@ const Gallery = () => {
 
         return province ? province.name : '';
     };
+
+    const handleEdit = (gallery) => {
+        setSelectedGallery(gallery)
+        setNewGallery({image: gallery.image, province: gallery.province});
+        toggleModal()
+    }
+
+    const handleClose = () => {
+        setSelectedGallery(null)
+        setNewGallery({image: '', province: ''});
+        toggleModal()
+    }
 
 
     return (
@@ -112,7 +134,9 @@ const Gallery = () => {
                                 <td className="px-4 py-2 text-left">{getProvinceName(gallery.province)}</td>
                                 <td className="px-4 py-2 text-right">
                                     <div className="flex justify-end">
-                                        <button className="px-2 py-1 rounded bg-primary text-white">Edit</button>
+                                        <button onClick={() => handleEdit(gallery)}
+                                                className="px-2 py-1 rounded bg-primary text-white">Edit
+                                        </button>
                                         <button onClick={() => handleDelete(gallery._id)}
                                                 className="ml-2 px-2 py-1 rounded bg-red-500 text-white">Remove
                                         </button>
@@ -132,10 +156,12 @@ const Gallery = () => {
             </div>
 
             {modal && (
-                <div className={`fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300 opacity-100`}>
-                    <div className={`bg-white m-2 sm:m-0 w-full sm:w-[35%] rounded-md shadow-lg transition-transform duration-300 transform`}>
+                <div
+                    className={`fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300 opacity-100`}>
+                    <div
+                        className={`bg-white m-2 sm:m-0 w-full sm:w-[35%] rounded-md shadow-lg transition-transform duration-300 transform`}>
                         <div className="bg-gray-100 p-3 flex items-center">
-                            <h2 className="font-extrabold">Create New Gallery</h2>
+                            <h2 className="font-extrabold">{selectedGallery ? 'Update Gallery' : 'Create New Gallery'}</h2>
                         </div>
                         <div className="p-3">
                             <form onSubmit={handleSubmit}>
@@ -167,11 +193,11 @@ const Gallery = () => {
                                 </div>
 
                                 <div className="flex justify-end space-x-2 text-xs">
-                                    <button type="button" onClick={toggleModal}
+                                    <button type="button" onClick={handleClose}
                                             className="px-3 py-0 rounded bg-gray-100">Close
                                     </button>
-                                    <button type="submit" className="px-4 py-2 rounded bg-primary text-white">Create
-                                        Gallery
+                                    <button type="submit" className="px-4 py-2 rounded bg-primary text-white">
+                                        {selectedGallery ? 'Update Gallery' : 'Create Gallery'}
                                     </button>
                                 </div>
                             </form>
