@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
 import api from "../../services/api.js";
 
@@ -59,9 +60,10 @@ const TableComponent = () => {
     }
     const fetchListings = async () => {
         try {
-            const res = await api.get('/listings');
-            setListings(res.data);
+            const res = await api.get('/property');
+            setListings(res.data.properties);
         } catch (error) {
+            console.log(error)
             setErrors('There was an error fetching the listings');
         }
     };
@@ -103,14 +105,14 @@ const TableComponent = () => {
                                 </thead>
                             </table>
             </div>
-            {listings.map(feat => (
-                <div key={feat.id} className="m-5">
+            {listings.map((listing) => (
+                <div key={listing._id} className="m-5">
                             <table className='w-full'>
                                 <tbody>
                                     <tr className="text-center text-[15px] w-full border-b">
-                                        <td className="px-4 py-2 lg:w-1/5  sm:text-center">{feat.title}</td>
-                                        <td className=" py-2 md:w-1/4 lg:w-1/5 text-center hidden sm:table-cell">{feat.address}</td>
-                                        <td className="px-4 py-2 md:w-1/4  lg:w-1/5 text-center hidden sm:table-cell">{feat.amount}</td>
+                                        <td className="px-4 py-2 lg:w-1/5  sm:text-center">{listing.title}</td>
+                                        <td className=" py-2 md:w-1/4 lg:w-1/5 text-center hidden sm:table-cell">{listing.address}</td>
+                                        <td className="px-4 py-2 md:w-1/4  lg:w-1/5 text-center hidden sm:table-cell">{listing.price}</td>
                                         <td className="px-4 py-2 md:w-1/4  lg:w-1/5 hidden lg:table-cell">
                                             <span className={`px-2py-1 text-xs font-bold
                                             rounded text-center`}>3
