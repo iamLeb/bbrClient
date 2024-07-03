@@ -69,7 +69,7 @@ const Gallery = () => {
                     toggleModal();
                 }
             } catch (e) {
-                setErrors(e.name);
+                setErrors(e.response.data.error);
             }
         }
     };
