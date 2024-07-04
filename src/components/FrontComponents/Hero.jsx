@@ -39,10 +39,10 @@ const Hero = () => {
                     <ul className={'flex space-x-0.5 font-semibold'}>
                         <li><span
                             className={`shadow-md rounded-tl p-3 hover:cursor-pointer ${switchSale ? 'bg-white text-black hover:text-white hover:bg-primary' : 'text-white bg-primary'}`}
-                            onClick={handleSwitchSale}>For Rent</span></li>
+                            onClick={handleSwitchSale}>Buying</span></li>
                         <li><span
                             className={`shadow-md rounded-tr p-3 transition duration-800 hover:ease-in hover:cursor-pointer ${switchSale ? 'bg-primary text-white' : 'text-black bg-white hover:bg-primary hover:text-white'} `}
-                            onClick={handleSwitchSale}>For Sale</span>
+                            onClick={handleSwitchSale}>Selling</span>
                         </li>
                     </ul>
                 </div>
@@ -60,7 +60,6 @@ const Hero = () => {
                                    type={"text"}
                                    placeholder={"Enter keyword..."}/>
                         </li>
-
 
                         <li className={'flex-1 hidden lg:block'}>
                             <PropertyType/>

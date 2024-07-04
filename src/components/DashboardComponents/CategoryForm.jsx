@@ -83,9 +83,15 @@ const CategoryForm = () => {
     const handleEdit = category => {
         setLoading(true)
         setSelectedCategory(category);
-        setNewCategory({ name: category.name });
+        setNewCategory({name: category.name});
         toggleModal();
         setLoading(false)
+    };
+
+    const handleClose = () => {
+        setSelectedCategory(null)
+        setNewCategory({ name: '' });
+        toggleModal();
     };
 
     return (
@@ -148,7 +154,7 @@ const CategoryForm = () => {
                                     />
                                 </div>
                                 <div className="flex justify-end space-x-2 text-xs">
-                                    <button type="button" onClick={toggleModal} className="px-3 py-0 rounded bg-gray-100">Close</button>
+                                    <button type="button" onClick={handleClose} className="px-3 py-0 rounded bg-gray-100">Close</button>
                                     <button type="submit" className="px-4 py-2 rounded bg-primary text-white">{selectedCategory ? 'Update Category' : 'Create Category'}</button>
                                 </div>
                             </form>
