@@ -4,27 +4,32 @@ import { useNavigate } from 'react-router-dom';
 import api from "../../services/api.js";
 
 const AddProperty = () => {
-    const [newProperty, setNewProperty] = useState({ title: '', address: '', price: '', image:'',beds: '',baths: '',category: '',media: ''});
+    const [newProperty, setNewProperty] = useState({ title: '', address: '', price: '', image:'',bed: '',bath: '',category: '',media: []});
     const [errors, setErrors] = useState('');
     const [selectedProperty, setSelectedProperty] = useState(null); // State for the selected property
     const navigate = useNavigate();
     const handleCancel = () => {
         navigate('/secure/listings')
     }
+    const addImg = (newProperty.media) => {
+        setNewProperty([hi]);
+    };
     const handleChange = e => {
         const { name, value } = e.target;
         setNewProperty({
             ...newProperty,
             [name]: value,
+            addImg
+            
            
         }); console.log(newProperty)
     };
     const handleSubmit = async e => {
         e.preventDefault();
         if (!newProperty.title || !newProperty.address || !newProperty.price 
-        || !newProperty.image || !newProperty.sqft || !newProperty.baths 
-        || !newProperty.beds|| !newProperty.description|| !newProperty.category
-        || !newProperty.media) {
+        || !newProperty.image || !newProperty.sqft || !newProperty.bath 
+        || !newProperty.bed|| !newProperty.description|| !newProperty.category
+        || !newProperty.media || !newProperty.media) {
             setErrors('all fields required');
         } else {
             try {
@@ -37,14 +42,18 @@ const AddProperty = () => {
                     }
                 } else {
                     // Create property
-                    console.log(newProperty)
+                    console.log(newProperty.media)
+                    const imgres = await api.post("/file/upload", newProperty.media)
+                    if(imgres.status !=201){
+                        setErrors('image did not upload properly')
+                    }
                     const res = await api.post('/property', newProperty);
                     if (res.status === 201) {
                         setProperties([...properties, res.data]);
                         console.log(res.data);
                     }
                 }
-                setNewProperty({ title: '',address: '',price: '',image: '',beds:'',baths: '',sqft: '',description: '',category: '',media: '' });
+                setNewProperty({ title: '',address: '',price: '',image: '',bed:'',bath: '',sqft: '',description: '',category: '',media: []});
                 navigate('/secure/listings');
             } catch (e) {
                 console.log(e)
@@ -81,7 +90,7 @@ const AddProperty = () => {
                 </div>
                 <div className='p-3 flex flex-col'>
                      <div className='font-bold mb-3'>Beds</div>
-                    <input value={newProperty.beds} name='beds' 
+                    <input value={newProperty.bed} name='bed' 
                     onChange={handleChange} type='text' 
                     placeholder='enter how many beds the property has' className='p-3 border rounded-lg' />
                 </div>
@@ -99,7 +108,7 @@ const AddProperty = () => {
                 </div>
                 <div className='p-3 flex flex-col'>
                      <div className='font-bold mb-3'>Baths</div>
-                    <input value={newProperty.baths} name='baths' 
+                    <input value={newProperty.bath} name='bath' 
                     onChange={handleChange} type='text' 
                     placeholder='enter how many baths the property has' className='p-3 border rounded-lg' />
                 </div>
@@ -118,7 +127,7 @@ const AddProperty = () => {
                 <div className='p-3 flex flex-col'>
                      <div className='font-bold mb-3'>media</div>
                     <input value={newProperty.media} name='media' 
-                    onChange={handleChange} type='text' 
+                    onChange={handleChange} type='file' 
                     placeholder='insert media' className='p-3 border rounded-lg' />
                 </div>
                 <div className="p-5 flex justify-center space-x-5 text-xs">
