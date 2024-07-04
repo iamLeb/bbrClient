@@ -22,6 +22,7 @@ import  Gallery from "./pages/dashboard/Gallery.jsx";
 import Profile from "./pages/dashboard/Profile.jsx";
 import Contact from "./pages/dashboard/Contact.jsx";
 import Testimonial from "./pages/dashboard/Testimonial.jsx";
+import AddAgent from "./pages/dashboard/AddAgent.jsx";
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
             <Route path={'provinces'} element={<Province/>} />
             <Route path={'listings'} element={<Properties/>} />
             <Route path={'contacts'} element={<Contact/>} />
+            <Route path={'addagent'} element={<AddAgent/>} />
             <Route path={'testimonials'} element={<Testimonial/>} />
             <Route path={'gallery'} element={<Gallery/>} />
             <Route path={'profile'} element={<Profile/>} />
