@@ -7,7 +7,6 @@ const Hero = () => {
                 className={'w-full h-[600px] bg-cover bg-center bg-[url("https://tunatheme.com/tf/html/quarter-preview/quarter/img/slider/13.jpg")] relative'}>
                 {/* Overlay */}
                 {/*<div className="absolute inset-0 bg-neutral-900 opacity-50"></div>*/}
-
                 <div className={'flex justify-center items-center h-[400px] md:h-[600px] text-white relative '}>
                     <div className={'flex flex-col gap-2 items-center text-center'}>
                         <div className={'flex space-x-4 items-center'}>
