@@ -31,8 +31,8 @@ const Sidebar = () => {
             path: 'blog',
         }, {
             icon: <CiMap />,
-            name: 'Provinces',
-            path: 'provinces',
+            name: 'Neighbourhoods',
+            path: 'neighbourhoods',
         },{
             icon: <IoMailOpenSharp  />,
             name: 'Contacts',

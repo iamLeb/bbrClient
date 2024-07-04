@@ -16,7 +16,7 @@ import ContactUs from "./pages/front/ContactUs.jsx";
 import DashboardLayout from "./layouts/DashboardLayout.jsx";
 import Admin from "./pages/dashboard/Admin.jsx";
 import Categories from "./pages/dashboard/Categories.jsx";
-import Province from "./pages/dashboard/Neighbourhood.jsx";
+import Neighbourhood from "./pages/dashboard/Neighbourhood.jsx";
 import Properties from "./pages/dashboard/Properties.jsx";
 import  Gallery from "./pages/dashboard/Gallery.jsx";
 import Profile from "./pages/dashboard/Profile.jsx";
@@ -51,7 +51,7 @@ function App() {
             <Route index element={<Admin />} />
             <Route path={'category'} element={<Categories/>} />
             <Route path={'blog'} element={<Blog/>} />
-            <Route path={'provinces'} element={<Province/>} />
+            <Route path={'neighbourhoods'} element={<Neighbourhood/>} />
             <Route path={'listings'} element={<Properties/>} />
             <Route path={'contacts'} element={<Contact/>} />
             <Route path={'testimonials'} element={<Testimonial/>} />
