@@ -83,7 +83,7 @@ const CategoryForm = () => {
     const handleEdit = category => {
         setLoading(true)
         setSelectedCategory(category);
-        setNewCategory({ name: category.name });
+        setNewCategory({name: category.name});
         toggleModal();
         setLoading(false)
     };
