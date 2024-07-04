@@ -3,7 +3,7 @@ import api from "../../services/api.js";
 import UserContext from "../../context/UserContext";
 
 const Profile = () => {
-    const {user, setUser} = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const [profile, setProfile] = useState({name: '', email: ''});
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -68,27 +68,27 @@ const Profile = () => {
             setErrors('Passwords do not match');
         } else {
             try {
-                const res = await api.put(`/auth/reset/${user.id}`, {...profile, password});
+                const res = await api.put(`/auth/reset/${user._id}`, {password: user.password, newPassword: password});
                 if (res.status === 200) {
                     setSuccess('Password updated successfully');
                     setPassword('');
                     setConfirmPassword('');
                 }
             } catch (e) {
-                setErrors(e.response.data.error);
+                setErrors('There was an error updating the password');
             }
         }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const res = await api.put('/user/profile', profile);
-            setUser(res.data); // Update user context
-            setSuccess('Profile updated successfully');
-        } catch (e) {
-            setErrors(e.response.data.error);
-        }
+        // try {
+        //     const res = await api.put('/user/profile', profile);
+        //     setUser(res.data); // Update user context
+        //     setSuccess('Profile updated successfully');
+        // } catch (e) {
+        //     setErrors(e.response.data.error);
+        // }
     };
 
     return (
