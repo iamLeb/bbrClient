@@ -3,7 +3,7 @@ import {useContext} from "react";
 import GlobalContext from "../../context/Global.js";
 
 const Hero = () => {
-    const {provinces} = useContext(GlobalContext)
+    const {neighbourhoods} = useContext(GlobalContext)
 
     return (
         <section className="relative pb-20">
@@ -28,8 +28,8 @@ const Hero = () => {
                     className={'absolute bottom-0 translate-y-1/2 right-1/2 transform translate-x-1/2 container mx-auto bg-white shadow-lg p-9'}>
                     <div className={'md:flex space-y-4 md:space-y-0 md:space-x-4'}>
                         <select className={'px-5 border py-4 w-full rounded-lg'}>
-                            <option selected={true}>Select Province</option>
-                            {provinces.map((province) => (
+                            <option selected={true}>Select Neighbourhood</option>
+                            {neighbourhoods.map((neighbourhood) => (
                                 <option key={province._id} value={province.name}>{province.name}</option>
                             ))}
                         </select>

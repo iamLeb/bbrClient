@@ -9,7 +9,7 @@ const GlobalContextProvider = ({ children }) => {
     const [categories, setCategories] = useState([]);
     const [testimonials, setTestimonials] = useState([]);
     const [blogs, setBlogs] = useState([]);
-    const [provinces, setProvinces] = useState([]);
+    const [neighbourhoods, setNeighbourhoods] = useState([]);
 
     const getCategories = async () => {
         const res = await api.get('category');
@@ -28,7 +28,7 @@ const GlobalContextProvider = ({ children }) => {
 
     const getProvinces = async () => {
         const res = await api.get('province');
-        setProvinces(res.data);
+        setNeighbourhoods(res.data);
     }
 
 
@@ -39,7 +39,7 @@ const GlobalContextProvider = ({ children }) => {
         getProvinces()
     })
     return (
-        <GlobalContext.Provider value={{ categories, testimonials, blogs, provinces }}>
+        <GlobalContext.Provider value={{ categories, testimonials, blogs, neighbourhoods }}>
             {children}
         </GlobalContext.Provider>
     );
