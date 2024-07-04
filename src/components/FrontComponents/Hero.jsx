@@ -1,6 +1,10 @@
 import { FaHouseChimney } from "react-icons/fa6";
+import {useContext} from "react";
+import GlobalContext from "../../context/Global.js";
 
 const Hero = () => {
+    const {provinces} = useContext(GlobalContext)
+
     return (
         <section className="relative pb-20">
             <div
@@ -25,6 +29,9 @@ const Hero = () => {
                     <div className={'md:flex space-y-4 md:space-y-0 md:space-x-4'}>
                         <select className={'px-5 border py-4 w-full rounded-lg'}>
                             <option selected={true}>Select Province</option>
+                            {provinces.map((province) => (
+                                <option key={province._id} value={province.name}>{province.name}</option>
+                            ))}
                         </select>
                         <select className={'px-5 border py-4 w-full rounded-lg'}>
                             <option selected={true}>Select City</option>

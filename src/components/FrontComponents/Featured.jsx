@@ -5,10 +5,12 @@ import { MdOutlineZoomOutMap } from "react-icons/md";
 import { FaArrowRightArrowLeft } from "react-icons/fa6";
 import { IoBookmarkOutline } from "react-icons/io5";
 import { IoIosSearch } from "react-icons/io";
-import api from "../../services/api.js";
-import {useEffect, useState} from "react";
+import {useContext} from "react";
+import GlobalContext from "../../context/Global.js";
 
 const Featured = () => {
+    const {categories} = useContext(GlobalContext)
+    
     const featured = [
         {
             id:0,
@@ -99,16 +101,7 @@ const Featured = () => {
             sqft: '1,800',
         },
     ];
-    const [categories, setCategories] = useState([]);
 
-    const getCategories = async () => {
-        const res = await api.get('category');
-        setCategories(res.data);
-    }
-
-    useEffect(() => {
-        getCategories();
-    })
     return (
         <section className={'mt-2 py-9'}>
             <div className={'flex flex-col justify-center items-center gap-5'}>
