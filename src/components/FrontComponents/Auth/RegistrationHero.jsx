@@ -23,10 +23,6 @@ const RegistrationHero = () => {
                         <p>Password</p>
                         <input type='text' placeholder="password" className="border w-full py-4 px-9 rounded-lg"/>
                     </div>
-                    <div>
-                        <p>Phone number</p>
-                        <input type='text' placeholder="phone" className="border w-full py-4 px-9 rounded-lg"/>
-                    </div>
                     <div className="flex justify-center">
                         <div className="w-1/3 bg-primary p-3 flex justify-center rounded-lg text-bold text-white">
                             Sign up
