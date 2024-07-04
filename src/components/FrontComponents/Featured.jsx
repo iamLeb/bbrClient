@@ -5,6 +5,8 @@ import { MdOutlineZoomOutMap } from "react-icons/md";
 import { FaArrowRightArrowLeft } from "react-icons/fa6";
 import { IoBookmarkOutline } from "react-icons/io5";
 import { IoIosSearch } from "react-icons/io";
+import api from "../../services/api.js";
+import {useEffect, useState} from "react";
 
 const Featured = () => {
     const featured = [
@@ -97,6 +99,16 @@ const Featured = () => {
             sqft: '1,800',
         },
     ];
+    const [categories, setCategories] = useState([]);
+
+    const getCategories = async () => {
+        const res = await api.get('category');
+        setCategories(res.data);
+    }
+
+    useEffect(() => {
+        getCategories();
+    })
     return (
         <section className={'mt-2 py-9'}>
             <div className={'flex flex-col justify-center items-center gap-5'}>
@@ -107,13 +119,9 @@ const Featured = () => {
                 </div>
 
                 <div className={'grid grid-cols-3 md:grid-cols-7 gap-4 font-light text-sm text-center justify-center'}>
-                    <button className={'tag text-primary'}>All</button>
-                    <button className={'tag'}>Apartments</button>
-                    <button className={'tag'}>Bungalow</button>
-                    <button className={'tag'}>House</button>
-                    <button className={'tag'}>Office</button>
-                    <button className={'tag'}>Smart Home</button>
-                    <button className={'tag'}>Villa</button>
+                    {categories.map(category => (
+                        <button key={category._id} className={'tag text-primary'}>{category.name}</button>
+                    ))}
                 </div>
 
             </div>
