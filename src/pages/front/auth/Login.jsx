@@ -1,16 +1,17 @@
 import api from "../../../services/api";
-import {useContext, useEffect, useState} from "react";
-import {useLocation, useNavigate} from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import UserContext from "../../../context/UserContext.js";
 
 const Login = () => {
-    const {user, setUser} = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
     const navigate = useNavigate();
     const [values, setValues] = useState({
         email: '',
         password: ''
     });
-    const [errors, setErrors] = useState('');
+    const [errors, setErrors] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
     const location = useLocation();
 
     const handleChange = e => {
@@ -19,39 +20,52 @@ const Login = () => {
             ...values,
             [name]: value,
         });
+
+        // Clear specific field error on change
+        if (errors[name]) {
+            setErrors({
+                ...errors,
+                [name]: ''
+            });
+        }
     }
 
     const handleLogin = async e => {
         e.preventDefault();
-        // Validates user input
-       if (!values.email || !values.password) {
-           setErrors('All Fields are required');
-       }
 
-       try {
-           const res = await api.post("/auth/login", values);
-           if (res.status === 200) {
+        // Validate user input
+        const newErrors = {};
+        if (!values.email) newErrors.email = 'Email is required';
+        if (!values.password) newErrors.password = 'Password is required';
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+        }
+
+        setIsLoading(true); // Set loading state to true
+
+        try {
+            const res = await api.post("/auth/login", values);
+            if (res.status === 200) {
                 setUser(res.data);
-               navigate('/secure');
-           } else {
-               setErrors("There was an error logging in");
-           }
-       } catch (e) {
-           setErrors("There was an unexpected error, try again later");
-       }
+                navigate('/secure');
+            } else {
+                setErrors({ form: "There was an error logging in" });
+            }
+        } catch (e) {
+            setErrors({ form: "There was an unexpected error, try again later" });
+        }
 
-    }
-
-    const authPage = () => {
-        console.log(user)
-        return user && location.pathname.split("/")[1] === 'auth'
+        setIsLoading(false); // Set loading state to false
     }
 
     useEffect(() => {
-        if (authPage()) {
+        if (user) {
             navigate('/secure');
         }
-    })
+    }, [user, navigate]);
+
     return (
         <section className={'py-9 container mx-auto'}>
             <div className={'md:flex bg-white shadow-lg gap-4 items-center rounded-lg border p-y'}>
@@ -68,21 +82,27 @@ const Login = () => {
                         <input
                             onChange={handleChange}
                             name='email'
-                            className={`w-full p-5 bg-gray-100 rounded-br-lg rounded-tl-lg outline-none ${errors && 'border border-red-500'}`}
+                            className={`w-full p-5 bg-gray-100 rounded-br-lg rounded-tl-lg outline-none ${errors.email && 'border border-red-500'}`}
                             placeholder={'Enter Email'}
-                            type="email"/>
+                            type="email"
+                            value={values.email}/>
+                        {errors.email && <span className="text-red-500 text-sm">{errors.email}</span>}
 
                         <input
                             onChange={handleChange}
                             name='password'
-                            className={`w-full p-5 bg-gray-100 rounded-br-lg rounded-tl-lg outline-none ${errors && 'border border-red-500'}`}
+                            className={`w-full p-5 bg-gray-100 rounded-br-lg rounded-tl-lg outline-none ${errors.password && 'border border-red-500'}`}
                             placeholder={'Enter Password'}
-                            type="password"/>
+                            type="password"
+                            value={values.password}/>
+                        {errors.password && <span className="text-red-500 text-sm">{errors.password}</span>}
 
-                        <button type='submit' className={'bg-primary py-5 font-bold text-white rounded-br-lg rounded-tl-lg'}>Access Portal</button>
+                        <button type='submit' className={'bg-primary py-5 font-bold text-white rounded-br-lg rounded-tl-lg'} disabled={isLoading}>
+                            {isLoading ? 'Loading...' : 'Access Portal'}
+                        </button>
                     </form>
                     <div className={'text-center pt-5 text-red-500'}>
-                        { errors ? errors : null }
+                        {errors.form ? errors.form : null}
                     </div>
                 </div>
             </div>
