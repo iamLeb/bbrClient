@@ -10,6 +10,7 @@ const Province = () => {
 
     const toggleModal = () => {
         setModal(!modal);
+        setErrors('');
     }
 
     const fetchProvinces = async () => {
@@ -74,7 +75,7 @@ const Province = () => {
                 setNewProvince({name: ''});
                 toggleModal();
             } catch (e) {
-                setErrors('There was an error creating/updating the province');
+                setErrors(e.response.data.error);
             }
         }
     }

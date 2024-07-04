@@ -32,7 +32,7 @@ const Contact = () => {
         <section className="h-screen m-5 mx-10">
             <div className={'gap-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}>
                 {contacts.map((contact) => (
-                    <div className={'container mx-auto shadow shadow-lg p-4 rounded-lg flex flex-col space-y-4 items-center'} key={contact._id}>
+                    <div className={'container mx-auto shadow shadow-lg p-3 rounded-lg flex flex-col space-y-4 items-center'} key={contact._id}>
                         <div>
                             <h1 className={'font-semibold'}>{contact.name}</h1>
                             <p className={'text-sm'}>{contact.email}</p>
