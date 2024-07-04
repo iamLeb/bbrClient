@@ -18,9 +18,15 @@ import Admin from "./pages/dashboard/Admin.jsx";
 import Categories from "./pages/dashboard/Categories.jsx";
 import Province from "./pages/dashboard/Province.jsx";
 import Properties from "./pages/dashboard/Properties.jsx";
+<<<<<<< HEAD
 import Testimonial from "./pages/dashboard/Testimonial.jsx";
 import Gallery from "./pages/dashboard/Gallery.jsx";
+=======
+import Gallery from "./pages/dashboard/Gallery.jsx";
+import Profile from "./pages/dashboard/Profile.jsx";
+>>>>>>> BBR-58
 import Contact from "./pages/dashboard/Contact.jsx";
+import Testimonial from "./pages/dashboard/Testimonial.jsx";
 
 function App() {
   return (
@@ -55,6 +61,8 @@ function App() {
             <Route path={'contacts'} element={<Contact/>} />
             <Route path={'testimonials'} element={<Testimonial/>} />
             <Route path={'gallery'} element={<Gallery/>} />
+            <Route path={'profile'} element={<Profile/>} />
+            <Route path={'contacts'} element={<Contact/>} />
           </Route>
         </Routes>
       </BrowserRouter>
