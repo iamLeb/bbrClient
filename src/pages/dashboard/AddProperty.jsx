@@ -11,20 +11,31 @@ const AddProperty = () => {
     const handleCancel = () => {
         navigate('/secure/listings')
     }
-    const addImg = (newProperty.media) => {
-        setNewProperty([hi]);
-    };
+
     const handleChange = e => {
         const { name, value } = e.target;
-        setNewProperty({
+        if (name === 'media'){
+            setNewProperty({
+                ...newProperty,
+                [name]: [value],
+                
+                
+               
+            }); console.log(newProperty)
+        } else{
+            setNewProperty({
             ...newProperty,
             [name]: value,
-            addImg
+            
             
            
-        }); console.log(newProperty)
+        });
+        }
+         console.log(newProperty)
     };
     const handleSubmit = async e => {
+        //setNewProperty({ title: '',address: '',price: '',image: '',bed:'',bath: '',sqft: '',description: '',category: '',media: []});
+        // console.log(newProperty.media)
         e.preventDefault();
         if (!newProperty.title || !newProperty.address || !newProperty.price 
         || !newProperty.image || !newProperty.sqft || !newProperty.bath 
@@ -41,10 +52,11 @@ const AddProperty = () => {
                         setSelectedTestiomnial(null);
                     }
                 } else {
+                    //addImg();
                     // Create property
-                    console.log(newProperty.media)
+                    console.log(typeof newProperty.media)
                     const imgres = await api.post("/file/upload", newProperty.media)
-                    if(imgres.status !=201){
+                    if(imgres.status ===400){
                         setErrors('image did not upload properly')
                     }
                     const res = await api.post('/property', newProperty);
@@ -53,7 +65,8 @@ const AddProperty = () => {
                         console.log(res.data);
                     }
                 }
-                setNewProperty({ title: '',address: '',price: '',image: '',bed:'',bath: '',sqft: '',description: '',category: '',media: []});
+                //setNewProperty({ title: '',address: '',price: '',image: '',bed:'',bath: '',sqft: '',description: '',category: '',media: []});
+                // console.log(typeof newProperty.media)
                 navigate('/secure/listings');
             } catch (e) {
                 console.log(e)
