@@ -24,8 +24,6 @@ const Profile = () => {
 
     const toggleModal = () => {
         setModal(!modal);
-        setErrors('');
-        setSuccess('');
     };
 
     const handleChange = (e) => {
