@@ -4,6 +4,7 @@ import UserContext from "../../context/UserContext";
 
 const Profile = () => {
     const {user} = useContext(UserContext);
+    const [nameChanged, setNameChanged] = useState(false);
     const [profile, setProfile] = useState({name: '', email: '', type: ''});
     const [errors, setErrors] = useState('');
     const [success, setSuccess] = useState('');
@@ -31,6 +32,7 @@ const Profile = () => {
             ...profile,
             [name]: value
         });
+        setNameChanged(true)
     };
 
     const handleClose = () => {
@@ -68,7 +70,6 @@ const Profile = () => {
         e.preventDefault();
         setErrors('');
         setSuccess('');
-        // const res = await  api.put(`/auth/reset/${user._id}`, values);
         if (!values.newPassword || !values.confirmPassword || !values.password) {
             setErrors('All fields are required');
         } else if (values.newPassword !== values.confirmPassword) {
@@ -90,13 +91,21 @@ const Profile = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // try {
-        //     const res = await api.put('/user/profile', profile);
-        //     setUser(res.data); // Update user context
-        //     setSuccess('Profile updated successfully');
-        // } catch (e) {
-        //     setErrors(e.response.data.error);
-        // }
+        setErrors('');
+        setSuccess('');
+        if (nameChanged) {
+            try {
+                const res = await api.put(`/auth/update/${user._id}`, profile);
+                setProfile(res.data); // Update user context
+                setSuccess('Profile updated successfully');
+                setErrors('')
+            } catch (e) {
+                setErrors(e.response.data.error);
+            }
+            !nameChanged
+        }else{
+            setErrors('No changes made');
+        }
     };
 
     return (
