@@ -24,6 +24,8 @@ const Profile = () => {
 
     const toggleModal = () => {
         setModal(!modal);
+        setErrors('');
+        setSuccess('');
     };
 
     const handleChange = (e) => {
@@ -90,6 +92,7 @@ const Profile = () => {
 
 
     const handleSubmit = async (e) => {
+        console.log(nameChanged)
         e.preventDefault();
         setErrors('');
         setSuccess('');
@@ -98,11 +101,10 @@ const Profile = () => {
                 const res = await api.put(`/auth/update/${user._id}`, profile);
                 setProfile(res.data); // Update user context
                 setSuccess('Profile updated successfully');
-                setErrors('')
             } catch (e) {
                 setErrors(e.response.data.error);
             }
-            !nameChanged
+            setNameChanged(false)
         }else{
             setErrors('No changes made');
         }
