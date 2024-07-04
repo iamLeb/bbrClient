@@ -32,7 +32,7 @@ const Gallery = () => {
     };
 
     useEffect(() => {
-        fetchGalleries();
+        fetchGalleries()
         fetchProvinces();
     }, []);
 
@@ -57,9 +57,9 @@ const Gallery = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        setErrors('')
         if (!newGallery.image || !newGallery.province) {
-            setErrors('Image name and province are required');
+            setErrors('Image and province are required');
         } else {
             try {
                 if (selectedGallery) {
@@ -79,7 +79,8 @@ const Gallery = () => {
                 setNewGallery({image: '', province: ''});
                 toggleModal();
             } catch (e) {
-                setErrors('There was an error creating/updating the gallery');
+                // setErrors('There was an error creating/updating the gallery');
+                setErrors(e.response.data.error)
             }
         }
     };
@@ -92,7 +93,7 @@ const Gallery = () => {
 
     const handleEdit = (gallery) => {
         setSelectedGallery(gallery)
-        setNewGallery({image: gallery.image, province: gallery.province});
+        setNewGallery(newGallery);
         toggleModal()
     }
 
@@ -167,11 +168,10 @@ const Gallery = () => {
                             <form onSubmit={handleSubmit}>
                                 <div className="mb-4">
                                     {errors && <p className="text-red-500 text-xs mt-2">{errors}</p>}
-                                    <label className="block text-sm font-bold mb-2">Image Name</label>
+                                    <label className="block text-sm font-bold mb-2">Image</label>
                                     <input
                                         onChange={handleChange}
-                                        placeholder="Enter image name"
-                                        type="text"
+                                        type="file"
                                         name="image"
                                         value={newGallery.image}
                                         className="w-full p-2 border rounded"
