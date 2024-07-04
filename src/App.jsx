@@ -16,7 +16,7 @@ import ContactUs from "./pages/front/ContactUs.jsx";
 import DashboardLayout from "./layouts/DashboardLayout.jsx";
 import Admin from "./pages/dashboard/Admin.jsx";
 import Categories from "./pages/dashboard/Categories.jsx";
-import Province from "./pages/dashboard/Province.jsx";
+import Province from "./pages/dashboard/Neighbourhood.jsx";
 import Properties from "./pages/dashboard/Properties.jsx";
 import  Gallery from "./pages/dashboard/Gallery.jsx";
 import Profile from "./pages/dashboard/Profile.jsx";
