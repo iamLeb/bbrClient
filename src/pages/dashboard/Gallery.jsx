@@ -17,7 +17,7 @@ const Gallery = () => {
     // console.log(neighbourhoods);
     const getNeighbourhoodName = id => {
         const res = neighbourhoods.find((neighbourhood) => neighbourhood._id === id);
-        return res.name ? res.name : '';
+        return res ? res.name : '';
     }
 
 
@@ -99,7 +99,7 @@ const Gallery = () => {
                 handleClose();
 
         } catch (e) {
-            setErrors(e.message);
+            setErrors(e.response.data.error);
         }
     };
 
