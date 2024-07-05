@@ -111,7 +111,7 @@ const Availability = () => {
 
   // Prepares availabilities data for sending to the database
   const handleSendToDatabase = () => {
-    const cleanedAvailabilities = availabilities.map(availability => {
+    const cleanedAvailabilities = availabilities.map((availability) => {
       const cleanedAvailability = { ...availability };
       delete cleanedAvailability.isEditing;
       return cleanedAvailability;
@@ -327,7 +327,7 @@ const Availability = () => {
       {/* Added Availabilities */}
       <div className="bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-2xl font-semibold mb-6 text-gray-800">
-        Availabilities Pending Approval
+          Availabilities Pending Approval
         </h2>
         {availabilities.length > 0 ? (
           <>
@@ -416,7 +416,7 @@ const Availability = () => {
             </button>
           </>
         ) : (
-          <p className="text-gray-500 italic">No availabilities added yet.</p>
+          <p className="text-gray-500 italic">No availabilities added yet!</p>
         )}
       </div>
     </div>
