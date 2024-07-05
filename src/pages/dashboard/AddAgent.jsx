@@ -13,7 +13,7 @@ const AddAgent = () => {
         phone: "",
         password: "",
         confirmPassword: "",
-        role: ""
+        type: ""
     });
 
     const [errors, setErrors] = useState({
@@ -22,7 +22,7 @@ const AddAgent = () => {
         phone: "",
         password: "",
         confirmPassword: "",
-        role: ""
+        type: ""
     });
 
     const validate = (name, value) => {
@@ -43,7 +43,7 @@ const AddAgent = () => {
                 if (!value) error = "Confirm Password is required";
                 else if (value !== values.password) error = "Passwords do not match";
                 break;
-            case "role":
+            case "type":
                 if (!value) error = "Role is required";
                 break;
             default:
@@ -68,7 +68,7 @@ const AddAgent = () => {
 
     const handleRegistration = async e => {
         e.preventDefault();
-        //console.log(values)
+        console.log(values.type)
         const formErrors = Object.keys(values).reduce((acc, key) => {
             const error = validate(key, values[key]);
             if (error) acc[key] = error;
@@ -81,7 +81,7 @@ const AddAgent = () => {
         }
 
         // send to api
-        const res = await api.post('auth/register', values);
+        const res = await api.post('auth/registeragent', values);
         
         if (res.status === 200) {
             setErrors(null);
@@ -120,10 +120,10 @@ const AddAgent = () => {
                     </div>
                     <div>
                         <p>Select role</p>
-                        <select name='role' onChange={handleChange}className="border w-full py-4 px-9 rounded-lg">
+                        <select name='type' onChange={handleChange}className="border w-full py-4 px-9 rounded-lg">
                             <option>Roles</option>
-                            <option value={'super'}>Super admin</option>
-                            <option value={'agent'}>Agent</option>
+                            <option value={'supers'}>Super admin</option>
+                            <option value={'agents'}>Agent</option>
                         </select>
                         {errors.confirmPassword && <p className="text-red-500">{errors.confirmPassword}</p>}
                     </div>
