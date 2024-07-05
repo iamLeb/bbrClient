@@ -1,49 +1,41 @@
 import { useState, useEffect } from "react";
-import api from "../../services/api.js";
-import neighbourhood from "./Neighbourhood.jsx";
+import api from "../../services/api";
+import Neighbourhood from "./Neighbourhood.jsx"; // Ensure correct import
 
 const Gallery = () => {
+    // State variables
     const [galleries, setGalleries] = useState([]);
-    const [neighbourhoods, setNeighbourhood] = useState([]);
+    const [neighbourhoods, setNeighbourhoods] = useState([]);
     const [newGallery, setNewGallery] = useState({ image: '', neighbourhood: '' });
     const [errors, setErrors] = useState('');
     const [modal, setModal] = useState(false);
     const [selectedGallery, setSelectedGallery] = useState(null);
 
-    const toggleModal = () => {
-        setModal(!modal);
-    };
-
-    // console.log(neighbourhoods);
-    const getNeighbourhoodName = id => {
-        const res = neighbourhoods.find((neighbourhood) => neighbourhood._id === id);
-        return res.name ? res.name : '';
-    }
-
-
+    // Fetching galleries and neighbourhoods
     const fetchGalleries = async () => {
         try {
             const res = await api.get('/gallery');
             setGalleries(res.data);
-        } catch (e) {
-            setErrors('There was an error fetching galleries');
+        } catch (error) {
+            setErrors('There was an error fetching galleries: ' + error.message);
         }
     };
 
-    const fetchNeighbourhood = async () => {
+    const fetchNeighbourhoods = async () => {
         try {
             const res = await api.get('/neighbourhood');
-            setNeighbourhood(res.data);
-        } catch (e) {
-            setErrors('There was an error fetching Neighbourhood');
+            setNeighbourhoods(res.data);
+        } catch (error) {
+            setErrors('There was an error fetching neighbourhoods: ' + error.message);
         }
     };
 
     useEffect(() => {
         fetchGalleries();
-        fetchNeighbourhood()
+        fetchNeighbourhoods();
     }, []);
 
+    // Handling form changes and submissions
     const handleChange = (e) => {
         const { name, value } = e.target;
         setNewGallery({
@@ -59,17 +51,6 @@ const Gallery = () => {
         });
     };
 
-    const handleDelete = async (id) => {
-        try {
-            const res = await api.delete(`/gallery/${id}`);
-            if (res.status === 200) {
-                setGalleries(galleries.filter(gallery => gallery._id !== id));
-            }
-        } catch (e) {
-            setErrors('There was an error deleting the gallery');
-        }
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
@@ -77,43 +58,67 @@ const Gallery = () => {
         formData.append('neighbourhood', newGallery.neighbourhood);
 
         try {
-            const res = await api.post('/file/upload', formData, {
+            const uploadRes = await api.post('/file/upload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            // if (res.status === 200) {
-                let url = res.data.url;
-                // create gallery
-                const gallery = await api.post(`/gallery/create`, {
-                    image: url,
-                    neighbourhood: newGallery.neighbourhood
-                });
 
-            const holder = gallery.data;
+            const imageUrl = uploadRes.data.url;
 
-                setGalleries([
-                    ...galleries,
-                    holder
-                ]);
-                handleClose();
+            const galleryRes = await api.post('/gallery/create', {
+                image: imageUrl,
+                neighbourhood: newGallery.neighbourhood
+            });
 
-        } catch (e) {
-            setErrors(e.message);
+            const createdGallery = galleryRes.data;
+
+            setGalleries([
+                ...galleries,
+                createdGallery
+            ]);
+
+            handleClose();
+        } catch (error) {
+            setErrors('Error creating gallery: ' + error.message);
         }
     };
 
+    // Deleting gallery
+    const handleDelete = async (id) => {
+        try {
+            const res = await api.delete(`/gallery/${id}`);
+            if (res.status === 200) {
+                setGalleries(galleries.filter(gallery => gallery._id !== id));
+            }
+        } catch (error) {
+            setErrors('There was an error deleting the gallery: ' + error.message);
+        }
+    };
 
+    // Editing gallery
     const handleEdit = (gallery) => {
         setSelectedGallery(gallery);
         setNewGallery({ image: gallery.image, neighbourhood: gallery.neighbourhood });
         toggleModal();
     };
 
+    // Closing modal
     const handleClose = () => {
         setSelectedGallery(null);
         setNewGallery({ image: '', neighbourhood: '' });
         toggleModal();
+    };
+
+    // Helper function to get neighbourhood name
+    const getNeighbourhoodName = (id) => {
+        const neighbourhood = neighbourhoods.find((neighbourhood) => neighbourhood._id === id);
+        return neighbourhood ? neighbourhood.name : '';
+    };
+
+    // Modal toggle function
+    const toggleModal = () => {
+        setModal(!modal);
     };
 
     return (
@@ -137,7 +142,12 @@ const Gallery = () => {
                         <tbody>
                         {galleries.map((gallery) => (
                             <tr className="text-xs border-b" key={gallery._id}>
-                                <td className="px-4 py-2 text-left">{gallery.image}</td>
+                                <td className="px-4 py-2 text-left">
+                                    <div className={'overflow-hidden h-9'}>
+                                        <img className={'w-full h-full object-center object-cover'} src={gallery.image} alt=""/>
+                                    </div>
+
+                                </td>
                                 <td className="px-4 py-2 text-left">{getNeighbourhoodName(gallery.neighbourhood)}</td>
                                 <td className="px-4 py-2 text-right">
                                     <div className="flex justify-end">
