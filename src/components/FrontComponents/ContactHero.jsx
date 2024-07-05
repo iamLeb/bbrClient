@@ -10,7 +10,7 @@ import {RiMailSendLine} from "react-icons/ri";
 
 const ContactHero = () => {
     return (
-        <section className={'py-9 px-5'}>
+        <section className={'py-9 px-5 bg-[#d5eaea]'}>
             <div className={'flex flex-col justify-around items-center pt-12 space-y-10'}>
 
                 <div className={'flex flex-col space-y-12 sm:pl-20 '}>
