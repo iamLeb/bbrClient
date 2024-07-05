@@ -120,6 +120,13 @@ const AddAgent = () => {
                         <input onChange={handleChange} name='confirmPassword' type='password' placeholder="Confirm Password" className="border w-full py-4 px-9 rounded-lg" />
                         {errors.confirmPassword && <p className="text-red-500">{errors.confirmPassword}</p>}
                     </div>
+                    <div>
+                        <p>Select role</p>
+                        <select className="border w-full py-4 px-9 rounded-lg">
+                            <option>Role</option>
+                        </select>
+                        {errors.confirmPassword && <p className="text-red-500">{errors.confirmPassword}</p>}
+                    </div>
                     <div className="flex justify-center">
                         <button type='submit' className="w-1/3 bg-primary p-3 flex justify-center rounded-lg text-bold text-white">
                             Add agent
