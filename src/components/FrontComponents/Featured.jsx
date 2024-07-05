@@ -7,6 +7,7 @@ import { IoBookmarkOutline } from "react-icons/io5";
 import { IoIosSearch } from "react-icons/io";
 import {useContext} from "react";
 import GlobalContext from "../../context/Global.js";
+import ViewMore from "./ViewMore.jsx";
 
 const Featured = () => {
     const {categories} = useContext(GlobalContext)
@@ -22,6 +23,7 @@ const Featured = () => {
             beds: 4,
             baths: 4,
             sqft: 900,
+            status: false
         },
         {
             id:1,
@@ -33,6 +35,8 @@ const Featured = () => {
             beds: 2,
             baths: 2,
             sqft: 600,
+            status: true
+
         },
         {
             id:2,
@@ -44,6 +48,7 @@ const Featured = () => {
             beds: 19,
             baths: 17,
             sqft: '8,500',
+            status: true
         },
         {
             id:3,
@@ -55,6 +60,7 @@ const Featured = () => {
             beds: 1,
             baths: 1,
             sqft: 600,
+            status: true
         },
         {
             id:4,
@@ -66,6 +72,7 @@ const Featured = () => {
             beds: 2,
             baths: 2,
             sqft: 600,
+            status: false
         },
         {
             id:5,
@@ -77,6 +84,7 @@ const Featured = () => {
             beds: 4,
             baths: 4,
             sqft: 900,
+            status: true
         },
         {
             id:6,
@@ -88,6 +96,7 @@ const Featured = () => {
             beds: 4,
             baths: 4,
             sqft: 900,
+            status: true
         },
         {
             id:7,
@@ -99,11 +108,12 @@ const Featured = () => {
             beds: 6,
             baths: 6,
             sqft: '1,800',
+            status: false
         },
     ];
 
     return (
-        <section className={'mt-2 py-9'}>
+        <section className={' py-9 bg-sky-100'}>
             <div className={'flex flex-col justify-center items-center gap-5'}>
                 <div className={'flex flex-col justify-between gap-4 text-center'}>
                     <h1 className={'font-bold text-4xl sm:text-5xl'}>Featured Properties</h1>
@@ -113,7 +123,7 @@ const Featured = () => {
 
                 <div className={'grid grid-cols-3 md:grid-cols-7 gap-4 font-light text-sm text-center justify-center'}>
                     {categories.map(category => (
-                        <button key={category._id} className={'tag text-primary'}>{category.name}</button>
+                        <button key={category._id} className={'tag text-black font-bold'}>{category.name}</button>
                     ))}
                 </div>
 
@@ -135,28 +145,8 @@ const Featured = () => {
                                             className={'absolute top-3 left-3 bg-primary text-white text-xs rounded-lg px-1.5 py-0.5'}>Featured</span>
                                     )}
 
-                                    <span
-                                        className={'absolute bottom-3 left-3 text-white font-bold text-2xl'}>{feat.amount}</span>
-                                    <ul className={'flex absolute right-3 bottom-3 space-x-2'}>
-                                        <li>
-                                            <div
-                                                className={'cursor-pointer transition-all duration-300 bg-neutral-700 p-2 rounded-full hover:bg-primary'}>
-                                                <FaArrowRightArrowLeft size={12} className={'rounded-full text-white'}/>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div
-                                                className={'cursor-pointer transition-all duration-300 bg-neutral-700 p-2 rounded-full hover:bg-primary'}>
-                                                <IoBookmarkOutline size={12} className={'rounded-full text-white'}/>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div
-                                                className={'cursor-pointer transition-all duration-300 bg-neutral-700 p-2 rounded-full hover:bg-primary'}>
-                                                <IoIosSearch size={12} className={'rounded-full text-white'}/>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                    <div
+                                        className={`${!feat.status ? 'top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2' : 'bottom-3 left-3'} absolute text-white font-bold text-2xl`}>{feat.status ? feat.amount : <span className={'bg-red-500 rounded-lg px-3 text-6xl'}>Sold</span> }</div>
                                 </div>
                                 <div>
                                     <span className={'font-semibold text-xl'}>{feat.title}</span>
@@ -211,6 +201,7 @@ const Featured = () => {
                     ))}
                 </div>
             </div>
+            <ViewMore />
         </section>
     );
 };

@@ -6,7 +6,7 @@ import GlobalContext from "../../context/Global.js";
 const Testimonials = () => {
     const {testimonials} = useContext(GlobalContext);
     return (
-        <div className="flex flex-col items-center p-5">
+        <div className="flex flex-col items-center p-5 py-24">
             <div className={'flex flex-col justify-between gap-4 text-center pb-9'}>
                 <h1 className={'font-bold text-4xl sm:text-5xl'}>From our Customers</h1>
                 <p className={'font-light text-sm'}>Hear some seasons why you should choose us</p>
@@ -24,7 +24,7 @@ const Testimonials = () => {
 
                         </div>
                         <div className="flex pt-10 justify-center">
-                            <img src={one} alt="image" className="rounded-full w-10 h-10"/>
+                            <img src={`https://ui-avatars.com/api/?name=${testimonial.name}`} alt="image" className="rounded-full w-10 h-10"/>
                         </div>
                         <div className="text-center font-bold">
                             {testimonial.name}

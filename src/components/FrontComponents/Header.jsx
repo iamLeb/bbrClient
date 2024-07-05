@@ -57,7 +57,7 @@ const Header = () => {
                         ))}
 
                         <li>
-                            <ul className={'flex items-center space-x-1 bg-primary p-4 rounded-lg font-semibold text-white'}>
+                            <ul onClick={() => navigate('/contact')} className={'cursor-pointer flex items-center space-x-1 bg-primary p-4 rounded-lg font-semibold text-white'}>
                                 <li>
                                 <TbHomeDollar/>
                                 </li>
@@ -65,7 +65,7 @@ const Header = () => {
                                     <PiLineVerticalThin/>
                                 </li>
                                 <li>
-                                    <span>Sell Properties</span>
+                                    <span>Buy | Sell</span>
                                 </li>
                             </ul>
                         </li>
