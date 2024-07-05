@@ -7,11 +7,10 @@ import {IoMailOpenSharp} from "react-icons/io5";
 import {GrGallery} from "react-icons/gr";
 import {FaRegUserCircle} from "react-icons/fa";
 import {useLocation, useNavigate} from "react-router-dom";
+import {FaCalendarAlt} from "react-icons/fa";
 import {MdOutlineCancel} from "react-icons/md";
-import React from "react";
 
-// eslint-disable-next-line react/prop-types
-const Sidebar = ({sidebar, toggleSidebar}) => {
+const Sidebar = ({sidebar,toggleSidebar}) => {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -56,10 +55,16 @@ const Sidebar = ({sidebar, toggleSidebar}) => {
             name: "My Profile",
             path: "profile",
         },
+        {
+            icon: <FaCalendarAlt/>,
+            name: "Create availability",
+            path: "availability",
+        },
     ];
 
     return (
-        <aside className={`bg-neutral-800 text-white h-screen w-80 sm:w-[500px] lg:w-80 ${sidebar ? 'block' : 'hidden'} lg:block`}>
+        <aside
+            className={`bg-neutral-800 text-white h-screen w-80 sm:w-[500px] lg:w-80 ${sidebar ? 'block' : 'hidden'} lg:block`}>
             <div className="py-9 text-center border-b border-gray-50 flex items-center space-x-20">
                 <div className={'text-white pl-6'} onClick={toggleSidebar}> {sidebar ?
                     <MdOutlineCancel size={30}/> : ''}</div>
