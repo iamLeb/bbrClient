@@ -51,6 +51,11 @@ const Sidebar = ({sidebar, toggleSidebar}) => {
             path: "gallery",
         },
         {
+            icon: <GrGallery/>,
+            name: "Testimonials",
+            path: "testimonial",
+        },
+        {
             icon: <FaRegUserCircle/>,
             name: "My Profile",
             path: "profile",
