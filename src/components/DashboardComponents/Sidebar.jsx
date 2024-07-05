@@ -10,7 +10,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {FaCalendarAlt} from "react-icons/fa";
 import {MdOutlineCancel} from "react-icons/md";
 
-const Sidebar = ({sidebar,toggleSidebar}) => {
+const Sidebar = ({sidebar, toggleSidebar}) => {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -65,10 +65,9 @@ const Sidebar = ({sidebar,toggleSidebar}) => {
     return (
         <aside
             className={`bg-neutral-800 text-white h-screen w-80 sm:w-[500px] lg:w-80 ${sidebar ? 'block' : 'hidden'} lg:block`}>
-            <div className="py-9 text-center border-b border-gray-50 flex items-center space-x-20">
+            <div className="py-5 text-center border-b border-gray-50 flex items-center space-x-20">
                 <div className={'text-white pl-6'} onClick={toggleSidebar}> {sidebar ?
-                    <MdOutlineCancel size={30}/> : ''}</div>
-
+                    <MdOutlineCancel size={26}/> : ''}</div>
                 <div className={'text-center'}>
                     <h1 className="text-3xl text-primary font-bold">logo</h1>
                 </div>
