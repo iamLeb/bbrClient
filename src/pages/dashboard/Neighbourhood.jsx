@@ -1,87 +1,88 @@
 import {useState, useEffect} from "react";
 import api from "../../services/api.js";
 
-const Province = () => {
-    const [provinces, setProvinces] = useState([]);
-    const [newProvince, setNewProvince] = useState({name: ''});
+const Neighbourhood = () => {
+    const [neighbourhoods, setNeighbourhoods] = useState([]);
+    const [newNeighbourhood, setNewNeighbourhood] = useState({name: ''});
     const [errors, setErrors] = useState('');
-    const [selectedProvince, setSelectedProvince] = useState(null); // State for the selected province
+    const [selectedNeighbourhood, setSelectedNeighbourhood] = useState(null); // State for the selected neighbourhood
     const [modal, setModal] = useState(false);
 
     const toggleModal = () => {
         setModal(!modal);
+        setErrors('');
     }
 
-    const fetchProvinces = async () => {
+    const fetchNeighbourhoods = async () => {
         try {
-            const res = await api.get('/province');
-            setProvinces(res.data);
+            const res = await api.get('/neighbourhood');
+            setNeighbourhoods(res.data);
         } catch (e) {
-            setErrors('There was an error fetching provinces');
+            setErrors('There was an error fetching neighbourhoods');
         }
     }
 
     useEffect(() => {
-        fetchProvinces()
+        fetchNeighbourhoods()
     }, []);
 
     const handleChange = (e) => {
         const {name, value} = e.target;
 
-        setNewProvince({
-            ...newProvince,
+        setNewNeighbourhood({
+            ...newNeighbourhood,
             [name]: value
         });
     }
 
     const handleDelete = async id => {
         try {
-            const res = await api.delete(`/province/${id}`);
+            const res = await api.delete(`/neighbourhood/${id}`);
             if (res.status === 200) {
-                setProvinces(provinces.filter(province => province._id !== id));
+                setNeighbourhoods(neighbourhoods.filter(neighbourhood => neighbourhood._id !== id));
             }
         } catch (e) {
-            setErrors('There was an error deleting the province');
+            setErrors('There was an error deleting the neighbourhood');
         }
     }
 
     const handleClose = () => {
-        setSelectedProvince(null)
-        setNewProvince({ name: '' });
+        setSelectedNeighbourhood(null)
+        setNewNeighbourhood({ name: '' });
         toggleModal();
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!newProvince.name) {
-            setErrors('Province name is required');
+        if (!newNeighbourhood.name) {
+            setErrors('Neighbourhood name is required');
         } else {
             try {
-                if (selectedProvince) {
+                if (selectedNeighbourhood) {
                     // Update category
-                    const res = await api.put(`/province/${selectedProvince._id}`, newProvince);
+                    const res = await api.put(`/neighbourhood/${selectedNeighbourhood._id}`, newNeighbourhood);
                     if (res.status === 200) {
-                        setProvinces(provinces.map(province => province._id === selectedProvince._id ? res.data : province));
-                        setSelectedProvince(null);
+                        setNeighbourhoods(neighbourhoods.map(neighbourhood => neighbourhood._id === selectedNeighbourhood._id ? res.data : neighbourhood));
+                        setSelectedNeighbourhood(null);
                     }
                 } else {
-                    const res = await api.post('/province/create', newProvince);
+                    const res = await api.post('/neighbourhood/create', newNeighbourhood);
                     if (res.status === 201) {
-                        setProvinces([...provinces, res.data]);
+                        setNeighbourhoods([...neighbourhoods, res.data]);
                     }
                 }
-                setNewProvince({name: ''});
+                setNewNeighbourhood({name: ''});
                 toggleModal();
             } catch (e) {
-                setErrors('There was an error creating/updating the province');
+                setErrors(e.response.data.error);
             }
         }
     }
 
-    const handleEdit = province => {
-        setSelectedProvince(province);
-        setNewProvince({ name: province.name });
+    const handleEdit = neighbourhood => {
+        setSelectedNeighbourhood(neighbourhood);
+        setNewNeighbourhood({ name: neighbourhood.name });
         toggleModal();
     };
 
@@ -89,12 +90,12 @@ const Province = () => {
         <section className="h-screen m-5 mx-10">
             <div className="bg-white border border-gray-100 shadow-2xl">
                 <div className="p-4 border-b flex items-center justify-between">
-                    <h3 className="font-bold">Province</h3>
+                    <h3 className="font-bold">Neighbourhood</h3>
 
                     <div>
                         <button onClick={toggleModal}
                                 className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>+
-                            Add New Province
+                            Add New Neighbourhood
                         </button>
                     </div>
                 </div>
@@ -109,13 +110,13 @@ const Province = () => {
                         </thead>
 
                         <tbody>
-                        {provinces.map((province) => (
-                            <tr className="text-xs border-b" key={province._id}>
-                                <td className="px-4 py-2 text-left">{province.name}</td>
+                        {neighbourhoods.map((neighbourhood) => (
+                            <tr className="text-xs border-b" key={neighbourhood._id}>
+                                <td className="px-4 py-2 text-left">{neighbourhood.name}</td>
                                 <td className="px-4 py-2">
                                     <div className={'text-right flex justify-end'}>
-                                        <button onClick={() => handleEdit(province)} className="px-2 py-1 rounded bg-primary text-white">Edit</button>
-                                        <button onClick={() => handleDelete(province._id)}
+                                        <button onClick={() => handleEdit(neighbourhood)} className="px-2 py-1 rounded bg-primary text-white">Edit</button>
+                                        <button onClick={() => handleDelete(neighbourhood._id)}
                                                 className="ml-2 px-2 py-1 rounded bg-red-500 text-white">Remove
                                         </button>
                                     </div>
@@ -139,19 +140,19 @@ const Province = () => {
                     <div
                         className={`bg-white m-2 sm:m-0 w-full sm:w-[35%] rounded-md shadow-lg transition-transform duration-300 transform`}>
                         <div className="bg-gray-100 p-3 flex items-center">
-                            <h2 className="font-extrabold">{selectedProvince ? 'Update Province' : 'Create New Province'}</h2>
+                            <h2 className="font-extrabold">{selectedNeighbourhood ? 'Update Neighbourhood' : 'Create New Neighbourhood'}</h2>
                         </div>
                         <div className="p-3">
                             <form onSubmit={handleSubmit}>
                                 <div className="mb-4">
                                     {errors && <p className="text-red-500 text-xs mt-2">{errors}</p>}
-                                    <label className="block text-sm font-bold mb-2">Province Name</label>
+                                    <label className="block text-sm font-bold mb-2">Neighbourhood Name</label>
                                     <input
                                         onChange={handleChange}
-                                        placeholder="enter province name"
+                                        placeholder="enter neighbourhood name"
                                         type="text"
                                         name="name"
-                                        value={newProvince.name} // Clear the input after submission
+                                        value={newNeighbourhood.name} // Clear the input after submission
                                         className="w-full p-2 border rounded"
                                     />
                                 </div>
@@ -160,7 +161,7 @@ const Province = () => {
                                     <button type="button" onClick={handleClose}
                                             className="px-3 py-0 rounded bg-gray-100">Close
                                     </button>
-                                    <button type="submit" className="px-4 py-2 rounded bg-primary text-white">{selectedProvince ? 'Update Province' : 'Create Province'}
+                                    <button type="submit" className="px-4 py-2 rounded bg-primary text-white">{selectedNeighbourhood ? 'Update Neighbourhood' : 'Create Neighbourhood'}
                                     </button>
                                 </div>
                             </form>
@@ -172,4 +173,4 @@ const Province = () => {
     );
 };
 
-export default Province;
+export default Neighbourhood;

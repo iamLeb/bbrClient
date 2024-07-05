@@ -11,6 +11,7 @@ const CategoryForm = () => {
 
     const toggleModal = () => {
         setModal(!modal);
+        setErrors('');
     };
 
     const fetchCategories = async () => {
@@ -35,11 +36,11 @@ const CategoryForm = () => {
     };
 
     const handleDelete = async id => {
-        let confirm = confirm("Are you sure you want to delete this category?");
+      //  let confirm = confirm("Are you sure you want to delete this category?");
 
         setLoading(true);
         try {
-            const res = await api.delete(`/f/${id}`);
+            const res = await api.delete(`/category/${id}`);
             if (res.status === 200) {
                 setLoading(false);
                 setCategories(categories.filter(category => category._id !== id));
@@ -74,7 +75,7 @@ const CategoryForm = () => {
                 setNewCategory({ name: '' });
                 toggleModal();
             } catch (e) {
-                setErrors('There was an error creating/updating the category');
+                setErrors(e.response.data.error);
             }
         }
         setLoading(false)

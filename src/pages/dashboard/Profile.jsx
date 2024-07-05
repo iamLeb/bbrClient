@@ -3,17 +3,22 @@ import api from "../../services/api.js";
 import UserContext from "../../context/UserContext";
 
 const Profile = () => {
-    const { user } = useContext(UserContext);
-    const [profile, setProfile] = useState({name: '', email: ''});
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const {user} = useContext(UserContext);
+    const [nameChanged, setNameChanged] = useState(false);
+    const [profile, setProfile] = useState({name: '', email: '', type: ''});
     const [errors, setErrors] = useState('');
     const [success, setSuccess] = useState('');
     const [modal, setModal] = useState(false);
 
+    const [values, setValues] = useState({
+        password: '',
+        newPassword: '',
+        confirmPassword: ''
+    })
+
     useEffect(() => {
         if (user) {
-            setProfile({name: user.name, email: user.email});
+            setProfile({name: user.name, email: user.email, type: user.type});
         }
     }, [user]);
 
@@ -27,21 +32,20 @@ const Profile = () => {
             ...profile,
             [name]: value
         });
+        setNameChanged(true)
     };
 
     const handleClose = () => {
         setErrors('');
-        setSuccess('');
         toggleModal();
     };
 
     const handlePasswordChange = (e) => {
         const {name, value} = e.target;
-        if (name === 'password') {
-            setPassword(value);
-        } else {
-            setConfirmPassword(value);
-        }
+        setValues({
+            ...values,
+            [name]: value
+        })
     };
 
     // const handleProfilePictureChange = async (e) => {
@@ -64,31 +68,44 @@ const Profile = () => {
 
     const submitPassword = async (e) => {
         e.preventDefault();
-        if (password !== confirmPassword) {
+        setErrors('');
+        setSuccess('');
+        if (!values.newPassword || !values.confirmPassword || !values.password) {
+            setErrors('All fields are required');
+        } else if (values.newPassword !== values.confirmPassword) {
             setErrors('Passwords do not match');
         } else {
             try {
-                const res = await api.put(`/auth/reset/${user._id}`, {password: user.password, newPassword: password});
+                const res = await api.put(`/auth/reset/${user._id}`, values);
                 if (res.status === 200) {
                     setSuccess('Password updated successfully');
-                    setPassword('');
-                    setConfirmPassword('');
+                    setValues({password: '', newPassword: '', confirmPassword: ''});
+                    handleClose()
                 }
             } catch (e) {
-                setErrors('There was an error updating the password');
+                setErrors(e.response.data.error);
             }
         }
     };
 
+
     const handleSubmit = async (e) => {
+        console.log(nameChanged)
         e.preventDefault();
-        // try {
-        //     const res = await api.put('/user/profile', profile);
-        //     setUser(res.data); // Update user context
-        //     setSuccess('Profile updated successfully');
-        // } catch (e) {
-        //     setErrors(e.response.data.error);
-        // }
+        setErrors('');
+        setSuccess('');
+        if (nameChanged) {
+            try {
+                const res = await api.put(`/auth/update/${user._id}`, profile);
+                setProfile(res.data); // Update user context
+                setSuccess('Profile updated successfully');
+            } catch (e) {
+                setErrors(e.response.data.error);
+            }
+            setNameChanged(false)
+        }else{
+            setErrors('No changes made');
+        }
     };
 
     return (
@@ -123,10 +140,21 @@ const Profile = () => {
                             type="email"
                             name="email"
                             value={profile.email}
-                            onChange={handleChange}
-                            className="w-full p-2 border rounded"
+                            disabled={true}
+                            className="w-full p-2 border rounded bg-gray-200"
                         />
                     </div>
+                    <div className="mb-4">
+                        <label className="block text-sm font-bold mb-2">Type</label>
+                        <input
+                            type="text"
+                            name="type"
+                            value={profile.type}
+                            disabled={true}
+                            className="w-full p-2 border rounded bg-gray-200"
+                        />
+                    </div>
+
 
                     <div className="flex justify-end space-x-2 text-xs">
                         <button type="button" onClick={toggleModal} className="px-4 py-2 rounded bg-primary text-white">
@@ -152,10 +180,17 @@ const Profile = () => {
                                 <div className="mb-4">
                                     {errors && <p className="text-red-500 text-xs mt-2">{errors}</p>}
                                     {success && <p className="text-green-500 text-xs mt-2">{success}</p>}
-                                    <label className="block text-sm font-bold mb-2">New Password</label>
+                                    <label className="block text-sm font-bold mb-2">Current Password</label>
                                     <input
                                         type="password"
                                         name="password"
+                                        onChange={handlePasswordChange}
+                                        className="w-full p-2 border rounded"
+                                    />
+                                    <label className="block text-sm font-bold mb-2">New Password</label>
+                                    <input
+                                        type="password"
+                                        name="newPassword"
                                         onChange={handlePasswordChange}
                                         className="w-full p-2 border rounded"
                                     />

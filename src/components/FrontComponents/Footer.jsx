@@ -9,11 +9,11 @@ import { FaInstagram } from "react-icons/fa";
 
 const Footer = () => {
     return (
-        <footer className={'bg-neutral-900'}>
+        <footer className={'bg-primary'}>
             <div
                 className={'relative container mx-auto lg:flex justify-center space-y-9 lg:space-y-0 lg:space-x-4 px-6 py-24 gap-9'}>
                 <div className={'relative'}>
-                    <div className={'bg-[#fff5e0] rounded-xl px-4 sm:px-10 shadow-lg py-10'}>
+                    <div className={'bg-[#d5eaea] rounded-xl px-4 sm:px-10 shadow-lg py-10'}>
                         <div className={'sm:flex justify-center space-x-4 items-center'}>
                             <img src="https://dreamhomewp.themesflat.com/wp-content/uploads/2023/08/selecbox-2-1-2.png"
                                  alt="photo"/>
@@ -24,7 +24,7 @@ const Footer = () => {
                                     thousands of suggestions for the dream home.</p>
                             </div>
                             <button
-                                className={'sm:absolute -bottom-7 bg-[#ffaa20] px-8 py-4 rounded-md text-white font-bold'}>Contact
+                                className={'sm:absolute -bottom-7 bg-white px-8 py-4 rounded-md text-primary hover:bg-primary hover:text-white transition-all duration-300 font-bold'}>Contact
                                 Seller
                             </button>
                         </div>
@@ -32,7 +32,7 @@ const Footer = () => {
                 </div>
 
                 <div className={'relative'}>
-                    <div className={'bg-[#fff5e0] rounded-xl px-4 sm:px-10 shadow-lg py-10'}>
+                    <div className={'bg-[#d5eaea] rounded-xl px-4 sm:px-10 shadow-lg py-10'}>
                         <div className={'sm:flex justify-center space-x-4 items-center'}>
                             <img src="https://dreamhomewp.themesflat.com/wp-content/uploads/2023/08/selecbox-1-1-2.png"
                                  alt="photo"/>
@@ -42,9 +42,8 @@ const Footer = () => {
                                     who need to buy a home.</p>
                             </div>
                             <button
-                                className={'sm:absolute -bottom-7 bg-[#ffaa20] px-8 py-4 rounded-md text-white font-bold'}>Contact
-                                Seller
-                            </button>
+                                className={'sm:absolute -bottom-7 bg-white px-8 py-4 rounded-md text-primary hover:bg-primary hover:text-white transition-all duration-300 font-bold'}>Contact
+                                Seller</button>
                         </div>
                     </div>
                 </div>
