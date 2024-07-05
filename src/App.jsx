@@ -37,31 +37,15 @@ function App() {
             setShowPreloader(false);
         }, 1000); // Display preloader for 3 seconds
 
-          <Route path="/secure" element={<DashboardLayout />}>
-            <Route index element={<Admin />} />
-            <Route path={'category'} element={<Categories/>} />
-            <Route path={'blog'} element={<Blog/>} />
-            <Route path={'provinces'} element={<Province/>} />
-            <Route path={'listings'} element={<Properties/>} />
-            <Route path={'contacts'} element={<Contact/>} />
-            <Route path={'addagent'} element={<AddAgent/>} />
-            <Route path={'testimonials'} element={<Testimonial/>} />
-            <Route path={'gallery'} element={<Gallery/>} />
-            <Route path={'profile'} element={<Profile/>} />
-            <Route path={'contacts'} element={<Contact/>} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-  )
         return () => clearTimeout(timer);
     }, []);
 
     return (
         <BrowserRouter>
             <ScrollToTop />
-            {loading || showPreloader ? (
+            {/* {loading || showPreloader ? (
                 <Preloader />  // Use Preloader component
-            ) : (
+            ) : ( */}
                 <Routes>
                     <Route path="/" element={<FrontLayout />}>
                         <Route index element={<Home />} />
@@ -76,6 +60,7 @@ function App() {
                         <Route path={'/auth/reset'} element={<Reset />} />
                         <Route path={'/auth/register'} element={<Register />} />
                         <Route path={'*'} element={<PageNotFound />} />
+                        
                     </Route>
                     <Route path="/secure" element={<DashboardLayout />}>
                         <Route index element={<Admin />} />
@@ -88,9 +73,10 @@ function App() {
                         <Route path={'gallery'} element={<Gallery />} />
                         <Route path={'profile'} element={<Profile />} />
                         <Route path={'contacts'} element={<Contact />} />
+                        <Route path={'addagent'} element={<AddAgent />} />
                     </Route>
                 </Routes>
-            )}
+            {/* )} */}
         </BrowserRouter>
     );
 }
