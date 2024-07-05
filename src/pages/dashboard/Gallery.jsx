@@ -17,7 +17,7 @@ const Gallery = () => {
     // console.log(neighbourhoods);
     const getNeighbourhoodName = id => {
         const res = neighbourhoods.find((neighbourhood) => neighbourhood._id === id);
-        return res ? res.name : '';
+        return res.name ? res.name : '';
     }
 
 
