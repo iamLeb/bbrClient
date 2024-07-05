@@ -9,6 +9,7 @@ import {FaRegUserCircle} from "react-icons/fa";
 import {useLocation, useNavigate} from "react-router-dom";
 import {FaCalendarAlt} from "react-icons/fa";
 import {MdOutlineCancel} from "react-icons/md";
+import { GiMicrophone } from "react-icons/gi";
 
 const Sidebar = ({sidebar, toggleSidebar}) => {
     const navigate = useNavigate();
@@ -51,7 +52,7 @@ const Sidebar = ({sidebar, toggleSidebar}) => {
             path: "gallery",
         },
         {
-            icon: <GrGallery/>,
+            icon: <GiMicrophone />,
             name: "Testimonials",
             path: "testimonial",
         },
