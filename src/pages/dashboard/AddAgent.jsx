@@ -13,6 +13,7 @@ const AddAgent = () => {
         phone: "",
         password: "",
         confirmPassword: "",
+        role: ""
     });
 
     const [errors, setErrors] = useState({
@@ -21,6 +22,7 @@ const AddAgent = () => {
         phone: "",
         password: "",
         confirmPassword: "",
+        role: ""
     });
 
     const validate = (name, value) => {
@@ -34,15 +36,15 @@ const AddAgent = () => {
                 if (!value) error = "Email is required";
                 else if (!emailPattern.test(value)) error = "Email is invalid";
                 break;
-            case "phone":
-                if (!value) error = "Phone number is required";
-                break;
             case "password":
                 if (!value) error = "Password is required";
                 break;
             case "confirmPassword":
                 if (!value) error = "Confirm Password is required";
                 else if (value !== values.password) error = "Passwords do not match";
+                break;
+            case "role":
+                if (!value) error = "Role is required";
                 break;
             default:
                 break;
@@ -66,6 +68,7 @@ const AddAgent = () => {
 
     const handleRegistration = async e => {
         e.preventDefault();
+        //console.log(values)
         const formErrors = Object.keys(values).reduce((acc, key) => {
             const error = validate(key, values[key]);
             if (error) acc[key] = error;
@@ -79,9 +82,9 @@ const AddAgent = () => {
 
         // send to api
         const res = await api.post('auth/register', values);
-
+        
         if (res.status === 200) {
-            // setErrors(res.data);
+            setErrors(null);
         } else {
             console.log('There was an error')
         }
@@ -106,11 +109,6 @@ const AddAgent = () => {
                         {errors.email && <p className="text-red-500">{errors.email}</p>}
                     </div>
                     <div>
-                        <p>Phone number</p>
-                        <input onChange={handleChange} name='phone' type='text' placeholder="Phone" className="border w-full py-4 px-9 rounded-lg" />
-                        {errors.phone && <p className="text-red-500">{errors.phone}</p>}
-                    </div>
-                    <div>
                         <p>Password</p>
                         <input onChange={handleChange} name='password' type='password' placeholder="Password" className="border w-full py-4 px-9 rounded-lg" />
                         {errors.password && <p className="text-red-500">{errors.password}</p>}
@@ -122,8 +120,10 @@ const AddAgent = () => {
                     </div>
                     <div>
                         <p>Select role</p>
-                        <select className="border w-full py-4 px-9 rounded-lg">
-                            <option>Role</option>
+                        <select name='role' onChange={handleChange}className="border w-full py-4 px-9 rounded-lg">
+                            <option>Roles</option>
+                            <option value={'super'}>Super admin</option>
+                            <option value={'agent'}>Agent</option>
                         </select>
                         {errors.confirmPassword && <p className="text-red-500">{errors.confirmPassword}</p>}
                     </div>
