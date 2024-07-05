@@ -24,7 +24,7 @@ const Gallery = () => {
 
     const fetchProvinces = async () => {
         try {
-            const res = await api.get('/province');
+            const res = await api.get('/neighbourhood');
             setProvinces(res.data);
         } catch (e) {
             setErrors('There was an error fetching provinces');
