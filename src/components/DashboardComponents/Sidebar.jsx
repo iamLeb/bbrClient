@@ -63,10 +63,16 @@ const Sidebar = ({sidebar, toggleSidebar}) => {
     ];
 
     return (
+        // <aside
+        //     className={`overflow-y-auto bg-neutral-800 text-white h-screen w-80 sm:w-[500px] lg:w-80 transition-transform duration-1000 ease-in-out
+        //      ${sidebar ? 'block' : 'hidden'} lg:block`}>
+
         <aside
-            className={`bg-neutral-800 text-white h-screen w-80 sm:w-[500px] lg:w-80 ${sidebar ? 'block' : 'hidden'} lg:block`}>
+            className={`fixed lg:static top-0 left-0 bg-neutral-800 text-white h-screen w-80 sm:w-[500px] lg:w-80 transition-transform duration-500 ease-in-out 
+            ${sidebar ? 'translate-x-0' : '-translate-x-full'} lg:transform-none`}>
+
             <div className="py-5 text-center border-b border-gray-50 flex items-center space-x-20">
-                <div className={'text-white pl-6'} onClick={toggleSidebar}> {sidebar ?
+                <div className={'text-white pl-6 lg:hidden'} onClick={toggleSidebar}> {sidebar ?
                     <MdOutlineCancel size={26}/> : ''}</div>
                 <div className={'text-center'}>
                     <h1 className="text-3xl text-primary font-bold">logo</h1>
