@@ -1,12 +1,14 @@
 import React from 'react';
-import { GoArrowRight, GoArrowLeft } from "react-icons/go";
-import { useContext } from "react";
+import {GoArrowRight, GoArrowLeft} from "react-icons/go";
+import {useContext} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import UserContext from "../../context/UserContext";
+import {MdOutlineCancel} from "react-icons/md";
 
-const Header = () => {
+// eslint-disable-next-line react/prop-types
+const Header = ({sidebar, toggleSidebar}) => {
     const navigate = useNavigate();
-    const { user } = useContext(UserContext);
+    const {user} = useContext(UserContext);
     const location = useLocation();
 
     return (
@@ -14,9 +16,10 @@ const Header = () => {
             <div className="bg-white w-full shadow-md">
                 <div className="flex justify-between items-center px-5">
                     {/* Mobile view toggle */}
-                    <div className="block lg:hidden">
-                        <GoArrowRight size={26} />
+                    <div onClick={toggleSidebar} className="block lg:hidden">
+                        {sidebar ? '' : <GoArrowRight size={26}/>}
                     </div>
+
 
                     {/* Manage Roles and Permissions button */}
                     <button
@@ -44,8 +47,9 @@ const Header = () => {
 
             {/* Conditional Go Back button */}
             {location.pathname !== '/secure' && (
-                <button onClick={() => navigate('/secure')} className="flex space-x-2 items-center text-primary px-4 pt-4">
-                    <GoArrowLeft />
+                <button onClick={() => navigate('/secure')}
+                        className="flex space-x-2 items-center text-primary px-4 pt-4">
+                    <GoArrowLeft/>
                     <span>Back to dashboard</span>
                 </button>
             )}

@@ -39,7 +39,7 @@ const Hero = () => {
                             </div>
                         ) : (
                             <select className={'px-5 border py-4 w-full rounded-lg outline-none'}>
-                                <option selected={true}>Select Search Categories</option>
+                                <option>Select Search Categories</option>
                                 {categories.map(category => (
                                     <option key={category} value={category.name}>{category.name}</option>
                                 ))}
@@ -52,8 +52,8 @@ const Hero = () => {
                                     className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary"></div>
                             </div>
                         ) : (
-                            <select className={'px-5 border py-4 w-full rounded-lg outline-none'}>
-                                <option selected={true}>Select Neighbourhood</option>
+                            <select defaultValue={'Select Neighbourhood'} className={'px-5 border py-4 w-full rounded-lg outline-none'}>
+                                <option>Select Neighbourhood</option>
                                 {neighbourhoods.map((neighbourhood) => (
                                     <option key={neighbourhood._id}
                                             value={neighbourhood.name}>{neighbourhood.name}</option>
@@ -61,7 +61,7 @@ const Hero = () => {
                             </select>
                         )}
                         <select className={'px-5 border py-4 w-full rounded-lg outline-none'}>
-                            <option selected={true}>Select City</option>
+                            <option value={""}>Select City</option>
                         </select>
                         <button className={'bg-primary text-white h-14 rounded-lg w-full'}>Find Now</button>
                     </div>
