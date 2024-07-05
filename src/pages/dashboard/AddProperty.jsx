@@ -81,7 +81,7 @@ const AddProperty = () => {
                 Add new property
             </div>
             
-            <form onSubmit={handleSubmit} enctype="multipart/form-data">
+            <form onSubmit={handleSubmit} encType="multipart/form-data">
                 <div className='p-3 flex flex-col'>
                     <div className='font-bold mb-3'>Title</div>
                     {errors && <p className="text-red-500 text- mt-2">{errors}</p>}
