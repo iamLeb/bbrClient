@@ -54,7 +54,7 @@ const Sidebar = ({sidebar, toggleSidebar}) => {
         {
             icon: <GiMicrophone />,
             name: "Testimonials",
-            path: "testimonial",
+            path: "testimonials",
         },
         {
             icon: <FaRegUserCircle/>,
