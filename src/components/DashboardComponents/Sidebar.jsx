@@ -63,12 +63,8 @@ const Sidebar = ({sidebar, toggleSidebar}) => {
     ];
 
     return (
-        // <aside
-        //     className={`overflow-y-auto bg-neutral-800 text-white h-screen w-80 sm:w-[500px] lg:w-80 transition-transform duration-1000 ease-in-out
-        //      ${sidebar ? 'block' : 'hidden'} lg:block`}>
-
         <aside
-            className={`fixed lg:static top-0 left-0 bg-neutral-800 text-white h-screen w-80 sm:w-[500px] lg:w-80 transition-transform duration-500 ease-in-out 
+            className={`overflow-y-auto fixed lg:static top-0 left-0 bg-neutral-800 text-white h-screen w-80 sm:w-[500px] lg:w-80 transition-transform duration-500 ease-in-out 
             ${sidebar ? 'translate-x-0' : '-translate-x-full'} lg:transform-none`}>
 
             <div className="py-5 text-center border-b border-gray-50 flex items-center space-x-20">
