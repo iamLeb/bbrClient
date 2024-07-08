@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: "https://bbrapi.onrender.com",
+    baseURL: import.meta.env.VITE_CORS,
     withCredentials: true // Send cookies with cross-origin requests
 });
 
