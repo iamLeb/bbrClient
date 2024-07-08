@@ -7,17 +7,20 @@ import six from "../../assets/images/explore6.jpg"
 import seven from "../../assets/images/explore7.jpg"
 import eight from "../../assets/images/explore8.jpg"
 import { PiPlusThin } from "react-icons/pi";
+import ViewMore from "./ViewMore.jsx";
 
 
 const Explore = () => {
     return (
-        <div className={'py-9'}>
+        <div className={'py-24'}>
             <div className={'flex flex-col justify-between gap-4 text-center'}>
                 <h1 className={'font-bold text-4xl sm:text-5xl'}>Discover The Perfect Neighbourhood</h1>
-                <p className={'font-light text-sm'}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda dolorum, error perspiciatis quas tempora velit?</p>
+                <p className={'font-light text-sm'}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda
+                    dolorum, error perspiciatis quas tempora velit?</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 h-[160rem] lg:grid-cols-4 md:h-[75rem] lg:h-[35rem]">
+            <div
+                className="grid grid-cols-1 md:grid-cols-2 h-[100rem] lg:grid-cols-4 md:h-[75rem] lg:h-[35rem] overflow-hidden">
                 <div className="group h-full w-full relative overflow-hidden hover:cursor-pointer">
                     <div className="overflow-hidden w-full bg-black h-full sm:absolute sm:inset-0">
                         <img
@@ -147,6 +150,7 @@ const Explore = () => {
                     </div>
                 </div>
             </div>
+            <ViewMore />
         </div>
 
     );

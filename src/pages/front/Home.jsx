@@ -4,6 +4,8 @@ import Featured from "../../components/FrontComponents/Featured.jsx";
 import Explore from "../../components/FrontComponents/Explore.jsx";
 import Testimonials from '../../components/FrontComponents/Testimonials.jsx';
 import Contact from "../../components/FrontComponents/Contact.jsx";
+import RegistrationHero from '../../components/FrontComponents/Auth/RegistrationHero.jsx';
+
 
 const Home = () => {
     return (

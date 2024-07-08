@@ -10,8 +10,9 @@ import {RiMailSendLine} from "react-icons/ri";
 
 const Contact = () => {
     return (
-        <section className={'py-9 px-5'}>
-            <p className={'text-center'}>Become our next customer, and find your dream home <span className={'text-primary underline'}>Contact us: 314-555-0123</span></p>
+        <section className={'bg-[#d5eaea] py-9 px-5'}>
+            <p className={'text-center'}>Become our next customer, and find your dream home <span
+                className={'text-primary underline'}>Contact us: 314-555-0123</span></p>
 
             <div className={'flex flex-col lg:flex-row justify-around items-center pt-12 space-y-10'}>
 
@@ -25,7 +26,7 @@ const Contact = () => {
                     </div>
 
                     <div className={'flex flex-col space-y-2'}>
-                        <div className={'flex flex-row  space-x-4'}>
+                        <div className={'flex flex-row'}>
                             <div>
                                 <GrMapLocation size={36}/>
                             </div>
@@ -38,7 +39,7 @@ const Contact = () => {
                             </div>
                         </div>
 
-                        <div className={'flex flex-row  space-x-4'}>
+                        <div className={'flex flex-row'}>
                             <div>
                                 <MdOutlinePermPhoneMsg size={36}/>
                             </div>
@@ -51,7 +52,7 @@ const Contact = () => {
                             </div>
                         </div>
 
-                        <div className={'flex flex-row  space-x-4'}>
+                        <div className={'flex flex-row'}>
                             <div>
                                 <RiMailSendLine size={36}/>
                             </div>
@@ -67,7 +68,7 @@ const Contact = () => {
                 </div>
 
                 <div className={'flex-1 w-full'}>
-                    <div className={'bg-white rounded-lg shadow-2xl p-7'}>
+                    <div className={'bg-white rounded-lg shadow-2xl p-10'}>
                         <div className={'flex justify-between items-center space-x-4'}>
                             <div>
                                 <h1 className={'text-3xl font-bold'}>Contact us</h1>
@@ -90,31 +91,31 @@ const Contact = () => {
                                 </div>
                             </div>
 
-                            <div className={'flex space-x-4'}>
-                                <div className={'flex-1'}>
-                                    <div className={'font-medium pt-2'}>Email</div>
-                                    <div className={'relative'}>
+
+                            <div className={'flex-1'}>
+                                <div className={'font-medium pt-2'}>Email</div>
+                                <div className={'relative'}>
                                          <span
                                              className={'absolute text-primary flex items-center top-1/2 -translate-y-1/2 left-1'}>  <MdOutlineEmail
                                              size={18}/></span>
-                                        <input
-                                            className={'px-9 focus:outline-primary border rounded-lg py-4 w-full placeholder:text-gray-500 text-sm'}
-                                            type="text" placeholder={"Your email"}/>
-                                    </div>
+                                    <input
+                                        className={'px-9 focus:outline-primary border rounded-lg py-4 w-full placeholder:text-gray-500 text-sm'}
+                                        type="text" placeholder={"Your email"}/>
                                 </div>
+                            </div>
 
-                                <div className={'flex-1'}>
-                                    <div className={'font-medium pt-2'}>Phone</div>
-                                    <div className={'relative'}>
+                            <div className={'flex-1'}>
+                                <div className={'font-medium pt-2'}>Phone</div>
+                                <div className={'relative'}>
                                         <span
                                             className={'absolute text-primary flex items-center top-1/2 -translate-y-1/2 left-1'}> <FaPhoneAlt
                                             size={18}/></span>
-                                        <input
-                                            className={'px-9 focus:outline-primary border rounded-lg py-4 w-full placeholder:text-gray-500 text-sm'}
-                                            type="text" placeholder={"Your phone"}/>
-                                    </div>
+                                    <input
+                                        className={'px-9 focus:outline-primary border rounded-lg py-4 w-full placeholder:text-gray-500 text-sm'}
+                                        type="text" placeholder={"Your phone"}/>
                                 </div>
                             </div>
+
 
                             <div className={'flex-1'}>
                                 <div className={'font-medium pt-2 w-full'}>Property Type</div>
@@ -131,7 +132,7 @@ const Contact = () => {
                             <div className={'flex-1'}>
                                 <div className={'font-medium pt-2'}>Message</div>
                                 <textarea
-                                    className={'px-3 focus:outline-primary w-full border rounded-lg py-4 w-full placeholder:text-gray-500 text-sm'}
+                                    className={'resize-none px-3 focus:outline-primary w-full border rounded-lg py-4 placeholder:text-gray-500 text-sm'}
                                     cols="30"
                                     rows="5" placeholder={"Your message"}></textarea>
                             </div>
