@@ -1,8 +1,8 @@
 import {useLocation, useNavigate} from "react-router-dom";
 import {MdOutlineCancel} from "react-icons/md";
 import {IoCameraSharp, IoHome, IoMailOpenSharp} from "react-icons/io5";
-import {FcAbout} from "react-icons/fc";
 import {CiBoxList} from "react-icons/ci";
+import {FaCircleInfo} from "react-icons/fa6";
 
 const SideBar = ({sidebar, toggleSidebar}) => {
     const navigate = useNavigate();
@@ -20,7 +20,7 @@ const SideBar = ({sidebar, toggleSidebar}) => {
             id: 1,
             name: 'About',
             onClick: () => navigate('/about'),
-            icon: <FcAbout/>,
+            icon: <FaCircleInfo />,
         },
         {
             id: 2,
