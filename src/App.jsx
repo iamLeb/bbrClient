@@ -23,30 +23,30 @@ import Gallery from "./pages/dashboard/Gallery.jsx";
 import Profile from "./pages/dashboard/Profile.jsx";
 import Contact from "./pages/dashboard/Contact.jsx";
 import Testimonial from "./pages/dashboard/Testimonial.jsx";
-import AddAgent from "./pages/dashboard/AddAgent.jsx";
-import GlobalContext from "./context/Global.js";
-import Preloader from "./components/Preloader.jsx"; // Import Preloader component
+// import AddAgent from "./pages/dashboard/AddAgent.jsx";
+// import GlobalContext from "./context/Global.js";
+// import Preloader from "./components/Preloader.jsx"; // Import Preloader component
 import ScrollToTop from "./components/ScrollToTop.js";
 import Availability from "./pages/dashboard/Availability.jsx";
 
 function App() {
-  const { loading } = useContext(GlobalContext);
-  const [showPreloader, setShowPreloader] = useState(true);
+  // const { loading } = useContext(GlobalContext);
+  // const [showPreloader, setShowPreloader] = useState(true);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowPreloader(false);
-    }, 1000); // Display preloader for 3 seconds
-
-    return () => clearTimeout(timer);
-  }, []);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setShowPreloader(false);
+  //   }, 1000); // Display preloader for 3 seconds
+  //
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   return (
     <BrowserRouter>
       <ScrollToTop />
-      {loading || showPreloader ? (
-        <Preloader /> // Use Preloader component
-      ) : (
+      {/*{loading || showPreloader ? (*/}
+      {/*  <Preloader /> // Use Preloader component*/}
+      {/*) : (*/}
         <Routes>
           <Route path="/" element={<FrontLayout />}>
             <Route index element={<Home />} />
@@ -76,7 +76,7 @@ function App() {
             <Route path={"availability"} element={<Availability />} />
           </Route>
         </Routes>
-      )}
+      {/*// )}*/}
     </BrowserRouter>
   );
 }
