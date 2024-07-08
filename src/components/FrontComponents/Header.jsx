@@ -5,6 +5,7 @@ import {PiLineVerticalThin} from "react-icons/pi";
 import {useNavigate} from "react-router-dom";
 import {GoArrowRight} from "react-icons/go";
 import React from "react";
+import {MdOutlineCancel} from "react-icons/md";
 
 const Header = ({sidebar, toggleSidebar}) => {
     const navigate = useNavigate();
@@ -79,7 +80,8 @@ const Header = ({sidebar, toggleSidebar}) => {
                 {/*Mobile View*/}
                 <div className={'flex md:hidden items-center space-x-3'}>
                     <div onClick={toggleSidebar}>
-                       <FiMenu className={'text-primary'} size={32}/>
+                        {sidebar ? <MdOutlineCancel className={'text-primary'} size={32}/> :
+                            <FiMenu className={'text-primary'} size={32}/>}
                     </div>
                 </div>
 
