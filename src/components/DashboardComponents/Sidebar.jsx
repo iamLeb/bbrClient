@@ -10,7 +10,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {FaCalendarAlt} from "react-icons/fa";
 import {MdOutlineCancel} from "react-icons/md";
 import {GiMicrophone} from "react-icons/gi";
-import { GrUserManager } from "react-icons/gr";
+import {GrUserManager} from "react-icons/gr";
 
 const Sidebar = ({sidebar, toggleSidebar}) => {
     const navigate = useNavigate();
@@ -63,9 +63,10 @@ const Sidebar = ({sidebar, toggleSidebar}) => {
             path: "profile",
         },
         {
-            icon: <GrUserManager />,
-            name: "Manage Roles and Permissions",
+            icon: <GrUserManager/>,
+            name: "Manage Roles",
             path: "availability",
+            mobile: true,
         },
         {
             icon: <FaCalendarAlt/>,
@@ -89,7 +90,7 @@ const Sidebar = ({sidebar, toggleSidebar}) => {
 
             <ul className="flex flex-col gap-2 pt-9">
                 {items.map((item) => (
-                    <li key={item.name}>
+                    <li key={item.name} className={item.mobile ? 'block md:hidden' : ''}>
                         <div
                             onClick={() => {
                                 navigate(item.path);
