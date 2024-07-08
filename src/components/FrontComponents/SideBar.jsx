@@ -1,5 +1,8 @@
 import {useLocation, useNavigate} from "react-router-dom";
 import {MdOutlineCancel} from "react-icons/md";
+import {IoCameraSharp, IoHome, IoMailOpenSharp} from "react-icons/io5";
+import {FcAbout} from "react-icons/fc";
+import {CiBoxList} from "react-icons/ci";
 
 const SideBar = ({sidebar, toggleSidebar}) => {
     const navigate = useNavigate();
@@ -11,26 +14,31 @@ const SideBar = ({sidebar, toggleSidebar}) => {
             name: 'Home',
             active: true,
             onClick: () => navigate('/'),
+            icon: <IoHome/>,
         },
         {
             id: 1,
             name: 'About',
             onClick: () => navigate('/about'),
+            icon: <FcAbout/>,
         },
         {
             id: 2,
             name: 'Blog',
             onClick: () => navigate('/blog'),
+            icon: <IoCameraSharp/>,
         },
         {
             id: 3,
             name: 'Contact',
             onClick: () => navigate('/contact'),
+            icon: <IoMailOpenSharp/>,
         },
         {
             id: 4,
             name: 'Listings',
             onClick: () => navigate('/properties/listing'),
+            icon: <CiBoxList/>,
         },
     ];
 
