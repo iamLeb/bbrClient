@@ -55,7 +55,7 @@ const SideBar = ({sidebar, toggleSidebar}) => {
 
             <ul className="flex flex-col gap-2 pt-9">
                 {items.map((item) => (
-                    <li key={item.name}>
+                    <li key={item.id}>
                         <div
                             onClick={() => {
                                 item.onClick();
