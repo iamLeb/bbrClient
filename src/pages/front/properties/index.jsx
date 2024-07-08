@@ -6,8 +6,78 @@ import { FaArrowRightArrowLeft } from "react-icons/fa6";
 import { IoBookmarkOutline } from "react-icons/io5";
 import { IoIosSearch } from "react-icons/io";
 import { RxMixerVertical } from "react-icons/rx";
+import { useState, useEffect } from "react";
+import PropertyFilters from "../../../components/FrontComponents/PropertyFilters";
 
 const Index = () => {
+    const [toggle,  setToggle] = useState(false)
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 640)
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+      }, []);
+    const handleOptions = () => {
+        setToggle(!toggle)
+    }
+    const categories = [
+        {
+            id: 0,
+            name:"house"
+        },
+        {
+            id: 1,
+            name:"Appartment"
+        },
+        {
+            id: 2,
+            name:"Condo"
+        },
+        {
+            id: 3,
+            name:"villa"
+        },
+        {
+            id: 4,
+            name:"two story"
+        },
+    ]
+    const cities = [
+        {
+            id: 0,
+            name:"winnipeg"
+        },
+        {
+            id: 1,
+            name:"brandon"
+        },
+        {
+            id: 2,
+            name:"morden"
+        },
+    ]
+    const neighbourhoods = [
+        {
+            id: 0,
+            name:"st vital"
+        },
+        {
+            id: 1,
+            name:"east St Paul"
+        },
+        {
+            id: 2,
+            name:"bridgewater"
+        },
+        {
+            id: 3,
+            name:"island lakes"
+        },
+        {
+            id: 4,
+            name:"transcona"
+        },
+    ]
     const listing = [
         {
             id:0,
@@ -21,7 +91,7 @@ const Index = () => {
             sqft: 900,
         },
         {
-            id:0,
+            id:1,
             featured: true,
             image: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
             amount: '$146,000',
@@ -32,7 +102,7 @@ const Index = () => {
             sqft: 900,
         },
         {
-            id:0,
+            id:2,
             featured: true,
             image: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
             amount: '$146,000',
@@ -43,7 +113,7 @@ const Index = () => {
             sqft: 900,
         },
         {
-            id:0,
+            id:3,
             featured: true,
             image: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
             amount: '$146,000',
@@ -56,32 +126,77 @@ const Index = () => {
 
     ]
     return (
-        <section className={'mt-2 py-9 '}>
-            <div className=" flex items-center justify-evenly pb-3">
-                <ul className="flex gap-1">
-                    <li className={'flex lg:flex-none border rounded-lg lg:w-1/2'}>
-                        <input id="searchKey" className={'focus:outline-primary rounded-lg p-3'}
-                            type={"text"}
-                            placeholder={"Address"}/>
-                    </li>
-                    <li className={'flex lg:flex-none border rounded-lg lg:w-1/2'}>
-                        <input id="searchKey" className={'focus:outline-primary rounded-lg p-3'}
-                            type={"text"}
-                            placeholder={"Enter keyword..."}/>
-                    </li>
-                </ul>
-                <div className="flex items-center gap-1 bg-primary bg-opacity-50 rounded-md py-2 px-5">
-                    <RxMixerVertical className="text-3xl font-bold" /> <p className="text-xl">Filters</p>
+        <section className={'mt-2'}>
+            <div className="flex items-center justify-center gap-x-1 sm:gap-x-3 shadow-lg pt-2 pb-3">
+                <div>
+                    <ul className="flex ">
+                        <li className={'hidden sm:flex lg:flex-none border rounded-lg lg:w-1/2'}>
+                            <input id="searchKey" className={'focus:outline-primary w-full rounded-lg p-3'}
+                                type={"text"}
+                                placeholder={"Address"}/>
+                        </li>
+                        <li className={'flex lg:flex-none border rounded-lg lg:w-1/2'}>
+                            <input id="searchKey" className={'focus:outline-primary w-full rounded-lg p-3'}
+                                type={"text"}
+                                placeholder={"Enter keyword..."}/>
+                        </li>
+                    </ul>
                 </div>
-                <div className="flex items-center gap-1 bg-primary py-2 px-5  bg-opacity-50 rounded-md">
-                    <IoIosSearch className="text-3xl font-bold"  /> <p className="text-xl">Search </p>
+                
+                
+                <div className="hidden sm:flex justify-center items-center">
+                     <select className="border rounded-lg p-3 space-x-1"> 
+                        <option>Neighbourhoods</option>
+                            {neighbourhoods.map(neigh => (
+                            <option key={neigh.id}>
+                                {neigh.name}
+                            </option>
+
+                        ))}
+                    </select>
+                </div>
+                <div className="hidden sm:flex justify-center items-center">
+                     <select className="border rounded-lg p-3 space-x-1"> 
+                        <option>Categories</option>
+                            {categories.map(category => (
+                            <option key={category.id}>
+                                {category.name}
+                            </option>
+
+                        ))}
+                    </select>
+                </div>
+                <div className="hidden sm:flex justify-center items-center">
+                     <select className="border rounded-lg p-3 space-x-1"> 
+                        <option>Cities</option>
+                            {cities.map(city => (
+                            <option key={city.id}>
+                                {city.name}
+                            </option>
+
+                        ))}
+                    </select>
+                </div>
+                <div onClick={handleOptions} className="flex items-center gap-1 bg-primary bg-opacity-50 rounded-md p-3 sm:py-3 sm:px-9">
+                    <RxMixerVertical className="text-lg font-extrabold" /> <p className="hidden font-extrabold sm:block">Filters</p>
+                </div>
+                <div className="flex items-center gap-1 bg-primary p-3 sm:py-3 sm:px-9  bg-opacity-50 rounded-md">
+                    <IoIosSearch className="text-lg font-extrabold"  /> <p className="hidden font-extrabold sm:block">Search </p>
                 </div>
                 
             </div>
-            <div className={' px-3 gap-4 text-center'}>
+                {toggle && isMobile&&
+                        <div className="w-full z-30 transition-all duration-300 shadow-lg flex justify-center">
+                            <div className="bg-white w-full rounded-lg flex justify-center">
+                                <PropertyFilters />
+                            </div>
+                        </div>
+                    }
+            <div className={' p-3 gap-4 text-center'}>
                 <h1 className={'font-bold text-3xl sm:text-4xl'}>Property Listings</h1>
                 <p className={'font-light text-sm'}>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
             </div>
+            
             {/*Featured Properties*/}
             <div className={'px-3 mt-5 flex justify-evenly'}>
                 <div className={'grid grid-cols-1 sm:grid-cols-2 md:grid-col-2 lg:grid-cols-3 gap-4'}>
