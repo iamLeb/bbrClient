@@ -9,7 +9,8 @@ import {FaRegUserCircle} from "react-icons/fa";
 import {useLocation, useNavigate} from "react-router-dom";
 import {FaCalendarAlt} from "react-icons/fa";
 import {MdOutlineCancel} from "react-icons/md";
-import { GiMicrophone } from "react-icons/gi";
+import {GiMicrophone} from "react-icons/gi";
+import { GrUserManager } from "react-icons/gr";
 
 const Sidebar = ({sidebar, toggleSidebar}) => {
     const navigate = useNavigate();
@@ -52,7 +53,7 @@ const Sidebar = ({sidebar, toggleSidebar}) => {
             path: "gallery",
         },
         {
-            icon: <GiMicrophone />,
+            icon: <GiMicrophone/>,
             name: "Testimonials",
             path: "testimonials",
         },
@@ -60,6 +61,11 @@ const Sidebar = ({sidebar, toggleSidebar}) => {
             icon: <FaRegUserCircle/>,
             name: "My Profile",
             path: "profile",
+        },
+        {
+            icon: <GrUserManager />,
+            name: "Manage Roles and Permissions",
+            path: "availability",
         },
         {
             icon: <FaCalendarAlt/>,
