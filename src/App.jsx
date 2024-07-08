@@ -28,6 +28,7 @@ import GlobalContext from "./context/Global.js";
 import Preloader from "./components/Preloader.jsx"; // Import Preloader component
 import ScrollToTop from "./components/ScrollToTop.js";
 import Availability from "./pages/dashboard/Availability.jsx";
+import Neighbourhood from "./pages/dashboard/Neighbourhood.jsx";
 
 function App() {
   const { loading } = useContext(GlobalContext);
@@ -66,7 +67,7 @@ function App() {
             <Route index element={<Admin />} />
             <Route path={"category"} element={<Categories />} />
             <Route path={"blog"} element={<Blog />} />
-            <Route path={"provinces"} element={<Province />} />
+            <Route path={"neighbourhoods"} element={<Neighbourhood />} />
             <Route path={"listings"} element={<Properties />} />
             <Route path={"contacts"} element={<Contact />} />
             <Route path={"testimonials"} element={<Testimonial />} />

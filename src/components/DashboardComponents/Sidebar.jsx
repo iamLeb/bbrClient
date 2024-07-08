@@ -39,8 +39,8 @@ const Sidebar = ({sidebar, toggleSidebar}) => {
         },
         {
             icon: <CiMap/>,
-            name: "Provinces",
-            path: "provinces",
+            name: "Neighbourhoods",
+            path: "neighbourhoods",
         },
         {
             icon: <IoMailOpenSharp/>,
