@@ -3,6 +3,8 @@ import {MdOutlineCancel} from "react-icons/md";
 import {IoCameraSharp, IoHome, IoMailOpenSharp} from "react-icons/io5";
 import {CiBoxList} from "react-icons/ci";
 import {FaCircleInfo} from "react-icons/fa6";
+import {TbHomeDollar} from "react-icons/tb";
+import React from "react";
 
 const SideBar = ({sidebar, toggleSidebar}) => {
     const navigate = useNavigate();
@@ -39,6 +41,12 @@ const SideBar = ({sidebar, toggleSidebar}) => {
             name: 'Listings',
             onClick: () => navigate('/properties/listing'),
             icon: <CiBoxList/>,
+        },
+        {
+            id: 5,
+            name: 'Buy | Sell',
+            onClick: () => navigate('/contact'),
+            icon:  <TbHomeDollar/>,
         },
     ];
 
