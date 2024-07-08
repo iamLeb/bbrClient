@@ -95,7 +95,7 @@ const Neighbourhood = () => {
                     <div>
                         <button onClick={toggleModal}
                                 className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>+
-                            Add New Neighbourhood
+                            Add New
                         </button>
                     </div>
                 </div>
