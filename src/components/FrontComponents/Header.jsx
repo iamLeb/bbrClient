@@ -1,10 +1,12 @@
-import { FiMenu } from "react-icons/fi";
-import { IoIosArrowDown } from "react-icons/io";
-import { TbHomeDollar } from "react-icons/tb";
-import { PiLineVerticalThin } from "react-icons/pi";
+import {FiMenu} from "react-icons/fi";
+import {IoIosArrowDown} from "react-icons/io";
+import {TbHomeDollar} from "react-icons/tb";
+import {PiLineVerticalThin} from "react-icons/pi";
 import {useNavigate} from "react-router-dom";
+import {GoArrowRight} from "react-icons/go";
+import React from "react";
 
-const Header = () => {
+const Header = ({sidebar, toggleSidebar}) => {
     const navigate = useNavigate();
 
     const links = [
@@ -49,7 +51,8 @@ const Header = () => {
                     <ul className={'flex space-x-4 items-center'}>
                         {links.map(link => (
                             <li onClick={() => link.onClick()} key={link.id}>
-                                <div className={`flex items-center space-x-1 hover:cursor-pointer hover:text-primary ${link.active && 'text-primary'} `}>
+                                <div
+                                    className={`flex items-center space-x-1 hover:cursor-pointer hover:text-primary ${link.active && 'text-primary'} `}>
                                     <span>{link.name}</span>
                                 </div>
 
@@ -57,9 +60,10 @@ const Header = () => {
                         ))}
 
                         <li>
-                            <ul onClick={() => navigate('/contact')} className={'cursor-pointer flex items-center space-x-1 bg-primary p-4 rounded-lg font-semibold text-white'}>
+                            <ul onClick={() => navigate('/contact')}
+                                className={'cursor-pointer flex items-center space-x-1 bg-primary p-4 rounded-lg font-semibold text-white'}>
                                 <li>
-                                <TbHomeDollar/>
+                                    <TbHomeDollar/>
                                 </li>
                                 <li>
                                     <PiLineVerticalThin/>
@@ -74,8 +78,8 @@ const Header = () => {
 
                 {/*Mobile View*/}
                 <div className={'flex md:hidden items-center space-x-3'}>
-                    <div>
-                    <FiMenu className={'text-primary'} size={32} />
+                    <div onClick={toggleSidebar}>
+                       <FiMenu className={'text-primary'} size={32}/>
                     </div>
                 </div>
 
