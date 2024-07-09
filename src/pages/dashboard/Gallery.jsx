@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import api from "../../services/api";
-import Neighbourhood from "./Neighbourhood.jsx"; // Ensure correct import
 
 const Gallery = () => {
     // State variables
@@ -10,14 +9,30 @@ const Gallery = () => {
     const [errors, setErrors] = useState('');
     const [modal, setModal] = useState(false);
     const [selectedGallery, setSelectedGallery] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     // Fetching galleries and neighbourhoods
     const fetchGalleries = async () => {
         try {
             const res = await api.get('/gallery');
-            setGalleries(res.data);
+            const galleriesData = res.data;
+
+            const galleriesWithMedia = await Promise.all(galleriesData.map(async (gallery) => {
+                const mediaRes = await fetchMedia(gallery._id);
+                return { ...gallery, media: mediaRes.data };
+            }));
+            setGalleries(galleriesWithMedia);
         } catch (error) {
             setErrors('There was an error fetching galleries: ' + error.message);
+        }
+    };
+
+    const fetchMedia = async (ownerId) => {
+        try {
+            return await api.get(`/media/getMediaForOwner/${ownerId}`);
+        } catch (error) {
+            setErrors('Error getting Media: ' + error.message);
+            return { data: [] };
         }
     };
 
@@ -53,34 +68,37 @@ const Gallery = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         const formData = new FormData();
         formData.append('file', newGallery.image);
         formData.append('neighbourhood', newGallery.neighbourhood);
 
         try {
+            // Upload the file to AWS
             const uploadRes = await api.post('/file/upload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
+            const url = uploadRes.data.url; // response url
 
-            const imageUrl = uploadRes.data.url;
+            // Create the gallery
+            const galleryRes = await api.post('/gallery/create', { neighbourhood: newGallery.neighbourhood });
+            const galleryId = galleryRes.data._id;
 
-            const galleryRes = await api.post('/gallery/create', {
-                image: imageUrl,
-                neighbourhood: newGallery.neighbourhood
+            // Store the URL and gallery ID in the media collection
+            await api.post('/media/create', {
+                type: 'image',
+                url,
+                ownerId: galleryId,
+                name: 'Gallery',
             });
 
-            const createdGallery = galleryRes.data;
-
-            setGalleries([
-                ...galleries,
-                createdGallery
-            ]);
-
-            handleClose();
+            fetchGalleries(); // Refresh the galleries list
+            setLoading(false);
+            handleClose()
         } catch (error) {
-            setErrors('Error creating gallery: ' + error.message);
+            setErrors('There was a problem creating the gallery: ' + error.message);
         }
     };
 
@@ -113,7 +131,7 @@ const Gallery = () => {
     // Helper function to get neighbourhood name
     const getNeighbourhoodName = (id) => {
         const neighbourhood = neighbourhoods.find((neighbourhood) => neighbourhood._id === id);
-        return neighbourhood ? neighbourhood.name : '';
+        return neighbourhood ? neighbourhood : '';
     };
 
     // Modal toggle function
@@ -143,18 +161,20 @@ const Gallery = () => {
                         {galleries.map((gallery) => (
                             <tr className="text-xs border-b" key={gallery._id}>
                                 <td className="px-4 py-2 text-left">
-                                    <div className={'overflow-hidden h-9'}>
-                                        <img className={'w-full h-full object-center object-cover'} src={gallery.image} alt=""/>
+                                    <div className="overflow-hidden h-9">
+                                        <img className="w-full h-full object-center object-cover"
+                                             src={gallery.media.url} alt=""/>
                                     </div>
-
                                 </td>
                                 <td className="px-4 py-2 text-left">{getNeighbourhoodName(gallery.neighbourhood)}</td>
                                 <td className="px-4 py-2 text-right">
                                     <div className="flex justify-end">
-                                        <button onClick={() => handleEdit(gallery)} className="px-2 py-1 rounded bg-primary text-white">
+                                        <button onClick={() => handleEdit(gallery)}
+                                                className="px-2 py-1 rounded bg-primary text-white">
                                             Edit
                                         </button>
-                                        <button onClick={() => handleDelete(gallery._id)} className="ml-2 px-2 py-1 rounded bg-red-500 text-white">
+                                        <button onClick={() => handleDelete(gallery._id)}
+                                                className="ml-2 px-2 py-1 rounded bg-red-500 text-white">
                                             Remove
                                         </button>
                                     </div>
@@ -195,7 +215,9 @@ const Gallery = () => {
                                 <div className="flex justify-end space-x-2 text-xs">
                                     <button type="button" onClick={handleClose} className="px-3 py-0 rounded bg-gray-100">Close</button>
                                     <button type="submit" className="px-4 py-2 rounded bg-primary text-white">
-                                        {selectedGallery ? 'Update Gallery' : 'Create Gallery'}
+                                        {loading ? 'Loading...' : (
+                                            selectedGallery ? 'Update Gallery' : 'Create Gallery'
+                                        )}
                                     </button>
                                 </div>
                             </form>
