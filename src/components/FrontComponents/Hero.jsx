@@ -8,7 +8,7 @@ const Hero = () => {
     const {neighbourhoods, categories, loading} = useContext(GlobalContext)
 
     return (
-        <section className="relative pb-20">
+        <section className="relative pb-20 py-14">
             <div
 
                 className={'w-full h-[600px] bg-cover bg-center bg-[url("https://tunatheme.com/tf/html/quarter-preview/quarter/img/slider/13.jpg")] relative'}>
