@@ -42,8 +42,9 @@ const FrontLayout = () => {
                 </div>
 
                 <div className="flex-1 z-0 lg:z-auto">
-                    <Header sidebar={sidebar} toggleSidebar={toggleSidebar}/>
-
+                    <div className={'mb-7'}>
+                        <Header sidebar={sidebar} toggleSidebar={toggleSidebar}/>
+                    </div>
                     {location.pathname !== '/' && (
                         <div className={'container mx-auto flex flex-col text-xs'}>
                             <ul className={'flex space-x-4 text-gray-500 border-b p-5'}>
