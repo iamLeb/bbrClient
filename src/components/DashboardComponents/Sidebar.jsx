@@ -9,7 +9,8 @@ import {FaRegUserCircle} from "react-icons/fa";
 import {useLocation, useNavigate} from "react-router-dom";
 import {FaCalendarAlt} from "react-icons/fa";
 import {MdOutlineCancel} from "react-icons/md";
-import { GiMicrophone } from "react-icons/gi";
+import {GiMicrophone} from "react-icons/gi";
+import {GrUserManager} from "react-icons/gr";
 
 const Sidebar = ({sidebar, toggleSidebar}) => {
     const navigate = useNavigate();
@@ -38,8 +39,8 @@ const Sidebar = ({sidebar, toggleSidebar}) => {
         },
         {
             icon: <CiMap/>,
-            name: "Provinces",
-            path: "provinces",
+            name: "Neighbourhoods",
+            path: "neighbourhoods",
         },
         {
             icon: <IoMailOpenSharp/>,
@@ -52,7 +53,7 @@ const Sidebar = ({sidebar, toggleSidebar}) => {
             path: "gallery",
         },
         {
-            icon: <GiMicrophone />,
+            icon: <GiMicrophone/>,
             name: "Testimonials",
             path: "testimonials",
         },
@@ -60,6 +61,12 @@ const Sidebar = ({sidebar, toggleSidebar}) => {
             icon: <FaRegUserCircle/>,
             name: "My Profile",
             path: "profile",
+        },
+        {
+            icon: <GrUserManager/>,
+            name: "Manage Roles",
+            path: "",
+            mobile: true,
         },
         {
             icon: <FaCalendarAlt/>,
@@ -70,7 +77,7 @@ const Sidebar = ({sidebar, toggleSidebar}) => {
 
     return (
         <aside
-            className={`overflow-y-auto fixed lg:static top-0 left-0 bg-neutral-800 text-white h-screen w-80 sm:w-[500px] lg:w-80 transition-transform duration-500 ease-in-out 
+            className={`overflow-y-auto no-scrollbar fixed lg:static top-0 left-0 bg-neutral-800 text-white h-screen w-80 sm:w-[500px] lg:w-80 transition-transform duration-500 ease-in-out 
             ${sidebar ? 'translate-x-0' : '-translate-x-full'} lg:transform-none`}>
 
             <div className="py-5 text-center border-b border-gray-50 flex items-center space-x-20">
@@ -83,7 +90,7 @@ const Sidebar = ({sidebar, toggleSidebar}) => {
 
             <ul className="flex flex-col gap-2 pt-9">
                 {items.map((item) => (
-                    <li key={item.name}>
+                    <li key={item.name} className={item.mobile ? 'block md:hidden' : ''}>
                         <div
                             onClick={() => {
                                 navigate(item.path);
