@@ -29,7 +29,7 @@ const Header = ({sidebar, toggleSidebar}) => {
 
                     {/* Manage Roles and Permissions button */}
                     <button 
-                        onClick={navigate('/secure/addAgent')}
+                        onClick={() => navigate('/secure/addAgent')}
                         className="hidden md:block text-sm transition-all duration-300 border border-primary hover:text-white hover:bg-primary text-primary rounded-full py-3 px-5"
                     >
                         Manage Roles and Permissions
