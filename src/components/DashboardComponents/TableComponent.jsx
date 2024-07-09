@@ -8,53 +8,7 @@ const TableComponent = () => {
     const [listings, setListings] = useState([]);
     const [errors, setErrors] = useState('');
 
-    // const listings = [
-    //     {
-    //         id:0,
-    //         featured: true,
-    //         image: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    //         amount: '$146,000',
-    //         title: 'super duper long title',
-    //         address: '15 Berwickkhbfe wfbdequdbewdfuebdf crt, Winnipeg, MB',
-    //         beds: 4,
-    //         baths: 4,
-    //         sqft: 900,
-    //     },
-    //     {
-    //         id:0,
-    //         featured: true,
-    //         image: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    //         amount: '$146,000',
-    //         title: 'Lot 6',
-    //         address: '15 Berwick crt, Winnipeg, MB',
-    //         beds: 4,
-    //         baths: 4,
-    //         sqft: 900,
-    //     },
-    //     {
-    //         id:0,
-    //         featured: true,
-    //         image: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    //         amount: '$146,000',
-    //         title: 'Lot 6',
-    //         address: '15 Berwick crt, Winnipeg, MB',
-    //         beds: 4,
-    //         baths: 4,
-    //         sqft: 900,
-    //     },
-    //     {
-    //         id:0,
-    //         featured: true,
-    //         image: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    //         amount: '$146,000',
-    //         title: 'Lot 6',
-    //         address: '15 Berwick crt, Winnipeg, MB',
-    //         beds: 4,
-    //         baths: 4,
-    //         sqft: 900,
-    //     },
-
-    // ]
+    
     const handlesubmit = () => {
         navigate('/secure/addlistings');
     }
@@ -79,7 +33,7 @@ const TableComponent = () => {
                             <div>
                                 <button onClick={handlesubmit} className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>+ Add
                                     New
-                                    Category
+                                    Listing
                                 </button>
                             </div>
                         </div>

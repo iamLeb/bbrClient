@@ -6,8 +6,24 @@ import api from "../../services/api.js";
 const AddProperty = () => {
     const [newProperty, setNewProperty] = useState({ title: '', address: '', price: '', image:'',bed: '',bath: '',category: '',media: []});
     const [errors, setErrors] = useState('');
+    const [categories, setCategories] = useState([])
     const [selectedProperty, setSelectedProperty] = useState(null); // State for the selected property
     const navigate = useNavigate();
+    
+    
+    const fetchCategories = async () => {
+        try {
+            const res = await api.get('/category');
+            setCategories(res.data);
+        } catch (error) {
+            setErrors('There was an error fetching categories');
+        }
+    };
+
+    useEffect(() => {
+        fetchCategories();
+    }, []);
+    
     const handleCancel = () => {
         navigate('/secure/listings')
     }
@@ -132,10 +148,15 @@ const AddProperty = () => {
                         placeholder='add images of the property' className='p-3 border rounded-lg' />
                     </div>
                     <div className='p-3 flex flex-col'>
-                        <div className='font-bold mb-3'>category</div>
-                        <input value={newProperty.category} name='category' 
-                        onChange={handleChange} type='text' 
-                        placeholder='select property categoroy' className='p-3 border rounded-lg' />
+                        <div className='font-bold mb-3'>Category</div>
+                        <select  className='p-4 border rounded-lg'  onChange={handleChange} value={newProperty.category} name='category' >
+                            <option>category</option>
+                            {categories.map( category => (
+                                <option>
+                                    {category.name}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>media</div>
