@@ -35,10 +35,9 @@ const Header = ({sidebar, toggleSidebar}) => {
                     </button>
 
                     {/* User profile section */}
-                    <div className="flex space-x-2 items-center cursor-pointer bg-gray-200 p-4 justify-center">
+                    <div onClick={handleDrop} className="flex space-x-2 items-center cursor-pointer bg-gray-200 p-4 justify-center">
                         <div className="overflow-hidden w-9 rounded-full">
                             <img
-                                onClick={handleDrop}
                                 className="object-center object-cover w-full h-full"
                                 src="https://themesbrand.com/velzon/html/master/assets/images/users/avatar-1.jpg"
                                 alt="photo"
