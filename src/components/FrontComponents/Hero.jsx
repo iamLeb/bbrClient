@@ -46,13 +46,34 @@ const Hero = () => {
                             </select>
                         )}
 
+                        <select className={'px-5 border py-4 w-full rounded-lg outline-none'}>
+                            <option>Select Cities</option>
+                            <option value="winnipeg">Winnipeg</option>
+                            <option value="brandon">Brandon</option>
+                            <option value="steinbach">Steinbach</option>
+                            <option value="thompson">Thompson</option>
+                            <option value="portage_la_prairie">Portage la Prairie</option>
+                            <option value="winker">Winkler</option>
+                            <option value="selkirk">Selkirk</option>
+                            <option value="morden">Morden</option>
+                            <option value="dauphin">Dauphin</option>
+                            <option value="the_pas">The Pas</option>
+                            <option value="flin_flon">Flin Flon</option>
+                            <option value="stonewall">Stonewall</option>
+                            <option value="neepawa">Neepawa</option>
+                            <option value="swan_river">Swan River</option>
+                            <option value="virden">Virden</option>
+                            <option value="carman">Carman</option>
+                        </select>
+
                         {loading ? (
                             <div className="flex justify-center items-center">
                                 <div
                                     className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary"></div>
                             </div>
                         ) : (
-                            <select defaultValue={'Select Neighbourhood'} className={'px-5 border py-4 w-full rounded-lg outline-none'}>
+                            <select defaultValue={'Select Neighbourhood'}
+                                    className={'px-5 border py-4 w-full rounded-lg outline-none'}>
                                 <option>Select Neighbourhood</option>
                                 {neighbourhoods.map((neighbourhood) => (
                                     <option key={neighbourhood._id}
@@ -60,9 +81,6 @@ const Hero = () => {
                                 ))}
                             </select>
                         )}
-                        <select className={'px-5 border py-4 w-full rounded-lg outline-none'}>
-                            <option value={""}>Select City</option>
-                        </select>
                         <button className={'bg-primary text-white h-14 rounded-lg w-full'}>Find Now</button>
                     </div>
                 </div>
