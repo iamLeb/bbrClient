@@ -7,6 +7,7 @@ const Neighbourhood = () => {
     const [errors, setErrors] = useState('');
     const [selectedNeighbourhood, setSelectedNeighbourhood] = useState(null); // State for the selected neighbourhood
     const [modal, setModal] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const toggleModal = () => {
         setModal(!modal);
@@ -36,25 +37,29 @@ const Neighbourhood = () => {
     }
 
     const handleDelete = async id => {
-        try {
-            const res = await api.delete(`/neighbourhood/${id}`);
-            if (res.status === 200) {
-                setNeighbourhoods(neighbourhoods.filter(neighbourhood => neighbourhood._id !== id));
+        if (window.confirm("Are you sure you want to delete this neighbourhood?")) {
+            setLoading(true);
+            try {
+                const res = await api.delete(`/neighbourhood/${id}`);
+                if (res.status === 200) {
+                    setNeighbourhoods(neighbourhoods.filter(neighbourhood => neighbourhood._id !== id));
+                }
+            } catch (e) {
+                setErrors('There was an error deleting the neighbourhood');
             }
-        } catch (e) {
-            setErrors('There was an error deleting the neighbourhood');
+            setLoading(false)
         }
     }
 
     const handleClose = () => {
         setSelectedNeighbourhood(null)
-        setNewNeighbourhood({ name: '' });
+        setNewNeighbourhood({name: ''});
         toggleModal();
     };
 
     const handleSubmit = async (e) => {
+        setLoading(true);
         e.preventDefault();
-
         if (!newNeighbourhood.name) {
             setErrors('Neighbourhood name is required');
         } else {
@@ -78,12 +83,15 @@ const Neighbourhood = () => {
                 setErrors(e.response.data.error);
             }
         }
+        setLoading(false)
     }
 
     const handleEdit = neighbourhood => {
+        setLoading(true)
         setSelectedNeighbourhood(neighbourhood);
-        setNewNeighbourhood({ name: neighbourhood.name });
+        setNewNeighbourhood({name: neighbourhood.name});
         toggleModal();
+        setLoading(false)
     };
 
     return (
@@ -91,7 +99,7 @@ const Neighbourhood = () => {
             <div className="bg-white border border-gray-100 shadow-2xl">
                 <div className="p-4 border-b flex items-center justify-between">
                     <h3 className="font-bold">Neighbourhood</h3>
-
+                    {loading ? 'loading...' : ''}
                     <div>
                         <button onClick={toggleModal}
                                 className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>+
@@ -115,7 +123,9 @@ const Neighbourhood = () => {
                                 <td className="px-4 py-2 text-left">{neighbourhood.name}</td>
                                 <td className="px-4 py-2">
                                     <div className={'text-right flex justify-end'}>
-                                        <button onClick={() => handleEdit(neighbourhood)} className="px-2 py-1 rounded bg-primary text-white">Edit</button>
+                                        <button onClick={() => handleEdit(neighbourhood)}
+                                                className="px-2 py-1 rounded bg-primary text-white">Edit
+                                        </button>
                                         <button onClick={() => handleDelete(neighbourhood._id)}
                                                 className="ml-2 px-2 py-1 rounded bg-red-500 text-white">Remove
                                         </button>
@@ -161,7 +171,8 @@ const Neighbourhood = () => {
                                     <button type="button" onClick={handleClose}
                                             className="px-3 py-0 rounded bg-gray-100">Close
                                     </button>
-                                    <button type="submit" className="px-4 py-2 rounded bg-primary text-white">{selectedNeighbourhood ? 'Update Neighbourhood' : 'Create Neighbourhood'}
+                                    <button type="submit"
+                                            className="px-4 py-2 rounded bg-primary text-white">{selectedNeighbourhood ? 'Update Neighbourhood' : 'Create Neighbourhood'}
                                     </button>
                                 </div>
                             </form>

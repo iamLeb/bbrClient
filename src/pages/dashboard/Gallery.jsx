@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
 import api from "../../services/api";
 import Neighbourhood from "./Neighbourhood.jsx"; // Ensure correct import
 
@@ -6,7 +6,7 @@ const Gallery = () => {
     // State variables
     const [galleries, setGalleries] = useState([]);
     const [neighbourhoods, setNeighbourhoods] = useState([]);
-    const [newGallery, setNewGallery] = useState({ image: '', neighbourhood: '' });
+    const [newGallery, setNewGallery] = useState({image: '', neighbourhood: ''});
     const [errors, setErrors] = useState('');
     const [modal, setModal] = useState(false);
     const [selectedGallery, setSelectedGallery] = useState(null);
@@ -37,7 +37,7 @@ const Gallery = () => {
 
     // Handling form changes and submissions
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setNewGallery({
             ...newGallery,
             [name]: value
@@ -86,27 +86,29 @@ const Gallery = () => {
 
     // Deleting gallery
     const handleDelete = async (id) => {
-        try {
-            const res = await api.delete(`/gallery/${id}`);
-            if (res.status === 200) {
-                setGalleries(galleries.filter(gallery => gallery._id !== id));
+        if (window.confirm("Are you sure you want to delete this gallery?")) {
+            try {
+                const res = await api.delete(`/gallery/${id}`);
+                if (res.status === 200) {
+                    setGalleries(galleries.filter(gallery => gallery._id !== id));
+                }
+            } catch (error) {
+                setErrors('There was an error deleting the gallery: ' + error.message);
             }
-        } catch (error) {
-            setErrors('There was an error deleting the gallery: ' + error.message);
         }
     };
 
     // Editing gallery
     const handleEdit = (gallery) => {
         setSelectedGallery(gallery);
-        setNewGallery({ image: gallery.image, neighbourhood: gallery.neighbourhood });
+        setNewGallery({image: gallery.image, neighbourhood: gallery.neighbourhood});
         toggleModal();
     };
 
     // Closing modal
     const handleClose = () => {
         setSelectedGallery(null);
-        setNewGallery({ image: '', neighbourhood: '' });
+        setNewGallery({image: '', neighbourhood: ''});
         toggleModal();
     };
 
@@ -126,7 +128,8 @@ const Gallery = () => {
             <div className="bg-white border border-gray-100 shadow-2xl">
                 <div className="p-4 border-b flex items-center justify-between">
                     <h3 className="font-bold">Gallery</h3>
-                    <button onClick={toggleModal} className="bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer">
+                    <button onClick={toggleModal}
+                            className="bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer">
                         + Add New Gallery
                     </button>
                 </div>
@@ -144,17 +147,20 @@ const Gallery = () => {
                             <tr className="text-xs border-b" key={gallery._id}>
                                 <td className="px-4 py-2 text-left">
                                     <div className={'overflow-hidden h-9'}>
-                                        <img className={'w-full h-full object-center object-cover'} src={gallery.image} alt=""/>
+                                        <img className={'w-full h-full object-center object-cover'} src={gallery.image}
+                                             alt=""/>
                                     </div>
 
                                 </td>
                                 <td className="px-4 py-2 text-left">{getNeighbourhoodName(gallery.neighbourhood)}</td>
                                 <td className="px-4 py-2 text-right">
                                     <div className="flex justify-end">
-                                        <button onClick={() => handleEdit(gallery)} className="px-2 py-1 rounded bg-primary text-white">
+                                        <button onClick={() => handleEdit(gallery)}
+                                                className="px-2 py-1 rounded bg-primary text-white">
                                             Edit
                                         </button>
-                                        <button onClick={() => handleDelete(gallery._id)} className="ml-2 px-2 py-1 rounded bg-red-500 text-white">
+                                        <button onClick={() => handleDelete(gallery._id)}
+                                                className="ml-2 px-2 py-1 rounded bg-red-500 text-white">
                                             Remove
                                         </button>
                                     </div>
@@ -181,9 +187,11 @@ const Gallery = () => {
                                 <div className="mb-4">
                                     {errors && <p className="text-red-500 text-xs mt-2">{errors}</p>}
                                     <label className="block text-sm font-bold mb-2">Image</label>
-                                    <input onChange={handleFileChange} type="file" name="file" className="w-full p-2 border rounded" />
+                                    <input onChange={handleFileChange} type="file" name="file"
+                                           className="w-full p-2 border rounded"/>
                                     <label className="block text-sm font-bold mb-2">Neighbourhood</label>
-                                    <select onChange={handleChange} name="neighbourhood" value={newGallery.neighbourhood} className="w-full p-2 border rounded">
+                                    <select onChange={handleChange} name="neighbourhood"
+                                            value={newGallery.neighbourhood} className="w-full p-2 border rounded">
                                         <option value="">Select a neighbourhood</option>
                                         {neighbourhoods.map((neighbourhood) => (
                                             <option key={neighbourhood._id} value={neighbourhood._id}>
@@ -193,7 +201,9 @@ const Gallery = () => {
                                     </select>
                                 </div>
                                 <div className="flex justify-end space-x-2 text-xs">
-                                    <button type="button" onClick={handleClose} className="px-3 py-0 rounded bg-gray-100">Close</button>
+                                    <button type="button" onClick={handleClose}
+                                            className="px-3 py-0 rounded bg-gray-100">Close
+                                    </button>
                                     <button type="submit" className="px-4 py-2 rounded bg-primary text-white">
                                         {selectedGallery ? 'Update Gallery' : 'Create Gallery'}
                                     </button>
