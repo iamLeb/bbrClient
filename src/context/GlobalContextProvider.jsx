@@ -1,14 +1,15 @@
 import GlobalContext from './Global.js';
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import api from "../services/api.js";
 
-const GlobalContextProvider = ({ children }) => {
+const GlobalContextProvider = ({children}) => {
     const [loading, setLoading] = useState(false);
 
     const [categories, setCategories] = useState([]);
     const [testimonials, setTestimonials] = useState([]);
     const [blogs, setBlogs] = useState([]);
     const [neighbourhoods, setNeighbourhoods] = useState([]);
+    const [contacts, setContacts] = useState([]);
 
     const getCategories = async () => {
         const res = await api.get('category');
@@ -32,15 +33,20 @@ const GlobalContextProvider = ({ children }) => {
         setLoading(false);
     };
 
+    const getContacts = async () => {
+        const res = await api.get('contact');
+        setContacts(res.data);
+    }
+
     useEffect(() => {
         const fetchData = async () => {
-            await Promise.all([getCategories(), getTestimonial(), getBlogs(), getNeighbourhood()]);
+            await Promise.all([getCategories(), getTestimonial(), getBlogs(), getNeighbourhood(), getContacts()]);
         };
         fetchData();
     }, []);
 
     return (
-        <GlobalContext.Provider value={{ categories, testimonials, blogs, neighbourhoods, loading }}>
+        <GlobalContext.Provider value={{categories, testimonials, blogs, neighbourhoods, loading, contacts}}>
             {children}
         </GlobalContext.Provider>
     );
