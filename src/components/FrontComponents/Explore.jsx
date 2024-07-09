@@ -12,7 +12,7 @@ import ViewMore from "./ViewMore.jsx";
 
 const Explore = () => {
     return (
-        <div className={'py-24'}>
+        <div className={'py-20'}>
             <div className={'flex flex-col justify-between gap-4 text-center'}>
                 <h1 className={'font-bold text-4xl sm:text-5xl'}>Discover The Perfect Neighbourhood</h1>
                 <p className={'font-light text-sm'}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda

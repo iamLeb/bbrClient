@@ -8,8 +8,10 @@ import { IoIosSearch } from "react-icons/io";
 import { RxMixerVertical } from "react-icons/rx";
 import { useState, useEffect } from "react";
 import PropertyFilters from "../../../components/FrontComponents/PropertyFilters";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
+    const navigate = useNavigate()
     const [toggle,  setToggle] = useState(false)
     const [isMobile, setIsMobile] = useState(window.innerWidth < 640)
     useEffect(() => {
@@ -128,27 +130,11 @@ const Index = () => {
     return (
         <section className={'mt-2'}>
             <div className="flex items-center justify-center gap-x-1 sm:gap-x-3 shadow-lg pt-2 pb-3">
-                <div>
-                    <ul className="flex ">
-                        <li className={'hidden sm:flex lg:flex-none border rounded-lg lg:w-1/2'}>
-                            <input id="searchKey" className={'focus:outline-primary w-full rounded-lg p-3'}
-                                type={"text"}
-                                placeholder={"Address"}/>
-                        </li>
-                        <li className={'flex lg:flex-none border rounded-lg lg:w-1/2'}>
-                            <input id="searchKey" className={'focus:outline-primary w-full rounded-lg p-3'}
-                                type={"text"}
-                                placeholder={"Enter keyword..."}/>
-                        </li>
-                    </ul>
-                </div>
-                
-                
                 <div className="hidden sm:flex justify-center items-center">
-                     <select className="border rounded-lg p-3 space-x-1"> 
-                        <option>Neighbourhoods</option>
+                     <select className="border rounded-lg p-3 w-full space-x-1"> 
+                        <option className="">Neighbourhoods</option>
                             {neighbourhoods.map(neigh => (
-                            <option key={neigh.id}>
+                            <option className="" key={neigh.id}>
                                 {neigh.name}
                             </option>
 
@@ -177,12 +163,12 @@ const Index = () => {
                         ))}
                     </select>
                 </div>
-                <div onClick={handleOptions} className="flex items-center gap-1 bg-primary bg-opacity-50 rounded-md p-3 sm:py-3 sm:px-9">
-                    <RxMixerVertical className="text-lg font-extrabold" /> <p className="hidden font-extrabold sm:block">Filters</p>
-                </div>
-                <div className="flex items-center gap-1 bg-primary p-3 sm:py-3 sm:px-9  bg-opacity-50 rounded-md">
-                    <IoIosSearch className="text-lg font-extrabold"  /> <p className="hidden font-extrabold sm:block">Search </p>
-                </div>
+                <button onClick={handleOptions} className="flex items-center gap-1 sm:hidden bg-primary bg-opacity-50 rounded-md p-3 sm:py-3 sm:px-9">
+                    <RxMixerVertical className="text-lg font-extrabold" /> <p className="font-extrabold">Filters</p>
+                </button>
+                <button className="flex items-center gap-1 bg-primary p-3 sm:py-3 sm:px-9  bg-opacity-50 rounded-md">
+                    <IoIosSearch className="text-lg font-extrabold"  /> <p className="font-extrabold">Search </p>
+                </button>
                 
             </div>
                 {toggle && isMobile&&
@@ -210,31 +196,12 @@ const Index = () => {
                                             className={'object-cover h-full w-full cursor-pointer transition-all duration-300 group-hover:brightness-75 group-hover:scale-105'}
                                             src={feat.image}
                                             alt="image"/>
-                                        <ul className={'transition-all duration-500 flex absolute top-0 h-full w-full justify-center items-center space-x-2 opacity-0 group-hover:opacity-100'}>
-                                            <li className="text-primary bg-white hover:text-white rounded-full hover:bg-primary">
-                                                <div
-                                                    className={'cursor-pointer transition-all duration-300 bg-white p-4 rounded-full  hover:bg-primary'}>
-                                                    <FaArrowRightArrowLeft  className={'rounded-full text-xl'}/>
-                                                </div>
-                                            </li>
-                                            <li className="text-primary bg-white hover:text-white rounded-full hover:bg-primary">
-                                                <div
-                                                    className={'cursor-pointer transition-all duration-300 bg-white p-4 rounded-full hover:text-white hover:bg-primary'}>
-                                                    <IoBookmarkOutline className={'rounded-full text-xl'}/>
-                                                </div>
-                                            </li>
-                                            <li className="text-primary bg-white hover:text-white rounded-full hover:bg-primary">
-                                                <div
-                                                    className={'cursor-pointer transition-all duration-300 bg-white p-4 rounded-full item hover:bg-primary '}>
-                                                    <IoIosSearch className={'rounded-full  text-xl'}/>
-                                                </div>
-                                            </li>
-                                        </ul>
+                                    
                                     </div>
                                     <span className={'absolute -bottom-6 left-3 text-primary bg-white shadow-2xl rounded-md p-3 text-xl'}>{feat.amount}</span>
                                 </div>
                                 <div className="pt-5">
-                                    <span className={'font-semibold text-xl'}>{feat.title}</span>
+                                    <span onClick={() => navigate('/properties/listing/1')} className={'hover:cursor-pointer font-semibold text-xl'}>{feat.title}</span>
                                 </div>
                                 <div className={'flex space-x-2 text-sm text-gray-500'}>
                                     <IoLocationOutline/>
