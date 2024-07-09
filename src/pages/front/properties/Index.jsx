@@ -128,27 +128,11 @@ const Index = () => {
     return (
         <section className={'mt-2'}>
             <div className="flex items-center justify-center gap-x-1 sm:gap-x-3 shadow-lg pt-2 pb-3">
-                <div>
-                    <ul className="flex ">
-                        <li className={'hidden sm:flex lg:flex-none border rounded-lg lg:w-1/2'}>
-                            <input id="searchKey" className={'focus:outline-primary w-full rounded-lg p-3'}
-                                type={"text"}
-                                placeholder={"Address"}/>
-                        </li>
-                        <li className={'flex lg:flex-none border rounded-lg lg:w-1/2'}>
-                            <input id="searchKey" className={'focus:outline-primary w-full rounded-lg p-3'}
-                                type={"text"}
-                                placeholder={"Enter keyword..."}/>
-                        </li>
-                    </ul>
-                </div>
-                
-                
                 <div className="hidden sm:flex justify-center items-center">
-                     <select className="border rounded-lg p-3 space-x-1"> 
-                        <option>Neighbourhoods</option>
+                     <select className="border rounded-lg p-3 w-full space-x-1"> 
+                        <option className="">Neighbourhoods</option>
                             {neighbourhoods.map(neigh => (
-                            <option key={neigh.id}>
+                            <option className="" key={neigh.id}>
                                 {neigh.name}
                             </option>
 
@@ -177,12 +161,12 @@ const Index = () => {
                         ))}
                     </select>
                 </div>
-                <div onClick={handleOptions} className="flex items-center gap-1 bg-primary bg-opacity-50 rounded-md p-3 sm:py-3 sm:px-9">
-                    <RxMixerVertical className="text-lg font-extrabold" /> <p className="hidden font-extrabold sm:block">Filters</p>
-                </div>
-                <div className="flex items-center gap-1 bg-primary p-3 sm:py-3 sm:px-9  bg-opacity-50 rounded-md">
-                    <IoIosSearch className="text-lg font-extrabold"  /> <p className="hidden font-extrabold sm:block">Search </p>
-                </div>
+                <button onClick={handleOptions} className="flex items-center gap-1 sm:hidden bg-primary bg-opacity-50 rounded-md p-3 sm:py-3 sm:px-9">
+                    <RxMixerVertical className="text-lg font-extrabold" /> <p className="font-extrabold">Filters</p>
+                </button>
+                <button className="flex items-center gap-1 bg-primary p-3 sm:py-3 sm:px-9  bg-opacity-50 rounded-md">
+                    <IoIosSearch className="text-lg font-extrabold"  /> <p className="font-extrabold">Search </p>
+                </button>
                 
             </div>
                 {toggle && isMobile&&
