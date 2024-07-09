@@ -33,7 +33,7 @@ const AboutHero = () => {
             <div className={'md:w-1/2 flex flex-col text-black space-y-2 md:space-y-4 p-4 justify-center'}>
                 <h1 className={'font-bold text-3xl md:text-4xl lg:text-5xl text-primary'}>Mission</h1>
 
-                <div className={'p-4 relative h-96 bg-primary rounded-lg sm:rounded-r-lg flex flex-col space-y-8'}>
+                <div className={'p-4 relative h-96 bg-primary rounded-lg sm:rounded-r-lg flex flex-col space-y-6'}>
                     <div className={'pt-3 sm:pt-8 flex flex-col font-semibold space-y-2'}>
                         <p className={'text-white'}>Trusted partner</p>
                         <p className={'font-light'}>In realizing our clients' real estate dreams</p>
