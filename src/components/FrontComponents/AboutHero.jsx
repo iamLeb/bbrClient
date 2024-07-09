@@ -13,7 +13,7 @@ const AboutHero = () => {
 
                 <div className={'overflow-hidden w-full h-80'}>
                     <img className={'h-full w-full rounded-lg object-cover object-center'}
-                         src={'src/assets/images/img_1.png'}/>
+                         src={'src/assets/images/img.png'}/>
                 </div>
 
                 <div className={'flex flex-row space-x-32'}>
