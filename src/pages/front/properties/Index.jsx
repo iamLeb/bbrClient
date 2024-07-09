@@ -194,26 +194,7 @@ const Index = () => {
                                             className={'object-cover h-full w-full cursor-pointer transition-all duration-300 group-hover:brightness-75 group-hover:scale-105'}
                                             src={feat.image}
                                             alt="image"/>
-                                        <ul className={'transition-all duration-500 flex absolute top-0 h-full w-full justify-center items-center space-x-2 opacity-0 group-hover:opacity-100'}>
-                                            <li className="text-primary bg-white hover:text-white rounded-full hover:bg-primary">
-                                                <div
-                                                    className={'cursor-pointer transition-all duration-300 bg-white p-4 rounded-full  hover:bg-primary'}>
-                                                    <FaArrowRightArrowLeft  className={'rounded-full text-xl'}/>
-                                                </div>
-                                            </li>
-                                            <li className="text-primary bg-white hover:text-white rounded-full hover:bg-primary">
-                                                <div
-                                                    className={'cursor-pointer transition-all duration-300 bg-white p-4 rounded-full hover:text-white hover:bg-primary'}>
-                                                    <IoBookmarkOutline className={'rounded-full text-xl'}/>
-                                                </div>
-                                            </li>
-                                            <li className="text-primary bg-white hover:text-white rounded-full hover:bg-primary">
-                                                <div
-                                                    className={'cursor-pointer transition-all duration-300 bg-white p-4 rounded-full item hover:bg-primary '}>
-                                                    <IoIosSearch className={'rounded-full  text-xl'}/>
-                                                </div>
-                                            </li>
-                                        </ul>
+                                    
                                     </div>
                                     <span className={'absolute -bottom-6 left-3 text-primary bg-white shadow-2xl rounded-md p-3 text-xl'}>{feat.amount}</span>
                                 </div>

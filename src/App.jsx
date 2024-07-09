@@ -45,9 +45,9 @@ function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      {/* {loading || showPreloader ? (
+      {loading || showPreloader ? (
         <Preloader /> // Use Preloader component
-      ) : ( */}
+      ) : (
         <Routes>
           <Route path="/" element={<FrontLayout />}>
             <Route index element={<Home />} />
