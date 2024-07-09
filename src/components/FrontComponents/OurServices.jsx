@@ -7,18 +7,29 @@ const OurServices = () => {
                 <p className={'font-semibold text-3xl md:text-4xl lg:text-5xl text-primary'}>Our Services</p>
             </div>
 
-            <div className={'flex flex-col space-y-2'}>
-                <div className={'relative md:w-1/2 flex justify-center items-center'}>
-                   <img src={'src/assets/images/img_2.png'}/>
+            <div className={'flex flex-col lg:flex-row space-y-2 lg:space-x-8'}>
+                <div className={'relative md:w-1/2 flex items-center justify-center'}>
+                    <img src={'src/assets/images/img_2.png'}/>
+
+                    <p className={'absolute text-3xl font-semibold text-white right-10 top-1/2'}>Buying</p>
+                    <button
+                        className={'absolute bg-neutral-50 rounded-lg p-1.5 text-primary font-medium right-10 top-2/3'}> Learn
+                        more
+                    </button>
                 </div>
 
-                <div>
-                    Selling
+                <div className={'relative md:w-1/2 flex items-center justify-center'}>
+                    <img src={'src/assets/images/img_3.png'}/>
+
+                    <p className={'absolute text-3xl font-semibold text-white right-10 top-1/2'}>Selling</p>
+                    <button
+                        className={'absolute bg-neutral-50 rounded-lg p-1.5 text-primary font-medium right-10 top-2/3'}> Learn
+                        more
+                    </button>
+
                 </div>
 
-                <div>
-                    Investing
-                </div>
+
             </div>
 
         </div>
