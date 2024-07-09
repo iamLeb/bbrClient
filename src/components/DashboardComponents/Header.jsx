@@ -1,22 +1,31 @@
 import React from 'react';
-import { GoArrowRight, GoArrowLeft } from "react-icons/go";
-import { useContext } from "react";
+import {GoArrowRight, GoArrowLeft} from "react-icons/go";
+import {useContext} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import UserContext from "../../context/UserContext";
+import {MdOutlineCancel} from "react-icons/md";
+import UserDrop from './UserDrop';
+import { useState } from 'react';
 
-const Header = () => {
+// eslint-disable-next-line react/prop-types
+const Header = ({sidebar, toggleSidebar}) => {
     const navigate = useNavigate();
-    const { user } = useContext(UserContext);
+    const {user} = useContext(UserContext);
     const location = useLocation();
+    const [drop, setDrop] = useState(false);
+    const handleDrop = () => {
+        setDrop(!drop);
+    }
 
     return (
         <header>
             <div className="bg-white w-full shadow-md">
                 <div className="flex justify-between items-center px-5">
                     {/* Mobile view toggle */}
-                    <div className="block lg:hidden">
-                        <GoArrowRight size={26} />
+                    <div onClick={toggleSidebar} className="block lg:hidden">
+                        {sidebar ? '' : <GoArrowRight size={26}/>}
                     </div>
+
 
                     {/* Manage Roles and Permissions button */}
                     <button 
@@ -27,7 +36,7 @@ const Header = () => {
                     </button>
 
                     {/* User profile section */}
-                    <div className="flex space-x-2 items-center cursor-pointer bg-gray-200 p-4 justify-center">
+                    <div onClick={handleDrop} className="flex space-x-2 items-center cursor-pointer bg-gray-200 p-4 justify-center">
                         <div className="overflow-hidden w-9 rounded-full">
                             <img
                                 className="object-center object-cover w-full h-full"
@@ -35,18 +44,25 @@ const Header = () => {
                                 alt="photo"
                             />
                         </div>
+                        
                         <div>
                             <p className="text-sm font-medium">{user && user.name}</p>
                             <p className="text-xs font-light">{user && user.type}</p>
                         </div>
                     </div>
                 </div>
+                
+                {drop && 
+                    <UserDrop />
+                }
+                 {/* user drop down when profile is clicked */}
             </div>
 
             {/* Conditional Go Back button */}
             {location.pathname !== '/secure' && (
-                <button onClick={() => navigate('/secure')} className="flex space-x-2 items-center text-primary px-4 pt-4">
-                    <GoArrowLeft />
+                <button onClick={() => navigate('/secure')}
+                        className="flex space-x-2 items-center text-primary px-4 pt-4">
+                    <GoArrowLeft/>
                     <span>Back to dashboard</span>
                 </button>
             )}
