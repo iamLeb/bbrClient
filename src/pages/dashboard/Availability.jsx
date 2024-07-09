@@ -1,7 +1,13 @@
-//Dependencies
+// ===== IMPORTS =====
+
+// React hooks for state management and side effects
 import { useState, useEffect } from "react";
+
+// Calendar component and its styles
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+
+// Date manipulation utilities
 import {
   format,
   addDays,
@@ -11,6 +17,8 @@ import {
   setMinutes,
   setSeconds,
 } from "date-fns";
+
+// Icons for UI elements
 import {
   Clock,
   Calendar as CalendarIcon,
@@ -21,70 +29,66 @@ import {
   X,
 } from "lucide-react";
 
+// API service for backend communication
+import api from "../../services/api";
+
 const Availability = () => {
-  //States
+  // ===== STATE DECLARATIONS =====
 
-  // Stores the currently selected date from the calendar
+  // Date and time states
   const [selectedDate, setSelectedDate] = useState(new Date());
-
-  // Stores the selected start time for availability
   const [startTime, setStartTime] = useState("09:00");
-
-  // Stores the selected end time for availability
   const [endTime, setEndTime] = useState("17:00");
 
-  // Stores the repeat option (none, daily, weekly)
+  //Repeat functionality states
   const [repeat, setRepeat] = useState("none");
-
-  // Stores the end date for repeated availabilities
   const [repeatUntil, setRepeatUntil] = useState(new Date());
 
-  // Array to store all added availabilities
+  //Availability management states
   const [availabilities, setAvailabilities] = useState([]);
-
-  //To track availability statuses
   const [availabilityStatuses, setAvailabilityStatuses] = useState([]);
 
-  //To manage notifications
+  //UI states
   const [notifications, setNotifications] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // State handlers
+  // ===== EVENT HANDLERS =====
 
-  // Updates the selected date when the user picks a new date on the calendar
-  const handleDateChange = (e) => {
-    setSelectedDate(e);
-  };
+  // Simple state update handlers
+  const handleDateChange = (e) => setSelectedDate(e);
+  const handleStartTimeChange = (e) => setStartTime(e.target.value);
+  const handleEndTimeChange = (e) => setEndTime(e.target.value);
+  const handleRepeatChange = (e) => setRepeat(e.target.value);
+  const handleRepeatUntilChange = (e) => setRepeatUntil(e.target.value);
 
-  // Updates the start time when the user changes it
-  const handleStartTimeChange = (e) => {
-    setStartTime(e.target.value);
-  };
+  // ===== AVAILABILITY EDITING FUNCTIONS =====
 
-  // Updates the end time when the user changes it
-  const handleEndTimeChange = (e) => {
-    setEndTime(e.target.value);
-  };
-
-  // Updates the repeat option when the user selects a different option
-  const handleRepeatChange = (e) => {
-    setRepeat(e.target.value);
-  };
-
-  // Updates the repeat until date when the user changes it
-  const handleRepeatUntilChange = (e) => {
-    setRepeatUntil(e.target.value);
-  };
-  // Updates the editing of an availability to true by adding isEditing field
+  /**
+   * Initiates the editing process for a specific availability
+   * @param {number} index - The index of the availability to edit
+   */
   const handleStartEdit = (index) => {
+    // Start the editing process for a specific availability
+    setIsEditing(true);
+
+    // Update the availabilities array
     setAvailabilities(
-      availabilities.map((a, i) =>
-        i === index ? { ...a, isEditing: true } : a
+      availabilities.map(
+        (a, i) =>
+          i === index
+            ? { ...a, isEditing: true } // Add 'isEditing' flag to the selected availability
+            : a // Leave other availabilities unchanged
       )
     );
   };
 
-  // Confirms or cancels the editing of an availability
-  const handleConfirmCancelEdit = (index) => {
+  /**
+   * Confirms or cancels the editing of an availability
+   * @param {number} index - The index of the availability being edited
+   */ const handleConfirmCancelEdit = (index) => {
+    setIsEditing(false);
+
     setAvailabilities(
       availabilities.map((a, i) =>
         i === index ? { ...a, isEditing: false } : a
@@ -92,42 +96,106 @@ const Availability = () => {
     );
   };
 
-  // Handles editing of start or end time for an availability
+  // ===== AVAILABILITY MANAGEMENT FUNCTIONS =====
+
+  /**
+   * Checks if a new availability overlaps with existing ones just the dates not starting and ending time
+   * @param {Date} newDate - The date to check for overlap
+   * @returns {boolean} True if overlap exists, false otherwise
+   */
+
+  const checkOverlap = (newDate) => {
+    return availabilities.some((availability) => {
+      const existingDate = new Date(availability.date);
+      return (
+        existingDate.getFullYear() === newDate.getFullYear() &&
+        existingDate.getMonth() === newDate.getMonth() &&
+        existingDate.getDate() === newDate.getDate()
+      );
+    });
+  };
+
+  /**
+   * Handles editing of start or end time for an availability
+   * @param {number} index - Index of the availability to edit
+   * @param {string} field - Field to edit ('startTime' or 'endTime')
+   * @param {string} value - New time value
+   */
   const handleEditTime = (index, field, value) => {
+    // Update availabilities array using map function
     const updatedAvailabilities = availabilities.map((a, i) => {
+      // Check if the current availability is the one being updated
       if (i === index) {
+        // Parse this combined string into a Date object
         const updatedDate = parse(
           `${format(a.date, "yyyy-MM-dd")} ${value}`,
           "yyyy-MM-dd HH:mm",
           new Date()
         );
 
-        const newStart = field === "startTime" ? updatedDate : a.startTime;
-        const newEnd = field === "endTime" ? updatedDate : a.endTime;
+        // Create a new availability object, spreading the existing properties
+        // and updating the specified field (startTime or endTime) with the new date
+        let updatedAvailability = { ...a, [field]: updatedDate };
 
-        if (checkOverlap(newStart, newEnd)) {
-          addNotification(
-            "This change would create an overlap. Please choose a different time.",
-            "error"
-          );
-          return a;
+        // Handle potential conflicts between start and end times
+        if (
+          field === "startTime" &&
+          updatedAvailability.endTime &&
+          updatedAvailability.startTime >= updatedAvailability.endTime
+        ) {
+          // If we're updating the start time and it's now later than or equal to the end time,
+          // adjust the end time to be 1 minute after the new start time
+          updatedAvailability.endTime = new Date(
+            updatedAvailability.startTime.getTime() + 60000
+          ); // Add 60,000 milliseconds (1 minute)
+        } else if (
+          field === "endTime" &&
+          updatedAvailability.startTime &&
+          updatedAvailability.endTime <= updatedAvailability.startTime
+        ) {
+          // If we're updating the end time and it's now earlier than or equal to the start time,
+          // adjust the start time to be 1 minute before the new end time
+          updatedAvailability.startTime = new Date(
+            updatedAvailability.endTime.getTime() - 60000
+          ); // Subtract 60,000 milliseconds (1 minute)
         }
-
-        addNotification("Availability updated successfully.", "success");
-        return { ...a, [field]: updatedDate };
+        // Update the status of the edited availability
+        setAvailabilityStatuses((prevStatuses) =>
+          prevStatuses.map(
+            (status, i) =>
+              i === index
+                ? { status: "pending" } // Set the status of the edited availability to "pending"
+                : status // Keep the status of other availabilities unchanged
+          )
+        );
+        // Return the updated availability object
+        return updatedAvailability;
       }
+      // If this isn't the availability being updated, return it unchanged
       return a;
     });
 
     setAvailabilities(updatedAvailabilities);
   };
 
-  // Deletes an availability from the list
+  /**
+   * Deletes an availability from the list
+   * @param {number} index - Index of the availability to delete
+   */
   const handleDelete = (index) => {
     setAvailabilities(availabilities.filter((_, i) => i !== index));
+    setAvailabilityStatuses((prevStatuses) =>
+      prevStatuses.filter((_, i) => i !== index)
+    );
+    setIsEditing(false);
   };
 
-  //To add notification for duplicates
+  // ===== NOTIFICATION MANAGEMENT =====
+  /**
+   * Adds a new notification and removes it after 5 seconds
+   * @param {string} message - Notification message
+   * @param {string} type - Notification type ('warning', 'success', 'error')
+   */
 
   const addNotification = (message, type = "warning") => {
     const id = Date.now();
@@ -139,64 +207,109 @@ const Availability = () => {
     }, 5000);
   };
 
-  //To Check overlap on availabilities
-  const checkOverlap = (newStart, newEnd) => {
-    return availabilities.some((availability) => {
-      const existingStart = new Date(availability.startTime);
-      const existingEnd = new Date(availability.endTime);
-      return (
-        (newStart >= existingStart && newStart < existingEnd) ||
-        (newEnd > existingStart && newEnd <= existingEnd) ||
-        (newStart <= existingStart && newEnd >= existingEnd)
+  // ===== DATABASE INTERACTION =====
+  /**
+   * Sends availabilities to the database and updates local state
+   */
+  const handleSendToDatabase = async () => {
+    setIsLoading(true);
+    try {
+      // Remove 'isEditing' property from each availability object
+      const cleanedAvailabilities = availabilities.map((availability) => {
+        const cleanedAvailability = { ...availability };
+        delete cleanedAvailability.isEditing;
+        return cleanedAvailability;
+      });
+
+      const createdAvailabilities = []; // Array to store successfully created availabilities
+      const statuses = []; // Array to store status of each availability creation attempt
+
+      // Iterate through each cleaned availability
+      for (let availability of cleanedAvailabilities) {
+        try {
+          // Send POST request to create availability in the database
+          const response = await api.post("/availability/create", availability);
+
+          // If successful, add to createdAvailabilities and update status
+          createdAvailabilities.push(response.data);
+          statuses.push({ id: response.data._id, status: "added" });
+        } catch (error) {
+          // If creation fails, log error and update status with error information
+          console.error("Error creating availability:", error);
+          statuses.push({
+            id: availability._id,
+            status: "rejected",
+            reason: error.response?.data?.error || "Unknown error",
+          });
+        }
+      }
+
+      // Update the availability statuses
+      setAvailabilityStatuses(statuses);
+
+      // Get IDs of successfully added availabilities
+      const successfullyAddedIds = statuses
+        .filter((status) => status.status === "added")
+        .map((status) => status.id);
+
+      // Remove successfully added availabilities from local state
+      setAvailabilities((prevAvailabilities) =>
+        prevAvailabilities.filter(
+          (availability) => !successfullyAddedIds.includes(availability._id)
+        )
       );
-    });
+
+      // Add success notification
+      addNotification(
+        `${createdAvailabilities.length} availabilities sent to database successfully`,
+        "success"
+      );
+
+      // Clear all notifications after a short delay
+      setTimeout(() => {
+        setNotifications([]);
+      }, 5000); // Clear after 5 seconds
+    } catch (error) {
+      console.error("Error in send to database process:", error);
+      addNotification(
+        "Failed to complete send to database process. Some availabilities may not have been added.",
+        "error"
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  // Prepares availabilities data for sending to the database
-  const handleSendToDatabase = () => {
-    const cleanedAvailabilities = availabilities.map((availability) => {
-      const cleanedAvailability = { ...availability };
-      delete cleanedAvailability.isEditing;
-      return cleanedAvailability;
-    });
-
-    // Simulate checking for duplicates
-    const newStatuses = cleanedAvailabilities.map((availability, index) => {
-      // Simulate a duplicate check (every third item is a "duplicate" for this example)
-      const isDuplicate = index % 3 === 0;
-      return {
-        id: index,
-        status: isDuplicate ? "rejected" : "added",
-        reason: isDuplicate ? "Duplicate entry" : null,
-      };
-    });
-
-    setAvailabilityStatuses(newStatuses);
-
-    console.log("Sending to database:");
-    console.log(cleanedAvailabilities);
-    // TODO: Implement actual database sending logic
-  };
-  
-  // Handles form submission to add new availabilities
+  // ===== FORM SUBMISSION =====
+  /**
+   * Handles form submission for adding new availabilities
+   * @param {Event} e - Form submit event
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Set the current date to midnight (00:00:00.000) of the selected date
     let currentDate = setMilliseconds(
       setSeconds(setMinutes(setHours(new Date(selectedDate), 0), 0), 0),
       0
     );
+
+    // Format the current date as a string (YYYY-MM-DD)
     let dateString = format(currentDate, "yyyy-MM-dd");
 
-    const newAvailabilities = [];
-    const skippedDates = [];
+    const newAvailabilities = []; // Array to store new availabilities
+    const skippedDates = []; // Array to store dates that couldn't be added due to overlap
 
+    // Check if repeatUntil is a string (valid date input)
     if (typeof repeatUntil === "string") {
+      // Parse the repeatUntil date
       const repeatUntilDate = parse(repeatUntil, "yyyy-MM-dd", new Date());
 
+      // Loop through dates from currentDate to repeatUntilDate
       while (currentDate <= repeatUntilDate) {
         dateString = format(currentDate, "yyyy-MM-dd");
 
+        // Create new Date objects for start and end times
         const newStart = parse(
           `${dateString} ${startTime}`,
           "yyyy-MM-dd HH:mm",
@@ -208,13 +321,15 @@ const Availability = () => {
           new Date()
         );
 
+        // Check for overlap with existing availabilities
         if (!checkOverlap(newStart, newEnd)) {
           newAvailabilities.push({
-            date: newStart,
+            date: currentDate,
             startTime: newStart,
             endTime: newEnd,
           });
         } else {
+          // If overlap, add date to skipped dates
           skippedDates.push(format(currentDate, "MMMM dd, yyyy"));
         }
 
@@ -235,7 +350,7 @@ const Availability = () => {
 
       if (!checkOverlap(newStart, newEnd)) {
         newAvailabilities.push({
-          date: newStart,
+          date: currentDate,
           startTime: newStart,
           endTime: newEnd,
         });
@@ -244,25 +359,39 @@ const Availability = () => {
       }
     }
 
+    // If any dates were skipped due to overlap, show notification
     if (skippedDates.length > 0) {
       addNotification(
         `Overlap detected for the following dates: ${skippedDates.join(
           ", "
-        )}. These availabilities were skipped.`,
-        "warning"
+        )}.Cannot be added on pending state.`,
+        "error"
       );
     }
 
+    // If new availabilities were created
     if (newAvailabilities.length > 0) {
-      setAvailabilities((prev) => [...prev, ...newAvailabilities]);
+      const newAvailabilitiesWithIds = newAvailabilities.map((avail) => ({
+        ...avail,
+        _id: Date.now() + Math.random(),
+      }));
+
+      setAvailabilities((prev) => [...prev, ...newAvailabilitiesWithIds]);
+
+      // Update availabilityStatuses for new availabilities
+      const newStatuses = newAvailabilitiesWithIds.map((avail) => ({
+        id: avail._id,
+        status: "pending",
+      }));
+
+      setAvailabilityStatuses((prevStatuses) => [
+        ...prevStatuses,
+        ...newStatuses,
+      ]);
+
       addNotification(
-        `Successfully added ${newAvailabilities.length} new availabilities.`,
+        `Added ${newAvailabilities.length} availabilities`,
         "success"
-      );
-    } else {
-      addNotification(
-        "No new availabilities were added due to overlaps.",
-        "error"
       );
     }
   };
@@ -528,13 +657,43 @@ const Availability = () => {
                 </li>
               ))}
             </ul>
-            <button
-              onClick={handleSendToDatabase}
-              className="mt-6 px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-300 flex items-center justify-center"
-            >
-              <CalendarIcon size={20} className="mr-2" />
-              Send to Database
-            </button>
+            {!isEditing && (
+              <button
+                onClick={handleSendToDatabase}
+                disabled={isLoading}
+                className="mt-6 px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-300 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isLoading ? (
+                  <>
+                    <div role="status" className="mr-2">
+                      <svg
+                        aria-hidden="true"
+                        className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-400"
+                        viewBox="0 0 100 101"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                          fill="currentColor"
+                        />
+                        <path
+                          d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                          fill="currentFill"
+                        />
+                      </svg>
+                      <span className="sr-only">Loading...</span>
+                    </div>
+                    Processing...
+                  </>
+                ) : (
+                  <>
+                    <CalendarIcon size={20} className="mr-2" />
+                    Send to Database
+                  </>
+                )}
+              </button>
+            )}
           </>
         ) : (
           <p className="text-gray-500 italic">No availabilities added yet!</p>
