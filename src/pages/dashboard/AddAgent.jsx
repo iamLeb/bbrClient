@@ -22,7 +22,8 @@ const AddAgent = () => {
         phone: "",
         password: "",
         confirmPassword: "",
-        type: ""
+        type: "",
+        general: ""
     });
 
     const validate = (name, value) => {
@@ -67,28 +68,39 @@ const AddAgent = () => {
     };
 
     const handleRegistration = async e => {
-        e.preventDefault();
-        console.log(values.type)
-        const formErrors = Object.keys(values).reduce((acc, key) => {
-            const error = validate(key, values[key]);
-            if (error) acc[key] = error;
-            return acc;
-        }, {});
+            e.preventDefault();
+            const formErrors = Object.keys(values).reduce((acc, key) => {
+                const error = validate(key, values[key]);
+                if (error) acc[key] = error;
+                return acc;
+            }, {});
 
-        if (Object.keys(formErrors).length > 0) {
-            setErrors(formErrors);
-            return;
-        }
+            if (Object.keys(formErrors).length > 0) {
+                setErrors(formErrors);
+                return;
+            }
 
-        // send to api
-        const res = await api.post('auth/registeragent', values);
-        
-        if (res.status === 200) {
-            setErrors(null);
-        } else {
-            console.log('There was an error')
-        }
-    }
+            
+        try {
+            // send to api
+            const res = await api.post('/auth/registeragent', values);
+            console.log(res)
+            if (res.status === 201) {
+                console.log("good");
+                // setErrors(null)
+            } else {
+                console.log('there was an error')
+            }
+        } catch (e) {
+            console.log(e.response.data.error)
+            const newError = (e.response.data.error);
+            setErrors ({
+                ...errors,
+                general: e.response.data.error
+            })
+        } 
+       
+    };
 
 
     return (
@@ -97,6 +109,7 @@ const AddAgent = () => {
                 <div className="">
                     <h1 className="font-bold text-3xl text-center">Add an agent</h1>
                 </div>
+                {errors && <p className='text-red-500 pl-5'>{errors.general}</p>}
                 <form onSubmit={handleRegistration} className='w-full p-5 space-y-7'>
                     <div>
                         <p>Name</p>
@@ -125,7 +138,7 @@ const AddAgent = () => {
                             <option value={'supers'}>Super admin</option>
                             <option value={'agents'}>Agent</option>
                         </select>
-                        {errors.confirmPassword && <p className="text-red-500">{errors.confirmPassword}</p>}
+                        {errors.type && <p className="text-red-500">{errors.type}</p>}
                     </div>
                     <div className="flex justify-center">
                         <button type='submit' className="w-1/3 bg-primary p-3 flex justify-center rounded-lg text-bold text-white">
