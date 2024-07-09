@@ -7,9 +7,11 @@ const CategoryForm = () => {
     const [newCategory, setNewCategory] = useState({ name: '' });
     const [selectedCategory, setSelectedCategory] = useState(null); // State for the selected category
     const [modal, setModal] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const toggleModal = () => {
         setModal(!modal);
+        setErrors('');
     };
 
     const fetchCategories = async () => {
@@ -34,17 +36,23 @@ const CategoryForm = () => {
     };
 
     const handleDelete = async id => {
+      //  let confirm = confirm("Are you sure you want to delete this category?");
+
+        setLoading(true);
         try {
             const res = await api.delete(`/category/${id}`);
             if (res.status === 200) {
+                setLoading(false);
                 setCategories(categories.filter(category => category._id !== id));
             }
         } catch (e) {
             setErrors('There was an error deleting the category');
         }
+        setLoading(false)
     };
 
     const handleSubmit = async e => {
+        setLoading(true);
         e.preventDefault();
         if (!newCategory.name) {
             setErrors('Category name is required');
@@ -67,14 +75,23 @@ const CategoryForm = () => {
                 setNewCategory({ name: '' });
                 toggleModal();
             } catch (e) {
-                setErrors('There was an error creating/updating the category');
+                setErrors(e.response.data.error);
             }
         }
+        setLoading(false)
     };
 
     const handleEdit = category => {
+        setLoading(true)
         setSelectedCategory(category);
-        setNewCategory({ name: category.name });
+        setNewCategory({name: category.name});
+        toggleModal();
+        setLoading(false)
+    };
+
+    const handleClose = () => {
+        setSelectedCategory(null)
+        setNewCategory({ name: '' });
         toggleModal();
     };
 
@@ -82,7 +99,8 @@ const CategoryForm = () => {
         <section className="h-screen m-5 mx-10">
             <div className="bg-white border border-gray-100 shadow-2xl">
                 <div className="p-4 border-b flex items-center justify-between">
-                    <h3 className="font-bold">Category</h3>
+                    <h3 className="font-bold">Category </h3>
+                    {loading ? 'loading...' : ''}
                     <div>
                         <button onClick={toggleModal} className="bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer">+ Add New Category</button>
                     </div>
@@ -137,7 +155,7 @@ const CategoryForm = () => {
                                     />
                                 </div>
                                 <div className="flex justify-end space-x-2 text-xs">
-                                    <button type="button" onClick={toggleModal} className="px-3 py-0 rounded bg-gray-100">Close</button>
+                                    <button type="button" onClick={handleClose} className="px-3 py-0 rounded bg-gray-100">Close</button>
                                     <button type="submit" className="px-4 py-2 rounded bg-primary text-white">{selectedCategory ? 'Update Category' : 'Create Category'}</button>
                                 </div>
                             </form>
