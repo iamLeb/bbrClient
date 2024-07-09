@@ -17,7 +17,7 @@ import ContactUs from "./pages/front/ContactUs.jsx";
 import DashboardLayout from "./layouts/DashboardLayout.jsx";
 import Admin from "./pages/dashboard/Admin.jsx";
 import Categories from "./pages/dashboard/Categories.jsx";
-import Province from "./pages/dashboard/Neighbourhood.jsx";
+import Neighbourhood from "./pages/dashboard/Neighbourhood.jsx";
 import Properties from "./pages/dashboard/Properties.jsx";
 import AddProperty from "./pages/dashboard/AddProperty.jsx";
 import Gallery from "./pages/dashboard/Gallery.jsx";
@@ -29,7 +29,6 @@ import GlobalContext from "./context/Global.js";
 import Preloader from "./components/Preloader.jsx"; // Import Preloader component
 import ScrollToTop from "./components/ScrollToTop.js";
 import Availability from "./pages/dashboard/Availability.jsx";
-import Neighbourhood from "./pages/dashboard/Neighbourhood.jsx";
 
 function App() {
   const { loading } = useContext(GlobalContext);
@@ -68,11 +67,12 @@ function App() {
             <Route index element={<Admin />} />
             <Route path={'category'} element={<Categories/>} />
             <Route path={'blog'} element={<Blog/>} />
-            <Route path={'provinces'} element={<Province/>} />
+            <Route path={'neighbourhood'} element={<Neighbourhood/>} />
             <Route path={'listings'} element={<Properties/>} />
+            <Route path={'addlistings'} element={<AddProperty />} />
           </Route>
         </Routes>
-      )}
+       )}
     </BrowserRouter>
   );
 }

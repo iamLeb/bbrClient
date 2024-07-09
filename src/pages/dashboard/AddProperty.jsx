@@ -80,72 +80,73 @@ const AddProperty = () => {
             <div className='bg-gray-100 p-3 font-extrabold text-center'>
                 Add new property
             </div>
-            
-            <form onSubmit={handleSubmit} encType="multipart/form-data">
-                <div className='p-3 flex flex-col'>
-                    <div className='font-bold mb-3'>Title</div>
-                    {errors && <p className="text-red-500 text- mt-2">{errors}</p>}
-                    <input value={newProperty.title} name='title' 
-                    onChange={handleChange} type='text' 
-                    placeholder='enter the title of the property' className='p-3 border rounded-lg' />
-                </div>
-                <div className='p-3 flex flex-col'>
-                     <div className='font-bold mb-3'>Address</div>
-                    <input value={newProperty.address} name='address' 
-                    onChange={handleChange} type='text' 
-                    placeholder='enter the address of the property' className='p-3 border rounded-lg' />
-                </div>
-                <div className='p-3 flex flex-col'>
-                     <div className='font-bold mb-3'>Price</div>
-                    <input value={newProperty.price} name='price' 
-                    onChange={handleChange} type='text' 
-                    placeholder='enter the price of the property' className='p-3 border rounded-lg' />
-                </div>
-                <div className='p-3 flex flex-col'>
-                     <div className='font-bold mb-3'>Beds</div>
-                    <input value={newProperty.bed} name='bed' 
-                    onChange={handleChange} type='text' 
-                    placeholder='enter how many beds the property has' className='p-3 border rounded-lg' />
-                </div>
-                <div className='p-3 flex flex-col'>
-                     <div className='font-bold mb-3'>Sqft</div>
-                    <input value={newProperty.sqft} name='sqft' 
-                    onChange={handleChange} type='text' 
-                    placeholder='enter the size of the property' className='p-3 border rounded-lg' />
-                </div>
-                <div className='p-3 flex flex-col'>
-                     <div className='font-bold mb-3'>Description</div>
-                    <input value={newProperty.description} name='description' 
-                    onChange={handleChange} type='text' 
-                    placeholder='enter description the property' className='p-3 border rounded-lg' />
-                </div>
-                <div className='p-3 flex flex-col'>
-                     <div className='font-bold mb-3'>Baths</div>
-                    <input value={newProperty.bath} name='bath' 
-                    onChange={handleChange} type='text' 
-                    placeholder='enter how many baths the property has' className='p-3 border rounded-lg' />
-                </div>
-                <div className='p-3 flex flex-col'>
-                     <div className='font-bold mb-3'>Images</div>
-                    <input value={newProperty.image} name='image' 
-                    onChange={handleChange} type='text' 
-                    placeholder='add images of the property' className='p-3 border rounded-lg' />
-                </div>
-                <div className='p-3 flex flex-col'>
-                     <div className='font-bold mb-3'>category</div>
-                    <input value={newProperty.category} name='category' 
-                    onChange={handleChange} type='text' 
-                    placeholder='select property categoroy' className='p-3 border rounded-lg' />
-                </div>
-                <div className='p-3 flex flex-col'>
-                     <div className='font-bold mb-3'>media</div>
-                    <input value={newProperty.media} name='media' 
-                    onChange={handleChange} type='file' 
-                    placeholder='insert media' className='p-3 border rounded-lg' />
+            {errors && <p className="text-red-500 pl-3 mt-2">{errors}</p>}
+            <form onSubmit={handleSubmit}>
+                <div className='grid grid-cols-2'>
+                    <div className='p-3 flex flex-col'>
+                        <div className='font-bold mb-3'>Title</div>
+                        <input value={newProperty.title} name='title' 
+                        onChange={handleChange} type='text' 
+                        placeholder='enter the title of the property' className='p-3 border rounded-lg' />
+                    </div>
+                    <div className='p-3 flex flex-col'>
+                        <div className='font-bold mb-3'>Address</div>
+                        <input value={newProperty.address} name='address' 
+                        onChange={handleChange} type='text' 
+                        placeholder='enter the address of the property' className='p-3 border rounded-lg' />
+                    </div>
+                    <div className='p-3 flex flex-col'>
+                        <div className='font-bold mb-3'>Price</div>
+                        <input value={newProperty.price} name='price' 
+                        onChange={handleChange} type='text' 
+                        placeholder='enter the price of the property' className='p-3 border rounded-lg' />
+                    </div>
+                    <div className='p-3 flex flex-col'>
+                        <div className='font-bold mb-3'>Beds</div>
+                        <input value={newProperty.bed} name='bed' 
+                        onChange={handleChange} type='text' 
+                        placeholder='enter how many beds the property has' className='p-3 border rounded-lg' />
+                    </div>
+                    <div className='p-3 flex flex-col'>
+                        <div className='font-bold mb-3'>Sqft</div>
+                        <input value={newProperty.sqft} name='sqft' 
+                        onChange={handleChange} type='text' 
+                        placeholder='enter the size of the property' className='p-3 border rounded-lg' />
+                    </div>
+                    <div className='p-3 flex flex-col'>
+                        <div className='font-bold mb-3'>Description</div>
+                        <input value={newProperty.description} name='description' 
+                        onChange={handleChange} type='text' 
+                        placeholder='enter description the property' className='p-3 border rounded-lg' />
+                    </div>
+                    <div className='p-3 flex flex-col'>
+                        <div className='font-bold mb-3'>Baths</div>
+                        <input value={newProperty.bath} name='bath' 
+                        onChange={handleChange} type='text' 
+                        placeholder='enter how many baths the property has' className='p-3 border rounded-lg' />
+                    </div>
+                    <div className='p-3 flex flex-col'>
+                        <div className='font-bold mb-3'>Images</div>
+                        <input value={newProperty.image} name='image' 
+                        onChange={handleChange} type='text' 
+                        placeholder='add images of the property' className='p-3 border rounded-lg' />
+                    </div>
+                    <div className='p-3 flex flex-col'>
+                        <div className='font-bold mb-3'>category</div>
+                        <input value={newProperty.category} name='category' 
+                        onChange={handleChange} type='text' 
+                        placeholder='select property categoroy' className='p-3 border rounded-lg' />
+                    </div>
+                    <div className='p-3 flex flex-col'>
+                        <div className='font-bold mb-3'>media</div>
+                        <input value={newProperty.media} name='media' 
+                        onChange={handleChange} type='file' 
+                        placeholder='insert media' className='p-3 border rounded-lg' />
+                    </div>
                 </div>
                 <div className="p-5 flex justify-center space-x-5 text-xs">
-                    <button type="button"  onClick={handleCancel}className="px-5 py-3 rounded bg-gray-100">Cancel</button>
-                    <button type="submit" className="px-6 py-3 rounded bg-primary text-white">Create Property</button>
+                    <button type="button"  onClick={handleCancel}className="px-5 py-3 w-1/5 rounded bg-gray-100">Cancel</button>
+                    <button type="submit" className="px-6 py-3 rounded bg-primary w-1/5 text-white">Create Property</button>
                 </div>
             </form>
         </div>
