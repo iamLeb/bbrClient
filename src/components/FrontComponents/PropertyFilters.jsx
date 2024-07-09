@@ -61,7 +61,7 @@ const PropertyFilters = () => {
     return(
         <div className=" flex flex-col w-full items-center gap-y-5 text-2xl m-3 rounded-lg">
              <div className="justify-center w-full items-center mt-5">
-                     <select className="border w-full rounded-lg p-5 space-x-1"> 
+                     <select className="border w-full rounded-lg p-3 space-x-1"> 
                         <option>Neighbourhoods</option>
                             {neighbourhoods.map(neigh => (
                             <option key={neigh.id}>
@@ -72,7 +72,7 @@ const PropertyFilters = () => {
                     </select>
                 </div>
                 <div className="justify-center w-full items-center">
-                     <select className="border rounded-lg w-full p-5 space-x-1"> 
+                     <select className="border rounded-lg w-full p-3 space-x-1"> 
                         <option>Cities</option>
                             {cities.map(city => (
                             <option key={city.id}>
@@ -83,7 +83,7 @@ const PropertyFilters = () => {
                     </select>
                 </div>
                 <div className="justify-center w-full items-center">
-                     <select className="border rounded-lg w-full p-5 space-x-1"> 
+                     <select className="border rounded-lg w-full p-3 space-x-1"> 
                         <option>Category</option>
                             {categories.map(category => (
                             <option key={category.id}>
@@ -93,20 +93,6 @@ const PropertyFilters = () => {
                         ))}
                     </select>
                 </div>
-
-                <ul className="flex flex-col w-full gap-y-5">
-                    <li className={'flex lg:flex-none border rounded-lg lg:w-1/2'}>
-                        <input id="searchKey" className={'focus:outline-primary rounded-lg pl-1 py-2'}
-                            type={"text"}
-                            placeholder={"Address"}/>
-                    </li>
-                    <li className={'flex lg:flex-none border rounded-lg lg:w-1/2'}>
-                        <input id="searchKey" className={'focus:outline-primary rounded-lg pl-1 py-2'}
-                            type={"text"}
-                            placeholder={"Enter keyword..."}/>
-                    </li>
-                </ul>
-                
         </div>
 
     )
