@@ -73,7 +73,7 @@ function App() {
                         <Route path={'gallery'} element={<Gallery />} />
                         <Route path={'profile'} element={<Profile />} />
                         <Route path={'contacts'} element={<Contact />} />
-                        <Route path={'addagent'} element={<AddAgent />} />
+                        <Route path={'addAgent'} element={<AddAgent />} />
                     </Route>
                 </Routes>
             )}
