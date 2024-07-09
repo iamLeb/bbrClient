@@ -8,8 +8,10 @@ import { IoIosSearch } from "react-icons/io";
 import { RxMixerVertical } from "react-icons/rx";
 import { useState, useEffect } from "react";
 import PropertyFilters from "../../../components/FrontComponents/PropertyFilters";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
+    const navigate = useNavigate()
     const [toggle,  setToggle] = useState(false)
     const [isMobile, setIsMobile] = useState(window.innerWidth < 640)
     useEffect(() => {
@@ -199,7 +201,7 @@ const Index = () => {
                                     <span className={'absolute -bottom-6 left-3 text-primary bg-white shadow-2xl rounded-md p-3 text-xl'}>{feat.amount}</span>
                                 </div>
                                 <div className="pt-5">
-                                    <span className={'font-semibold text-xl'}>{feat.title}</span>
+                                    <span onClick={() => navigate('/properties/listing/1')} className={'hover:cursor-pointer font-semibold text-xl'}>{feat.title}</span>
                                 </div>
                                 <div className={'flex space-x-2 text-sm text-gray-500'}>
                                     <IoLocationOutline/>
