@@ -149,7 +149,7 @@ const AddProperty = () => {
                     </div>
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Category</div>
-                        <select  className='p-4 border rounded-lg'  onChange={handleChange} value={newProperty.category} name='category' >
+                        <select  className='p-3 border rounded-lg'  onChange={handleChange} value={newProperty.category} name='category' >
                             <option>category</option>
                             {categories.map( category => (
                                 <option>
@@ -158,7 +158,7 @@ const AddProperty = () => {
                             ))}
                         </select>
                     </div>
-                    <div className='p-3 flex flex-col'>
+                    <div className='p-2 flex flex-col'>
                         <div className='font-bold mb-3'>media</div>
                         <input value={newProperty.media} name='media' 
                         onChange={handleChange} type='file' 
