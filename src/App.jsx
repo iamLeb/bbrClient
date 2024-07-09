@@ -23,6 +23,7 @@ import Gallery from "./pages/dashboard/Gallery.jsx";
 import Profile from "./pages/dashboard/Profile.jsx";
 import Contact from "./pages/dashboard/Contact.jsx";
 import Testimonial from "./pages/dashboard/Testimonial.jsx";
+import AddAgent from "./pages/dashboard/AddAgent.jsx";
 import GlobalContext from "./context/Global.js";
 import Preloader from "./components/Preloader.jsx"; // Import Preloader component
 import ScrollToTop from "./components/ScrollToTop.js";
