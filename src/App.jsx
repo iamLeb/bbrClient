@@ -67,10 +67,15 @@ function App() {
             <Route index element={<Admin />} />
             <Route path={'category'} element={<Categories/>} />
             <Route path={'blog'} element={<Blog/>} />
-            <Route path={'neighbourhood'} element={<Neighbourhood/>} />
+            <Route path={'neighbourhoods'} element={<Neighbourhood/>} />
+            <Route path={'contacts'} element={<Contact/>} />
+            <Route path={'testimonials'} element={<Testimonial/>} />
+            <Route path={'profile'} element={<Profile/>} />
+            <Route path={'availability'} element={<Availability/>} />
             <Route path={'listings'} element={<Properties/>} />
             <Route path={'addlistings'} element={<AddProperty />} />
-              <Route path={'addAgent'} element={<AddAgent />} />
+            <Route path={'addAgent'} element={<AddAgent />} />
+            <Route path={'gallery'} element={<Gallery />} />
           </Route>
         </Routes>
        )}
