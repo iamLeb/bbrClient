@@ -76,8 +76,8 @@ const ContactHero = () => {
                         </div>
 
                         <form className={'flex flex-col gap-2'}>
-                            <div className={'flex flex-col md:flex-row pt-2 space-x-4'}>
-                                <div className={'w-1/2'}>
+                            <div className={'flex flex-col md:flex-row md:pt-2 md:space-x-4'}>
+                                <div className={'w-full md:w-1/2'}>
                                     <div className={'font-medium pt-2'}>Your name</div>
                                     <div className={'relative'}>
                                     <span
@@ -90,7 +90,7 @@ const ContactHero = () => {
                                 </div>
 
 
-                                <div className={'w-1/2'}>
+                                <div className={'w-full md:w-1/2'}>
                                     <div className={'font-medium pt-2'}>Email</div>
                                     <div className={'relative'}>
                                          <span
@@ -103,8 +103,8 @@ const ContactHero = () => {
                                 </div>
                             </div>
 
-                            <div className={'flex flex-col md:flex-row pt-2 space-x-4'}>
-                                <div className={'w-1/2'}>
+                            <div className={'flex flex-col md:flex-row md:pt-2 md:space-x-4'}>
+                                <div className={'w-full md:w-1/2'}>
                                     <div className={'font-medium pt-2'}>Phone</div>
                                     <div className={'relative'}>
                                         <span
@@ -117,7 +117,7 @@ const ContactHero = () => {
                                 </div>
 
 
-                                <div className={'w-1/2'}>
+                                <div className={'w-full md:w-1/2'}>
                                     <div className={'font-medium pt-2 w-full'}>Property Type</div>
                                     <div className={'relative'}>
                                         <ul>
