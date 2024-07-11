@@ -6,7 +6,7 @@ import PageNotFound from "./pages/front/errors/PageNotFound.jsx";
 import About from "./pages/front/About.jsx";
 import Index from "./pages/front/properties/Index.jsx";
 import BlogSingle from "./pages/front/blog/Single.jsx";
-import Blog from "./pages/dashboard/Blog.jsx";
+import Blog from "./pages/dashboard/blog/Blog.jsx";
 import BlogFront from "./pages/front/blog/Blog.jsx";
 import Single from "./pages/front/properties/Single.jsx";
 import Login from "./pages/front/auth/Login.jsx";
@@ -29,6 +29,7 @@ import GlobalContext from "./context/Global.js";
 import Preloader from "./components/Preloader.jsx"; // Import Preloader component
 import ScrollToTop from "./components/ScrollToTop.js";
 import Availability from "./pages/dashboard/Availability.jsx";
+import Create from "./pages/dashboard/blog/Create.jsx";
 
 function App() {
   const { loading } = useContext(GlobalContext);
@@ -67,6 +68,7 @@ function App() {
             <Route index element={<Admin />} />
             <Route path={'category'} element={<Categories/>} />
             <Route path={'blog'} element={<Blog/>} />
+            <Route path={'blog/create'} element={<Create />} />
             <Route path={'neighbourhoods'} element={<Neighbourhood/>} />
             <Route path={'contacts'} element={<Contact/>} />
             <Route path={'testimonials'} element={<Testimonial/>} />
