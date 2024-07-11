@@ -133,7 +133,7 @@ const Gallery = () => {
     // Helper function to get neighbourhood name
     const getNeighbourhoodName = (id) => {
         const neighbourhood = neighbourhoods.find((neighbourhood) => neighbourhood._id === id);
-        return neighbourhood ? neighbourhood : '';
+        return neighbourhood ? neighbourhood.name : '';
     };
 
     // Modal toggle function

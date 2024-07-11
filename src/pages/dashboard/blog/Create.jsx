@@ -5,6 +5,7 @@ import {useNavigate} from "react-router-dom";
 
 const Create = () => {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
     const { categories } = useContext(GlobalContext);
 
     const [values, setValues] = useState({
@@ -31,7 +32,7 @@ const Create = () => {
 
     const handleSubmit = async e => {
         e.preventDefault();
-
+        setLoading(true);
         const formData = new FormData();
         formData.append('title', values.title);
         formData.append('category', values.category);
@@ -64,7 +65,7 @@ const Create = () => {
                 ownerId: blogId,
                 name: 'Blog',
             });
-
+            setLoading(false);
             navigate('/secure/blog');
 
         } catch (error) {
@@ -128,8 +129,11 @@ const Create = () => {
                     </div>
                 </div>
                 <div className='p-5 flex justify-center space-x-5 text-xs'>
-                    <button type='submit' className='px-6 py-3 rounded bg-primary w-1/5 text-white'>
-                        Create Property
+                    <button type='submit'
+                            className='px-6 py-3 rounded bg-primary w-1/5 text-white flex items-center justify-center'>
+                        <span>Create Property</span>
+                        {loading && <span
+                            className='ml-2 animate-spin border-2 border-t-2 border-white border-t-transparent rounded-full w-4 h-4'></span>}
                     </button>
                 </div>
             </form>

@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import {useContext, useEffect, useState} from "react";
 import api from "../../../services/api";
+import GlobalContext from "../../../context/Global.js";
 
 const Blog = () => {
     const navigate = useNavigate();
+    const {format} = useContext(GlobalContext);
 
     const [blogs, setBlogs] = useState([]);
     const [categories, setCategories] = useState({});
@@ -92,7 +94,7 @@ const Blog = () => {
                                 </td>
                                 <td className="px-4 py-2 hidden lg:block">
                                         <span>
-                                            Jan 15, 2024
+                                            {format(blog.createdAt)}
                                         </span>
                                 </td>
                                 <td className="px-4 py-2">
