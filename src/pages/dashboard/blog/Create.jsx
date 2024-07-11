@@ -40,6 +40,13 @@ const Create = () => {
         formData.append('file', values.file);
         formData.append('content', values.content);
 
+        if (!values.file || !values.content || !values.title || !values.category) {
+            setLoading(true)
+            setErrors('All Fields are required');
+            setLoading(false);
+            return;
+        }
+
         try {
             // Upload the file to AWS
             const response = await api.post('/file/upload', formData, {
@@ -82,7 +89,9 @@ const Create = () => {
             </div>
 
             <form onSubmit={handleSubmit}>
-                {errors && <p className="text-red-500 text-xs mt-2">{errors}</p>}
+                <div className={'flex justify-center'}>
+                    {errors && <span className="p-2 rounded-lg bg-red-500 font-bold text-white text-xs mt-2 uppercase">{errors}</span>}
+                </div>
                 <div className=''>
                     <div className='flex justify-between items-center'>
                         <div className='p-3 flex flex-col w-full'>
@@ -133,6 +142,7 @@ const Create = () => {
                 </div>
                 <div className='p-5 flex justify-center space-x-5 text-xs'>
                     <button type='submit'
+                            disabled={loading}
                             className='px-6 py-3 rounded bg-primary w-1/5 text-white flex items-center justify-center'>
                         <span>Create Property</span>
                         {loading && <span

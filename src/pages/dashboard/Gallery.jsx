@@ -72,6 +72,13 @@ const Gallery = () => {
         formData.append('file', newGallery.image);
         formData.append('neighbourhood', newGallery.neighbourhood);
 
+        if(!newGallery.image || newGallery.neighbourhood) {
+            setLoading(true)
+            setErrors('All Fields are required');
+            setLoading(false);
+            return;
+        }
+
         try {
             // Upload the file to AWS
             const uploadRes = await api.post('/file/upload', formData, {
