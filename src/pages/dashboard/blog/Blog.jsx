@@ -99,6 +99,7 @@ const Blog = () => {
                         </thead>
                         <tbody>
                         {blogs.map((blog) => (
+
                             <tr key={blog._id} className="text-left lg:text-center text-xs border-b ">
                                 <td className="px-4 py-2">{blog.title}</td>
                                 <td className="px-4 py-2 truncate hidden lg:block">{blog.content}</td>
