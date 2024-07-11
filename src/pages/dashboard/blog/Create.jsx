@@ -1,11 +1,12 @@
-import { useContext, useState } from 'react';
+import {useContext, useState} from 'react';
 import GlobalContext from "../../../context/Global.js";
 import api from '../../../services/api';
 import {useNavigate} from "react-router-dom";
 
 const Create = () => {
     const navigate = useNavigate();
-    const { categories } = useContext(GlobalContext);
+    const {categories} = useContext(GlobalContext);
+    const [errors, setErrors] = useState('');
 
     const [values, setValues] = useState({
         title: '',
@@ -15,7 +16,7 @@ const Create = () => {
     });
 
     const handleChange = e => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setValues(prevValues => ({
             ...prevValues,
             [name]: value,
@@ -68,7 +69,7 @@ const Create = () => {
             navigate('/secure/blog');
 
         } catch (error) {
-            console.error('Error:', error);
+            setErrors(error.response.data.error)
         }
     };
 
@@ -79,6 +80,7 @@ const Create = () => {
             </div>
 
             <form onSubmit={handleSubmit}>
+                {errors && <p className="text-red-500 text-xs mt-2">{errors}</p>}
                 <div className=''>
                     <div className='flex justify-between items-center'>
                         <div className='p-3 flex flex-col w-full'>

@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import {useNavigate} from "react-router-dom";
+import {useEffect, useState} from "react";
 import api from "../../../services/api";
 
 const Blog = () => {
@@ -7,7 +7,7 @@ const Blog = () => {
 
     const [blogs, setBlogs] = useState([]);
     const [categories, setCategories] = useState({});
-
+    const [errors, setErrors] = useState('');
     const fetchBlogs = async () => {
         try {
             const response = await api.get('/blog');
@@ -48,7 +48,22 @@ const Blog = () => {
         try {
             return await api.get(`/media/getMediaForOwner/${ownerId}`);
         } catch (error) {
-            return { data: [] };
+            return {data: []};
+        }
+    };
+
+    const handleDelete = async (id) => {
+        if (window.confirm("Are you sure you want to delete this blog?")) {
+            try {
+                const res = await api.delete(`/blog/${id}`);
+                const blog = blogs.find((blog) => blog._id === id);
+                const media = await api.delete(`/media/${blog.media._id}`);
+                if (res.status === 200 && media.status === 200) {
+                    setBlogs(blogs.filter(blog => blog._id !== id));
+                }
+            } catch (error) {
+                setErrors('There was an error deleting the gallery: ' + error.message);
+            }
         }
     };
 
@@ -62,7 +77,10 @@ const Blog = () => {
                 <div className="p-4 border-b"><h3 className="font-bold">Add, Edit & Remove</h3></div>
                 <div className="p-3">
                     <div className="sm:flex justify-between items-center">
-                        <button onClick={() => navigate('create')} className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>+ Create New Blog </button>
+                        <button onClick={() => navigate('create')}
+                                className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>+
+                            Create New Blog
+                        </button>
                     </div>
                 </div>
                 <div className="overflow-x-auto">
@@ -83,7 +101,8 @@ const Blog = () => {
                                 <td className="px-4 py-2">{blog.title}</td>
                                 <td className="px-4 py-2 truncate hidden lg:block">{blog.content}</td>
                                 <td className="px-4 py-2 hidden lg:table-cell">
-                                    <img src={blog.media.url} alt="Blog Image" className="w-10 h-10 object-cover rounded-lg" />
+                                    <img src={blog.media.url} alt="Blog Image"
+                                         className="w-10 h-10 object-cover rounded-lg"/>
                                 </td>
                                 <td className="px-4 py-2 hidden lg:table-cell">
                                         <span className={`px-2 py-1 text-xs font-bold rounded `}>
@@ -98,7 +117,9 @@ const Blog = () => {
                                 <td className="px-4 py-2">
                                     <div className={'flex justify-end lg:justify-center text-end '}>
                                         <button className="px-2 py-1 rounded bg-green-500 text-white">Edit</button>
-                                        <button className="ml-2 px-2 py-1 rounded bg-red-500 text-white">Remove</button>
+                                        <button onClick={() => handleDelete(blog._id)}
+                                                className="ml-2 px-2 py-1 rounded bg-red-500 text-white">Remove
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
