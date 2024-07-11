@@ -8,7 +8,6 @@ const Gallery = () => {
     const [newGallery, setNewGallery] = useState({image: '', neighbourhood: ''});
     const [errors, setErrors] = useState('');
     const [modal, setModal] = useState(false);
-    const [selectedGallery, setSelectedGallery] = useState(null);
     const [loading, setLoading] = useState(false);
 
     // Fetching galleries and neighbourhoods
@@ -19,7 +18,7 @@ const Gallery = () => {
 
             const galleriesWithMedia = await Promise.all(galleriesData.map(async (gallery) => {
                 const mediaRes = await fetchMedia(gallery._id);
-                return { ...gallery, media: mediaRes.data };
+                return {...gallery, media: mediaRes.data};
             }));
             setGalleries(galleriesWithMedia);
         } catch (error) {
@@ -32,7 +31,7 @@ const Gallery = () => {
             return await api.get(`/media/getMediaForOwner/${ownerId}`);
         } catch (error) {
             setErrors('Error getting Media: ' + error.message);
-            return { data: [] };
+            return {data: []};
         }
     };
 
@@ -83,7 +82,7 @@ const Gallery = () => {
             const url = uploadRes.data.url; // response url
 
             // Create the gallery
-            const galleryRes = await api.post('/gallery/create', { neighbourhood: newGallery.neighbourhood });
+            const galleryRes = await api.post('/gallery/create', {neighbourhood: newGallery.neighbourhood});
             const galleryId = galleryRes.data._id;
 
             // Store the URL and gallery ID in the media collection
@@ -107,7 +106,9 @@ const Gallery = () => {
         if (window.confirm("Are you sure you want to delete this gallery?")) {
             try {
                 const res = await api.delete(`/gallery/${id}`);
-                if (res.status === 200) {
+                const gallery = galleries.find((gallery) => gallery._id === id);
+                const media = await api.delete(`/media/${gallery.media._id}`);
+                if (res.status === 200 && media.status === 200) {
                     setGalleries(galleries.filter(gallery => gallery._id !== id));
                 }
             } catch (error) {
@@ -116,16 +117,8 @@ const Gallery = () => {
         }
     };
 
-    // Editing gallery
-    const handleEdit = (gallery) => {
-        setSelectedGallery(gallery);
-        setNewGallery({image: gallery.image, neighbourhood: gallery.neighbourhood});
-        toggleModal();
-    };
-
     // Closing modal
     const handleClose = () => {
-        setSelectedGallery(null);
         setNewGallery({image: '', neighbourhood: ''});
         toggleModal();
     };
@@ -133,7 +126,7 @@ const Gallery = () => {
     // Helper function to get neighbourhood name
     const getNeighbourhoodName = (id) => {
         const neighbourhood = neighbourhoods.find((neighbourhood) => neighbourhood._id === id);
-        return neighbourhood ? neighbourhood : '';
+        return neighbourhood ? neighbourhood.name : '';
     };
 
     // Modal toggle function
@@ -172,10 +165,6 @@ const Gallery = () => {
                                 <td className="px-4 py-2 text-left">{getNeighbourhoodName(gallery.neighbourhood)}</td>
                                 <td className="px-4 py-2 text-right">
                                     <div className="flex justify-end">
-                                        <button onClick={() => handleEdit(gallery)}
-                                                className="px-2 py-1 rounded bg-primary text-white">
-                                            Edit
-                                        </button>
                                         <button onClick={() => handleDelete(gallery._id)}
                                                 className="ml-2 px-2 py-1 rounded bg-red-500 text-white">
                                             Remove
@@ -197,7 +186,7 @@ const Gallery = () => {
                 <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
                     <div className="bg-white m-2 sm:m-0 w-full sm:w-[35%] rounded-md shadow-lg">
                         <div className="bg-gray-100 p-3 flex items-center">
-                            <h2 className="font-extrabold">{selectedGallery ? 'Update Gallery' : 'Create New Gallery'}</h2>
+                            <h2 className="font-extrabold">Create New Gallery</h2>
                         </div>
                         <div className="p-3">
                             <form onSubmit={handleSubmit}>
@@ -223,7 +212,7 @@ const Gallery = () => {
                                     </button>
                                     <button type="submit" className="px-4 py-2 rounded bg-primary text-white">
                                         {loading ? 'Loading...' : (
-                                            selectedGallery ? 'Update Gallery' : 'Create Gallery'
+                                            'Create Gallery'
                                         )}
                                     </button>
                                 </div>
