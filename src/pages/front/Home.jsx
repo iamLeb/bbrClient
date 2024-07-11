@@ -9,14 +9,18 @@ import UserSearchResult from "../../components/FrontComponents/UserSearchResult.
 
 
 const Home = () => {
+    const [searchResult, setSearchResult] = React.useState(false);
+    const toggleSearch = () => {
+        setSearchResult(!searchResult);
+    };
     return (
         <div>
-            <Hero />
-            <UserSearchResult/>
-            <Featured />
-            <Explore />
-            <Contact />
-            <Testimonials />
+            <Hero searchResult={searchResult} toggleSearch={toggleSearch} />
+            {searchResult && <UserSearchResult/>}
+            <Featured/>
+            <Explore/>
+            <Contact/>
+            <Testimonials/>
         </div>
     );
 };
