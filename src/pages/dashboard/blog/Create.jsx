@@ -71,6 +71,7 @@ const Create = () => {
 
         } catch (error) {
             setErrors(error.response.data.error)
+            setLoading(false)
         }
     };
 
