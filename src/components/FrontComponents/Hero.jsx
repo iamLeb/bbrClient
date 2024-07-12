@@ -1,14 +1,14 @@
-import { FaHouseChimney } from "react-icons/fa6";
+import {FaHouseChimney} from "react-icons/fa6";
 import {useContext} from "react";
 import GlobalContext from "../../context/Global.js";
 import {useNavigate} from "react-router-dom";
 
-const Hero = () => {
+const Hero = ({searchResult,toggleSearch}) => {
     const navigate = useNavigate();
     const {neighbourhoods, categories, loading} = useContext(GlobalContext)
 
     return (
-        <section className="relative pb-20">
+        <section className="relative pb-20 py-14">
             <div
 
                 className={'w-full h-[600px] bg-cover bg-center bg-[url("https://tunatheme.com/tf/html/quarter-preview/quarter/img/slider/13.jpg")] relative'}>
@@ -24,7 +24,9 @@ const Hero = () => {
                         </h1>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia quaerat veritatis
                             voluptas?</p>
-                        <button onClick={() => navigate('contact')} className={'bg-primary text-white p-4'}>Schedule Appointment</button>
+                        <button onClick={() => navigate('contact')} className={'bg-primary text-white p-4'}>Schedule
+                            Appointment
+                        </button>
                     </div>
                 </div>
 
@@ -46,13 +48,34 @@ const Hero = () => {
                             </select>
                         )}
 
+                        <select className={'px-5 border py-4 w-full rounded-lg outline-none'}>
+                            <option>Select Cities</option>
+                            <option value="winnipeg">Winnipeg</option>
+                            <option value="brandon">Brandon</option>
+                            <option value="steinbach">Steinbach</option>
+                            <option value="thompson">Thompson</option>
+                            <option value="portage_la_prairie">Portage la Prairie</option>
+                            <option value="winker">Winkler</option>
+                            <option value="selkirk">Selkirk</option>
+                            <option value="morden">Morden</option>
+                            <option value="dauphin">Dauphin</option>
+                            <option value="the_pas">The Pas</option>
+                            <option value="flin_flon">Flin Flon</option>
+                            <option value="stonewall">Stonewall</option>
+                            <option value="neepawa">Neepawa</option>
+                            <option value="swan_river">Swan River</option>
+                            <option value="virden">Virden</option>
+                            <option value="carman">Carman</option>
+                        </select>
+
                         {loading ? (
                             <div className="flex justify-center items-center">
                                 <div
                                     className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary"></div>
                             </div>
                         ) : (
-                            <select defaultValue={'Select Neighbourhood'} className={'px-5 border py-4 w-full rounded-lg outline-none'}>
+                            <select defaultValue={'Select Neighbourhood'}
+                                    className={'px-5 border py-4 w-full rounded-lg outline-none'}>
                                 <option>Select Neighbourhood</option>
                                 {neighbourhoods.map((neighbourhood) => (
                                     <option key={neighbourhood._id}
@@ -60,10 +83,8 @@ const Hero = () => {
                                 ))}
                             </select>
                         )}
-                        <select className={'px-5 border py-4 w-full rounded-lg outline-none'}>
-                            <option value={""}>Select City</option>
-                        </select>
-                        <button className={'bg-primary text-white h-14 rounded-lg w-full'}>Find Now</button>
+                        <button onClick={toggleSearch} className={'bg-primary text-white h-14 rounded-lg w-full'}>{searchResult?'Close':'Find Now'}
+                        </button>
                     </div>
                 </div>
             </div>

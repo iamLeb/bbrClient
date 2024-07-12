@@ -90,7 +90,6 @@ const Profile = () => {
 
 
     const handleSubmit = async (e) => {
-        console.log(nameChanged)
         e.preventDefault();
         setErrors('');
         setSuccess('');
@@ -117,13 +116,6 @@ const Profile = () => {
                 {success && <p className="text-green-500 text-xs mt-2">{success}</p>}
 
                 <form onSubmit={handleSubmit}>
-                    {/*<div className="mb-4">*/}
-                    {/*    <label className="block text-sm font-bold mb-2">Profile Picture</label>*/}
-                    {/*    <input type="file" onChange={handleProfilePictureChange}/>*/}
-                    {/*    {profile.profilePicture && (*/}
-                    {/*        <img src={profile.profilePicture} alt="Profile" className="mt-2 w-20 h-20 rounded-full"/>*/}
-                    {/*    )}*/}
-                    {/*</div>*/}
                     <div className="mb-4">
                         <label className="block text-sm font-bold mb-2">Name</label>
                         <input

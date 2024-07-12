@@ -1,60 +1,83 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
+import {useLocation, useNavigate} from "react-router-dom";
+import api from "../../services/api.js";
 
 const TableComponent = () => {
-    const listings = [
-        {
-            id:0,
-            featured: true,
-            image: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            amount: '$146,000',
-            title: 'super duper long title',
-            address: '15 Berwickkhbfe wfbdequdbewdfuebdf crt, Winnipeg, MB',
-            beds: 4,
-            baths: 4,
-            sqft: 900,
-        },
-        {
-            id:0,
-            featured: true,
-            image: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            amount: '$146,000',
-            title: 'Lot 6',
-            address: '15 Berwick crt, Winnipeg, MB',
-            beds: 4,
-            baths: 4,
-            sqft: 900,
-        },
-        {
-            id:0,
-            featured: true,
-            image: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            amount: '$146,000',
-            title: 'Lot 6',
-            address: '15 Berwick crt, Winnipeg, MB',
-            beds: 4,
-            baths: 4,
-            sqft: 900,
-        },
-        {
-            id:0,
-            featured: true,
-            image: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            amount: '$146,000',
-            title: 'Lot 6',
-            address: '15 Berwick crt, Winnipeg, MB',
-            beds: 4,
-            baths: 4,
-            sqft: 900,
-        },
+    const navigate = useNavigate();
+    const [listings, setListings] = useState([]);
+    const [errors, setErrors] = useState('');
 
-    ]
+    // const listings = [
+    //     {
+    //         id:0,
+    //         featured: true,
+    //         image: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    //         amount: '$146,000',
+    //         title: 'super duper long title',
+    //         address: '15 Berwickkhbfe wfbdequdbewdfuebdf crt, Winnipeg, MB',
+    //         beds: 4,
+    //         baths: 4,
+    //         sqft: 900,
+    //     },
+    //     {
+    //         id:0,
+    //         featured: true,
+    //         image: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    //         amount: '$146,000',
+    //         title: 'Lot 6',
+    //         address: '15 Berwick crt, Winnipeg, MB',
+    //         beds: 4,
+    //         baths: 4,
+    //         sqft: 900,
+    //     },
+    //     {
+    //         id:0,
+    //         featured: true,
+    //         image: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    //         amount: '$146,000',
+    //         title: 'Lot 6',
+    //         address: '15 Berwick crt, Winnipeg, MB',
+    //         beds: 4,
+    //         baths: 4,
+    //         sqft: 900,
+    //     },
+    //     {
+    //         id:0,
+    //         featured: true,
+    //         image: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    //         amount: '$146,000',
+    //         title: 'Lot 6',
+    //         address: '15 Berwick crt, Winnipeg, MB',
+    //         beds: 4,
+    //         baths: 4,
+    //         sqft: 900,
+    //     },
+
+    // ]
+    const handlesubmit = () => {
+        navigate('/secure/addlistings');
+    }
+    const fetchListings = async () => {
+        try {
+            const res = await api.get('/property');
+            setListings(res.data.properties);
+        } catch (error) {
+            console.log(error)
+            setErrors('There was an error fetching the listings');
+        }
+    };
+    useEffect(() => {
+        fetchListings();
+    }, []);
+
     return (
         <div className='m-3'>
             <div className="bg-white border w-full border-gray-100 shadow-2xl">
                         <div className="p-4 border-b flex justify-between items-center">
                             <h3 className="font-bold">My listings</h3>
                             <div>
-                                <button className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>+ Add
+                                <button onClick={handlesubmit} className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>+ Add
                                     New
                                     Category
                                 </button>
@@ -82,14 +105,14 @@ const TableComponent = () => {
                                 </thead>
                             </table>
             </div>
-            {listings.map(feat => (
-                <div key={feat.id} className="m-5">
+            {listings.map((listing) => (
+                <div key={listing._id} className="m-5">
                             <table className='w-full'>
                                 <tbody>
                                     <tr className="text-center text-[15px] w-full border-b">
-                                        <td className="px-4 py-2 lg:w-1/5  sm:text-center">{feat.title}</td>
-                                        <td className=" py-2 md:w-1/4 lg:w-1/5 text-center hidden sm:table-cell">{feat.address}</td>
-                                        <td className="px-4 py-2 md:w-1/4  lg:w-1/5 text-center hidden sm:table-cell">{feat.amount}</td>
+                                        <td className="px-4 py-2 lg:w-1/5  sm:text-center">{listing.title}</td>
+                                        <td className=" py-2 md:w-1/4 lg:w-1/5 text-center hidden sm:table-cell">{listing.address}</td>
+                                        <td className="px-4 py-2 md:w-1/4  lg:w-1/5 text-center hidden sm:table-cell">{listing.price}</td>
                                         <td className="px-4 py-2 md:w-1/4  lg:w-1/5 hidden lg:table-cell">
                                             <span className={`px-2py-1 text-xs font-bold
                                             rounded text-center`}>3

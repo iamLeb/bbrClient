@@ -6,7 +6,7 @@ import PageNotFound from "./pages/front/errors/PageNotFound.jsx";
 import About from "./pages/front/About.jsx";
 import Index from "./pages/front/properties/Index.jsx";
 import BlogSingle from "./pages/front/blog/Single.jsx";
-import Blog from "./pages/dashboard/Blog.jsx";
+import Blog from "./pages/dashboard/blog/Blog.jsx";
 import BlogFront from "./pages/front/blog/Blog.jsx";
 import Single from "./pages/front/properties/Single.jsx";
 import Login from "./pages/front/auth/Login.jsx";
@@ -17,12 +17,14 @@ import ContactUs from "./pages/front/ContactUs.jsx";
 import DashboardLayout from "./layouts/DashboardLayout.jsx";
 import Admin from "./pages/dashboard/Admin.jsx";
 import Categories from "./pages/dashboard/Categories.jsx";
-import Province from "./pages/dashboard/Neighbourhood.jsx";
+import Neighbourhood from "./pages/dashboard/Neighbourhood.jsx";
 import Properties from "./pages/dashboard/Properties.jsx";
+import AddProperty from "./pages/dashboard/AddProperty.jsx";
 import Gallery from "./pages/dashboard/Gallery.jsx";
 import Profile from "./pages/dashboard/Profile.jsx";
 import Contact from "./pages/dashboard/Contact.jsx";
 import Testimonial from "./pages/dashboard/Testimonial.jsx";
+import AddAgent from "./pages/dashboard/AddAgent.jsx";
 import GlobalContext from "./context/Global.js";
 import Preloader from "./components/Preloader.jsx"; // Import Preloader component
 import ScrollToTop from "./components/ScrollToTop.js";
@@ -63,19 +65,21 @@ function App() {
           </Route>
           <Route path="/secure" element={<DashboardLayout />}>
             <Route index element={<Admin />} />
-            <Route path={"category"} element={<Categories />} />
-            <Route path={"blog"} element={<Blog />} />
-            <Route path={"provinces"} element={<Province />} />
-            <Route path={"listings"} element={<Properties />} />
-            <Route path={"contacts"} element={<Contact />} />
-            <Route path={"testimonials"} element={<Testimonial />} />
-            <Route path={"gallery"} element={<Gallery />} />
-            <Route path={"profile"} element={<Profile />} />
-            <Route path={"contacts"} element={<Contact />} />
-            <Route path={"availability"} element={<Availability />} />
+            <Route path={'category'} element={<Categories/>} />
+            <Route path={'blog'} element={<Blog/>} />
+            <Route path={'blog/create'} element={<Create />} />
+            <Route path={'neighbourhoods'} element={<Neighbourhood/>} />
+            <Route path={'contacts'} element={<Contact/>} />
+            <Route path={'testimonials'} element={<Testimonial/>} />
+            <Route path={'profile'} element={<Profile/>} />
+            <Route path={'availability'} element={<Availability/>} />
+            <Route path={'listings'} element={<Properties/>} />
+            <Route path={'addlistings'} element={<AddProperty />} />
+            <Route path={'addAgent'} element={<AddAgent />} />
+            <Route path={'gallery'} element={<Gallery />} />
           </Route>
         </Routes>
-      )}
+       )}
     </BrowserRouter>
   );
 }

@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import {useContext, useEffect, useState} from "react";
+import GlobalContext from "../../context/Global.js";
 import api from "../../services/api.js";
 
 const CategoryForm = () => {
+    const {categories, setCategories} = useContext(GlobalContext);
     const [errors, setErrors] = useState('');
-    const [categories, setCategories] = useState([]);
-    const [newCategory, setNewCategory] = useState({ name: '' });
+
+    const [newCategory, setNewCategory] = useState({name: ''});
     const [selectedCategory, setSelectedCategory] = useState(null); // State for the selected category
     const [modal, setModal] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -28,7 +30,7 @@ const CategoryForm = () => {
     }, []);
 
     const handleChange = e => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setNewCategory({
             ...newCategory,
             [name]: value
@@ -36,19 +38,19 @@ const CategoryForm = () => {
     };
 
     const handleDelete = async id => {
-      //  let confirm = confirm("Are you sure you want to delete this category?");
-
-        setLoading(true);
-        try {
-            const res = await api.delete(`/category/${id}`);
-            if (res.status === 200) {
-                setLoading(false);
-                setCategories(categories.filter(category => category._id !== id));
+        if (window.confirm("Are you sure you want to delete this category?")) {
+            setLoading(true);
+            try {
+                const res = await api.delete(`/category/${id}`);
+                if (res.status === 200) {
+                    setLoading(false);
+                  fetchCategories()
+                }
+            } catch (e) {
+                setErrors('There was an error deleting the category');
             }
-        } catch (e) {
-            setErrors('There was an error deleting the category');
+            setLoading(false)
         }
-        setLoading(false)
     };
 
     const handleSubmit = async e => {
@@ -69,10 +71,11 @@ const CategoryForm = () => {
                     // Create category
                     const res = await api.post('/category/create', newCategory);
                     if (res.status === 201) {
+
                         setCategories([...categories, res.data]);
                     }
                 }
-                setNewCategory({ name: '' });
+                setNewCategory({name: ''});
                 toggleModal();
             } catch (e) {
                 setErrors(e.response.data.error);
@@ -91,7 +94,7 @@ const CategoryForm = () => {
 
     const handleClose = () => {
         setSelectedCategory(null)
-        setNewCategory({ name: '' });
+        setNewCategory({name: ''});
         toggleModal();
     };
 
@@ -102,7 +105,10 @@ const CategoryForm = () => {
                     <h3 className="font-bold">Category </h3>
                     {loading ? 'loading...' : ''}
                     <div>
-                        <button onClick={toggleModal} className="bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer">+ Add New Category</button>
+                        <button onClick={toggleModal}
+                                className="bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer">+
+                            Add New Category
+                        </button>
                     </div>
                 </div>
                 <div className="overflow-x-auto">
@@ -119,8 +125,12 @@ const CategoryForm = () => {
                                 <td className="text-left px-4 py-2">{category.name}</td>
                                 <td className="px-4 py-2">
                                     <div className="text-right">
-                                        <button onClick={() => handleEdit(category)} className="px-2 py-1 rounded bg-primary text-white">Edit</button>
-                                        <button onClick={() => handleDelete(category._id)} className="ml-2 px-2 py-1 rounded bg-red-500 text-white">Remove</button>
+                                        <button onClick={() => handleEdit(category)}
+                                                className="px-2 py-1 rounded bg-primary text-white">Edit
+                                        </button>
+                                        <button onClick={() => handleDelete(category._id)}
+                                                className="ml-2 px-2 py-1 rounded bg-red-500 text-white">Remove
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -135,8 +145,10 @@ const CategoryForm = () => {
                 </div>
             </div>
             {modal && (
-                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300 opacity-100">
-                    <div className="bg-white m-2 sm:m-0 w-full sm:w-[35%] rounded-md shadow-lg transition-transform duration-300 transform">
+                <div
+                    className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300 opacity-100">
+                    <div
+                        className="bg-white m-2 sm:m-0 w-full sm:w-[35%] rounded-md shadow-lg transition-transform duration-300 transform">
                         <div className="bg-gray-100 p-3 flex items-center">
                             <h2 className="font-extrabold">{selectedCategory ? 'Update Category' : 'Create New Category'}</h2>
                         </div>
@@ -155,8 +167,11 @@ const CategoryForm = () => {
                                     />
                                 </div>
                                 <div className="flex justify-end space-x-2 text-xs">
-                                    <button type="button" onClick={handleClose} className="px-3 py-0 rounded bg-gray-100">Close</button>
-                                    <button type="submit" className="px-4 py-2 rounded bg-primary text-white">{selectedCategory ? 'Update Category' : 'Create Category'}</button>
+                                    <button type="button" onClick={handleClose}
+                                            className="px-3 py-0 rounded bg-gray-100">Close
+                                    </button>
+                                    <button type="submit"
+                                            className="px-4 py-2 rounded bg-primary text-white">{selectedCategory ? 'Update Category' : 'Create Category'}</button>
                                 </div>
                             </form>
                         </div>
