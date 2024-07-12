@@ -15,6 +15,16 @@ const ContactTemplate = () => {
     const [errors, setErrors] = useState('');
     const [success, setSuccess] = useState('');
     const [contact, setContact] = useState({name: '', email: '', phone: '', message: ''});
+
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+        setContact({
+            ...contact,
+            [name]: value
+        });
+        console.log(contact)
+    };
+
     // const handleSubmit = async e => {
     //     setLoading(true);
     //     e.preventDefault();
@@ -115,7 +125,7 @@ const ContactTemplate = () => {
                             <IoChatboxEllipsesOutline className={'text-primary '} size={32}/>
                         </div>
 
-                        <form onSubmit={handleSubmit} className={'flex flex-col gap-2'}>
+                        <form onSubmit={''} className={'flex flex-col gap-2'}>
                             <div className={'pt-2'}>
                                 <div className={'font-medium pt-2'}>Your name</div>
                                 <div className={'relative'}>
@@ -126,6 +136,7 @@ const ContactTemplate = () => {
                                         className={'px-9 focus:outline-primary border rounded-lg py-4 w-full placeholder:text-gray-500 text-sm'}
                                         type="text"
                                         name="name"
+                                        onChange={handleChange}
                                         placeholder={"Your name"}/>
                                 </div>
                             </div>
@@ -139,7 +150,10 @@ const ContactTemplate = () => {
                                              size={18}/></span>
                                     <input
                                         className={'px-9 focus:outline-primary border rounded-lg py-4 w-full placeholder:text-gray-500 text-sm'}
-                                        type="text" placeholder={"Your email"}/>
+                                        type="text"
+                                        name="email"
+                                        onChange={handleChange}
+                                        placeholder={"Your email"}/>
                                 </div>
                             </div>
 
@@ -151,7 +165,10 @@ const ContactTemplate = () => {
                                             size={18}/></span>
                                     <input
                                         className={'px-9 focus:outline-primary border rounded-lg py-4 w-full placeholder:text-gray-500 text-sm'}
-                                        type="text" placeholder={"Your phone"}/>
+                                        type="text"
+                                        name="phone"
+                                        onChange={handleChange}
+                                        placeholder={"Your phone"}/>
                                 </div>
                             </div>
 
@@ -173,7 +190,10 @@ const ContactTemplate = () => {
                                 <textarea
                                     className={'resize-none px-3 focus:outline-primary w-full border rounded-lg py-4 placeholder:text-gray-500 text-sm'}
                                     cols="30"
-                                    rows="5" placeholder={"Your message"}></textarea>
+                                    rows="5"
+                                    name="message"
+                                    onChange={handleChange}
+                                    placeholder={"Your message"}></textarea>
                             </div>
 
                             <div>
