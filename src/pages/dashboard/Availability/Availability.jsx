@@ -14,9 +14,9 @@ const Availability = () => {
     useNotifications();
 
   return (
-    <div className="p-8 max-w-6xl mx-auto bg-gray-50 min-h-screen">
+    <div className="p-4 md:p-8 max-w-6xl mx-auto bg-gray-50 min-h-screen overflow-x-hidden">
       {/* Page title */}
-      <h1 className="text-4xl font-bold mb-8 text-center text-gray-800">
+      <h1 className="text-3xl md:text-4xl font-bold mb-6 md:mb-8 text-center text-gray-800">
         Availability Management
       </h1>
 
@@ -24,7 +24,7 @@ const Availability = () => {
       <Notifications ref={notificationsRef} />
 
       {/* Form for adding new availabilities */}
-      <div className="mb-12">
+      <div className="mb-8 md:mb-12">
         <AvailabilityForm
           availabilities={availabilities}
           setAvailabilities={setAvailabilities}

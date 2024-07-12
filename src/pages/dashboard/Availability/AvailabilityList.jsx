@@ -283,21 +283,23 @@ const AvailabilityList = ({
     (availability, index) => (
       <li
         key={availability.id}
-        className={`bg-gray-50 p-4 rounded-md flex flex-wrap justify-between items-center gap-4 transition-all duration-300 hover:shadow-md ${
+        className={`bg-white p-4 rounded-md flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 transition-all duration-300 hover:shadow-md border-l-4 ${
           availability.status === "rejected"
-            ? "border-l-4 border-red-500"
+            ? "border-red-500"
             : availability.status === "added"
-            ? "border-l-4 border-green-500"
-            : "border-l-4 border-yellow-500"
+            ? "border-green-500"
+            : "border-yellow-500"
         }`}
       >
-        <span className="flex items-center space-x-4 flex-grow">
-          <CalendarIcon size={20} className="text-gray-500" />
-          <span className="font-medium text-gray-700">
-            {format(new Date(availability.date), "yyyy-MM-dd")}:
-          </span>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 w-full sm:w-auto">
+          <div className="flex items-center space-x-2">
+            <CalendarIcon size={20} className="text-gray-500" />
+            <span className="font-medium text-gray-700">
+              {format(new Date(availability.date), "MMM dd, yyyy")}
+            </span>
+          </div>
           {availability.isEditing ? (
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 mt-2 sm:mt-0">
               <input
                 type="time"
                 value={format(new Date(availability.startTime), "HH:mm")}
@@ -314,12 +316,12 @@ const AvailabilityList = ({
             </div>
           ) : (
             <span className="text-gray-600">
-              {format(new Date(availability.startTime), "HH:mm")} -{" "}
-              {format(new Date(availability.endTime), "HH:mm")}
+              {format(new Date(availability.startTime), "h:mm a")} -{" "}
+              {format(new Date(availability.endTime), "h:mm a")}
             </span>
           )}
-        </span>
-        <div className="space-x-2 flex items-center">
+        </div>
+        <div className="flex flex-wrap items-center justify-end space-x-2 mt-4 sm:mt-0">
           {availability.isEditing ? (
             <>
               <button
@@ -354,7 +356,7 @@ const AvailabilityList = ({
             <Trash2 size={16} />
           </button>
           <span
-            className={`ml-2 px-2 py-1 rounded-full text-xs ${
+            className={`px-2 py-1 rounded-full text-xs ${
               availability.status === "rejected"
                 ? "bg-red-100 text-red-800"
                 : availability.status === "added"
