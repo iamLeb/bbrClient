@@ -5,16 +5,22 @@ import Explore from "../../components/FrontComponents/Explore.jsx";
 import Testimonials from '../../components/FrontComponents/Testimonials.jsx';
 import Contact from "../../components/FrontComponents/Contact.jsx";
 import RegistrationHero from '../../components/FrontComponents/Auth/RegistrationHero.jsx';
+import UserSearchResult from "../../components/FrontComponents/UserSearchResult.jsx";
 
 
 const Home = () => {
+    const [searchResult, setSearchResult] = React.useState(false);
+    const toggleSearch = () => {
+        setSearchResult(!searchResult);
+    };
     return (
         <div>
-            <Hero />
-            <Featured />
-            <Explore />
-            <Contact />
-            <Testimonials />
+            <Hero searchResult={searchResult} toggleSearch={toggleSearch} />
+            {searchResult && <UserSearchResult/>}
+            <Featured/>
+            <Explore/>
+            <Contact/>
+            <Testimonials/>
         </div>
     );
 };

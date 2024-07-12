@@ -1,9 +1,9 @@
-import { FaHouseChimney } from "react-icons/fa6";
+import {FaHouseChimney} from "react-icons/fa6";
 import {useContext} from "react";
 import GlobalContext from "../../context/Global.js";
 import {useNavigate} from "react-router-dom";
 
-const Hero = () => {
+const Hero = ({searchResult,toggleSearch}) => {
     const navigate = useNavigate();
     const {neighbourhoods, categories, loading} = useContext(GlobalContext)
 
@@ -24,7 +24,9 @@ const Hero = () => {
                         </h1>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia quaerat veritatis
                             voluptas?</p>
-                        <button onClick={() => navigate('contact')} className={'bg-primary text-white p-4'}>Schedule Appointment</button>
+                        <button onClick={() => navigate('contact')} className={'bg-primary text-white p-4'}>Schedule
+                            Appointment
+                        </button>
                     </div>
                 </div>
 
@@ -81,7 +83,8 @@ const Hero = () => {
                                 ))}
                             </select>
                         )}
-                        <button className={'bg-primary text-white h-14 rounded-lg w-full'}>Find Now</button>
+                        <button onClick={toggleSearch} className={'bg-primary text-white h-14 rounded-lg w-full'}>{searchResult?'Close':'Find Now'}
+                        </button>
                     </div>
                 </div>
             </div>
