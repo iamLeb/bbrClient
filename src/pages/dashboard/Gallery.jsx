@@ -72,7 +72,7 @@ const Gallery = () => {
         formData.append('file', newGallery.image);
         formData.append('neighbourhood', newGallery.neighbourhood);
 
-        if(!newGallery.image || newGallery.neighbourhood) {
+        if (!newGallery.image || !newGallery.neighbourhood) {
             setLoading(true)
             setErrors('All Fields are required');
             setLoading(false);
@@ -219,11 +219,13 @@ const Gallery = () => {
                                     <button type="button" onClick={handleClose}
                                             className="px-3 py-0 rounded bg-gray-100">Close
                                     </button>
-                                    <button type="submit" disabled={loading} className="px-6 py-3  rounded bg-primary text-white">
+                                    <button type='submit'
+                                            disabled={loading}
+                                            className='px-6 py-3 rounded bg-primary w-1/5 text-white flex items-center justify-center'>
                                         <span>Create Gallery</span>
                                         {loading && <span
                                             className='ml-2 animate-spin border-2 border-t-2 border-white border-t-transparent rounded-full w-4 h-4'></span>}
-                                    </button>
+                                    </button>y
                                 </div>
                             </form>
                         </div>
