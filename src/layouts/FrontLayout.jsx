@@ -37,11 +37,11 @@ const FrontLayout = () => {
     return (
         <>
             <div className="relative lg:static flex">
-                <div className="fixed z-10 lg:static lg:z-auto" ref={sidebarRef}>
+                <div className="fixed z-50 lg:static lg:z-auto" ref={sidebarRef}>
                     <SideBar sidebar={sidebar} toggleSidebar={toggleSidebar}/>
                 </div>
 
-                <div className="flex-1 z-0 lg:z-auto">
+                <div className="flex-1 lg:z-auto">
                     <div className={'mb-6'}>
                         <Header sidebar={sidebar} toggleSidebar={toggleSidebar}/>
                     </div>
