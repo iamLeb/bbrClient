@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
 import api from "../../../services/api";
 import GlobalContext from "../../../context/Global.js";
@@ -23,7 +23,7 @@ const Blog = () => {
             const categoriesMap = {};
             categoryResponses.forEach((response, index) => {
                 const categoryId = blogs[index].category;
-                categoriesMap[categoryId] = response.data.name;
+                categoriesMap[categoryId] = response.data;
             });
 
             // Fetch media for each blog
@@ -37,7 +37,7 @@ const Blog = () => {
             setCategories(categoriesMap);
             setBlogs(blogs);
         } catch (error) {
-            console.error("Error fetching blogs:", error);
+            console.log(error.message);
         }
     };
 
@@ -108,9 +108,9 @@ const Blog = () => {
                                          className="w-10 h-10 object-cover rounded-lg"/>
                                 </td>
                                 <td className="px-4 py-2 hidden lg:table-cell">
-                                        <span className={`px-2 py-1 text-xs font-bold rounded `}>
-                                            {categories[blog.category]}
-                                        </span>
+                                    <span
+                                        className={`px-2 py-1 text-xs font-bold rounded ${categories[blog.category].active ? 'text-black' : 'text-red-500'}`}>{categories[blog.category].name}</span>
+
                                 </td>
                                 <td className="px-4 py-2 hidden lg:block">
                                         <span>

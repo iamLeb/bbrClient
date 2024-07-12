@@ -1,4 +1,4 @@
-import {useContext, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import GlobalContext from "../../../context/Global.js";
 import api from '../../../services/api';
 import {useNavigate} from "react-router-dom";
@@ -7,7 +7,7 @@ const Create = () => {
     const navigate = useNavigate();
     const [errors, setErrors] = useState('');
     const [loading, setLoading] = useState(false);
-    const { categories } = useContext(GlobalContext);
+    const {categories} = useContext(GlobalContext);
 
     const [values, setValues] = useState({
         title: '',
@@ -39,6 +39,13 @@ const Create = () => {
         formData.append('category', values.category);
         formData.append('file', values.file);
         formData.append('content', values.content);
+
+        if (!values.file || !values.content || !values.title || !values.category) {
+            setLoading(true)
+            setErrors('All Fields are required');
+            setLoading(false);
+            return;
+        }
 
         try {
             // Upload the file to AWS
@@ -82,7 +89,9 @@ const Create = () => {
             </div>
 
             <form onSubmit={handleSubmit}>
-                {errors && <p className="text-red-500 text-xs mt-2">{errors}</p>}
+                <div className={'flex justify-center'}>
+                    {errors && <span className="p-2 rounded-lg bg-red-500 font-bold text-white text-xs mt-2 uppercase">{errors}</span>}
+                </div>
                 <div className=''>
                     <div className='flex justify-between items-center'>
                         <div className='p-3 flex flex-col w-full'>
@@ -133,6 +142,7 @@ const Create = () => {
                 </div>
                 <div className='p-5 flex justify-center space-x-5 text-xs'>
                     <button type='submit'
+                            disabled={loading}
                             className='px-6 py-3 rounded bg-primary w-1/5 text-white flex items-center justify-center'>
                         <span>Create Property</span>
                         {loading && <span

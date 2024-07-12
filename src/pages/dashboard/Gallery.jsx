@@ -72,6 +72,13 @@ const Gallery = () => {
         formData.append('file', newGallery.image);
         formData.append('neighbourhood', newGallery.neighbourhood);
 
+        if(!newGallery.image || newGallery.neighbourhood) {
+            setLoading(true)
+            setErrors('All Fields are required');
+            setLoading(false);
+            return;
+        }
+
         try {
             // Upload the file to AWS
             const uploadRes = await api.post('/file/upload', formData, {
@@ -165,9 +172,11 @@ const Gallery = () => {
                                 <td className="px-4 py-2 text-left">{getNeighbourhoodName(gallery.neighbourhood)}</td>
                                 <td className="px-4 py-2 text-right">
                                     <div className="flex justify-end">
-                                        <button onClick={() => handleDelete(gallery._id)}
+                                        <button disabled={loading} onClick={() => handleDelete(gallery._id)}
                                                 className="ml-2 px-2 py-1 rounded bg-red-500 text-white">
-                                            Remove
+                                            <span>Remove</span>
+                                            {loading && <span
+                                                className='ml-2 animate-spin border-2 border-t-2 border-white border-t-transparent rounded-full w-4 h-4'></span>}
                                         </button>
                                     </div>
                                 </td>
@@ -210,10 +219,10 @@ const Gallery = () => {
                                     <button type="button" onClick={handleClose}
                                             className="px-3 py-0 rounded bg-gray-100">Close
                                     </button>
-                                    <button type="submit" className="px-4 py-2 rounded bg-primary text-white">
-                                        {loading ? 'Loading...' : (
-                                            'Create Gallery'
-                                        )}
+                                    <button type="submit" disabled={loading} className="px-6 py-3  rounded bg-primary text-white">
+                                        <span>Create Gallery</span>
+                                        {loading && <span
+                                            className='ml-2 animate-spin border-2 border-t-2 border-white border-t-transparent rounded-full w-4 h-4'></span>}
                                     </button>
                                 </div>
                             </form>
