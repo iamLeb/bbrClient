@@ -1,9 +1,11 @@
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
+import GlobalContext from "../../context/Global.js";
 import api from "../../services/api.js";
 
 const CategoryForm = () => {
+    const {categories, setCategories} = useContext(GlobalContext);
     const [errors, setErrors] = useState('');
-    const [categories, setCategories] = useState([]);
+
     const [newCategory, setNewCategory] = useState({name: ''});
     const [selectedCategory, setSelectedCategory] = useState(null); // State for the selected category
     const [modal, setModal] = useState(false);
@@ -69,6 +71,7 @@ const CategoryForm = () => {
                     // Create category
                     const res = await api.post('/category/create', newCategory);
                     if (res.status === 201) {
+
                         setCategories([...categories, res.data]);
                     }
                 }
