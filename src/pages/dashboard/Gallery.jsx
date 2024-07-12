@@ -71,7 +71,7 @@ const Gallery = () => {
         const formData = new FormData();
         formData.append('file', newGallery.image);
         formData.append('neighbourhood', newGallery.neighbourhood);
-        
+
         if (!newGallery.image || !newGallery.neighbourhood) {
             setLoading(true)
             setErrors('All Fields are required');
@@ -110,6 +110,7 @@ const Gallery = () => {
 
     // Deleting gallery
     const handleDelete = async (id) => {
+        setLoading(true)
         if (window.confirm("Are you sure you want to delete this gallery?")) {
             try {
                 const res = await api.delete(`/gallery/${id}`);
@@ -122,6 +123,7 @@ const Gallery = () => {
                 setErrors('There was an error deleting the gallery: ' + error.message);
             }
         }
+        setLoading(false)
     };
 
     // Closing modal
@@ -173,7 +175,7 @@ const Gallery = () => {
                                 <td className="px-4 py-2 text-right">
                                     <div className="flex justify-end">
                                         <button disabled={loading} onClick={() => handleDelete(gallery._id)}
-                                                className="ml-2 px-2 py-1 rounded bg-red-500 text-white">
+                                                className='px-3 py-2 rounded bg-red-500 text-white flex items-center justify-center'>
                                             <span>Remove</span>
                                             {loading && <span
                                                 className='ml-2 animate-spin border-2 border-t-2 border-white border-t-transparent rounded-full w-4 h-4'></span>}
@@ -221,11 +223,11 @@ const Gallery = () => {
                                     </button>
                                     <button type='submit'
                                             disabled={loading}
-                                            className='px-6 py-3 rounded bg-primary w-1/5 text-white flex items-center justify-center'>
+                                            className='px-3 py-2 rounded bg-primary text-white flex items-center justify-center'>
                                         <span>Create Gallery</span>
                                         {loading && <span
                                             className='ml-2 animate-spin border-2 border-t-2 border-white border-t-transparent rounded-full w-4 h-4'></span>}
-                                    </button>y
+                                    </button>
                                 </div>
                             </form>
                         </div>
