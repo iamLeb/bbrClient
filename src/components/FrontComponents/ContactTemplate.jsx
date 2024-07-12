@@ -22,38 +22,30 @@ const ContactTemplate = () => {
             ...contact,
             [name]: value
         });
-        console.log(contact)
     };
 
-    // const handleSubmit = async e => {
-    //     setLoading(true);
-    //     e.preventDefault();
-    //     if (!newCategory.name) {
-    //         setErrors('Category name is required');
-    //     } else {
-    //         try {
-    //             if (selectedCategory) {
-    //                 // Update category
-    //                 const res = await api.put(`/category/${selectedCategory._id}`, newCategory);
-    //                 if (res.status === 200) {
-    //                     setCategories(categories.map(category => category._id === selectedCategory._id ? res.data : category));
-    //                     setSelectedCategory(null);
-    //                 }
-    //             } else {
-    //                 // Create category
-    //                 const res = await api.post('/category/create', newCategory);
-    //                 if (res.status === 201) {
-    //                     setCategories([...categories, res.data]);
-    //                 }
-    //             }
-    //             setNewCategory({name: ''});
-    //             toggleModal();
-    //         } catch (e) {
-    //             setErrors(e.response.data.error);
-    //         }
-    //     }
-    //     setLoading(false)
-    // };
+    const handleSubmit = async e => {
+        console.log(contact)
+        setLoading(true);
+        e.preventDefault();
+        setErrors('');
+        setSuccess('');
+        if (!contact.name || !contact.email || !contact.phone || !contact.message) {
+            setErrors('All fields are required');
+        } else {
+            try {
+                const res = await api.post('/contact/create', contact);
+                if (res.status === 201) {
+                    setSuccess('We have received your message and we will get back to you soon.');
+                    setContact({name: '', email: '', phone: '', message: ''});
+                }
+            } catch (e) {
+                setErrors(e.response.data.error);
+            }
+        }
+
+        setLoading(false)
+    };
 
 
     return (
@@ -118,6 +110,10 @@ const ContactTemplate = () => {
                     <div className={'bg-white rounded-lg shadow-2xl p-10'}>
                         <div className={'flex justify-between items-center space-x-4'}>
                             <div>
+
+                                {errors && <p className="text-red-500 text-xs mt-2">{errors}</p>}
+                                {success && <p className="text-green-500 text-xs mt-2">{success}</p>}
+
                                 <h1 className={'text-3xl font-bold'}>Contact us</h1>
                                 <p className={'text-gray-500 text-sm pt-3'}>We will respond as soon as we receive your
                                     message.</p>
@@ -125,7 +121,7 @@ const ContactTemplate = () => {
                             <IoChatboxEllipsesOutline className={'text-primary '} size={32}/>
                         </div>
 
-                        <form onSubmit={''} className={'flex flex-col gap-2'}>
+                        <form onSubmit={handleSubmit} className={'flex flex-col gap-2'}>
                             <div className={'pt-2'}>
                                 <div className={'font-medium pt-2'}>Your name</div>
                                 <div className={'relative'}>
@@ -172,19 +168,6 @@ const ContactTemplate = () => {
                                 </div>
                             </div>
 
-
-                            <div className={'flex-1'}>
-                                <div className={'font-medium pt-2 w-full'}>Property Type</div>
-                                <div className={'relative'}>
-                                    {/*<span*/}
-                                    {/*    className={'absolute text-primary flex items-center top-1/2 -translate-y-1/2 left-1'}> <TiHomeOutline*/}
-                                    {/*    size={18}/></span>*/}
-                                    <ul>
-                                        <PropertyType className={'px-9 py-4'}/>
-                                    </ul>
-                                </div>
-                            </div>
-
                             <div className={'flex-1'}>
                                 <div className={'font-medium pt-2'}>Message</div>
                                 <textarea
@@ -199,6 +182,8 @@ const ContactTemplate = () => {
                             <div>
                                 <button className={'w-1/2 border  bg-primary rounded-lg py-4 w-full'}>
                                     <span className={'text-white font-bold'}>Send Request</span>
+                                    {loading && <span
+                                        className='ml-2 animate-spin border-2 border-t-2 border-white border-t-transparent rounded-full w-4 h-4'></span>}
                                 </button>
                             </div>
                         </form>
