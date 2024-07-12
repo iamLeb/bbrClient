@@ -71,7 +71,7 @@ const Gallery = () => {
         const formData = new FormData();
         formData.append('file', newGallery.image);
         formData.append('neighbourhood', newGallery.neighbourhood);
-
+        
         if (!newGallery.image || !newGallery.neighbourhood) {
             setLoading(true)
             setErrors('All Fields are required');

@@ -111,6 +111,7 @@ const GlobalContextProvider = ({children}) => {
                 getName(),
                 getGalleries(),
                 getNeighbourhoodName(),
+                setCategories()
             ]);
         };
         fetchData();
@@ -119,6 +120,7 @@ const GlobalContextProvider = ({children}) => {
     return (
         <GlobalContext.Provider value={{
             categories,
+            setCategories,
             testimonials,
             blogs,
             neighbourhoods,
