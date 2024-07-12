@@ -1,26 +1,28 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {useState, useEffect, useContext} from 'react';
+import {useNavigate} from 'react-router-dom';
 import api from "../../services/api.js";
 import GlobalContext from "../../context/Global.js";
 
 const AddProperty = () => {
-    const { categories } = useContext(GlobalContext);
+    const {categories, neighbourhoods, setProperties, properties} = useContext(GlobalContext);
     const [newProperty, setNewProperty] = useState({
         title: '',
         address: '',
         price: '',
-        image: '',
         bed: '',
         bath: '',
         category: '',
-        media: [],
+        city: '',
+        neighbourhood: '',
         sqft: '',
-        description: '',
         yearBuilt: '',
         landArea: '',
+        description: '',
+        video: '',
+        media: [],
     });
     const [errors, setErrors] = useState('');
-    const [selectedProperty, setSelectedProperty] = useState(null); // State for the selected property
+    const [selectedProperty, setSelectedProperty] = useState(null);
     const navigate = useNavigate();
 
     const handleCancel = () => {
@@ -28,7 +30,7 @@ const AddProperty = () => {
     }
 
     const handleChange = e => {
-        const { name, value, files } = e.target;
+        const {name, value, files} = e.target;
         if (name === 'media') {
             setNewProperty({
                 ...newProperty,
@@ -44,24 +46,21 @@ const AddProperty = () => {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        if (!newProperty.title || !newProperty.address || !newProperty.price
-            || !newProperty.image || !newProperty.sqft || !newProperty.bath
+        if (!newProperty.title || !newProperty.address || !newProperty.price || !newProperty.sqft || !newProperty.bath
             || !newProperty.bed || !newProperty.description || !newProperty.category
-            || !newProperty.media || !newProperty.media) {
+            || !newProperty.city || !newProperty.neighbourhood) {
             setErrors('All fields are required');
             return;
         }
 
         try {
             if (selectedProperty) {
-                // Update property
                 const res = await api.put(`/property/${selectedProperty._id}`, newProperty);
                 if (res.status === 200) {
                     setProperties(properties.map(property => property._id === selectedProperty._id ? res.data : property));
                     setSelectedProperty(null);
                 }
             } else {
-                // Upload media files
                 const formData = new FormData();
                 for (let i = 0; i < newProperty.media.length; i++) {
                     formData.append('media', newProperty.media[i]);
@@ -73,7 +72,6 @@ const AddProperty = () => {
                     return;
                 }
 
-                // Create property
                 const res = await api.post('/property', newProperty);
                 if (res.status === 201) {
                     setProperties([...properties, res.data]);
@@ -115,36 +113,19 @@ const AddProperty = () => {
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Beds</div>
                         <input value={newProperty.bed} name='bed'
-                               onChange={handleChange} type='text'
+                               onChange={handleChange} type='number'
                                placeholder='Enter how many beds the property has' className='p-3 border rounded-lg'/>
-                    </div>
-                    <div className='p-3 flex flex-col'>
-                        <div className='font-bold mb-3'>Sqft</div>
-                        <input value={newProperty.sqft} name='sqft'
-                               onChange={handleChange} type='text'
-                               placeholder='Enter the size of the property' className='p-3 border rounded-lg'/>
-                    </div>
-                    <div className='p-3 flex flex-col'>
-                        <div className='font-bold mb-3'>Description</div>
-                        <input value={newProperty.description} name='description'
-                               onChange={handleChange} type='text'
-                               placeholder='Enter description of the property' className='p-3 border rounded-lg'/>
                     </div>
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Baths</div>
                         <input value={newProperty.bath} name='bath'
-                               onChange={handleChange} type='text'
+                               onChange={handleChange} type='number'
                                placeholder='Enter how many baths the property has' className='p-3 border rounded-lg'/>
                     </div>
                     <div className='p-3 flex flex-col'>
-                        <div className='font-bold mb-3'>Images</div>
-                        <input value={newProperty.image} name='image'
-                               onChange={handleChange} type='text'
-                               placeholder='Add images of the property' className='p-3 border rounded-lg'/>
-                    </div>
-                    <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Category</div>
-                        <select value={newProperty.category} name='category' onChange={handleChange} className='p-3 border rounded-lg'>
+                        <select value={newProperty.category} name='category' onChange={handleChange}
+                                className='p-3 border rounded-lg'>
                             <option value=''>Select a category</option>
                             {categories.map(category => (
                                 <option key={category._id} value={category._id}>{category.name}</option>
@@ -152,20 +133,72 @@ const AddProperty = () => {
                         </select>
                     </div>
                     <div className='p-3 flex flex-col'>
-                        <div className='font-bold mb-3'>Media</div>
-                        <input name='media' onChange={handleChange} type='file' multiple className='p-3 border rounded-lg'/>
+                        <div className='font-bold mb-3'>City</div>
+                        <select value={newProperty.city} name='city' onChange={handleChange}
+                                className='px-5 border py-4 w-full rounded-lg outline-none'>
+                            <option value=''>Select a City</option>
+                            <option value="winnipeg">Winnipeg</option>
+                            <option value="brandon">Brandon</option>
+                            <option value="steinbach">Steinbach</option>
+                            <option value="thompson">Thompson</option>
+                            <option value="portage_la_prairie">Portage la Prairie</option>
+                            <option value="winkler">Winkler</option>
+                            <option value="selkirk">Selkirk</option>
+                            <option value="morden">Morden</option>
+                            <option value="dauphin">Dauphin</option>
+                            <option value="the_pas">The Pas</option>
+                            <option value="flin_flon">Flin Flon</option>
+                            <option value="stonewall">Stonewall</option>
+                            <option value="neepawa">Neepawa</option>
+                            <option value="swan_river">Swan River</option>
+                            <option value="virden">Virden</option>
+                            <option value="carman">Carman</option>
+                        </select>
+                    </div>
+                    <div className='p-3 flex flex-col'>
+                        <div className='font-bold mb-3'>Neighbourhood</div>
+                        <select value={newProperty.neighbourhood} name='neighbourhood' onChange={handleChange}
+                                className='p-3 border rounded-lg'>
+                            <option value=''>Select a neighbourhood</option>
+                            {neighbourhoods.map(neighbourhood => (
+                                <option key={neighbourhood._id} value={neighbourhood._id}>{neighbourhood.name}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className='p-3 flex flex-col'>
+                        <div className='font-bold mb-3'>Sqft</div>
+                        <input value={newProperty.sqft} name='sqft'
+                               onChange={handleChange} type='number'
+                               placeholder='Enter the size of the property' className='p-3 border rounded-lg'/>
                     </div>
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Year Built</div>
                         <input value={newProperty.yearBuilt} name='yearBuilt'
-                               onChange={handleChange} type='text'
+                               onChange={handleChange} type='number'
                                placeholder='Year the property was built' className='p-3 border rounded-lg'/>
                     </div>
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Land Area</div>
                         <input value={newProperty.landArea} name='landArea'
-                               onChange={handleChange} type='text'
+                               onChange={handleChange} type='number'
                                placeholder='Land area of the property' className='p-3 border rounded-lg'/>
+                    </div>
+                    <div className='p-3 flex flex-col'>
+                        <div className='font-bold mb-3'>Description</div>
+                        <textarea value={newProperty.description} name='description'
+                                  onChange={handleChange} placeholder='Enter description of the property'
+                                  className='p-3 border rounded-lg'/>
+                    </div>
+                    <div className='p-3 flex flex-col'>
+                        <div className='font-bold mb-3'>Image</div>
+                        <input name='media' onChange={handleChange} type='file' multiple
+                               className='p-3 border rounded-lg'/>
+                    </div>
+                    <div className='p-3 flex flex-col'>
+                        <div className='font-bold mb-3'>Video</div>
+                        <input value={newProperty.video} name='video'
+                               onChange={handleChange} type='text'
+                               placeholder='Add video URL of the property' className='p-3 border rounded-lg'/>
                     </div>
                 </div>
                 <div className="p-5 flex justify-center space-x-5 text-xs">
@@ -177,6 +210,8 @@ const AddProperty = () => {
                 </div>
             </form>
         </div>
+
+
     );
 };
 
