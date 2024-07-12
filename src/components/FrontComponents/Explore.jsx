@@ -37,6 +37,7 @@ const Explore = () => {
                         <PiPlusThin className="text-6xl"/>
                     </div>
                 </div>
+                
                 <div className="group sm:h-full sm:w-full relative overflow-hidden hover:cursor-pointer">
                     <div className="overflow-hidden w-full bg-black h-full sm:absolute sm:inset-0">
                         <img

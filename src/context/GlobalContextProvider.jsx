@@ -74,6 +74,8 @@ const GlobalContextProvider = ({ children }) => {
         }
     };
 
+    
+
     useEffect(() => {
         const fetchData = async () => {
             await Promise.all([
