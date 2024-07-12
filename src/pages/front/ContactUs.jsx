@@ -1,10 +1,8 @@
-import ContactHero from "../../components/FrontComponents/ContactHero.jsx";
+import ContactTemplate from "../../components/FrontComponents/ContactTemplate.jsx";
 
 const ContactUs = () => {
     return (
-        <section className={''}>
-            <ContactHero />
-        </section>
+        <ContactTemplate/>
     );
 };
 
