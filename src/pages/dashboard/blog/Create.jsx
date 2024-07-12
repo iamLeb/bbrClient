@@ -1,4 +1,4 @@
-import {useContext, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import GlobalContext from "../../../context/Global.js";
 import api from '../../../services/api';
 import {useNavigate} from "react-router-dom";
@@ -7,7 +7,7 @@ const Create = () => {
     const navigate = useNavigate();
     const [errors, setErrors] = useState('');
     const [loading, setLoading] = useState(false);
-    const { categories } = useContext(GlobalContext);
+    const {categories} = useContext(GlobalContext);
 
     const [values, setValues] = useState({
         title: '',
