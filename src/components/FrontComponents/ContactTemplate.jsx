@@ -108,12 +108,16 @@ const ContactTemplate = () => {
 
                 <div className={'flex-1 w-full'}>
                     <div className={'bg-white rounded-lg shadow-2xl p-10'}>
+
+                        <div className={'flex justify-center items-center'}>
+                            {errors &&
+                                <p className="text-red-500 text-xs  mt-2 text-center font-bold">{errors}</p>}
+                            {success &&
+                                <p className="text-green-500 text-xs mt-2 text-center font-bold">{success}</p>}
+                        </div>
+
                         <div className={'flex justify-between items-center space-x-4'}>
                             <div>
-
-                                {errors && <p className="text-red-500 text-xs mt-2">{errors}</p>}
-                                {success && <p className="text-green-500 text-xs mt-2">{success}</p>}
-
                                 <h1 className={'text-3xl font-bold'}>Contact us</h1>
                                 <p className={'text-gray-500 text-sm pt-3'}>We will respond as soon as we receive your
                                     message.</p>
@@ -132,6 +136,7 @@ const ContactTemplate = () => {
                                         className={'px-9 focus:outline-primary border rounded-lg py-4 w-full placeholder:text-gray-500 text-sm'}
                                         type="text"
                                         name="name"
+                                        value={contact.name}
                                         onChange={handleChange}
                                         placeholder={"Your name"}/>
                                 </div>
@@ -148,6 +153,7 @@ const ContactTemplate = () => {
                                         className={'px-9 focus:outline-primary border rounded-lg py-4 w-full placeholder:text-gray-500 text-sm'}
                                         type="text"
                                         name="email"
+                                        value={contact.email}
                                         onChange={handleChange}
                                         placeholder={"Your email"}/>
                                 </div>
@@ -163,6 +169,7 @@ const ContactTemplate = () => {
                                         className={'px-9 focus:outline-primary border rounded-lg py-4 w-full placeholder:text-gray-500 text-sm'}
                                         type="text"
                                         name="phone"
+                                        value={contact.phone}
                                         onChange={handleChange}
                                         placeholder={"Your phone"}/>
                                 </div>
@@ -175,13 +182,16 @@ const ContactTemplate = () => {
                                     cols="30"
                                     rows="5"
                                     name="message"
+                                    value={contact.message}
                                     onChange={handleChange}
                                     placeholder={"Your message"}></textarea>
                             </div>
 
                             <div>
-                                <button className={'w-1/2 border  bg-primary rounded-lg py-4 w-full'}>
-                                    <span className={'text-white font-bold'}>Send Request</span>
+                                <button type='submit'
+                                        disabled={loading}
+                                        className='px-6 py-3 w-full rounded bg-primary text-white flex items-center justify-center'>
+                                    <span>Send Message</span>
                                     {loading && <span
                                         className='ml-2 animate-spin border-2 border-t-2 border-white border-t-transparent rounded-full w-4 h-4'></span>}
                                 </button>
