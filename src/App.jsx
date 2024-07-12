@@ -15,6 +15,7 @@ import Reset from "./pages/front/auth/Reset.jsx";
 import Register from "./pages/front/auth/Register.jsx";
 import ContactUs from "./pages/front/ContactUs.jsx";
 import DashboardLayout from "./layouts/DashboardLayout.jsx";
+import Create from "./pages/dashboard/blog/Create.jsx";
 import Admin from "./pages/dashboard/Admin.jsx";
 import Categories from "./pages/dashboard/Categories.jsx";
 import Neighbourhood from "./pages/dashboard/Neighbourhood.jsx";
