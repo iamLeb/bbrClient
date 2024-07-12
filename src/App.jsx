@@ -26,7 +26,7 @@ import Testimonial from "./pages/dashboard/Testimonial.jsx";
 import GlobalContext from "./context/Global.js";
 import Preloader from "./components/Preloader.jsx"; // Import Preloader component
 import ScrollToTop from "./components/ScrollToTop.js";
-import Availability from "./pages/dashboard/Availability.jsx";
+import Availability from "./pages/dashboard/Availability/Availability.jsx";
 
 function App() {
   const { loading } = useContext(GlobalContext);
