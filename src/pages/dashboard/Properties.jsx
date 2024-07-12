@@ -6,7 +6,7 @@ const Properties = () => {
     const { user } = useContext(UserContext);
     return (
         <div>
-           {user &&  <TableComponent />}
+            <TableComponent />
         </div>
     );
 };
