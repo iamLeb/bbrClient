@@ -283,10 +283,10 @@ const AvailabilityList = ({
         key={availability.id}
         className={`bg-gray-50 p-4 rounded-md flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 transition-all duration-300 hover:shadow-md ${
           availability.status === "rejected"
-            ? "border-l-4 border-red-500"
+            ? "border-red-500"
             : availability.status === "added"
-            ? "border-l-4 border-green-500"
-            : "border-l-4 border-yellow-500"
+            ? "border-green-500"
+            : "border-yellow-500"
         }`}
       >
         {/* Date and time information */}
@@ -297,6 +297,7 @@ const AvailabilityList = ({
               {format(new Date(availability.date), "yyyy-MM-dd")}:
             </span>
           </span>
+
           {availability.isEditing ? (
             <div className="flex items-center space-x-2 mt-2 sm:mt-0">
               <input
@@ -315,13 +316,14 @@ const AvailabilityList = ({
             </div>
           ) : (
             <span className="text-gray-600">
-              {format(new Date(availability.startTime), "HH:mm")} -{" "}
-              {format(new Date(availability.endTime), "HH:mm")}
+              {format(new Date(availability.startTime), "h:mm a")} -{" "}
+              {format(new Date(availability.endTime), "h:mm a")}
             </span>
           )}
         </span>
         {/* Action buttons and status */}
         <div className="flex flex-wrap items-center gap-2 mt-4 sm:mt-0">
+
           {availability.isEditing ? (
             <>
               <button
