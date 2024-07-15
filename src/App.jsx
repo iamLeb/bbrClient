@@ -15,6 +15,7 @@ import Reset from "./pages/front/auth/Reset.jsx";
 import Register from "./pages/front/auth/Register.jsx";
 import ContactUs from "./pages/front/ContactUs.jsx";
 import DashboardLayout from "./layouts/DashboardLayout.jsx";
+import Create from "./pages/dashboard/blog/Create.jsx";
 import Admin from "./pages/dashboard/Admin.jsx";
 import Categories from "./pages/dashboard/Categories.jsx";
 import Neighbourhood from "./pages/dashboard/Neighbourhood.jsx";
@@ -28,8 +29,7 @@ import AddAgent from "./pages/dashboard/AddAgent.jsx";
 import GlobalContext from "./context/Global.js";
 import Preloader from "./components/Preloader.jsx"; // Import Preloader component
 import ScrollToTop from "./components/ScrollToTop.js";
-import Availability from "./pages/dashboard/Availability.jsx";
-import Create from "./pages/dashboard/blog/Create.jsx";
+import Availability from "./pages/dashboard/Availability/Availability.jsx";
 
 function App() {
   const { loading } = useContext(GlobalContext);
