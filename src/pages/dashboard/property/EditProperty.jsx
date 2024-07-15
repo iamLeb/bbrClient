@@ -12,7 +12,7 @@ const EditProperty = () => {
     const [selectedProperty, setSelectedProperty] = useState(null);
     const {categories} = useContext(GlobalContext);
     const {neighbourhoods} = useContext(GlobalContext);
-    const {getNeigbourhoodName, getName} = useContext(GlobalContext);
+    const {getNeighbourhoodName, getName} = useContext(GlobalContext);
     const [newProperty, setNewProperty] = useState({
         title: '',
         address: '',
@@ -64,7 +64,7 @@ const EditProperty = () => {
         setLoading(true);
 
         // Validate form fields
-        if (!newProperty.title || !newProperty.address || !newProperty.price || !newProperty.bed || !newProperty.bath || !newProperty.category || !newProperty.city || !newProperty.neighbourhood || !newProperty.sqft || !newProperty.yearBuilt || !newProperty.landArea || !newProperty.description) {
+        if (!newProperty.title || !newProperty.address || !newProperty.bed || !newProperty.bath || !newProperty.category || !newProperty.city || !newProperty.neighbourhood || !newProperty.description) {
             setErrors('All fields are required');
             setLoading(false);
             return;
@@ -131,14 +131,14 @@ const EditProperty = () => {
                         <div className='font-bold mb-3'>Category</div>
                         <select name='category' onChange={handleChange}
                                 className='p-3 border rounded-lg'>
-                            <option value={newProperty.category}>Select a category</option>
+                            <option value=''>{getName(newProperty.category)}</option>
                             {categories.map(category => (
                                 <option key={category._id} value={category._id}>{category.name}</option>
                             ))}
                         </select>
                     </div>
                     <div className='p-3 flex flex-col'>
-                        <div className='font-bold mb-3'>City</div>
+                    <div className='font-bold mb-3'>City</div>
                         <select value={newProperty.city} name='city' onChange={handleChange}
                                 className='px-5 border py-4 w-full rounded-lg outline-none'>
                             <option value=''>Select a City</option>
@@ -164,7 +164,7 @@ const EditProperty = () => {
                         <div className='font-bold mb-3'>Neighbourhood</div>
                         <select name='neighbourhood' onChange={handleChange}
                                 className='p-3 border rounded-lg'>
-                            <option value=''>{getNeigbourhoodName(newProperty.neighbourhood)}</option>
+                            <option value=''>{getNeighbourhoodName(newProperty.neighbourhood)}</option>
                             {neighbourhoods.map(neighbourhood => (
                                 <option key={neighbourhood._id} value={neighbourhood._id}>{neighbourhood.name}</option>
                             ))}
@@ -173,19 +173,19 @@ const EditProperty = () => {
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Sqft</div>
                         <input value={newProperty.sqft} name='sqft'
-                               onChange={handleChange} type='number'
+                               onChange={handleChange} type='text'
                                placeholder='Enter the size of the property' className='p-3 border rounded-lg'/>
                     </div>
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Year Built</div>
                         <input value={newProperty.yearBuilt} name='yearBuilt'
-                               onChange={handleChange} type='number'
+                               onChange={handleChange} type='text'
                                placeholder='Year the property was built' className='p-3 border rounded-lg'/>
                     </div>
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Land Area</div>
                         <input value={newProperty.landArea} name='landArea'
-                               onChange={handleChange} type='number'
+                               onChange={handleChange} type='text'
                                placeholder='Land area of the property' className='p-3 border rounded-lg'/>
                     </div>
                     <div className='p-3 flex flex-col'>
@@ -205,7 +205,7 @@ const EditProperty = () => {
                     <button type='submit'
                             disabled={loading}
                             className='px-6 py-3 rounded bg-primary text-white flex items-center justify-center'>
-                        <span>Create Property</span>
+                        <span>Update Property</span>
                         {loading && <span
                             className='ml-2 animate-spin border-2 border-t-2 border-white border-t-transparent rounded-full w-4 h-4'></span>}
                     </button>

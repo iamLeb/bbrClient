@@ -199,19 +199,19 @@ const AddProperty = () => {
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Sqft</div>
                         <input value={newProperty.sqft} name='sqft'
-                               onChange={handleChange} type='number'
+                               onChange={handleChange} type='text'
                                placeholder='Enter the size of the property' className='p-3 border rounded-lg'/>
                     </div>
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Year Built</div>
                         <input value={newProperty.yearBuilt} name='yearBuilt'
-                               onChange={handleChange} type='number'
+                               onChange={handleChange} type='text'
                                placeholder='Year the property was built' className='p-3 border rounded-lg'/>
                     </div>
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Land Area</div>
                         <input value={newProperty.landArea} name='landArea'
-                               onChange={handleChange} type='number'
+                               onChange={handleChange} type='text'
                                placeholder='Land area of the property' className='p-3 border rounded-lg'/>
                     </div>
                     <div className='p-3 flex flex-col'>
