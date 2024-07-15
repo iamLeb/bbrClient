@@ -97,7 +97,7 @@ const AddProperty = () => {
 
             const propertyId = propertyRes.data._id;
 
-            // Store the URL and blog ID in the media collection
+            // Store the URL and property ID in the media collection
             await api.post('/media/create', {
                 type: 'image',
                 url,
@@ -120,7 +120,7 @@ const AddProperty = () => {
             </div>
             {errors && <p className="text-red-500 pl-3 mt-2">{errors}</p>}
             <form onSubmit={handleSubmit}>
-                <div className='grid grid-cols-2'>
+                <div className='grid grid-cols-1 md:grid-cols-2'>
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Title</div>
                         <input value={newProperty.title} name='title'
@@ -214,9 +214,10 @@ const AddProperty = () => {
                     </div>
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Description</div>
-                        <textarea value={newProperty.description} name='description'
+                        <textarea value={newProperty.description} name='description' cols="30"
+                                  rows="5"
                                   onChange={handleChange} placeholder='Enter description of the property'
-                                  className='p-3 border rounded-lg'/>
+                                  className='resize-none p-3 border rounded-lg'/>
                     </div>
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Image</div>
@@ -225,17 +226,18 @@ const AddProperty = () => {
                     </div>
                 </div>
                 <div className="p-5 flex justify-center space-x-5 text-xs">
-                    <button type="button" onClick={handleCancel}
-                            className="px-5 py-3 w-1/5 rounded bg-gray-100">Cancel
-                    </button>
-                    <button type="submit" className="px-6 py-3 rounded bg-primary w-1/5 text-white">Create Property
+                    <button type='submit'
+                            disabled={loading}
+                            className='px-6 py-3 rounded bg-primary text-white flex items-center justify-center'>
+                        <span>Create Property</span>
+                        {loading && <span
+                            className='ml-2 animate-spin border-2 border-t-2 border-white border-t-transparent rounded-full w-4 h-4'></span>}
                     </button>
                 </div>
             </form>
         </div>
-
-
     );
+
 };
 
 export default AddProperty;

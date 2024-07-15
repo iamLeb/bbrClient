@@ -29,7 +29,7 @@ const TableComponent = () => {
             });
 
             // Fetch neighbourhoods for each property
-            const neighbourhoodPromises = properties.map(property => fetchNeighbourhoodName(property.category));
+            const neighbourhoodPromises = properties.map(property => fetchNeighbourhoodName(property.neighbourhood));
             const neighbourhoodResponses = await Promise.all(neighbourhoodPromises);
 
             // Create a map of neighbourhood IDs to neighbourhood names
@@ -39,8 +39,7 @@ const TableComponent = () => {
                 neighbourhoodsMap[neighbourhoodId] = response.data;
             });
 
-
-            // Fetch media for each blog
+            // Fetch media for each property
             const mediaPromises = properties.map(property => fetchMedia(property._id));
             const mediaResponses = await Promise.all(mediaPromises);
 
@@ -49,7 +48,7 @@ const TableComponent = () => {
             });
 
             setCategories(categoriesMap);
-            setNeighbourhoods(neighbourhoodsMap)
+            setNeighbourhoods(neighbourhoodsMap);
             setProperties(properties);
         } catch (error) {
             console.log(error.message);
@@ -89,95 +88,69 @@ const TableComponent = () => {
         }
     };
 
-
     useEffect(() => {
         fetchProperties()
     }, []);
 
     return (
-        <div className='m-3'>
-            <div className="bg-white border w-full border-gray-100 shadow-2xl">
-                <div className="p-4 border-b flex justify-between items-center">
-                    <h3 className="font-bold">My listings</h3>
-                    <div>
+        <div className="h-screen m-5">
+            <div className="bg-white border border-gray-100 shadow-2xl">
+                <div className="p-4 border-b"><h3 className="font-bold">Add, Edit & Remove</h3></div>
+                <div className="p-3">
+                    <div className="sm:flex justify-between items-center">
                         <button onClick={() => navigate('add')}
                                 className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>+
-                            Add
-                            New
-                            Category
+                            Create New Property
                         </button>
                     </div>
                 </div>
-                <div className="p-3 hidden sm:block">
-                    <div className="sm:flex justify-between items-center">
-                        <div className="relative mt-2 sm:mt-0">
-                            <input
-                                placeholder="Search..."
-                                className="py-2 px-10 w-56 outline-none border rounded text-sm" type="text"/>
-                        </div>
-                    </div>
-                </div>
+
                 <div className="overflow-x-auto">
                     <table className="table-auto w-full">
                         <thead>
-                        <tr className="text-center w-full text-[15px] bg-gray-100">
-                            <th className="px-4 py-2 lg:w-1/5 text-center sm:text-wrap">Title</th>
-                            <th className="px-4 py-2 md:w-1/4 lg:w-1/5 text-center hidden sm:table-cell">Address</th>
-                            <th className="px-4 py-2 lg:w-1/5 text-center hidden sm:table-cell">Price</th>
-                            <th className="px-4 py-2 lg:w-1/5 text-center hidden lg:table-cell">Created</th>
-                            <th className="px-4 py-2 lg:w-1/5 text-center ">Action</th>
+                        <tr className="text-left lg:text-center text-sm bg-gray-100">
+                            <th className="px-4 py-2">Title</th>
+                            <th className="px-4 py-2 hidden lg:table-cell">Address</th>
+                            <th className="px-4 py-2 hidden lg:table-cell">Price</th>
+                            <th className="px-4 py-2 hidden lg:table-cell">Image</th>
+                            <th className="px-4 py-2 hidden lg:table-cell">Status</th>
+                            <th className="px-4 py-2 text-end lg:text-center">Action</th>
                         </tr>
                         </thead>
-                    </table>
-                </div>
-                {properties.map((property) => (
-                    <div key={property._id} className="m-5">
-                        <table className='w-full'>
-                            <tbody>
-                            <tr className="text-center text-[15px] w-full border-b">
-                                <td className="px-4 py-2 lg:w-1/5  sm:text-center">{property.title}</td>
-                                <td className=" py-2 md:w-1/4 lg:w-1/5 text-center hidden sm:table-cell">{property.address}</td>
-                                <td className="px-4 py-2 md:w-1/4  lg:w-1/5 text-center hidden sm:table-cell">{property.price}</td>
-                                <td className="px-4 py-2 hidden lg:block">
-                                        <span>
-                                            {format(property.createdAt)}
-                                        </span>
+
+                        <tbody>
+                        {properties.map((property) => (
+                            <tr key={property._id} className="text-left lg:text-center text-xs border-b">
+                                <td className="px-4 py-2">{property.title}</td>
+                                <td className="px-4 py-2 truncate hidden lg:block">{property.address}</td>
+                                <td className="px-4 py-2 hidden lg:block">{property.price}</td>
+                                <td className="px-4 py-2 hidden lg:table-cell">
+                                    <img src={property.media.url} alt="Property Image"
+                                         className="w-10 h-10 object-cover rounded-lg"/>
                                 </td>
-                                <td className="px-4 py-2 md:w-1/4  lg:w-1/5 hidden lg:table-cell">
-                                            <span className={`px-2py-1 text-xs font-bold
-                                            rounded text-center`}>3
-                                            Active
-                                            </span>
+                                <td className="px-4 py-2 hidden lg:table-cell font-bold">
+                                    {property.status === true ? 'Active' : 'Sold'}
                                 </td>
                                 <td className="px-4 py-2">
-                                    <div className={'flex justify-end sm:justify-center sm:block'}>
-                                        <button className="px-2 py-1 rounded bg-green-500 text-white text-center">Edit
-                                        </button>
-                                        <button onClick={() => handleDelete(property._id)} className="ml-2 px-2 py-1 rounded
-                                                bg-red-500 text-white text-center">Remove
+                                    <div className={'flex justify-end lg:justify-center text-end'}>
+                                        <button className="px-2 py-1 rounded bg-green-500 text-white">Edit</button>
+                                        <button onClick={() => handleDelete(property._id)}
+                                                className="ml-2 px-2 py-1 rounded bg-red-500 text-white">Remove
                                         </button>
                                     </div>
                                 </td>
                             </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                ))}
+                        ))}
+                        </tbody>
+                    </table>
+                </div>
                 <div className="flex justify-end p-4 space-x-2">
-                    <button className="border px-2 py-1 text-sm
-                rounded">Previous
-                    </button>
-                    <button className="border px-2 py-1 text-white bg-purple-900
-                text-sm rounded">1
-                    </button>
-                    <button className="border px-2 py-1 text-sm
-                rounded">Next
-                    </button>
+                    <button className="border px-2 py-1 text-sm rounded">Previous</button>
+                    <button className="border px-2 py-1 text-white bg-purple-900 text-sm rounded">1</button>
+                    <button className="border px-2 py-1 text-sm rounded">Next</button>
                 </div>
             </div>
         </div>
-
-
     );
 };
 
