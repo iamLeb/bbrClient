@@ -75,7 +75,7 @@ function App() {
             <Route path={'profile'} element={<Profile/>} />
             <Route path={'availability'} element={<Availability/>} />
             <Route path={'listings'} element={<Properties/>} />
-            <Route path={'addlistings'} element={<AddProperty />} />
+            <Route path={'listings/add'} element={<AddProperty />} />
             <Route path={'addAgent'} element={<AddAgent />} />
             <Route path={'gallery'} element={<Gallery />} />
           </Route>

@@ -4,7 +4,12 @@ import api from "../../services/api.js";
 import GlobalContext from "../../context/Global.js";
 
 const AddProperty = () => {
-    const {categories, neighbourhoods, setProperties, properties} = useContext(GlobalContext);
+    const navigate = useNavigate();
+    const [errors, setErrors] = useState('');
+    const [loading, setLoading] = useState(false);
+    const {categories} = useContext(GlobalContext);
+    const {neighbourhoods} = useContext(GlobalContext);
+
     const [newProperty, setNewProperty] = useState({
         title: '',
         address: '',
@@ -18,69 +23,93 @@ const AddProperty = () => {
         yearBuilt: '',
         landArea: '',
         description: '',
-        video: '',
-        media: [],
     });
-    const [errors, setErrors] = useState('');
-    const [selectedProperty, setSelectedProperty] = useState(null);
-    const navigate = useNavigate();
 
     const handleCancel = () => {
         navigate('/secure/listings');
     }
 
     const handleChange = e => {
-        const {name, value, files} = e.target;
-        if (name === 'media') {
-            setNewProperty({
-                ...newProperty,
-                [name]: files,
-            });
-        } else {
-            setNewProperty({
-                ...newProperty,
-                [name]: value,
-            });
-        }
+        const {name, value} = e.target;
+        setNewProperty(prevValues => ({
+            ...prevValues,
+            [name]: value,
+        }));
+    };
+
+    const handleFileChange = e => {
+        setNewProperty(prevValues => ({
+            ...prevValues,
+            file: e.target.files[0]
+        }));
     };
 
     const handleSubmit = async e => {
         e.preventDefault();
-        if (!newProperty.title || !newProperty.address || !newProperty.price || !newProperty.sqft || !newProperty.bath
-            || !newProperty.bed || !newProperty.description || !newProperty.category
-            || !newProperty.city || !newProperty.neighbourhood) {
-            setErrors('All fields are required');
+        setLoading(true);
+        const formData = new FormData();
+        formData.append('title', newProperty.title);
+        formData.append('address', newProperty.address);
+        formData.append('price', newProperty.price);
+        formData.append('bed', newProperty.bed);
+        formData.append('bath', newProperty.bath);
+        formData.append('category', newProperty.category);
+        formData.append('city', newProperty.city);
+        formData.append('neighbourhood', newProperty.neighbourhood);
+        formData.append('sqft', newProperty.sqft);
+        formData.append('yearBuilt', newProperty.yearBuilt);
+        formData.append('landArea', newProperty.landArea);
+        formData.append('description', newProperty.description);
+        formData.append('file', newProperty.file);
+
+        if (!newProperty.title || !newProperty.address || !newProperty.bed || !newProperty.bath || !newProperty.category || !newProperty.city || !newProperty.neighbourhood || !newProperty.description) {
+            setLoading(true)
+            setErrors('All Fields are required');
+            setLoading(false);
             return;
         }
 
         try {
-            if (selectedProperty) {
-                const res = await api.put(`/property/${selectedProperty._id}`, newProperty);
-                if (res.status === 200) {
-                    setProperties(properties.map(property => property._id === selectedProperty._id ? res.data : property));
-                    setSelectedProperty(null);
+            // Upload the file to AWS
+            const response = await api.post('/file/upload', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
                 }
-            } else {
-                const formData = new FormData();
-                for (let i = 0; i < newProperty.media.length; i++) {
-                    formData.append('media', newProperty.media[i]);
-                }
+            });
 
-                const imgres = await api.post("/file/upload", formData);
-                if (imgres.status === 400) {
-                    setErrors('Image did not upload properly');
-                    return;
-                }
+            const url = response.data.url; // response url
 
-                const res = await api.post('/property', newProperty);
-                if (res.status === 201) {
-                    setProperties([...properties, res.data]);
-                    navigate('/secure/listings');
-                }
-            }
-        } catch (e) {
-            console.error(e);
-            setErrors('There was an error creating/updating the property');
+            // Create the gallery
+            const propertyRes = await api.post('/property/create', {
+                title: newProperty.title,
+                address: newProperty.address,
+                price: newProperty.price,
+                bed: newProperty.bed,
+                bath: newProperty.bath,
+                category: newProperty.category,
+                city: newProperty.city,
+                neighbourhood: newProperty.neighbourhood,
+                sqft: newProperty.sqft,
+                yearBuilt: newProperty.yearBuilt,
+                landArea: newProperty.landArea,
+                description: newProperty.description,
+            });
+
+            const propertyId = propertyRes.data._id;
+
+            // Store the URL and blog ID in the media collection
+            await api.post('/media/create', {
+                type: 'image',
+                url,
+                ownerId: propertyId,
+                name: 'Property',
+            });
+            setLoading(false);
+            navigate('/secure/listings');
+
+        } catch (error) {
+            setErrors(error.response.data.error)
+            setLoading(false)
         }
     };
 
@@ -124,7 +153,7 @@ const AddProperty = () => {
                     </div>
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Category</div>
-                        <select value={newProperty.category} name='category' onChange={handleChange}
+                        <select name='category' onChange={handleChange}
                                 className='p-3 border rounded-lg'>
                             <option value=''>Select a category</option>
                             {categories.map(category => (
@@ -157,7 +186,7 @@ const AddProperty = () => {
                     </div>
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Neighbourhood</div>
-                        <select value={newProperty.neighbourhood} name='neighbourhood' onChange={handleChange}
+                        <select name='neighbourhood' onChange={handleChange}
                                 className='p-3 border rounded-lg'>
                             <option value=''>Select a neighbourhood</option>
                             {neighbourhoods.map(neighbourhood => (
@@ -191,14 +220,8 @@ const AddProperty = () => {
                     </div>
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Image</div>
-                        <input name='media' onChange={handleChange} type='file' multiple
+                        <input onChange={handleFileChange} type='file' name='file' multiple
                                className='p-3 border rounded-lg'/>
-                    </div>
-                    <div className='p-3 flex flex-col'>
-                        <div className='font-bold mb-3'>Video</div>
-                        <input value={newProperty.video} name='video'
-                               onChange={handleChange} type='text'
-                               placeholder='Add video URL of the property' className='p-3 border rounded-lg'/>
                     </div>
                 </div>
                 <div className="p-5 flex justify-center space-x-5 text-xs">
