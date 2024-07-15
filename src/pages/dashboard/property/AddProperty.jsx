@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
-import api from "../../services/api.js";
-import GlobalContext from "../../context/Global.js";
+import api from "../../../services/api.js";
+import GlobalContext from "../../../context/Global.js";
 
 const AddProperty = () => {
     const navigate = useNavigate();
@@ -9,6 +9,7 @@ const AddProperty = () => {
     const [loading, setLoading] = useState(false);
     const {categories} = useContext(GlobalContext);
     const {neighbourhoods} = useContext(GlobalContext);
+    const [selectedProperty, setSelectedProperty] = useState(null);
 
     const [newProperty, setNewProperty] = useState({
         title: '',
@@ -113,10 +114,11 @@ const AddProperty = () => {
         }
     };
 
+
     return (
         <div className='m-5 border rounded-b-lg'>
             <div className='bg-gray-100 p-3 font-extrabold text-center'>
-                Add new property
+              Add new property
             </div>
             {errors && <p className="text-red-500 pl-3 mt-2">{errors}</p>}
             <form onSubmit={handleSubmit}>

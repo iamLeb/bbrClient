@@ -1,6 +1,6 @@
-import TableComponent from "../../components/DashboardComponents/TableComponent.jsx";
+import TableComponent from "../../../components/DashboardComponents/TableComponent.jsx";
 import {useContext} from "react";
-import UserContext from "../../context/UserContext.js";
+import UserContext from "../../../context/UserContext.js";
 
 const Properties = () => {
     const { user } = useContext(UserContext);

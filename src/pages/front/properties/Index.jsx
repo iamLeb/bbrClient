@@ -1,22 +1,23 @@
-import { IoLocationOutline } from "react-icons/io5";
-import { LiaBedSolid } from "react-icons/lia";
-import { FaShower } from "react-icons/fa";
-import { MdOutlineZoomOutMap } from "react-icons/md";
-import { IoIosSearch } from "react-icons/io";
-import { RxMixerVertical } from "react-icons/rx";
-import { useState, useEffect, useContext } from "react";
+import {IoLocationOutline} from "react-icons/io5";
+import {LiaBedSolid} from "react-icons/lia";
+import {FaShower} from "react-icons/fa";
+import {MdOutlineZoomOutMap} from "react-icons/md";
+import {IoIosSearch} from "react-icons/io";
+import {RxMixerVertical} from "react-icons/rx";
+import {useState, useEffect, useContext} from "react";
 import PropertyFilters from "../../../components/FrontComponents/PropertyFilters";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import GlobalContext from "../../../context/Global.js";
 
 const Index = () => {
     const navigate = useNavigate();
     const [toggle, setToggle] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
-    const { properties, categories, neighbourhoods, loading, getNeighbourhoodName } = useContext(GlobalContext);
+    const {properties, categories, neighbourhoods, loading, getNeighbourhoodName} = useContext(GlobalContext);
     const [newProperty, setNewProperty] = useState({
         city: ''
     });
+
 
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -25,7 +26,7 @@ const Index = () => {
     }, []);
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setNewProperty(prevState => ({
             ...prevState,
             [name]: value
@@ -60,7 +61,8 @@ const Index = () => {
                     </select>
                 </div>
                 <div className="hidden sm:flex justify-center items-center">
-                    <select value={newProperty.city} name='city' onChange={handleChange} className='px-5 border py-4 w-full rounded-lg outline-none'>
+                    <select value={newProperty.city} name='city' onChange={handleChange}
+                            className='px-5 border py-4 w-full rounded-lg outline-none'>
                         <option value=''>Select a City</option>
                         <option value="winnipeg">Winnipeg</option>
                         <option value="brandon">Brandon</option>
@@ -80,17 +82,18 @@ const Index = () => {
                         <option value="carman">Carman</option>
                     </select>
                 </div>
-                <button onClick={handleOptions} className="flex items-center gap-1 sm:hidden bg-primary bg-opacity-50 rounded-md p-3 sm:py-3 sm:px-9">
-                    <RxMixerVertical className="text-lg font-extrabold" /> <p className="font-extrabold">Filters</p>
+                <button onClick={handleOptions}
+                        className="flex items-center gap-1 sm:hidden bg-primary bg-opacity-50 rounded-md p-3 sm:py-3 sm:px-9">
+                    <RxMixerVertical className="text-lg font-extrabold"/> <p className="font-extrabold">Filters</p>
                 </button>
                 <button className="flex items-center gap-1 bg-primary p-3 sm:py-3 sm:px-9 bg-opacity-50 rounded-md">
-                    <IoIosSearch className="text-lg font-extrabold" /> <p className="font-extrabold">Search </p>
+                    <IoIosSearch className="text-lg font-extrabold"/> <p className="font-extrabold">Search </p>
                 </button>
             </div>
             {toggle && isMobile &&
                 <div className="w-full z-30 transition-all duration-300 shadow-lg flex justify-center">
                     <div className="bg-white w-full rounded-lg flex justify-center">
-                        <PropertyFilters />
+                        <PropertyFilters/>
                     </div>
                 </div>
             }
@@ -106,42 +109,45 @@ const Index = () => {
                         <div key={property._id} className={'border border-gray-200 bg-white p-5 rounded-lg group'}>
                             <div className={'flex flex-col gap-3 justify-center'}>
                                 <div className={'relative rounded-lg h-56'}>
-                                    <span className={'absolute bottom-3 left-3 text-white font-bold text-2xl'}>${property.price}</span>
+                                    <span
+                                        className={'absolute bottom-3 left-3 text-white font-bold text-2xl'}>${property.price}</span>
                                     <div className={'relative overflow-hidden rounded-lg h-56'}>
                                         <img
                                             className={'object-cover h-full w-full cursor-pointer transition-all duration-300 group-hover:brightness-75 group-hover:scale-105'}
-                                            src={property.media.url}
-                                            alt="Property Image" />
+                                            src={property.url}
+                                            alt="Property Image"/>
                                     </div>
-                                    <span className={'absolute -bottom-6 left-3 text-primary bg-white shadow-2xl rounded-md p-3 text-xl'}>${property.price}</span>
+                                    <span
+                                        className={'absolute -bottom-6 left-3 text-primary bg-white shadow-2xl rounded-md p-3 text-xl'}>${property.price}</span>
                                 </div>
                                 <div className="pt-5">
-                                    <span onClick={() => navigate(`/properties/listing/${property._id}`)} className={'hover:cursor-pointer font-semibold text-xl'}>{property.title}</span>
+                                    <span onClick={() => navigate(`/properties/listing/${property._id}`)}
+                                          className={'hover:cursor-pointer font-semibold text-xl'}>{property.title}</span>
                                 </div>
                                 <div className={'flex space-x-2 text-sm text-gray-500'}>
-                                    <IoLocationOutline />
+                                    <IoLocationOutline/>
                                     <span>{property.address} </span>
                                 </div>
                                 <ul className={'flex justify-between items-center text-gray-500 text-sm'}>
                                     <li>
                                         <div className={'flex items-center space-x-2'}>
-                                            <LiaBedSolid />
+                                            <LiaBedSolid/>
                                             <p>
-                                                Beds <span className={'font-medium'}>{property.beds}</span>
+                                                Beds <span className={'font-medium'}>{property.bed}</span>
                                             </p>
                                         </div>
                                     </li>
                                     <li>
                                         <div className={'flex items-center space-x-2'}>
-                                            <FaShower />
+                                            <FaShower/>
                                             <p>
-                                                Baths <span className={'font-medium'}>{property.baths}</span>
+                                                Baths <span className={'font-medium'}>{property.bath} </span>
                                             </p>
                                         </div>
                                     </li>
                                     <li>
                                         <div className={'flex items-center space-x-2'}>
-                                            <MdOutlineZoomOutMap />
+                                            <MdOutlineZoomOutMap/>
                                             <p>
                                                 SqFt <span className={'font-medium'}>{property.sqft}</span>
                                             </p>
@@ -152,14 +158,17 @@ const Index = () => {
                                 <div className={'flex justify-between items-center font-light text-sm text-gray-500'}>
                                     <div className={'flex items-center space-x-2'}>
                                         <img className={'w-9 rounded-full'}
-                                             src={property.agent.image}
-                                             alt="Agent Avatar" />
+                                             src={'https://dreamhomewp.themesflat.com/wp-content/uploads/2023/11/user-1-1.jpg'}
+                                             alt="Agent Avatar"/>
                                         <span
-                                            className={'cursor-pointer transition-all duration-300 hover:text-primary'}>{property.agent.name}</span>
+                                            className={'cursor-pointer transition-all duration-300 hover:text-primary'}>Bukola Bliss</span>
                                     </div>
                                     <div>
-                                        <span>Built in: {property.yearBuilt}</span>
-                                    </div>
+                                        {property.yearBuilt && (
+                                            <div>
+                                                <span>Built in: {property.yearBuilt}</span>
+                                            </div>
+                                        )}                                    </div>
                                 </div>
                             </div>
                         </div>

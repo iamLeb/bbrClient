@@ -10,7 +10,6 @@ const TableComponent = () => {
     const [categories, setCategories] = useState({});
     const [neighbourhoods, setNeighbourhoods] = useState({});
     const [errors, setErrors] = useState('');
-    const {format} = useContext(GlobalContext);
 
     const fetchProperties = async () => {
         try {
@@ -88,6 +87,7 @@ const TableComponent = () => {
         }
     };
 
+
     useEffect(() => {
         fetchProperties()
     }, []);
@@ -134,7 +134,9 @@ const TableComponent = () => {
 
                                 <td className="px-4 py-2">
                                     <div className="flex justify-end lg:justify-center text-end">
-                                        <button className="px-2 py-1 rounded bg-primary text-white">Edit</button>
+                                        <button onClick={() => navigate('edit/' + property._id)}
+                                                className="px-2 py-1 rounded bg-primary text-white">Edit
+                                        </button>
                                         <button onClick={() => handleDelete(property._id)}
                                                 className="ml-2 px-2 py-1 rounded bg-red-500 text-white">Remove
                                         </button>
