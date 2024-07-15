@@ -113,7 +113,7 @@ const Featured = () => {
     ];
 
     return (
-        <section className={'py-9 bg-sky-100'}>
+        <section className={'pt-28 sm:py-9 bg-sky-100'}>
             <div className={'flex flex-col justify-center items-center gap-5'}>
                 <div className={'flex flex-col justify-between gap-4 text-center'}>
                     <h1 className={'font-bold text-4xl sm:text-5xl'}>Featured Properties</h1>
