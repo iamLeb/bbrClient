@@ -60,22 +60,21 @@ const AvailabilityList = ({
     setConfirmation({ message, onConfirm });
   }, []);
 
-    //to delete a particular availablity from availablities[] and  pop up a display message
-    const onDelete = useCallback(
-      (index) => {
-        const deletedAvailability = availabilities[index];
-        setAvailabilities((prev) => prev.filter((_, i) => i !== index));
-        addNotification(
-          `Availability for ${format(
-            new Date(deletedAvailability.date),
-            "MMMM dd, yyyy"
-          )} has been removed from sending to databases.`,
-          "info"
-        );
-      },
-      [availabilities, setAvailabilities, addNotification]
-    );
-  
+  //to delete a particular availablity from availablities[] and  pop up a display message
+  const onDelete = useCallback(
+    (index) => {
+      const deletedAvailability = availabilities[index];
+      setAvailabilities((prev) => prev.filter((_, i) => i !== index));
+      addNotification(
+        `Availability for ${format(
+          new Date(deletedAvailability.date),
+          "MMMM dd, yyyy"
+        )} has been removed from sending to databases.`,
+        "info"
+      );
+    },
+    [availabilities, setAvailabilities, addNotification]
+  );
 
   // Function to clear the confirmation
   const clearConfirmation = useCallback(() => setConfirmation(null), []);
@@ -153,7 +152,6 @@ const AvailabilityList = ({
   const filteredAvailabilities = hideAdded
     ? availabilities.filter((a) => a.status !== "added")
     : availabilities;
-
 
   //to update a particular availability
   const onEdit = useCallback(
@@ -283,7 +281,7 @@ const AvailabilityList = ({
     (availability, index) => (
       <li
         key={availability.id}
-        className={`bg-gray-50 p-4 rounded-md flex flex-wrap justify-between items-center gap-4 transition-all duration-300 hover:shadow-md ${
+        className={`bg-gray-50 p-4 rounded-md flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 transition-all duration-300 hover:shadow-md ${
           availability.status === "rejected"
             ? "border-l-4 border-red-500"
             : availability.status === "added"
@@ -291,13 +289,16 @@ const AvailabilityList = ({
             : "border-l-4 border-yellow-500"
         }`}
       >
-        <span className="flex items-center space-x-4 flex-grow">
-          <CalendarIcon size={20} className="text-gray-500" />
-          <span className="font-medium text-gray-700">
-            {format(new Date(availability.date), "yyyy-MM-dd")}:
+        {/* Date and time information */}
+        <span className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 flex-grow">
+          <span className="flex items-center space-x-2">
+            <CalendarIcon size={20} className="text-gray-500" />
+            <span className="font-medium text-gray-700">
+              {format(new Date(availability.date), "yyyy-MM-dd")}:
+            </span>
           </span>
           {availability.isEditing ? (
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 mt-2 sm:mt-0">
               <input
                 type="time"
                 value={format(new Date(availability.startTime), "HH:mm")}
@@ -319,7 +320,8 @@ const AvailabilityList = ({
             </span>
           )}
         </span>
-        <div className="space-x-2 flex items-center">
+        {/* Action buttons and status */}
+        <div className="flex flex-wrap items-center gap-2 mt-4 sm:mt-0">
           {availability.isEditing ? (
             <>
               <button
@@ -354,7 +356,7 @@ const AvailabilityList = ({
             <Trash2 size={16} />
           </button>
           <span
-            className={`ml-2 px-2 py-1 rounded-full text-xs ${
+            className={`px-2 py-1 rounded-full text-xs ${
               availability.status === "rejected"
                 ? "bg-red-100 text-red-800"
                 : availability.status === "added"

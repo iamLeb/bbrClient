@@ -5,7 +5,7 @@ import { Clock, Calendar as CalendarIcon, Repeat } from "lucide-react";
 import { generateAvailabilities } from "./availabilityHelpers";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import PropTypes from 'prop-types';//for eslint error 
+import PropTypes from "prop-types"; //for eslint error
 
 // Define the AvailabilityForm component
 const AvailabilityForm = ({
@@ -200,6 +200,17 @@ const AvailabilityForm = ({
     </div>
   );
 };
+// Custom styles to override weekend color
+const styles = `
+.react-calendar__month-view__days__day--weekend {
+  color: inherit;
+}
+`;
+
+// Create a style element and append it to the document head
+const styleElement = document.createElement("style");
+styleElement.textContent = styles;
+document.head.appendChild(styleElement);
 
 AvailabilityForm.propTypes = {
   availabilities: PropTypes.array.isRequired,

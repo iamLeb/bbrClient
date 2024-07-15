@@ -1,16 +1,16 @@
-import { useState, useCallback, useEffect,forwardRef } from "react";
+import { useState, useCallback, useEffect, forwardRef } from "react";
 import { X, CheckCircle, AlertCircle, Info } from "lucide-react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 // Component to render the appropriate icon based on notification type
 const NotificationIcon = ({ type }) => {
   switch (type) {
     case "success":
-      return <CheckCircle className="w-5 h-5 text-green-400" />;
+      return <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />;
     case "error":
-      return <AlertCircle className="w-5 h-5 text-red-400" />;
+      return <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />;
     default:
-      return <Info className="w-5 h-5 text-blue-400" />;
+      return <Info className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />;
   }
 };
 
@@ -27,23 +27,26 @@ const Notifications = forwardRef((props, ref) => {
   }, []);
 
   // Function to add a new notification
-  const addNotification = useCallback((message, type = "warning") => {
-    // Generate a unique ID for the notification
-    const id = Date.now();
-    // Add the new notification to the state
-    setNotifications((prev) => [...prev, { id, message, type }]);
-    // Set a timeout to automatically dismiss the notification after 5 seconds
-    setTimeout(() => {
-      dismissNotification(id);
-    }, 5000);
-  }, [dismissNotification]);
+  const addNotification = useCallback(
+    (message, type = "warning") => {
+      // Generate a unique ID for the notification
+      const id = Date.now();
+      // Add the new notification to the state
+      setNotifications((prev) => [...prev, { id, message, type }]);
+      // Set a timeout to automatically dismiss the notification after 5 seconds
+      setTimeout(() => {
+        dismissNotification(id);
+      }, 5000);
+    },
+    [dismissNotification]
+  );
 
   // Effect to expose addNotification and dismissNotification methods via ref
   useEffect(() => {
     if (ref) {
       ref.current = {
         addNotification,
-        dismissNotification
+        dismissNotification,
       };
     }
   }, [ref, addNotification, dismissNotification]);
@@ -53,11 +56,11 @@ const Notifications = forwardRef((props, ref) => {
 
   // Render the notifications
   return (
-    <div className="fixed top-4 right-4 z-50 space-y-2 max-w-sm w-full">
+    <div className="fixed top-2 right-2 sm:top-4 sm:right-4 z-50 space-y-2 max-w-[calc(100%-1rem)] sm:max-w-sm w-full">
       {notifications.map((notification) => (
         <div
           key={notification.id}
-          className={`flex items-center p-4 rounded-lg shadow-lg text-white ${
+          className={`flex items-center p-3 sm:p-4 rounded-lg shadow-lg text-white text-sm sm:text-base ${
             notification.type === "success"
               ? "bg-green-500"
               : notification.type === "error"
@@ -68,13 +71,15 @@ const Notifications = forwardRef((props, ref) => {
           {/* Render the appropriate icon based on notification type */}
           <NotificationIcon type={notification.type} />
           {/* Display the notification message */}
-          <p className="ml-3 mr-8 flex-1">{notification.message}</p>
+          <p className="ml-2 sm:ml-3 mr-4 sm:mr-8 flex-1">
+            {notification.message}
+          </p>
           {/* Button to manually dismiss the notification */}
           <button
             onClick={() => dismissNotification(notification.id)}
             className="text-white hover:text-gray-200 transition-colors"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
         </div>
       ))}
@@ -82,10 +87,10 @@ const Notifications = forwardRef((props, ref) => {
   );
 });
 
-Notifications.displayName = 'Notifications';
+Notifications.displayName = "Notifications";
 
 NotificationIcon.propTypes = {
-  type: PropTypes.oneOf(['success', 'error', 'warning']).isRequired,
+  type: PropTypes.oneOf(["success", "error", "warning"]).isRequired,
 };
 
 export default Notifications;
