@@ -11,6 +11,7 @@ const Admin = () => {
     const {user} = useContext(UserContext);
     const navigate = useNavigate();
     const {categories} = useContext(GlobalContext);
+    const {properties} = useContext(GlobalContext);
     const {neighbourhoods} = useContext(GlobalContext);
     const {contacts} = useContext(GlobalContext);
 
@@ -18,7 +19,7 @@ const Admin = () => {
         {
             id: 1,
             title: 'Total Listings',
-            count: '100.00',
+            count: properties.length,
             linkLabel: 'View all Listings',
             path: "listings",
             increase: '+16.24',

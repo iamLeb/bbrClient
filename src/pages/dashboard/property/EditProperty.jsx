@@ -1,11 +1,11 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import api from "../../../services/api.js";
 import GlobalContext from "../../../context/Global.js";
 
 const EditProperty = () => {
-    // Extract the ID parameter from the URL
     let {id} = useParams();
+    const navigate = useNavigate();
 
     // State variables
     const [loading, setLoading] = useState(false);
@@ -28,8 +28,11 @@ const EditProperty = () => {
         description: ''
     });
     const [errors, setErrors] = useState('');
+    const statusOptions = [
+        { value: true, label: 'Active' },
+        { value: false, label: 'Sold' }
+    ];
 
-    // Fetch property details by ID
     const getProperty = async (id) => {
         try {
             setLoading(true);
@@ -42,7 +45,7 @@ const EditProperty = () => {
         }
     };
 
-    // Handle form input changes
+
     const handleChange = (e) => {
         const {name, value} = e.target;
         setNewProperty({
@@ -74,11 +77,9 @@ const EditProperty = () => {
             // Update property
             const res = await api.put(`/property/${id}`, newProperty);
             if (res.status === 200) {
-                // Handle successful update
-                console.log('Property updated successfully:', res.data);
+                navigate('/secure/listings');
             }
         } catch (error) {
-            console.error('Error updating property:', error);
             setErrors(error.response.data.error);
         } finally {
             setLoading(false);
@@ -138,7 +139,7 @@ const EditProperty = () => {
                         </select>
                     </div>
                     <div className='p-3 flex flex-col'>
-                    <div className='font-bold mb-3'>City</div>
+                        <div className='font-bold mb-3'>City</div>
                         <select value={newProperty.city} name='city' onChange={handleChange}
                                 className='px-5 border py-4 w-full rounded-lg outline-none'>
                             <option value=''>Select a City</option>
@@ -189,28 +190,37 @@ const EditProperty = () => {
                                placeholder='Land area of the property' className='p-3 border rounded-lg'/>
                     </div>
                     <div className='p-3 flex flex-col'>
-                        <div className='font-bold mb-3'>Image</div>
-                        <input onChange={handleFileChange} type='file' name='file' multiple
-                               className='p-3 border rounded-lg'/>
+                        <div className='font-bold mb-3'>Status</div>
+                        <select value={newProperty.status} name='status' onChange={handleChange}
+                                className='px-5 border py-4 w-full rounded-lg outline-none'>
+                            {statusOptions.map(option => (
+                                <option key={option.value} value={option.value}>{option.label}</option>
+                            ))}
+                        </select>
                     </div>
-                    <div className='p-3 flex flex-col'>
-                        <div className='font-bold mb-3'>Description</div>
-                        <textarea value={newProperty.description} name='description' cols="30"
-                                  rows="5"
-                                  onChange={handleChange} placeholder='Enter description of the property'
-                                  className='resize-none p-3 border rounded-lg'/>
-                    </div>
+                <div className='p-3 flex flex-col'>
+                    <div className='font-bold mb-3'>Image</div>
+                    <input onChange={handleFileChange} type='file' name='file' multiple
+                           className='p-3 border rounded-lg'/>
                 </div>
-                <div className="p-5 flex justify-center space-x-5 text-xs">
-                    <button type='submit'
-                            disabled={loading}
-                            className='px-6 py-3 rounded bg-primary text-white flex items-center justify-center'>
-                        <span>Update Property</span>
-                        {loading && <span
-                            className='ml-2 animate-spin border-2 border-t-2 border-white border-t-transparent rounded-full w-4 h-4'></span>}
-                    </button>
+                <div className='p-3 flex flex-col'>
+                    <div className='font-bold mb-3'>Description</div>
+                    <textarea value={newProperty.description} name='description' cols="30"
+                              rows="5"
+                              onChange={handleChange} placeholder='Enter description of the property'
+                              className='resize-none p-3 border rounded-lg'/>
                 </div>
-            </form>
+        </div>
+    <div className="p-5 flex justify-center space-x-5 text-xs">
+        <button type='submit'
+                disabled={loading}
+                className='px-6 py-3 rounded bg-primary text-white flex items-center justify-center'>
+            <span>Update Property</span>
+            {loading && <span
+                className='ml-2 animate-spin border-2 border-t-2 border-white border-t-transparent rounded-full w-4 h-4'></span>}
+        </button>
+    </div>
+</form>
 
         </div>
     );
