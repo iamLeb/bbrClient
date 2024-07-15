@@ -9,6 +9,7 @@ import {MdOutlinePermPhoneMsg} from "react-icons/md";
 import {RiMailSendLine} from "react-icons/ri";
 import api from "../../services/api.js";
 import {useState} from "react";
+import BookingQuestion from "./UserBooking/BookingQuestion.jsx";
 
 const ContactTemplate = () => {
     const [loading, setLoading] = useState(false);
@@ -175,6 +176,7 @@ const ContactTemplate = () => {
                                 </div>
                             </div>
 
+                            <BookingQuestion />
                             <div className={'flex-1'}>
                                 <div className={'font-medium pt-2'}>Message</div>
                                 <textarea
