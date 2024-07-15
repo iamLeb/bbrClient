@@ -29,7 +29,6 @@ import AddAgent from "./pages/dashboard/AddAgent.jsx";
 import GlobalContext from "./context/Global.js";
 import Preloader from "./components/Preloader.jsx"; // Import Preloader component
 import ScrollToTop from "./components/ScrollToTop.js";
-import Create from "./pages/dashboard/blog/Create.jsx";
 import EditProperty from "./pages/dashboard/property/EditProperty.jsx";
 import Availability from "./pages/dashboard/Availability/Availability.jsx";
 
