@@ -122,18 +122,19 @@ const TableComponent = () => {
                         {properties.map((property) => (
                             <tr key={property._id} className="text-left lg:text-center text-xs border-b">
                                 <td className="px-4 py-2">{property.title}</td>
-                                <td className="px-4 py-2 truncate hidden lg:block">{property.address}</td>
-                                <td className="px-4 py-2 hidden lg:block">{property.price}</td>
+                                <td className="px-4 py-2 truncate hidden lg:table-cell">{property.address}</td>
+                                <td className="px-4 py-2 hidden lg:table-cell">{property.price}</td>
                                 <td className="px-4 py-2 hidden lg:table-cell">
                                     <img src={property.media.url} alt="Property Image"
                                          className="w-10 h-10 object-cover rounded-lg"/>
                                 </td>
-                                <td className="px-4 py-2 hidden lg:table-cell font-bold">
+                                <td className={`px-4 py-2 hidden lg:table-cell font-bold ${property.status === true ? 'text-green-500' : 'text-red-500'}`}>
                                     {property.status === true ? 'Active' : 'Sold'}
                                 </td>
+
                                 <td className="px-4 py-2">
-                                    <div className={'flex justify-end lg:justify-center text-end'}>
-                                        <button className="px-2 py-1 rounded bg-green-500 text-white">Edit</button>
+                                    <div className="flex justify-end lg:justify-center text-end">
+                                        <button className="px-2 py-1 rounded bg-primary text-white">Edit</button>
                                         <button onClick={() => handleDelete(property._id)}
                                                 className="ml-2 px-2 py-1 rounded bg-red-500 text-white">Remove
                                         </button>
@@ -152,6 +153,7 @@ const TableComponent = () => {
             </div>
         </div>
     );
+
 };
 
 export default TableComponent;

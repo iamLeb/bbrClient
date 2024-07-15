@@ -213,16 +213,16 @@ const AddProperty = () => {
                                placeholder='Land area of the property' className='p-3 border rounded-lg'/>
                     </div>
                     <div className='p-3 flex flex-col'>
+                        <div className='font-bold mb-3'>Image</div>
+                        <input onChange={handleFileChange} type='file' name='file' multiple
+                               className='p-3 border rounded-lg'/>
+                    </div>
+                    <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Description</div>
                         <textarea value={newProperty.description} name='description' cols="30"
                                   rows="5"
                                   onChange={handleChange} placeholder='Enter description of the property'
                                   className='resize-none p-3 border rounded-lg'/>
-                    </div>
-                    <div className='p-3 flex flex-col'>
-                        <div className='font-bold mb-3'>Image</div>
-                        <input onChange={handleFileChange} type='file' name='file' multiple
-                               className='p-3 border rounded-lg'/>
                     </div>
                 </div>
                 <div className="p-5 flex justify-center space-x-5 text-xs">
