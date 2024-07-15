@@ -31,7 +31,6 @@ import Preloader from "./components/Preloader.jsx"; // Import Preloader componen
 import ScrollToTop from "./components/ScrollToTop.js";
 import Availability from "./pages/dashboard/Availability/Availability.jsx";
 import EditProperty from "./pages/dashboard/property/EditProperty.jsx";
-
 function App() {
   const { loading } = useContext(GlobalContext);
   const [showPreloader, setShowPreloader] = useState(true);
