@@ -9,7 +9,6 @@ const EditProperty = () => {
 
     // State variables
     const [loading, setLoading] = useState(false);
-    const [selectedProperty, setSelectedProperty] = useState(null);
     const {categories} = useContext(GlobalContext);
     const {neighbourhoods} = useContext(GlobalContext);
     const {getNeighbourhoodName, getName} = useContext(GlobalContext);
@@ -37,7 +36,7 @@ const EditProperty = () => {
         try {
             setLoading(true);
             const res = await api.get(`/property/${id}`);
-            setNewProperty(res.data); // Assuming API returns the entire property object
+            setNewProperty(res.data); 
             setLoading(false);
         } catch (error) {
             console.error('Error fetching property:', error);

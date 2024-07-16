@@ -13,7 +13,7 @@ const Edit = () => {
     const [newBlog, setNewBlog] = useState({
         title: '',
         category: '',
-        content: '',
+        content: ''
     });
     const [media, setMedia] = useState([]);
     const [errors, setErrors] = useState('');
@@ -67,28 +67,28 @@ const Edit = () => {
         }
 
         try {
-            if (newBlog.file) {
-                const formData = new FormData();
-                formData.append('title', newBlog.title);
-                formData.append('category', newBlog.category);
-                formData.append('content', newBlog.content);
-                formData.append('file', newBlog.file);
-
-                const response = await api.post('/file/upload', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
-
-                const url = response.data.url; // response url
-
-                await api.put(`/media/${media}`, {
-                    type: 'image',
-                    url,
-                    ownerId: id,
-                    name: 'Blog',
-                });
-            }
+            // if (newBlog.file) {
+            //     const formData = new FormData();
+            //     formData.append('title', newBlog.title);
+            //     formData.append('category', newBlog.category);
+            //     formData.append('content', newBlog.content);
+            //     formData.append('file', newBlog.file);
+            //
+            //     const response = await api.post('/file/upload', formData, {
+            //         headers: {
+            //             'Content-Type': 'multipart/form-data'
+            //         }
+            //     });
+            //
+            //     const url = response.data.url; // response url
+            //
+            //     await api.put(`/media/${media}`, {
+            //         type: 'image',
+            //         url,
+            //         ownerId: id,
+            //         name: 'Blog',
+            //     });
+            // }
 
             // Update blog
             const res = await api.put(`/blog/${id}`, newBlog);
