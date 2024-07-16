@@ -9,27 +9,35 @@ const Edit = () => {
 
     // State variables
     const [loading, setLoading] = useState(false);
-    const {categories, getName, fetchMedia} = useContext(GlobalContext);
+    const {categories, getName} = useContext(GlobalContext);
     const [newBlog, setNewBlog] = useState({
         title: '',
         category: '',
         content: '',
-        file: null
     });
+    const [media, setMedia] = useState([]);
     const [errors, setErrors] = useState('');
 
+    const fetchMedia = async (ownerId) => {
+        try {
+            const res = await api.get(`/media/getMediaForOwner/${ownerId}`);
+            return res.data._id
+        } catch (error) {
+            return {data: []};
+        }
+    };
     const getBlog = async (id) => {
         try {
             setLoading(true);
             const res = await api.get(`/blog/${id}`);
             setNewBlog(res.data);
+            setMedia(await fetchMedia(id));
             setLoading(false);
         } catch (error) {
             console.error('Error fetching blog:', error);
             setLoading(false);
         }
     };
-
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -59,27 +67,36 @@ const Edit = () => {
         }
 
         try {
-            const formData = new FormData();
-            formData.append('title', newBlog.title);
-            formData.append('category', newBlog.category);
-            formData.append('content', newBlog.content);
             if (newBlog.file) {
+                const formData = new FormData();
+                formData.append('title', newBlog.title);
+                formData.append('category', newBlog.category);
+                formData.append('content', newBlog.content);
                 formData.append('file', newBlog.file);
+
+                const response = await api.post('/file/upload', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+
+                const url = response.data.url; // response url
+
+                await api.put(`/media/${media}`, {
+                    type: 'image',
+                    url,
+                    ownerId: id,
+                    name: 'Blog',
+                });
             }
 
-            const response = await api.post('/file/upload', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
-
-            const url = response.data.url; // response url
-
-            if (response.status === 200) {
+            // Update blog
+            const res = await api.put(`/blog/${id}`, newBlog);
+            if (res.status === 200) {
                 navigate('/secure/blog');
             }
         } catch (error) {
-            setErrors(error.response?.data?.error || 'An error occurred');
+            setErrors(error.response.data.error);
         } finally {
             setLoading(false);
         }
