@@ -56,7 +56,7 @@ function App() {
             <Route path={"/blog/:id"} element={<BlogSingle />} />
             <Route path={"/contact"} element={<ContactUs />} />
             <Route path={"/properties/listing"} element={<Index />} />
-            <Route path={"/properties/listing/1"} element={<Single />} />
+            <Route path={"/properties/listing/:id"} element={<Single />} />
             <Route path={"/auth/login"} element={<Login />} />
             <Route path={"/auth/forgot"} element={<Forgot />} />
             <Route path={"/auth/reset"} element={<Reset />} />
