@@ -2,115 +2,12 @@ import { IoLocationOutline } from "react-icons/io5";
 import { LiaBedSolid } from "react-icons/lia";
 import { FaShower } from "react-icons/fa";
 import { MdOutlineZoomOutMap } from "react-icons/md";
-import { FaArrowRightArrowLeft } from "react-icons/fa6";
-import { IoBookmarkOutline } from "react-icons/io5";
-import { IoIosSearch } from "react-icons/io";
 import {useContext} from "react";
 import GlobalContext from "../../context/Global.js";
 import ViewMore from "./ViewMore.jsx";
 
 const Featured = () => {
-    const {categories} = useContext(GlobalContext)
-    
-    const featured = [
-        {
-            id:0,
-            featured: true,
-            image: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            amount: '$146,000',
-            title: 'Lot 6',
-            address: '15 Berwick crt, Winnipeg, Manitoba',
-            beds: 4,
-            baths: 4,
-            sqft: 900,
-            status: false
-        },
-        {
-            id:1,
-            featured: true,
-            image: 'https://images.pexels.com/photos/210617/pexels-photo-210617.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            amount: '$106,000',
-            title: 'The Pinnacle Dr',
-            address: '252 Pinnacle dr, Winnipeg, Manitoba',
-            beds: 2,
-            baths: 2,
-            sqft: 600,
-            status: true
-
-        },
-        {
-            id:2,
-            featured: true,
-            image: 'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            amount: '$106,000',
-            title: 'St Vital Centre',
-            address: '1225 St Mary Rd, Winnipeg, Manitoba',
-            beds: 19,
-            baths: 17,
-            sqft: '8,500',
-            status: true
-        },
-        {
-            id:3,
-            featured: true,
-            image: 'https://images.pexels.com/photos/87223/pexels-photo-87223.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            amount: '$106,000',
-            title: 'Kiloradian Place',
-            address: '252 Kildonan Mall, Winnipeg, Manitoba',
-            beds: 1,
-            baths: 1,
-            sqft: 600,
-            status: true
-        },
-        {
-            id:4,
-            featured: true,
-            image: 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            amount: '$106,000',
-            title: 'Garden City',
-            address: '888 Garden City, Winnipeg, Manitoba',
-            beds: 2,
-            baths: 2,
-            sqft: 600,
-            status: false
-        },
-        {
-            id:5,
-            featured: true,
-            image: 'https://images.pexels.com/photos/1732414/pexels-photo-1732414.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            amount: '$900,000',
-            title: 'Portage Place',
-            address: '323 Portage Ave, Winnipeg, Manitoba',
-            beds: 4,
-            baths: 4,
-            sqft: 900,
-            status: true
-        },
-        {
-            id:6,
-            featured: true,
-            image: 'https://images.pexels.com/photos/280221/pexels-photo-280221.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            amount: '$600,000',
-            title: 'Smith West Place',
-            address: '323 Smith West PL, Winnipeg, Manitoba',
-            beds: 4,
-            baths: 4,
-            sqft: 900,
-            status: true
-        },
-        {
-            id:7,
-            featured: true,
-            image: 'https://images.pexels.com/photos/1481105/pexels-photo-1481105.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            amount: '$190,000',
-            title: 'The Place',
-            address: '323 The Place RD, Winnipeg, Manitoba',
-            beds: 6,
-            baths: 6,
-            sqft: '1,800',
-            status: false
-        },
-    ];
+    const {categories, properties} = useContext(GlobalContext)
 
     return (
         <section className={'pt-28 sm:py-9 bg-sky-100'}>
@@ -122,7 +19,7 @@ const Featured = () => {
                 </div>
 
                 <div className={'grid grid-cols-3 md:grid-cols-7 gap-4 font-light text-sm text-center justify-center'}>
-                    {categories.map(category => (
+                    {categories.slice(0,8).map(category => (
                         <button key={category._id} className={'tag text-black font-bold'}>{category.name}</button>
                     ))}
                 </div>
@@ -132,18 +29,15 @@ const Featured = () => {
             {/*Featured Properties*/}
             <div className={'px-3 mt-5'}>
                 <div className={'grid grid-cols-1 sm:grid-cols-2 md:grid-col-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'}>
-                    {featured.map(feat => (
-                        <div key={feat.id} className={'border border-gray-200 bg-white p-5 rounded-lg'}>
+                    {properties.slice(properties.length -9, properties.length -1).map(feat => (
+                        <div key={feat._id} className={'border border-gray-200 bg-white p-5 rounded-lg'}>
                             <div className={'flex flex-col gap-3 justify-center'}>
                                 <div className={'relative overflow-hidden rounded-lg h-56'}>
                                     <img
                                         className={'object-cover h-full w-full cursor-pointer transition-all duration-300 hover:brightness-75 hover:scale-105'}
-                                        src={feat.image}
+                                        src={feat.url}
                                         alt="image"/>
-                                    {feat.featured && (
-                                        <span
-                                            className={'absolute top-3 left-3 bg-primary text-white text-xs rounded-lg px-1.5 py-0.5'}>Featured</span>
-                                    )}
+                                        <span className={'absolute top-3 left-3 bg-primary text-white text-xs rounded-lg px-1.5 py-0.5'}>Featured</span>
 
                                     <div
                                         className={`${!feat.status ? 'top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2' : 'bottom-3 left-3'} absolute text-white font-bold text-2xl`}>{feat.status ? feat.amount : <span className={'bg-red-500 rounded-lg px-3 text-6xl'}>Sold</span> }</div>
@@ -160,7 +54,7 @@ const Featured = () => {
                                         <div className={'flex items-center space-x-2'}>
                                             <LiaBedSolid/>
                                             <p>
-                                                Beds <span className={'font-medium'}>{feat.beds}</span>
+                                                Beds <span className={'font-medium'}>{feat.bed}</span>
                                             </p>
                                         </div>
                                     </li>
@@ -169,7 +63,7 @@ const Featured = () => {
                                         <div className={'flex items-center space-x-2'}>
                                             <FaShower/>
                                             <p>
-                                                Baths <span className={'font-medium'}>{feat.baths}</span>
+                                                Baths <span className={'font-medium'}>{feat.bath}</span>
                                             </p>
                                         </div>
                                     </li>
@@ -190,11 +84,13 @@ const Featured = () => {
                                              src="https://dreamhomewp.themesflat.com/wp-content/uploads/2023/11/user-1-1.jpg"
                                              alt=""/>
                                         <span
-                                            className={'cursor-pointer transition-all duration-300 hover:text-primary'}>Alexia Putellas</span>
+                                            className={'cursor-pointer transition-all duration-300 hover:text-primary'}>Bukola Bliss</span>
                                     </div>
-                                    <div>
-                                        <span>Build in: 2022</span>
-                                    </div>
+                                    {feat.yearBuilt && (
+                                        <div>
+                                            <span>Built in: {feat.yearBuilt}</span>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>

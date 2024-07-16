@@ -103,7 +103,7 @@ const Index = () => {
             </div>
 
             {/* Property Listings */}
-            <div className={'px-3 mt-5 flex justify-evenly'}>
+            <div className={'px-3 mt-5 flex justify-evenly p-5'}>
                 <div className={'grid grid-cols-1 sm:grid-cols-2 md:grid-col-2 lg:grid-cols-3 gap-4'}>
                     {properties.map(property => (
                         <div key={property._id} className={'border border-gray-200 bg-white p-5 rounded-lg group'}>
@@ -168,7 +168,8 @@ const Index = () => {
                                             <div>
                                                 <span>Built in: {property.yearBuilt}</span>
                                             </div>
-                                        )}                                    </div>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         </div>

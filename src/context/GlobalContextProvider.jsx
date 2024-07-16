@@ -12,6 +12,7 @@ const GlobalContextProvider = ({children}) => {
     const [contacts, setContacts] = useState([]);
     const [galleries, setGalleries] = useState([]);
     const [properties, setProperties] = useState([]);
+    const [listings, setListings] = useState([]);
 
     const getCategories = async () => {
         const res = await api.get('category');
@@ -77,6 +78,7 @@ const GlobalContextProvider = ({children}) => {
         setLoading(false)
     }
 
+
     // Helper function to get name
     const getName = id => {
         const category = categories.find((category) => category._id === id);
@@ -132,6 +134,7 @@ const GlobalContextProvider = ({children}) => {
                 getNeighbourhoodName(),
                 setCategories(),
                 getProperties(),
+                fetchMedia()
             ]);
         };
         fetchData();
@@ -151,6 +154,9 @@ const GlobalContextProvider = ({children}) => {
             galleries,
             getNeighbourhoodName,
             properties,
+            listings,
+            setListings,
+            fetchMedia
         }}>
             {children}
         </GlobalContext.Provider>
