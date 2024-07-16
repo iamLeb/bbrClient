@@ -5,8 +5,10 @@ import { MdOutlineZoomOutMap } from "react-icons/md";
 import {useContext} from "react";
 import GlobalContext from "../../context/Global.js";
 import ViewMore from "./ViewMore.jsx";
+import {useNavigate} from "react-router-dom";
 
 const Featured = () => {
+    const navigate = useNavigate();
     const {categories, properties} = useContext(GlobalContext)
 
     return (
@@ -42,7 +44,7 @@ const Featured = () => {
                                     <div
                                         className={`${!feat.status ? 'top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2' : 'bottom-3 left-3'} absolute text-white font-bold text-2xl`}>{feat.status ? feat.amount : <span className={'bg-red-500 rounded-lg px-3 text-6xl'}>Sold</span> }</div>
                                 </div>
-                                <div>
+                                <div className={'cursor-pointer'} onClick={() => navigate(`/properties/listing/${feat._id}`)}>
                                     <span className={'font-semibold text-xl'}>{feat.title}</span>
                                 </div>
                                 <div className={'flex space-x-2 text-sm text-gray-500'}>

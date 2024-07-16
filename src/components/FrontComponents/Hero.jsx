@@ -73,7 +73,7 @@ const Hero = ({searchResult,toggleSearch}) => {
                     className={'absolute bottom-0 translate-y-1/2 right-1/2 transform translate-x-1/2 container mx-auto bg-white shadow-lg p-9'}>
                     <form onSubmit={handleSearch} className={'md:flex space-y-4 md:space-y-0 md:space-x-4'}>
                         <select onChange={handleChange} name="category" className={'px-5 border py-4 w-full rounded-lg outline-none'}>
-                            <option disabled={true} selected={true}>Select Search Categories</option>
+                            <option selected={true}>Select Search Categories</option>
                             {categories.map((category, i) => (
                                 <option key={i} value={category._id}>{category.name}</option>
                             ))}

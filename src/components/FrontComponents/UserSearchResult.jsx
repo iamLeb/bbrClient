@@ -4,8 +4,10 @@ import { FaShower } from "react-icons/fa";
 import { MdOutlineZoomOutMap } from "react-icons/md";
 import { useContext } from "react";
 import GlobalContext from "../../context/Global.js";
+import {useNavigate} from "react-router-dom";
 
 const UserSearchResult = () => {
+    const navigate = useNavigate();
     const { listings } = useContext(GlobalContext);
 
     return (
@@ -35,7 +37,8 @@ const UserSearchResult = () => {
                                                 alt={feat.title}
                                             />
                                         </div>
-                                        <div>
+                                        <div className={'cursor-pointer'}
+                                             onClick={() => navigate(`/properties/listing/${feat._id}`)}>
                                             <span className={'font-semibold text-xl'}>{feat.title}</span>
                                         </div>
                                         <div className={'flex space-x-2 text-sm text-gray-500'}>
