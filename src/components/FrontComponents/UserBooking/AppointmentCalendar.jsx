@@ -126,12 +126,21 @@ const AppointmentCalendar = () => {
       <div className="bg-white rounded-lg shadow-md overflow-hidden">
         <div className="flex flex-col lg:flex-row">
           {/* Calendar section */}
-          <div className="w-full lg:w-1/2 p-4">
+          <div className="w-full lg:w-1/2">
             <Calendar
               className="w-full border-none"
               minDate={new Date()}
               onChange={handleDateChange}
               value={selectedDate}
+              formatMonthYear={(locale, date) =>
+                date.toLocaleDateString(locale, {
+                  month: "short",
+                  year: "numeric",
+                })
+              }
+              formatShortWeekday={(locale, date) =>
+                date.toLocaleDateString(locale, { weekday: "narrow" })
+              }
             />
           </div>
           {/* Appointment details section */}
