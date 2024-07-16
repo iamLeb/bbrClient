@@ -1,54 +1,72 @@
-import {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
+import api from "../../../services/api.js";
 import GlobalContext from "../../../context/Global.js";
-import api from '../../../services/api';
-import {useNavigate} from "react-router-dom";
 
-const Create = () => {
+const Edit = () => {
+    let {id} = useParams();
     const navigate = useNavigate();
-    const [errors, setErrors] = useState('');
-    const [loading, setLoading] = useState(false);
-    const {categories} = useContext(GlobalContext);
 
-    const [values, setValues] = useState({
+    // State variables
+    const [loading, setLoading] = useState(false);
+    const {categories, getName, fetchMedia} = useContext(GlobalContext);
+    const [newBlog, setNewBlog] = useState({
         title: '',
         category: '',
-        file: null,
-        content: ''
+        content: '',
+        file: null
     });
+    const [errors, setErrors] = useState('');
 
-    const handleChange = e => {
+    const getBlog = async (id) => {
+        try {
+            setLoading(true);
+            const res = await api.get(`/blog/${id}`);
+            setNewBlog(res.data);
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching blog:', error);
+            setLoading(false);
+        }
+    };
+
+
+    const handleChange = (e) => {
         const {name, value} = e.target;
-        setValues(prevValues => ({
-            ...prevValues,
-            [name]: value,
-        }));
+        setNewBlog({
+            ...newBlog,
+            [name]: value
+        });
     };
 
     const handleFileChange = e => {
-        setValues(prevValues => ({
+        setNewBlog(prevValues => ({
             ...prevValues,
             file: e.target.files[0]
         }));
     };
 
-    const handleSubmit = async e => {
+    // Handle form submission
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        const formData = new FormData();
-        formData.append('title', values.title);
-        formData.append('category', values.category);
-        formData.append('file', values.file);
-        formData.append('content', values.content);
 
-        if (!values.file || !values.content || !values.title || !values.category) {
-            setLoading(true)
-            setErrors('All Fields are required');
+        // Validate form fields
+        if (!newBlog.title || !newBlog.category || !newBlog.content) {
+            setErrors('All fields are required');
             setLoading(false);
             return;
         }
 
         try {
-            // Upload the file to AWS
+            const formData = new FormData();
+            formData.append('title', newBlog.title);
+            formData.append('category', newBlog.category);
+            formData.append('content', newBlog.content);
+            if (newBlog.file) {
+                formData.append('file', newBlog.file);
+            }
+
             const response = await api.post('/file/upload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
@@ -57,67 +75,57 @@ const Create = () => {
 
             const url = response.data.url; // response url
 
-            // Create the gallery
-            const blogRes = await api.post('/blog/create', {
-                title: values.title,
-                category: values.category,
-                content: values.content,
-            });
-
-            const blogId = blogRes.data._id;
-
-            // Store the URL and blog ID in the media collection
-            await api.post('/media/create', {
-                type: 'image',
-                url,
-                ownerId: blogId,
-                name: 'Blog',
-            });
-            setLoading(false);
-            navigate('/secure/blog');
-
+            if (response.status === 200) {
+                navigate('/secure/blog');
+            }
         } catch (error) {
-            setErrors(error.response.data.error)
-            setLoading(false)
+            setErrors(error.response?.data?.error || 'An error occurred');
+        } finally {
+            setLoading(false);
         }
     };
+
+    useEffect(() => {
+        getBlog(id);
+    }, [id]);
 
     return (
         <div className='m-5 border rounded-b-lg'>
             <div className='bg-gray-100 p-3 font-extrabold text-center'>
-                Add new blog
+                Update Blog
             </div>
 
             <form onSubmit={handleSubmit}>
                 <div className={'flex justify-center'}>
-                    {errors && <span className="p-2 rounded-lg bg-red-500 font-bold text-white text-xs mt-2 uppercase">{errors}</span>}
+                    {errors && <span
+                        className="p-2 rounded-lg bg-red-500 font-bold text-white text-xs mt-2 uppercase">{errors}</span>}
                 </div>
                 <div className=''>
                     <div className='flex justify-between items-center'>
                         <div className='p-3 flex flex-col w-full'>
                             <div className='font-bold mb-3'>Title</div>
                             <input
+                                value={newBlog.title}
                                 onChange={handleChange}
                                 name='title'
                                 type='text'
-                                placeholder='Enter the title of the blog'
                                 className='p-3 border rounded-lg w-full'
                             />
                         </div>
                         <div className='p-3 flex flex-col w-full'>
                             <div className='font-bold mb-3'>Category</div>
                             <select
+                                value={newBlog.category}
+                                name='category'
                                 onChange={handleChange}
                                 className='p-3 border rounded-lg w-full'
-                                name='category'
                             >
-                                <option value=''>--Select Category--</option>
+                                <option value=''>{getName(newBlog.category)}</option>
                                 {categories.map(category => (
                                     <option key={category._id} value={category._id}>{category.name}</option>
                                 ))}
                             </select>
                         </div>
-
                         <div className='p-3 flex flex-col w-full'>
                             <div className='font-bold mb-3'>Image</div>
                             <input
@@ -128,11 +136,11 @@ const Create = () => {
                             />
                         </div>
                     </div>
-
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Content</div>
                         <textarea
                             onChange={handleChange}
+                            value={newBlog.content}
                             name='content'
                             cols='30'
                             rows='10'
@@ -141,10 +149,12 @@ const Create = () => {
                     </div>
                 </div>
                 <div className='p-5 flex justify-center space-x-5 text-xs'>
-                    <button type='submit'
-                            disabled={loading}
-                            className='px-6 py-3 rounded bg-primary text-white flex items-center justify-center'>
-                        <span>Create Blog</span>
+                    <button
+                        type='submit'
+                        disabled={loading}
+                        className='px-6 py-3 rounded bg-primary text-white flex items-center justify-center'
+                    >
+                        <span>Update Blog</span>
                         {loading && <span
                             className='ml-2 animate-spin border-2 border-t-2 border-white border-t-transparent rounded-full w-4 h-4'></span>}
                     </button>
@@ -154,4 +164,4 @@ const Create = () => {
     );
 };
 
-export default Create;
+export default Edit;

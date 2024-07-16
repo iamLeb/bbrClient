@@ -31,6 +31,7 @@ import Preloader from "./components/Preloader.jsx"; // Import Preloader componen
 import ScrollToTop from "./components/ScrollToTop.js";
 import Availability from "./pages/dashboard/Availability/Availability.jsx";
 import EditProperty from "./pages/dashboard/property/EditProperty.jsx";
+import Edit from "./pages/dashboard/blog/Edit.jsx";
 function App() {
   const { loading } = useContext(GlobalContext);
   const [showPreloader, setShowPreloader] = useState(true);
@@ -68,6 +69,7 @@ function App() {
             <Route path={'category'} element={<Categories/>} />
             <Route path={'blog'} element={<Blog/>} />
             <Route path={'blog/create'} element={<Create />} />
+            <Route path={'blog/edit/:id'} element={<Edit />} />
             <Route path={'neighbourhoods'} element={<Neighbourhood/>} />
             <Route path={'contacts'} element={<Contact/>} />
             <Route path={'testimonials'} element={<Testimonial/>} />
