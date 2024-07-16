@@ -52,13 +52,13 @@ const AppointmentCalendar = () => {
       start.setHours(
         parseInt(startTime.split(":")[0]),
         parseInt(startTime.split(":")[1]),
-        0,
+        0
       );
       const end = new Date(selectedDate);
       end.setHours(
         parseInt(endTime.split(":")[0]),
         parseInt(endTime.split(":")[1]),
-        0,
+        0
       );
 
       // Generate time slots and update state
@@ -74,7 +74,7 @@ const AppointmentCalendar = () => {
     setSelectedSlots((prevSlots) => {
       // Check if the slot is already selected
       const slotIndex = prevSlots.findIndex(
-        (selectedSlot) => selectedSlot.getTime() === slot.getTime(),
+        (selectedSlot) => selectedSlot.getTime() === slot.getTime()
       );
 
       if (slotIndex !== -1) {
@@ -101,7 +101,7 @@ const AppointmentCalendar = () => {
   // Helper function to check if a slot is selected
   const isSlotSelected = (slot) => {
     return selectedSlots.some(
-      (selectedSlot) => selectedSlot.getTime() === slot.getTime(),
+      (selectedSlot) => selectedSlot.getTime() === slot.getTime()
     );
   };
 
@@ -167,7 +167,13 @@ const AppointmentCalendar = () => {
               </div>
               {/* Available time slots */}
               <div>
-                <h4 className="text-md font-semibold mb-2">Available Slots</h4>
+                <h4 className="text-md font-semibold mb-2 text-center">
+                  Available Slots
+                  <br />
+                  <span className="text-sm font-normal">
+                    (Select one or more)
+                  </span>
+                </h4>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 max-h-64 overflow-y-auto">
                   {timeSlots.map((slot) => (
                     <button
@@ -182,7 +188,6 @@ const AppointmentCalendar = () => {
                         handleSlotSelect(slot);
                       }}
                     >
-                      <Clock size={14} className="mr-1" />
                       {slot.toLocaleTimeString([], {
                         hour: "2-digit",
                         minute: "2-digit",
