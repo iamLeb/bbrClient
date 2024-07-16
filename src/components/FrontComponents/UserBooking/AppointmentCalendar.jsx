@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { Clock, Check } from "lucide-react";
+import { Check } from "lucide-react";
+import ConfirmationPopup from "../../../pages/dashboard/Availability/ConfirmationPopup";
 
 const AppointmentCalendar = () => {
   // State variables
@@ -9,6 +10,7 @@ const AppointmentCalendar = () => {
   const [duration] = useState(15); // Duration of each appointment slot in minutes
   const [timeSlots, setTimeSlots] = useState([]); // Stores available time slots for the selected date
   const [selectedSlots, setSelectedSlots] = useState([]); // Stores the time slots selected by the user
+  const [confirmation, setConfirmation] = useState(null); //confirmation
 
   // Mock function to fetch availability from a database
   // In a real application, this would be an API call
@@ -20,6 +22,14 @@ const AppointmentCalendar = () => {
       endTime: "17:00",
     };
   };
+
+  // Generic function to handle confirmations
+  const handleConfirmation = useCallback((message, onConfirm) => {
+    setConfirmation({ message, onConfirm });
+  }, []);
+
+  // Function to clear the confirmation
+  const clearConfirmation = useCallback(() => setConfirmation(null), []);
 
   // Handler for when a new date is selected in the calendar
   const handleDateChange = (date) => {
@@ -109,14 +119,19 @@ const AppointmentCalendar = () => {
   // TODO: Implement actual appointment confirmation logic
   const handleConfirm = () => {
     if (selectedSlots.length > 0) {
-      const totalDuration = selectedSlots.length * duration;
-      console.log("Appointment confirmed:", {
-        date: selectedDate,
-        startTime: selectedSlots[0],
-        endTime: selectedSlots[selectedSlots.length - 1],
-        duration: totalDuration,
-      });
-      alert(`Appointment confirmed for ${totalDuration} minutes!`);
+      let totalDuration = selectedSlots.length * duration;
+      handleConfirmation(
+        "Are you sure you want to confrim the booking?",
+        () => {
+          console.log("Appointment confirmed:", {
+            date: selectedDate,
+            startTime: selectedSlots[0],
+            endTime: selectedSlots[selectedSlots.length - 1],
+            duration: totalDuration,
+          });
+          clearConfirmation();
+        }
+      );
     }
   };
 
@@ -218,6 +233,13 @@ const AppointmentCalendar = () => {
           </div>
         </div>
       </div>
+      {confirmation && (
+        <ConfirmationPopup
+          message={confirmation.message}
+          onConfirm={confirmation.onConfirm}
+          onCancel={clearConfirmation}
+        />
+      )}
     </div>
   );
 };
