@@ -19,8 +19,8 @@ import Create from "./pages/dashboard/blog/Create.jsx";
 import Admin from "./pages/dashboard/Admin.jsx";
 import Categories from "./pages/dashboard/Categories.jsx";
 import Neighbourhood from "./pages/dashboard/Neighbourhood.jsx";
-import Properties from "./pages/dashboard/Properties.jsx";
-import AddProperty from "./pages/dashboard/AddProperty.jsx";
+import Properties from "./pages/dashboard/property/Properties.jsx";
+import AddProperty from "./pages/dashboard/property/AddProperty.jsx";
 import Gallery from "./pages/dashboard/Gallery.jsx";
 import Profile from "./pages/dashboard/Profile.jsx";
 import Contact from "./pages/dashboard/Contact.jsx";
@@ -30,7 +30,7 @@ import GlobalContext from "./context/Global.js";
 import Preloader from "./components/Preloader.jsx"; // Import Preloader component
 import ScrollToTop from "./components/ScrollToTop.js";
 import Availability from "./pages/dashboard/Availability/Availability.jsx";
-
+import EditProperty from "./pages/dashboard/property/EditProperty.jsx";
 function App() {
   const { loading } = useContext(GlobalContext);
   const [showPreloader, setShowPreloader] = useState(true);
@@ -42,7 +42,6 @@ function App() {
 
     return () => clearTimeout(timer);
   }, []);
-
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -75,7 +74,8 @@ function App() {
             <Route path={'profile'} element={<Profile/>} />
             <Route path={'availability'} element={<Availability/>} />
             <Route path={'listings'} element={<Properties/>} />
-            <Route path={'addlistings'} element={<AddProperty />} />
+            <Route path={'listings/add'} element={<AddProperty />} />
+            <Route path={'listings/edit/:id'} element={<EditProperty />} />
             <Route path={'addAgent'} element={<AddAgent />} />
             <Route path={'gallery'} element={<Gallery />} />
           </Route>

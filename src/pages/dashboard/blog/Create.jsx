@@ -143,8 +143,8 @@ const Create = () => {
                 <div className='p-5 flex justify-center space-x-5 text-xs'>
                     <button type='submit'
                             disabled={loading}
-                            className='px-6 py-3 rounded bg-primary w-1/5 text-white flex items-center justify-center'>
-                        <span>Create Property</span>
+                            className='px-6 py-3 rounded bg-primary text-white flex items-center justify-center'>
+                        <span>Create Blog</span>
                         {loading && <span
                             className='ml-2 animate-spin border-2 border-t-2 border-white border-t-transparent rounded-full w-4 h-4'></span>}
                     </button>

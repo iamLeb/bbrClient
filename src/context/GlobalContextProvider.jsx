@@ -11,6 +11,8 @@ const GlobalContextProvider = ({children}) => {
     const [neighbourhoods, setNeighbourhoods] = useState([]);
     const [contacts, setContacts] = useState([]);
     const [galleries, setGalleries] = useState([]);
+    const [properties, setProperties] = useState([]);
+    const [listings, setListings] = useState([]);
 
     const getCategories = async () => {
         const res = await api.get('category');
@@ -40,6 +42,24 @@ const GlobalContextProvider = ({children}) => {
         setLoading(false)
     };
 
+    const getProperties = async () => {
+        setLoading(true)
+        const res = await api.get('property');
+        const propertiesData = res.data;
+
+        // Fetch media for each blog
+        const propertiesWithMedia = await Promise.all(
+            propertiesData.map(async (property) => {
+                const mediaResponse = await fetchMedia(property._id);
+                const url = mediaResponse.data.url ?? 'default.png';
+                return {...property, url};
+            })
+        );
+
+        setProperties(propertiesWithMedia);
+        setLoading(false)
+    };
+
     const getGalleries = async () => {
         setLoading(true);
         const res = await api.get('gallery');
@@ -57,6 +77,7 @@ const GlobalContextProvider = ({children}) => {
         setGalleries(galleriesWithMedia)
         setLoading(false)
     }
+
 
     // Helper function to get name
     const getName = id => {
@@ -111,7 +132,9 @@ const GlobalContextProvider = ({children}) => {
                 getName(),
                 getGalleries(),
                 getNeighbourhoodName(),
-                setCategories()
+                setCategories(),
+                getProperties(),
+                fetchMedia()
             ]);
         };
         fetchData();
@@ -130,6 +153,10 @@ const GlobalContextProvider = ({children}) => {
             getName,
             galleries,
             getNeighbourhoodName,
+            properties,
+            listings,
+            setListings,
+            fetchMedia
         }}>
             {children}
         </GlobalContext.Provider>
