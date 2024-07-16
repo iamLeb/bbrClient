@@ -1,11 +1,50 @@
 import {FaHouseChimney} from "react-icons/fa6";
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import GlobalContext from "../../context/Global.js";
 import {useNavigate} from "react-router-dom";
+import api from "../../services/api.js";
 
 const Hero = ({searchResult,toggleSearch}) => {
+
     const navigate = useNavigate();
-    const {neighbourhoods, categories, loading} = useContext(GlobalContext)
+    const {neighbourhoods, categories, setListings, fetchMedia} = useContext(GlobalContext)
+    const [loading , setLoading] = useState(false);
+    const [values, setValues] = useState({
+        category: '',
+        city: '',
+        neighbourhood: ''
+    });
+
+    const getSortedListings = async () => {
+        setLoading(true);
+        const res = await api.post('/property/search', values);
+        const listingData = res.data;
+
+        // Fetch media for each blog
+        const listingWithMedia = await Promise.all(
+            listingData.map(async (listing) => {
+                const mediaResponse = await fetchMedia(listing._id);
+                const url = mediaResponse.data.url ?? 'default.png';
+                return {...listing, url};
+            })
+        );
+
+        setListings(listingWithMedia);
+        setLoading(false)
+    }
+
+    const handleChange = e => {
+        const {name, value} = e.target;
+        setValues({...values, [name]: value});
+    }
+
+    const handleSearch = async (e) => {
+        setLoading(true);
+        e.preventDefault();
+        await getSortedListings();
+        toggleSearch(true);
+        setLoading(false);
+    }
 
     return (
         <section className="relative pb-20 py-14">
@@ -32,24 +71,16 @@ const Hero = ({searchResult,toggleSearch}) => {
 
                 <div
                     className={'absolute bottom-0 translate-y-1/2 right-1/2 transform translate-x-1/2 container mx-auto bg-white shadow-lg p-9'}>
-                    <div className={'md:flex space-y-4 md:space-y-0 md:space-x-4'}>
+                    <form onSubmit={handleSearch} className={'md:flex space-y-4 md:space-y-0 md:space-x-4'}>
+                        <select onChange={handleChange} name="category" className={'px-5 border py-4 w-full rounded-lg outline-none'}>
+                            <option disabled={true} selected={true}>Select Search Categories</option>
+                            {categories.map((category, i) => (
+                                <option key={i} value={category._id}>{category.name}</option>
+                            ))}
+                        </select>
 
-                        {loading ? (
-                            <div className="flex justify-center items-center">
-                                <div
-                                    className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary"></div>
-                            </div>
-                        ) : (
-                            <select className={'px-5 border py-4 w-full rounded-lg outline-none'}>
-                                <option>Select Search Categories</option>
-                                {categories.map(category => (
-                                    <option key={category} value={category.name}>{category.name}</option>
-                                ))}
-                            </select>
-                        )}
-
-                        <select className={'px-5 border py-4 w-full rounded-lg outline-none'}>
-                            <option>Select Cities</option>
+                        <select onChange={handleChange} name={"city"} className={'px-5 border py-4 w-full rounded-lg outline-none'}>
+                            <option disabled={true} selected={true}>Select Cities</option>
                             <option value="winnipeg">Winnipeg</option>
                             <option value="brandon">Brandon</option>
                             <option value="steinbach">Steinbach</option>
@@ -68,24 +99,21 @@ const Hero = ({searchResult,toggleSearch}) => {
                             <option value="carman">Carman</option>
                         </select>
 
-                        {loading ? (
-                            <div className="flex justify-center items-center">
-                                <div
-                                    className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary"></div>
-                            </div>
-                        ) : (
-                            <select defaultValue={'Select Neighbourhood'}
-                                    className={'px-5 border py-4 w-full rounded-lg outline-none'}>
-                                <option>Select Neighbourhood</option>
-                                {neighbourhoods.map((neighbourhood) => (
-                                    <option key={neighbourhood._id}
-                                            value={neighbourhood.name}>{neighbourhood.name}</option>
-                                ))}
-                            </select>
-                        )}
-                        <button onClick={toggleSearch} className={'bg-primary text-white h-14 rounded-lg w-full'}>{searchResult?'Close':'Find Now'}
+                        <select onChange={handleChange} name={"neighbourhood"} defaultValue={'Select Neighbourhood'}
+                                className={'px-5 border py-4 w-full rounded-lg outline-none'}>
+                            <option disabled={true} selected={true}>Select Neighbourhood</option>
+                            {neighbourhoods.map((neighbourhood, i) => (
+                                <option key={i}
+                                        value={neighbourhood._id}>{neighbourhood.name}</option>
+                            ))}
+                        </select>
+
+                        <button disabled={loading} type={'submit'} className={'disabled:bg-gray-400 disabled:cursor-no-drop flex justify-center items-center bg-primary text-white h-14 rounded-lg w-full'}>
+                            Search Now
+                            {loading && <span
+                                className='ml-2 animate-spin border-2 border-t-2 border-white border-t-transparent rounded-full w-4 h-4'></span>}
                         </button>
-                    </div>
+                    </form>
                 </div>
             </div>
         </section>

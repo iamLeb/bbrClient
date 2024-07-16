@@ -35,6 +35,8 @@ const BookingQuestion = () => {
           <h2 className="text-lg sm:text-2xl font-semibold pr-2 sm:pr-4 transition-all duration-300 ease-in-out">
             {showCalendar
               ? "Book Appointment"
+              : window.innerWidth < 640
+              ? "Book an appointment"
               : "Would you like to book an appointment?"}
           </h2>
           {/* Conditional rendering of cancel button or chevron icon */}
