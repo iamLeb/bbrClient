@@ -47,19 +47,12 @@ const Single = () => {
                             </li>
                             <li>
                                 <div className="flex space-x-2 items-center">
-                                    <AiOutlineComment/>
-                                    <span>No Comments</span>
-                                </div>
-                            </li>
-                            <li>
-                                <div className="flex space-x-2 items-center">
                                     <CiCalendar/>
                                     <span>{new Date(blog.createdAt).toLocaleDateString()}</span>
                                 </div>
                             </li>
                         </ul>
                     </div>
-                    {console.log(blog)}
                     <div className="overflow-hidden rounded-lg">
                         <img className="object-cover object-center h-80 md:h-96 w-full"
                              src={blog.url}
