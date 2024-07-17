@@ -11,31 +11,8 @@ import GlobalContext from "../../../context/Global.js";
 
 const Index = () => {
     const navigate = useNavigate();
-    const [toggle, setToggle] = useState(false);
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
-    const {properties, categories, neighbourhoods, loading, getNeighbourhoodName} = useContext(GlobalContext);
-    const [newProperty, setNewProperty] = useState({
-        city: ''
-    });
+    const {properties} = useContext(GlobalContext);
 
-
-    useEffect(() => {
-        const handleResize = () => setIsMobile(window.innerWidth < 768);
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
-    const handleChange = (e) => {
-        const {name, value} = e.target;
-        setNewProperty(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
-
-    const handleOptions = () => {
-        setToggle(!toggle);
-    };
 
     return (
         <section className={'mt-2'}>
