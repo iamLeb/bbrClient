@@ -39,64 +39,6 @@ const Index = () => {
 
     return (
         <section className={'mt-2'}>
-            {/*<div className="flex items-center justify-center gap-x-1 sm:gap-x-3 shadow-lg pt-2 pb-3">*/}
-            {/*    <div className="hidden sm:flex justify-center items-center">*/}
-            {/*        <select className="border rounded-lg p-3 w-full space-x-1">*/}
-            {/*            <option className="">Neighbourhoods</option>*/}
-            {/*            {neighbourhoods.map(neigh => (*/}
-            {/*                <option className="" key={neigh.id}>*/}
-            {/*                    {neigh.name}*/}
-            {/*                </option>*/}
-            {/*            ))}*/}
-            {/*        </select>*/}
-            {/*    </div>*/}
-            {/*    <div className="hidden sm:flex justify-center items-center">*/}
-            {/*        <select className="border rounded-lg p-3 space-x-1">*/}
-            {/*            <option>Categories</option>*/}
-            {/*            {categories.map(category => (*/}
-            {/*                <option key={category.id}>*/}
-            {/*                    {category.name}*/}
-            {/*                </option>*/}
-            {/*            ))}*/}
-            {/*        </select>*/}
-            {/*    </div>*/}
-            {/*    <div className="hidden sm:flex justify-center items-center">*/}
-            {/*        <select value={newProperty.city} name='city' onChange={handleChange}*/}
-            {/*                className='px-5 border py-4 w-full rounded-lg outline-none'>*/}
-            {/*            <option value=''>Select a City</option>*/}
-            {/*            <option value="winnipeg">Winnipeg</option>*/}
-            {/*            <option value="brandon">Brandon</option>*/}
-            {/*            <option value="steinbach">Steinbach</option>*/}
-            {/*            <option value="thompson">Thompson</option>*/}
-            {/*            <option value="portage_la_prairie">Portage la Prairie</option>*/}
-            {/*            <option value="winkler">Winkler</option>*/}
-            {/*            <option value="selkirk">Selkirk</option>*/}
-            {/*            <option value="morden">Morden</option>*/}
-            {/*            <option value="dauphin">Dauphin</option>*/}
-            {/*            <option value="the_pas">The Pas</option>*/}
-            {/*            <option value="flin_flon">Flin Flon</option>*/}
-            {/*            <option value="stonewall">Stonewall</option>*/}
-            {/*            <option value="neepawa">Neepawa</option>*/}
-            {/*            <option value="swan_river">Swan River</option>*/}
-            {/*            <option value="virden">Virden</option>*/}
-            {/*            <option value="carman">Carman</option>*/}
-            {/*        </select>*/}
-            {/*    </div>*/}
-            {/*    <button onClick={handleOptions}*/}
-            {/*            className="flex items-center gap-1 sm:hidden bg-primary bg-opacity-50 rounded-md p-3 sm:py-3 sm:px-9">*/}
-            {/*        <RxMixerVertical className="text-lg font-extrabold"/> <p className="font-extrabold">Filters</p>*/}
-            {/*    </button>*/}
-            {/*    <button className="flex items-center gap-1 bg-primary p-3 sm:py-3 sm:px-9 bg-opacity-50 rounded-md">*/}
-            {/*        <IoIosSearch className="text-lg font-extrabold"/> <p className="font-extrabold">Search </p>*/}
-            {/*    </button>*/}
-            {/*</div>*/}
-            {/*{toggle && isMobile &&*/}
-            {/*    <div className="w-full z-30 transition-all duration-300 shadow-lg flex justify-center">*/}
-            {/*        <div className="bg-white w-full rounded-lg flex justify-center">*/}
-            {/*            <PropertyFilters/>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*}*/}
             <div className={'p-3 gap-4 text-center'}>
                 <h1 className={'font-bold text-3xl sm:text-4xl'}>Property Listings</h1>
                 <p className={'font-light text-sm'}>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>

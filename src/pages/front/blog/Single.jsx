@@ -1,37 +1,40 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { IoFolderOpenOutline } from 'react-icons/io5';
-import { CiCalendar } from 'react-icons/ci';
-import { IoIosArrowRoundForward } from 'react-icons/io';
-import { useParams } from 'react-router-dom';
+import React, {useContext, useEffect, useState} from 'react';
+import {IoFolderOpenOutline} from 'react-icons/io5';
+import {CiCalendar} from 'react-icons/ci';
+import {IoIosArrowRoundForward} from 'react-icons/io';
+import {useNavigate, useParams} from 'react-router-dom';
 import api from '../../../services/api.js';
 import GlobalContext from '../../../context/Global.js';
 
 const Single = () => {
-    let { id } = useParams();
-    const [blog, setBlog] = useState({});
-    const { getName, fetchMedia } = useContext(GlobalContext);
+    let {id} = useParams();
+    const [blog, setBlog] = useState({
+        title: '',
+        category: '',
+        createdAt: '',
+        content: '',
+        url: 'default.png' // Default image URL or empty string as per your needs
+    });
+    const navigate = useNavigate();
+    const {getName, fetchMedia} = useContext(GlobalContext);
+    const [loading, setLoading] = useState(true); 
 
     useEffect(() => {
         const getBlog = async () => {
-            try {
-                const response = await api.get(`/blog/${id}`);
-                const blogData = response.data;
+            const response = await api.get(`/blog/${id}`);
+            const blogData = response.data;
 
-                // Fetch media data
-                const mediaResponse = await fetchMedia(id);
-                const url = mediaResponse?.data?.url || 'default.png'; // Use default if media URL is not available
+            const mediaResponse = await fetchMedia(id);
+            const url = mediaResponse?.data?.url || 'default.png';
 
-                // Combine blog data with media URL
-                const blogWithMedia = { ...blogData, url };
-                setBlog(blogWithMedia);
-            } catch (error) {
-                console.error('Error fetching blog:', error);
-                // Handle error, show a message or log it
-            }
+            const blogWithMedia = {...blogData, url};
+            setBlog(blogWithMedia);
+            setLoading(false);
+
         };
 
-        getBlog(); // Call getBlog function
-    }, [id, fetchMedia]); // Ensure fetchMedia is in the dependency array if it might change
+        getBlog();
+    }, [id, fetchMedia]);
 
     return (
         <section className="container mx-auto">
@@ -43,13 +46,13 @@ const Single = () => {
                         <ul className="flex space-x-4 items-center py-2 text-xs md:text-sm font-light">
                             <li>
                                 <div className="flex space-x-2 items-center">
-                                    <IoFolderOpenOutline />
+                                    <IoFolderOpenOutline/>
                                     <span>{getName(blog.category)}</span>
                                 </div>
                             </li>
                             <li>
                                 <div className="flex space-x-2 items-center">
-                                    <CiCalendar />
+                                    <CiCalendar/>
                                     <span>{new Date(blog.createdAt).toLocaleDateString()}</span>
                                 </div>
                             </li>
@@ -62,13 +65,12 @@ const Single = () => {
                     </div>
 
                     <div className="pt-9">
-                        {console.log(blog.content)}
-                        {/*{blog.content.split('\n').map((line, index) => (*/}
-                        {/*    <p key={index} className="font-light text-gray-700 leading-relaxed">*/}
-                        {/*        {line}*/}
-                        {/*        <br/>*/}
-                        {/*    </p>*/}
-                        {/*))}*/}
+                        {blog.content.split('\n').map((line, index) => (
+                            <p key={index} className="font-medium text-gray-700 leading-relaxed">
+                                {line}
+                                <br/>
+                            </p>
+                        ))}
                     </div>
 
                 </div>
@@ -80,7 +82,8 @@ const Single = () => {
                         <ul>
                             {[1, 2, 3].map((item, index) => (
                                 <li key={index}>
-                                    <div className="hover:text-primary flex justify-between space-x-2 items-center border-b">
+                                    <div
+                                        className="hover:text-primary flex justify-between space-x-2 items-center border-b">
                                         <p className="py-3">{getName(blog.category)}</p>
                                         <IoIosArrowRoundForward size={28}/>
                                     </div>
@@ -88,7 +91,9 @@ const Single = () => {
                             ))}
                         </ul>
 
-                        <button className="bg-primary text-white font-bold w-full py-5 rounded-lg">Apply Now!</button>
+                        <button onClick={() => navigate('/contact')}
+                                className="bg-primary text-white font-bold w-full py-5 rounded-lg">Apply Now!
+                        </button>
                     </div>
                 </div>
             </div>
