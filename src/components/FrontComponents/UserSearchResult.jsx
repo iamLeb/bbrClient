@@ -16,9 +16,6 @@ const UserSearchResult = () => {
                 {listings.length === 0 ? (
                     <div>
                         <div className={'flex items-center justify-center space-x-4 font-light text-sm text-center'}>
-                            <button className={'tag text-black font-bold'}>Apartment</button>
-                            <button className={'tag text-black font-bold'}>Winnipeg</button>
-                            <button className={'tag text-black font-bold'}>Sage Creek</button>
                         </div>
                         <p className="text-center text-gray-500">No listings found.</p>
                     </div>
@@ -28,6 +25,7 @@ const UserSearchResult = () => {
                         <div
                             className={'grid grid-cols-1 sm:grid-cols-2 md:grid-col-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'}>
                             {listings.map((feat) => (
+
                                 <div key={feat.id} className={'border border-gray-200 bg-white p-5 rounded-lg'}>
                                     <div className={'flex flex-col gap-3 justify-center'}>
                                         <div className={'relative overflow-hidden rounded-lg h-56'}>
@@ -84,7 +82,7 @@ const UserSearchResult = () => {
                                                     className={'cursor-pointer transition-all duration-300 hover:text-primary'}>Bukola Bliss</span>
                                             </div>
                                             <div>
-                                                <span>Build in: 2022</span>
+                                                <span>Build in: {feat.yearBuilt}</span>
                                             </div>
                                         </div>
                                     </div>
