@@ -6,8 +6,10 @@ import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { SlSocialTwitter } from "react-icons/sl";
 import { FiFacebook } from "react-icons/fi";
 import { FaInstagram } from "react-icons/fa";
+import {useNavigate} from "react-router-dom";
 
 const Footer = () => {
+    const navigate = useNavigate();
     return (
         <footer className={'bg-primary'}>
             <div
@@ -80,7 +82,7 @@ const Footer = () => {
                                 <div>
                                     <p>Hotline:</p>
                                     <span className={'text-white'}>
-                                        <a href="tel:2015550124">(201) 555-0124</a>
+                                        <a href="tel:3145559120">(314) 555-9120</a>
                                     </span>
                                 </div>
                             </div>
@@ -106,20 +108,20 @@ const Footer = () => {
                         <li>
                             <div className={'flex items-center space-x-2 hover:text-primary cursor-pointer'}>
                                 <RxCaretRight className={'text-primary'}/>
-                                <span className={'text-sm text-white'}>Home</span>
+                                <span onClick={()=> navigate('/')} className={'text-sm text-white'}>Home</span>
                             </div>
                         </li>
 
                         <li>
                             <div className={'flex items-center space-x-2 hover:text-primary cursor-pointer'}>
                                 <RxCaretRight className={'text-primary'}/>
-                                <span className={'text-sm text-white'}>About Us</span>
+                                <span onClick={()=> navigate('/about')}className={'text-sm text-white'}>About Us</span>
                             </div>
                         </li>
                         <li>
                             <div className={'flex items-center space-x-2 cursor-pointer'}>
                                 <RxCaretRight className={'text-primary'}/>
-                                <span className={'text-sm text-white'}>Contact Us</span>
+                                <span onClick={()=> navigate('/contact')} className={'text-sm text-white hover:text-black'}>Contact Us</span>
                             </div>
                         </li>
                     </ul>
