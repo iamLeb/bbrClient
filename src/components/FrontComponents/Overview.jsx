@@ -122,53 +122,6 @@ const Overview = ({property}) => {
                         {/*<span className={'font-medium cursor-pointer hover:text-primary'}>Show More</span>*/}
                     </div>
 
-                    <div className={'flex flex-col gap-4 bg-white shadow-lg p-5 my-5 rounded-lg'}>
-                        <h1 className={'font-bold pb-2 border-b'}>Features</h1>
-                        <ul className={'grid grid-cols-4 gap-6'}>
-                            <li>
-                                <div className={'flex items-center space-x-2'}>
-                                    <input checked={true} type="checkbox"/>
-                                    <p className={'text-xs md:text-md'}>Alerm System</p>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div className={'flex items-center space-x-2'}>
-                                    <input checked={true} type="checkbox"/>
-                                    <p className={'text-xs md:text-md'}>Alerm System</p>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div className={'flex items-center space-x-2'}>
-                                    <input checked={true} type="checkbox"/>
-                                    <p className={'text-xs md:text-md'}>Alerm System</p>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div className={'flex items-center space-x-2'}>
-                                    <input checked={true} type="checkbox"/>
-                                    <p className={'text-xs md:text-md'}>Alerm System</p>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div className={'flex items-center space-x-2'}>
-                                    <input checked={true} type="checkbox"/>
-                                    <p className={'text-xs md:text-md'}>Alerm System</p>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div className={'flex items-center space-x-2'}>
-                                    <input checked={true} type="checkbox"/>
-                                    <p className={'text-xs md:text-md'}>Alerm System</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
                     <div className={'flex flex-col gap-4 bg-white shadow-lg p-5  my-5 rounded-lg'}>
                         <h1 className={'font-bold pb-2 border-b'}>Location</h1>
                         <div className={'grid grid-cols-1 md:grid-cols-3 justify-center items-center gap-6 text-sm'}>
