@@ -52,7 +52,7 @@ const ContactTemplate = () => {
     return (
         <section className={'bg-sky-100 px-5'}>
             <p className={'text-center py-5'}>Become our next customer, and find your dream home <span
-                className={'text-primary underline'}>Contact us: 314-555-0123</span></p>
+                className={'text-primary underline'}>Contact us: 314-555-9120</span></p>
 
             <div className={'flex flex-col lg:flex-row justify-around items-center pt-12 space-y-10'}>
 
@@ -88,7 +88,7 @@ const ContactTemplate = () => {
                             </div>
                             <div className={'flex flex-col'}>
                                 <p className={'text-gray-500 text-lg'}>Office address</p>
-                                <p className={'text-3xl font-semibold text-primary'}>314-555-0123</p>
+                                <p className={'text-3xl font-semibold text-primary'}>431-996-0123</p>
                             </div>
                         </div>
 
