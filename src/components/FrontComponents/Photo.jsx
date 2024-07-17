@@ -45,8 +45,11 @@ const Photo = ({property}) => {
                         <div>
                             <ul className={'flex flex-col md:flex-row gap-2 p-2'}>
                                 <li>
-                                    <span className={'bg-green-500 text-white px-2 py-0.5 rounded-md'}>For Sale</span>
+                                    <span
+                                        className={`${property.active ? 'bg-green-500' : 'bg-red-500'} text-white px-2 py-0.5 rounded-md`}>{property.active ? 'For Sale' : 'Sold'}
+                                    </span>
                                 </li>
+
                                 <li>
                                     <div className={'flex items-center space-x-2'}>
                                         <CiMap size={19}/>
@@ -86,7 +89,7 @@ const Photo = ({property}) => {
                                         </div>}
                                 </li>
                             </ul>
-                                </div>
+                        </div>
                     </div>
 
                     <div
