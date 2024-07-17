@@ -21,7 +21,7 @@ const UserSearchResult = () => {
                     </div>
                 ) : (
                     <div>
-                        <h1 className="text-center text-4xl pb-5">Search Result</h1>
+                        <h1 className="text-center text-3xl pb-5">Search Result</h1>
                         <div
                             className={'grid grid-cols-1 sm:grid-cols-2 md:grid-col-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'}>
                             {listings.map((feat) => (
