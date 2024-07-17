@@ -108,14 +108,14 @@ const Footer = () => {
                         <li>
                             <div className={'flex items-center space-x-2 hover:text-primary cursor-pointer'}>
                                 <RxCaretRight className={'text-primary'}/>
-                                <span onClick={()=> navigate('/')} className={'text-sm text-white'}>Home</span>
+                                <span onClick={()=> navigate('/')} className={'text-sm text-white hover:text-black'}>Home</span>
                             </div>
                         </li>
 
                         <li>
                             <div className={'flex items-center space-x-2 hover:text-primary cursor-pointer'}>
                                 <RxCaretRight className={'text-primary'}/>
-                                <span onClick={()=> navigate('/about')}className={'text-sm text-white'}>About Us</span>
+                                <span onClick={()=> navigate('/about')}className={'text-sm text-white hover:text-black'}>About Us</span>
                             </div>
                         </li>
                         <li>
@@ -154,16 +154,16 @@ const Footer = () => {
                     <h1 className={'text-4xl text-white font-bold'}>logo</h1>
                     <ul className={'flex items-center space-x-6 text-white font-bold'}>
                         <li>
-                            <div className={'cursor-pointer hover:text-primary'}>Property</div>
+                            <div onClick={()=> navigate('/listing')}className={'cursor-pointer hover:text-black'}>Property</div>
                         </li>
                         <li>
-                            <div className={'cursor-pointer hover:text-primary'}>Page</div>
+                            <div onClick={()=> navigate('/listing')}className={'cursor-pointer hover:text-black'}>Page</div>
                         </li>
                         <li>
-                            <div className={'cursor-pointer hover:text-primary'}>Blog</div>
+                            <div onClick={()=> navigate('/blog')}className={'cursor-pointer hover:text-black'}>Blog</div>
                         </li>
                         <li>
-                            <div className={'cursor-pointer hover:text-primary'}>Contact</div>
+                            <div onClick={()=> navigate('/contact')}className={'cursor-pointer hover:text-black'}>Contact</div>
                         </li>
                     </ul>
                     <div className={'flex items-center space-x-4'}>
