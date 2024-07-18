@@ -27,7 +27,7 @@ const BlogLists = () => {
                             </ul>
                             <h3 className="font-bold text-2xl">{blog.title}</h3>
                             <p className="overflow-hidden text-ellipsis whitespace-nowrap">{blog.content}</p>
-                            <button onClick={() => navigate('/blog/1')}
+                            <button onClick={()=> navigate(blog._id)}
                                     className={'text-primary font-medium pt-5'}>Read
                                 More
                             </button>

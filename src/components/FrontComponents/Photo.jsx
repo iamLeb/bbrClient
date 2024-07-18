@@ -1,21 +1,21 @@
-import { useState } from "react";
-import { RxCaretRight } from "react-icons/rx";
-import { CiMap, CiCalendar } from "react-icons/ci";
-import { IoBookmarkOutline } from "react-icons/io5";
-import { FaArrowRightArrowLeft, FaShower } from "react-icons/fa6";
-import { GoShareAndroid } from "react-icons/go";
-import { LuPrinter, LuBedDouble } from "react-icons/lu";
-import { MdZoomOutMap } from "react-icons/md";
-import { Carousel } from 'react-responsive-carousel';
-import { IoMdPhotos } from "react-icons/io";
+import {useState} from "react";
+import {RxCaretRight} from "react-icons/rx";
+import {CiMap, CiCalendar} from "react-icons/ci";
+import {IoBookmarkOutline} from "react-icons/io5";
+import {FaArrowRightArrowLeft, FaShower} from "react-icons/fa6";
+import {GoShareAndroid} from "react-icons/go";
+import {LuPrinter, LuBedDouble} from "react-icons/lu";
+import {MdZoomOutMap} from "react-icons/md";
+import {Carousel} from 'react-responsive-carousel';
+import {IoMdPhotos} from "react-icons/io";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
-const Photo = () => {
+const Photo = ({property}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
     const images = [
-        "https://dreamhomewp.themesflat.com/wp-content/uploads/2023/08/drh-6-2.webp",
+        property.url,
         "https://dreamhomewp.themesflat.com/wp-content/uploads/2023/08/prperty_03.webp",
         "https://dreamhomewp.themesflat.com/wp-content/uploads/2023/08/prperty_04.webp",
         "https://dreamhomewp.themesflat.com/wp-content/uploads/2023/08/prperty_05.webp"
@@ -41,23 +41,27 @@ const Photo = () => {
             <div className={'container mx-auto flex flex-col text-xs'}>
                 <div className={'md:flex justify-between items-center py-9'}>
                     <div className={'flex flex-col gap-2'}>
-                        <h1 className={'text-3xl font-medium p-1'}>8329 South Santa Clara</h1>
+                        <h1 className={'text-3xl font-medium p-1'}>{property.title}</h1>
                         <div>
                             <ul className={'flex flex-col md:flex-row gap-2 p-2'}>
                                 <li>
-                                    <span className={'bg-green-500 text-white px-2 py-0.5 rounded-md'}>For Sale</span>
+                                    <span
+                                        className={`${property.active ? 'bg-green-500' : 'bg-red-500'} text-white px-2 py-0.5 rounded-md`}>{property.active ? 'For Sale' : 'Sold'}
+                                    </span>
                                 </li>
+
                                 <li>
                                     <div className={'flex items-center space-x-2'}>
                                         <CiMap size={19}/>
-                                        <span> 315 Wild Bird Drive, Spring, Texas</span>
+                                        <span> {property.address}</span>
                                     </div>
                                 </li>
                                 <li>
-                                    <div className={'flex items-center space-x-2'}>
-                                        <CiCalendar/>
-                                        <span> 2022</span>
-                                    </div>
+                                    {property.yearBuilt &&
+                                        <div className={'flex items-center space-x-2'}>
+                                            <CiCalendar/>
+                                            <span> {property.yearBuilt}</span>
+                                        </div>}
                                 </li>
                             </ul>
                         </div>
@@ -66,61 +70,37 @@ const Photo = () => {
                                 <li>
                                     <div className={'flex items-center space-x-2'}>
                                         <LuBedDouble size={15}/>
-                                        <span> Bed: <span className={'font-medium'}>1</span></span>
+                                        <span> Bed: <span className={'font-medium'}>{property.bed}</span></span>
                                     </div>
                                 </li>
 
                                 <li>
                                     <div className={'flex items-center space-x-2'}>
                                         <FaShower size={15}/>
-                                        <span> Baths: <span className={'font-medium'}>3</span></span>
+                                        <span> Baths: <span className={'font-medium'}>{property.bath}</span></span>
                                     </div>
                                 </li>
 
                                 <li>
-                                    <div className={'flex items-center space-x-2'}>
-                                        <MdZoomOutMap size={15}/>
-                                        <span> SqFt: <span className={'font-medium'}>1,245</span></span>
-                                    </div>
+                                    {property.sqft &&
+                                        <div className={'flex items-center space-x-2'}>
+                                            <MdZoomOutMap size={15}/>
+                                            <span> SqFt: <span className={'font-medium'}>{property.sqft}</span></span>
+                                        </div>}
                                 </li>
                             </ul>
                         </div>
                     </div>
 
-                    <div className={'flex flex-row justify-between md:justify-start p-2 md:flex-col  gap-4 items-center'}>
-                        <ul className={'flex space-x-2'}>
-                            <li>
-                                <div
-                                    className={'border p-2 rounded-lg text-gray-500 hover:text-white cursor-pointer hover:bg-primary'}>
-                                    <IoBookmarkOutline size={15}/>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div
-                                    className={'border p-2 rounded-lg text-gray-500 hover:text-white cursor-pointer hover:bg-primary'}>
-                                    <FaArrowRightArrowLeft size={15}/>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div
-                                    className={'border p-2 rounded-lg text-gray-500 hover:text-white cursor-pointer hover:bg-primary'}>
-                                    <GoShareAndroid size={15}/>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div
-                                    className={'border p-2 rounded-lg text-gray-500 hover:text-white cursor-pointer hover:bg-primary'}>
-                                    <LuPrinter size={15}/>
-                                </div>
-                            </li>
-                        </ul>
+                    <div
+                        className={'flex flex-row justify-between md:justify-start p-2 md:flex-col gap-4 items-center'}>
                         <div>
-                            <h1 className={'text-3xl text-primary font-medium'}>$63,000</h1>
+                            <h1 className={'text-3xl text-primary font-medium'}>
+                                {property.price.startsWith('$') ? property.price : `$${property.price}`}
+                            </h1>
                         </div>
                     </div>
+
                 </div>
             </div>
 

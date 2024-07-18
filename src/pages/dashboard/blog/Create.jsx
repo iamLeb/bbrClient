@@ -85,7 +85,7 @@ const Create = () => {
     return (
         <div className='m-5 border rounded-b-lg'>
             <div className='bg-gray-100 p-3 font-extrabold text-center'>
-                Add new property
+                Add new blog
             </div>
 
             <form onSubmit={handleSubmit}>
@@ -100,7 +100,7 @@ const Create = () => {
                                 onChange={handleChange}
                                 name='title'
                                 type='text'
-                                placeholder='Enter the title of the property'
+                                placeholder='Enter the title of the blog'
                                 className='p-3 border rounded-lg w-full'
                             />
                         </div>

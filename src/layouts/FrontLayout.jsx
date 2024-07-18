@@ -1,8 +1,8 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {Outlet, useLocation} from "react-router-dom";
+import React, { useEffect, useRef, useState } from 'react';
+import { Outlet, useLocation } from "react-router-dom";
 import Header from "../components/FrontComponents/Header.jsx";
 import Footer from "../components/FrontComponents/Footer.jsx";
-import {RxCaretRight} from "react-icons/rx";
+import { RxCaretRight } from "react-icons/rx";
 import SideBar from "../components/FrontComponents/SideBar.jsx";
 
 const FrontLayout = () => {
@@ -46,18 +46,20 @@ const FrontLayout = () => {
                         <Header sidebar={sidebar} toggleSidebar={toggleSidebar}/>
                     </div>
                     {location.pathname !== '/' && (
-                        <div className={'container mx-auto flex flex-col text-xs'}>
-                            <ul className={'flex space-x-4 text-gray-500 border-b p-5'}>
-                                <li>
-                                    <div className={'flex items-center space-x-2 text-primary cursor-pointer'}>
-                                        <a href={'/'}>Home</a>
-                                        <RxCaretRight/>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span>{firstDirectory}</span>
-                                </li>
-                            </ul>
+                        <div className="mt-[70px]">
+                            <div className={'container mx-auto flex flex-col text-xs'}>
+                                <ul className={'flex space-x-4 text-gray-500 border-b p-5'}>
+                                    <li>
+                                        <div className={'flex items-center space-x-2 text-primary cursor-pointer'}>
+                                            <a href={'/'}>Home</a>
+                                            <RxCaretRight/>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span>{firstDirectory}</span>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     )}
                     <Outlet/> {/* This is the children that will inherit the header & footer */}

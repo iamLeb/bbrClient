@@ -72,7 +72,7 @@ const AddProperty = () => {
 
         try {
             // Upload the file to AWS
-            const response = await api.post('/file/upload', formData, {
+            const response = await api.post('/file/upload-multiple', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

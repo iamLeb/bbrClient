@@ -69,6 +69,10 @@ const Blog = () => {
         }
     };
 
+    const getFirstFiveWords = (text) => {
+        return text.split(' ').slice(0, 5).join(' ') + (text.split(' ').length > 5 ? '...' : '');
+    };
+
     useEffect(() => {
         fetchBlogs();
     }, []);
@@ -101,8 +105,8 @@ const Blog = () => {
                         {blogs.map((blog) => (
 
                             <tr key={blog._id} className="text-left lg:text-center text-xs border-b ">
-                                <td className="px-4 py-2">{blog.title}</td>
-                                <td className="px-4 py-2 truncate hidden lg:block">{blog.content}</td>
+                                <td className="px-4 py-2">{getFirstFiveWords(blog.title)}</td>
+                                <td className="px-4 py-2 truncate hidden lg:block">{getFirstFiveWords(blog.content)}</td>
                                 <td className="px-4 py-2 hidden lg:table-cell">
                                     <img src={blog.media.url} alt="Blog Image"
                                          className="w-10 h-10 object-cover rounded-lg"/>
@@ -119,7 +123,7 @@ const Blog = () => {
                                 </td>
                                 <td className="px-4 py-2">
                                     <div className={'flex justify-end lg:justify-center text-end '}>
-                                        <button className="px-2 py-1 rounded bg-green-500 text-white">Edit</button>
+                                        <button onClick={()=> navigate('edit/' + blog._id)} className="px-2 py-1 rounded bg-green-500 text-white">Edit</button>
                                         <button onClick={() => handleDelete(blog._id)}
                                                 className="ml-2 px-2 py-1 rounded bg-red-500 text-white">Remove
                                         </button>

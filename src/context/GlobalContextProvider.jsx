@@ -134,7 +134,7 @@ const GlobalContextProvider = ({children}) => {
                 getNeighbourhoodName(),
                 setCategories(),
                 getProperties(),
-                fetchMedia()
+                fetchMedia(),
             ]);
         };
         fetchData();

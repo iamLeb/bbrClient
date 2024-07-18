@@ -9,10 +9,7 @@ const EditProperty = () => {
 
     // State variables
     const [loading, setLoading] = useState(false);
-    const [selectedProperty, setSelectedProperty] = useState(null);
-    const {categories} = useContext(GlobalContext);
-    const {neighbourhoods} = useContext(GlobalContext);
-    const {getNeighbourhoodName, getName} = useContext(GlobalContext);
+    const {categories, neighbourhoods, getNeighbourhoodName, getName} = useContext(GlobalContext);
     const [newProperty, setNewProperty] = useState({
         title: '',
         address: '',
@@ -29,15 +26,15 @@ const EditProperty = () => {
     });
     const [errors, setErrors] = useState('');
     const statusOptions = [
-        { value: true, label: 'Active' },
-        { value: false, label: 'Sold' }
+        {value: true, label: 'Active'},
+        {value: false, label: 'Sold'}
     ];
 
     const getProperty = async (id) => {
         try {
             setLoading(true);
             const res = await api.get(`/property/${id}`);
-            setNewProperty(res.data); // Assuming API returns the entire property object
+            setNewProperty(res.data);
             setLoading(false);
         } catch (error) {
             console.error('Error fetching property:', error);
@@ -198,29 +195,29 @@ const EditProperty = () => {
                             ))}
                         </select>
                     </div>
-                <div className='p-3 flex flex-col'>
-                    <div className='font-bold mb-3'>Image</div>
-                    <input onChange={handleFileChange} type='file' name='file' multiple
-                           className='p-3 border rounded-lg'/>
+                    <div className='p-3 flex flex-col'>
+                        <div className='font-bold mb-3'>Image</div>
+                        <input onChange={handleFileChange} type='file' name='file' multiple
+                               className='p-3 border rounded-lg'/>
+                    </div>
+                    <div className='p-3 flex flex-col'>
+                        <div className='font-bold mb-3'>Description</div>
+                        <textarea value={newProperty.description} name='description' cols="30"
+                                  rows="5"
+                                  onChange={handleChange} placeholder='Enter description of the property'
+                                  className='resize-none p-3 border rounded-lg'/>
+                    </div>
                 </div>
-                <div className='p-3 flex flex-col'>
-                    <div className='font-bold mb-3'>Description</div>
-                    <textarea value={newProperty.description} name='description' cols="30"
-                              rows="5"
-                              onChange={handleChange} placeholder='Enter description of the property'
-                              className='resize-none p-3 border rounded-lg'/>
+                <div className="p-5 flex justify-center space-x-5 text-xs">
+                    <button type='submit'
+                            disabled={loading}
+                            className='px-6 py-3 rounded bg-primary text-white flex items-center justify-center'>
+                        <span>Update Property</span>
+                        {loading && <span
+                            className='ml-2 animate-spin border-2 border-t-2 border-white border-t-transparent rounded-full w-4 h-4'></span>}
+                    </button>
                 </div>
-        </div>
-    <div className="p-5 flex justify-center space-x-5 text-xs">
-        <button type='submit'
-                disabled={loading}
-                className='px-6 py-3 rounded bg-primary text-white flex items-center justify-center'>
-            <span>Update Property</span>
-            {loading && <span
-                className='ml-2 animate-spin border-2 border-t-2 border-white border-t-transparent rounded-full w-4 h-4'></span>}
-        </button>
-    </div>
-</form>
+            </form>
 
         </div>
     );
