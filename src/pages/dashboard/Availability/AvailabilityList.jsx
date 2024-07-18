@@ -223,7 +223,8 @@ const AvailabilityList = ({
         } else {
           // If the API call failed, determine the reason for rejection
           const errorMessage =
-            result.reason.response?.data?.error || "Unknown error";
+            result.reason.response?.data?.error ||
+            "Failed to connect to database";
 
           // Categorize the error based on its content
           const rejectionReason = errorMessage.includes(
@@ -323,7 +324,6 @@ const AvailabilityList = ({
         </span>
         {/* Action buttons and status */}
         <div className="flex flex-wrap items-center gap-2 mt-4 sm:mt-0">
-
           {availability.isEditing ? (
             <>
               <button
@@ -466,12 +466,12 @@ const AvailabilityList = ({
 AvailabilityList.propTypes = {
   availabilities: PropTypes.arrayOf(
     PropTypes.shape({
-      date: PropTypes.string.isRequired,
-      startTime: PropTypes.string.isRequired,
-      endTime: PropTypes.string.isRequired,
+      date: PropTypes.instanceOf(Date).isRequired,
+      startTime: PropTypes.instanceOf(Date).isRequired,
+      endTime: PropTypes.instanceOf(Date).isRequired,
       status: PropTypes.string.isRequired,
       isEditing: PropTypes.bool,
-      id: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
     })
   ).isRequired,
   setAvailabilities: PropTypes.func.isRequired,

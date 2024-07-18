@@ -22,7 +22,7 @@ const Notifications = forwardRef((props, ref) => {
   // Function to remove a notification by its ID
   const dismissNotification = useCallback((id) => {
     setNotifications((prev) =>
-      prev.filter((notification) => notification.id !== id)
+      prev.filter((notification) => notification.id !== id),
     );
   }, []);
 
@@ -38,7 +38,7 @@ const Notifications = forwardRef((props, ref) => {
         dismissNotification(id);
       }, 5000);
     },
-    [dismissNotification]
+    [dismissNotification],
   );
 
   // Effect to expose addNotification and dismissNotification methods via ref
@@ -64,8 +64,8 @@ const Notifications = forwardRef((props, ref) => {
             notification.type === "success"
               ? "bg-green-500"
               : notification.type === "error"
-              ? "bg-red-500"
-              : "bg-blue-500"
+                ? "bg-red-500"
+                : "bg-blue-500"
           }`}
         >
           {/* Render the appropriate icon based on notification type */}
@@ -90,7 +90,8 @@ const Notifications = forwardRef((props, ref) => {
 Notifications.displayName = "Notifications";
 
 NotificationIcon.propTypes = {
-  type: PropTypes.oneOf(["success", "error", "warning"]).isRequired,
+  type: PropTypes.oneOf(["success", "error", "warning", "pending", "info"])
+    .isRequired,
 };
 
 export default Notifications;
