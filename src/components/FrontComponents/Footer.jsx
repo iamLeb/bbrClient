@@ -1,11 +1,11 @@
 import React from 'react';
-import { LiaPhoneVolumeSolid } from "react-icons/lia";
-import { MdOutlineMarkEmailRead } from "react-icons/md";
-import { RxCaretRight } from "react-icons/rx";
-import { HiOutlineArrowNarrowRight } from "react-icons/hi";
-import { SlSocialTwitter } from "react-icons/sl";
-import { FiFacebook } from "react-icons/fi";
-import { FaInstagram } from "react-icons/fa";
+import {LiaPhoneVolumeSolid} from "react-icons/lia";
+import {MdOutlineMarkEmailRead} from "react-icons/md";
+import {RxCaretRight} from "react-icons/rx";
+import {HiOutlineArrowNarrowRight} from "react-icons/hi";
+import {SlSocialTwitter} from "react-icons/sl";
+import {FiFacebook} from "react-icons/fi";
+import {FaInstagram} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
 
 const Footer = () => {
@@ -45,7 +45,8 @@ const Footer = () => {
                             </div>
                             <button
                                 className={'sm:absolute -bottom-7 bg-white px-8 py-4 rounded-md text-primary hover:bg-primary hover:text-white transition-all duration-300 font-bold'}>Contact
-                                Seller</button>
+                                Seller
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -108,41 +109,42 @@ const Footer = () => {
                         <li>
                             <div className={'flex items-center space-x-2 hover:text-primary cursor-pointer'}>
                                 <RxCaretRight className={'text-primary'}/>
-                                <span onClick={()=> navigate('/')} className={'text-sm text-white hover:text-black'}>Home</span>
+                                <span onClick={() => navigate('/')}
+                                      className={'text-sm text-white hover:text-black'}>Home</span>
                             </div>
                         </li>
 
                         <li>
                             <div className={'flex items-center space-x-2 hover:text-primary cursor-pointer'}>
                                 <RxCaretRight className={'text-primary'}/>
-                                <span onClick={()=> navigate('/about')}className={'text-sm text-white hover:text-black'}>About Us</span>
+                                <span onClick={() => navigate('/about')}
+                                      className={'text-sm text-white hover:text-black'}>About Us</span>
                             </div>
                         </li>
                         <li>
-                            <div className={'flex items-center space-x-2 cursor-pointer'}>
+                            <div className={'flex items-center space-x-2 hover:text-primary cursor-pointer'}>
                                 <RxCaretRight className={'text-primary'}/>
-                                <span onClick={()=> navigate('/contact')} className={'text-sm text-white hover:text-black'}>Contact Us</span>
+                                <span onClick={() => navigate('/blog')}
+                                      className={'text-sm text-white hover:text-black'}>Blog</span>
                             </div>
                         </li>
+
+                        <li>
+                            <div className={'flex items-center space-x-2 cursor-pointer'}>
+                                <RxCaretRight className={'text-primary'}/>
+                                <span onClick={() => navigate('/contact')}
+                                      className={'text-sm text-white hover:text-black'}>Contact Us</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div className={'flex items-center space-x-2 hover:text-primary cursor-pointer'}>
+                                <RxCaretRight className={'text-primary'}/>
+                                <span onClick={() => navigate('/properties/listing')}
+                                      className={'text-sm text-white hover:text-black'}>Listings</span>
+                            </div>
+                        </li>
+
                     </ul>
-                </div>
-                <div className={'flex flex-col gap-4'}>
-                    <h1 className={'font-bold text-white py-3'}>Newsletter</h1>
-                    <p className={'text-xs text-white px-6'}>Sign up to receive the latest articles</p>
-
-                    <form className={'flex flex-col gap-4 px-6'}>
-                        <input
-                            className={'bg-white text-xs py-4 rounded-lg px-5 w-full'}
-                            placeholder={'Your email address'}
-                            type="text"/>
-
-                        <button
-                            className={'hover:bg-neutral-900 transition-all duration-300 flex space-x-4 items-center justify-center rounded-lg py-4 text-white font-medium bg-[#333335] border border-gray-700'}>
-                            <span>Sign up</span>
-                            <HiOutlineArrowNarrowRight/>
-                        </button>
-
-                    </form>
                 </div>
             </div>
 
@@ -152,20 +154,6 @@ const Footer = () => {
             <div className={'hidden sm:block'}>
                 <div className={'flex justify-around py-9'}>
                     <h1 className={'text-4xl text-white font-bold'}>logo</h1>
-                    <ul className={'flex items-center space-x-6 text-white font-bold'}>
-                        <li>
-                            <div onClick={()=> navigate('/listing')}className={'cursor-pointer hover:text-black'}>Property</div>
-                        </li>
-                        <li>
-                            <div onClick={()=> navigate('/listing')}className={'cursor-pointer hover:text-black'}>Page</div>
-                        </li>
-                        <li>
-                            <div onClick={()=> navigate('/blog')}className={'cursor-pointer hover:text-black'}>Blog</div>
-                        </li>
-                        <li>
-                            <div onClick={()=> navigate('/contact')}className={'cursor-pointer hover:text-black'}>Contact</div>
-                        </li>
-                    </ul>
                     <div className={'flex items-center space-x-4'}>
                     <span
                         className={'border border-neutral-800 hover:bg-primary text-white p-3 rounded-full'}><SlSocialTwitter/></span>
