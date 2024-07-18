@@ -15,7 +15,7 @@ const Home = () => {
     return (
         <div>
             <Hero searchResult={searchResult} toggleSearch={toggleSearch} />
-            {searchResult && <UserSearchResult/>}
+            {searchResult && <UserSearchResult toggleSearch={toggleSearch}/>}
             <Featured/>
             <Explore/>
             <Contact/>

@@ -1,14 +1,14 @@
-import { IoLocationOutline } from "react-icons/io5";
-import { LiaBedSolid } from "react-icons/lia";
-import { FaShower } from "react-icons/fa";
-import { MdOutlineZoomOutMap } from "react-icons/md";
-import { useContext } from "react";
+import {IoLocationOutline} from "react-icons/io5";
+import {LiaBedSolid} from "react-icons/lia";
+import {FaShower} from "react-icons/fa";
+import {MdOutlineZoomOutMap} from "react-icons/md";
+import {useContext} from "react";
 import GlobalContext from "../../context/Global.js";
 import {useNavigate} from "react-router-dom";
 
-const UserSearchResult = () => {
+const UserSearchResult = ({toggleSearch}) => {
     const navigate = useNavigate();
-    const { listings } = useContext(GlobalContext);
+    const {listings} = useContext(GlobalContext);
 
     return (
         <section className={'pt-28 sm:pt-2 pb-2 bg-white'}>
@@ -21,7 +21,10 @@ const UserSearchResult = () => {
                     </div>
                 ) : (
                     <div>
-                        <h1 className="text-center text-3xl pb-5">Search Result</h1>
+                        <div className={'flex flex-col sm:flex-row justify-center space-y-4 lg:space-y-0 lg:space-x-4'}>
+                            <h1 className="text-center text-3xl pb-5">Search Result</h1>
+                            <h1 onClick={()=>toggleSearch()}>Clear Search</h1>
+                        </div>
                         <div
                             className={'grid grid-cols-1 sm:grid-cols-2 md:grid-col-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'}>
                             {listings.map((feat) => (
