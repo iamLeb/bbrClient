@@ -11,8 +11,32 @@ import api from "../../services/api.js";
 const Featured = () => {
     const navigate = useNavigate();
     const {categories} = useContext(GlobalContext);
-    const {properties, setProperties, fetchMedia} = useContext(GlobalContext);
+    const { fetchMedia} = useContext(GlobalContext);
+    const [properties, setProperties] = useState([]);
     const [loading, setLoading] = useState(false);
+
+
+    useEffect(() => {
+        const getProperties = async () => {
+            setLoading(true)
+            const res = await api.get('property');
+            const propertiesData = res.data;
+
+            // Fetch media for each blog
+            const propertiesWithMedia = await Promise.all(
+                propertiesData.map(async (property) => {
+                    const mediaResponse = await fetchMedia(property._id);
+                    const url = mediaResponse.data.url ?? 'default.png';
+                    return {...property, url};
+                })
+            );
+
+            setProperties(propertiesWithMedia);
+            setLoading(false)
+        };
+
+        getProperties();
+    }, [fetchMedia]);
 
     const handleChange = async (id = 'all') => {
         setLoading(true);
