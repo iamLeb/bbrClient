@@ -1,14 +1,8 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { Check } from "lucide-react";
 import ConfirmationPopup from "../../../pages/dashboard/Availability/ConfirmationPopup";
-import { format, parseISO } from "date-fns";
-
-function formatTime(isoString) {
-  const date = parseISO(isoString);
-  return format(date, "HH:mm");
-}
 
 //backend API
 import api from "../../../services/api.js";
@@ -21,23 +15,75 @@ const AppointmentCalendar = () => {
   const [selectedSlots, setSelectedSlots] = useState([]); // Stores the time slots selected by the user
   const [confirmation, setConfirmation] = useState(null); //confirmation
   const [isLoading, setIsLoading] = useState(false); //spinner animation for acitivity relate
+  const [monthAvailability, setMonthAvailability] = useState({}); //to store 3 months avaibality ( previous month,current month ,next month)
 
-  const fetchAvailability = async (date) => {
+  //for changing the dates CSS
+  const tileClassName = ({ date, view }) => {
+    if (view === "month") {
+      // Base class for all tiles to make them circular and add more spacing
+      let baseClass =
+        "rounded-full w-10 h-10 flex items-center justify-center transition duration-200 m-1 ";
+
+      // Check if the date is selected
+      if (date.toDateString() === selectedDate.toDateString()) {
+        return baseClass + "bg-blue-500 text-white cursor-pointer";
+      }
+
+      // Check if the date is in the past
+      if (date < new Date().setHours(0, 0, 0, 0)) {
+        return baseClass + "bg-gray-100 text-gray-400 cursor-not-allowed";
+      }
+
+      // For current and future dates
+      return isDateAvailable(date)
+        ? baseClass + "bg-green-100 "
+        : baseClass + "bg-red-100 ";
+    }
+  };
+
+  //for intial active mount
+  useEffect(() => {
+    handleActiveStartDateChange({ activeStartDate: new Date() });
+  }, []);
+
+  //to fetch 3 months avilability  previous month,current month ,next month
+  const fetchMonthAvailability = async (year, month) => {
     try {
       setIsLoading(true); // Set loading to true before fetching
+      const response = await api.get(`/availability/month/${year}/${month}`);
+      setMonthAvailability(response.data);
+    } catch (error) {
+      console.error("Error fetching month availability:", error);
+    } finally {
+      setIsLoading(false); // Set loading to true before fetching
+    }
+  };
 
-      const response = await api.get(`/availability/${date}`);
+  //the function is called only when the month view changes--sets monthAvailability intially
+  const handleActiveStartDateChange = ({ activeStartDate }) => {
+    fetchMonthAvailability(
+      activeStartDate.getFullYear(),
+      activeStartDate.getMonth() + 1
+    );
+  };
+
+  //to check if any date is avilable
+  const isDateAvailable = (date) => {
+    const dateString = date.toISOString().split("T")[0];
+    return monthAvailability[dateString] !== undefined;
+  };
+
+  const findAvailability = (date) => {
+    try {
+      const findDate = monthAvailability[date.toISOString().split("T")[0]];
 
       // Check if the response indicates no availability
-      if (response.data.notAvailable) {
+      if (findDate === undefined) {
         return { notAvailable: true };
       }
 
       // Extract startTime and endTime from the response
-      let { startTime, endTime } = response.data;
-
-      startTime = formatTime(startTime);
-      endTime = formatTime(endTime);
+      let { startTime, endTime } = findDate;
 
       // Return an object with startTime, endTime, and notAvailable flag
       return { startTime, endTime, notAvailable: false };
@@ -45,14 +91,13 @@ const AppointmentCalendar = () => {
       console.log("Error fetching availability:", error);
       // If there's an error, return an object indicating no availability
       return { notAvailable: true };
-    } finally {
-      setIsLoading(false); // Set loading to false after fetching (whether successful or not)
     }
   };
 
   // Generic function to handle confirmations
   const handleConfirmation = useCallback((message, onConfirm) => {
     setConfirmation({ message, onConfirm });
+    setSelectedSlots([]);
   }, []);
 
   // Function to clear the confirmation
@@ -79,10 +124,10 @@ const AppointmentCalendar = () => {
   };
 
   // Effect hook to update available time slots when selected date changes
-  useEffect(() => {
+  useMemo(() => {
     const updateTimeSlots = async () => {
       // Fetch availability for the selected date
-      const availability = await fetchAvailability(selectedDate);
+      const availability = findAvailability(selectedDate);
       if (availability.notAvailable) {
         // If not available, set time slots to an empty array
         setTimeSlots([]);
@@ -111,7 +156,7 @@ const AppointmentCalendar = () => {
     };
 
     updateTimeSlots();
-  }, [selectedDate, duration]);
+  }, [selectedDate, duration, monthAvailability]);
 
   // Handler for selecting/deselecting time slots
   const handleSlotSelect = (slot) => {
@@ -150,7 +195,6 @@ const AppointmentCalendar = () => {
   };
 
   // Handler for confirming the appointment
-  // TODO: Implement actual appointment confirmation logic
   const handleConfirm = () => {
     if (selectedSlots.length > 0) {
       let totalDuration = selectedSlots.length * duration;
@@ -190,6 +234,8 @@ const AppointmentCalendar = () => {
               formatShortWeekday={(locale, date) =>
                 date.toLocaleDateString(locale, { weekday: "narrow" })
               }
+              tileClassName={tileClassName}
+              onActiveStartDateChange={handleActiveStartDateChange}
             />
           </div>
           {/* Appointment details section */}
@@ -238,7 +284,7 @@ const AppointmentCalendar = () => {
                         key={slot.toISOString()}
                         className={`flex items-center justify-center px-2 py-2 rounded text-sm ${
                           isSlotSelected(slot)
-                            ? "bg-indigo-600 text-white"
+                            ? "bg-blue-800 text-white"
                             : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
                         }`}
                         onClick={(e) => {
@@ -257,24 +303,24 @@ const AppointmentCalendar = () => {
               </div>
 
               {/* Confirm appointment button */}
-              {timeSlots.length >0 && (
-              <button
-                className={`w-full py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
-                  selectedSlots.length > 0
-                    ? "bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    : "bg-gray-300 cursor-not-allowed"
-                }`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleConfirm();
-                }}
-                disabled={selectedSlots.length === 0}
-              >
-                <div className="flex items-center justify-center">
-                  <Check size={18} className="mr-2" />
-                  Confirm Appointment
-                </div>
-              </button>
+              {timeSlots.length > 0 && (
+                <button
+                  className={`w-full py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
+                    selectedSlots.length > 0
+                      ? "bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      : "bg-gray-300 cursor-not-allowed"
+                  }`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleConfirm();
+                  }}
+                  disabled={selectedSlots.length === 0}
+                >
+                  <div className="flex items-center justify-center">
+                    <Check size={18} className="mr-2" />
+                    Confirm Appointment
+                  </div>
+                </button>
               )}
             </div>
           </div>
