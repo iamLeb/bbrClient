@@ -85,6 +85,21 @@ const AppointmentCalendar = () => {
       // Extract startTime and endTime from the response
       let { startTime, endTime } = findDate;
 
+      // Function to subtract 5 hours from a time string
+      const subtractFiveHours = (timeString) => {
+        const [hours, minutes] = timeString.split(":").map(Number);
+        let newHours = hours - 5;
+        if (newHours < 0) newHours += 24;
+        return `${String(newHours).padStart(2, "0")}:${String(minutes).padStart(
+          2,
+          "0"
+        )}`;
+      };
+
+      // Subtract 5 hours from startTime and endTime
+      startTime = subtractFiveHours(startTime);
+      endTime = subtractFiveHours(endTime);
+
       // Return an object with startTime, endTime, and notAvailable flag
       return { startTime, endTime, notAvailable: false };
     } catch (error) {
