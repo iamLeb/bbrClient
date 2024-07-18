@@ -20,7 +20,7 @@ const Hero = ({searchResult, toggleSearch}) => {
 
         let res;
         if (values.category === '' && values.city === '' && values.neighbourhood === '') {
-            res = await api.get('/property'); // Fetch all listings if all values are empty
+            res = await api.get('/property');
         } else {
             res = await api.post('/property/search', values);
         }
