@@ -11,15 +11,24 @@ import api from "../../services/api.js";
 const Featured = () => {
     const navigate = useNavigate();
     const {categories} = useContext(GlobalContext);
-    const {properties, setProperties} = useContext(GlobalContext);
+    const {properties, setProperties, fetchMedia} = useContext(GlobalContext);
     const [loading, setLoading] = useState(false);
 
     const handleChange = async (id = 'all') => {
         setLoading(true);
         const response = await api.get(`/property/category/${id}`);
-        console.log(response.data);
-        setProperties(response.data);
-        setLoading(false);
+
+        // Fetch media for each blog
+        const propertiesWithMedia = await Promise.all(
+            response.data.map(async (property) => {
+                const mediaResponse = await fetchMedia(property._id);
+                const url = mediaResponse.data.url ?? 'default.png';
+                return {...property, url};
+            })
+        );
+
+        setProperties(propertiesWithMedia);
+        setLoading(false)
     }
 
     return (
@@ -31,7 +40,7 @@ const Featured = () => {
                         the best option for you.</p>
                 </div>
 
-                <div className={'grid grid-cols-3 md:grid-cols-7 gap-4 font-light text-sm text-center justify-center'}>
+                <div className={'grid grid-cols-3 md:grid-cols-8 gap-4 font-light text-sm text-center justify-center'}>
                     <button onClick={() => handleChange('all')}
                             className={'tag text-black font-bold'}>
                         All
