@@ -4,11 +4,11 @@ import GlobalContext from "../../context/Global.js";
 import {useNavigate} from "react-router-dom";
 import api from "../../services/api.js";
 
-const Hero = ({searchResult,toggleSearch}) => {
+const Hero = ({searchResult, toggleSearch}) => {
 
     const navigate = useNavigate();
     const {neighbourhoods, categories, setListings, fetchMedia} = useContext(GlobalContext)
-    const [loading , setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [values, setValues] = useState({
         category: '',
         city: '',
@@ -17,7 +17,14 @@ const Hero = ({searchResult,toggleSearch}) => {
 
     const getSortedListings = async () => {
         setLoading(true);
-        const res = await api.post('/property/search', values);
+
+        let res;
+        if (values.category === '' && values.city === '' && values.neighbourhood === '') {
+            res = await api.get('/property'); // Fetch all listings if all values are empty
+        } else {
+            res = await api.post('/property/search', values);
+        }
+
         const listingData = res.data;
 
         // Fetch media for each blog
@@ -30,9 +37,8 @@ const Hero = ({searchResult,toggleSearch}) => {
         );
 
         setListings(listingWithMedia);
-        setLoading(false)
-    }
-
+        setLoading(false);
+    };
     const handleChange = e => {
         const {name, value} = e.target;
         setValues({...values, [name]: value});
@@ -72,15 +78,17 @@ const Hero = ({searchResult,toggleSearch}) => {
                 <div
                     className={'absolute bottom-0 translate-y-1/2 right-1/2 transform translate-x-1/2 container mx-auto bg-white shadow-lg p-9'}>
                     <form onSubmit={handleSearch} className={'md:flex space-y-4 md:space-y-0 md:space-x-4'}>
-                        <select onChange={handleChange} name="category" className={'px-5 border py-4 w-full rounded-lg outline-none'}>
-                            <option selected={true}>Select Search Categories</option>
+                        <select onChange={handleChange} name="category"
+                                className={'px-5 border py-4 w-full rounded-lg outline-none'}>
+                            <option value='' selected={true}>Select Categories</option>
                             {categories.map((category, i) => (
                                 <option key={i} value={category._id}>{category.name}</option>
                             ))}
                         </select>
 
-                        <select onChange={handleChange} name={"city"} className={'px-5 border py-4 w-full rounded-lg outline-none'}>
-                            <option disabled={true} selected={true}>Select Cities</option>
+                        <select onChange={handleChange} name={"city"}
+                                className={'px-5 border py-4 w-full rounded-lg outline-none'}>
+                            <option value='' selected={true}>Select Cities</option>
                             <option value="winnipeg">Winnipeg</option>
                             <option value="brandon">Brandon</option>
                             <option value="steinbach">Steinbach</option>
@@ -101,14 +109,15 @@ const Hero = ({searchResult,toggleSearch}) => {
 
                         <select onChange={handleChange} name={"neighbourhood"} defaultValue={'Select Neighbourhood'}
                                 className={'px-5 border py-4 w-full rounded-lg outline-none'}>
-                            <option disabled={true} selected={true}>Select Neighbourhood</option>
+                            <option value='' selected={true}>Select Neighbourhood</option>
                             {neighbourhoods.map((neighbourhood, i) => (
                                 <option key={i}
                                         value={neighbourhood._id}>{neighbourhood.name}</option>
                             ))}
                         </select>
 
-                        <button disabled={loading} type={'submit'} className={'disabled:bg-gray-400 disabled:cursor-no-drop flex justify-center items-center bg-primary text-white h-14 rounded-lg w-full'}>
+                        <button disabled={loading} type={'submit'}
+                                className={'disabled:bg-gray-400 disabled:cursor-no-drop flex justify-center items-center bg-primary text-white h-14 rounded-lg w-full'}>
                             Search Now
                             {loading && <span
                                 className='ml-2 animate-spin border-2 border-t-2 border-white border-t-transparent rounded-full w-4 h-4'></span>}
