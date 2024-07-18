@@ -39,10 +39,12 @@ const Featured = () => {
                                         alt="image" />
                                     <span className={'absolute top-3 left-3 bg-primary text-white text-xs rounded-lg px-1.5 py-0.5'}>Featured</span>
                                     {!feat.status && (
-                                        <div className="absolute inset-0 bg-red-500 bg-opacity-75 flex items-center justify-center">
+                                        <div
+                                            className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 bg-red-500 ">
                                             <span className="text-white text-6xl font-bold">Sold</span>
                                         </div>
                                     )}
+
                                 </div>
                                 <div className={'cursor-pointer'} onClick={() => navigate(`/properties/listing/${feat._id}`)}>
                                     <span className={'font-semibold text-xl'}>{feat.title}</span>
