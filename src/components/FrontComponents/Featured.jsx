@@ -14,20 +14,12 @@ const Featured = () => {
     const {properties, setProperties} = useContext(GlobalContext);
     const [loading, setLoading] = useState(false);
 
-    const handleChange = async id => {
+    const handleChange = async (id = 'all') => {
         setLoading(true);
-        if (id === '') {
-            id = null;
-        } else {
-            const response = await api.get('/property/category/' + id);
-            console.log(id)
-            setProperties(response.data);
-            setLoading(false);
-        }
-        // const response = await api.get(`/property/category/${id}`);
-        // console.log(response.data);
-        // setProperties(response.data);
-        // setLoading(false);
+        const response = await api.get(`/property/category/${id}`);
+        console.log(response.data);
+        setProperties(response.data);
+        setLoading(false);
     }
 
     return (
@@ -40,7 +32,7 @@ const Featured = () => {
                 </div>
 
                 <div className={'grid grid-cols-3 md:grid-cols-7 gap-4 font-light text-sm text-center justify-center'}>
-                    <button onClick={() => handleChange('')}
+                    <button onClick={() => handleChange('all')}
                             className={'tag text-black font-bold'}>
                         All
                     </button>
