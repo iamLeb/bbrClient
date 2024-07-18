@@ -20,12 +20,12 @@ const Footer = () => {
                             <img src="https://dreamhomewp.themesflat.com/wp-content/uploads/2023/08/selecbox-2-1-2.png"
                                  alt="photo"/>
                             <div className={'flex flex-col gap-4 pb-2'}>
-                                <h1 className={'font-bold text-3xl'}>You need a house</h1>
+                                <h1 className={'font-bold text-3xl'}>Need a house</h1>
                                 <p className={'text-xs text-gray-600 w-72'}>
                                     Tell us your needs, we will give you
                                     thousands of suggestions for the dream home.</p>
                             </div>
-                            <button
+                            <button onClick={()=>navigate('/contact')}
                                 className={'sm:absolute -bottom-7 bg-white px-8 py-4 rounded-md text-primary hover:bg-primary hover:text-white transition-all duration-300 font-bold'}>Contact
                                 Seller
                             </button>
@@ -43,7 +43,7 @@ const Footer = () => {
                                 <p className={'text-xs text-gray-600 w-72'}>We will connect you to thousands of people
                                     who need to buy a home.</p>
                             </div>
-                            <button
+                            <button onClick={()=>navigate('/contact')}
                                 className={'sm:absolute -bottom-7 bg-white px-8 py-4 rounded-md text-primary hover:bg-primary hover:text-white transition-all duration-300 font-bold'}>Contact
                                 Seller
                             </button>
