@@ -1,14 +1,14 @@
-import {IoLocationOutline} from "react-icons/io5";
-import {LiaBedSolid} from "react-icons/lia";
-import {FaShower} from "react-icons/fa";
-import {MdOutlineZoomOutMap} from "react-icons/md";
-import {useContext} from "react";
+import { IoLocationOutline } from "react-icons/io5";
+import { LiaBedSolid } from "react-icons/lia";
+import { FaShower } from "react-icons/fa";
+import { MdOutlineZoomOutMap } from "react-icons/md";
+import { useContext } from "react";
 import GlobalContext from "../../context/Global.js";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const UserSearchResult = ({toggleSearch}) => {
+const UserSearchResult = ({ setSearchResult }) => {
     const navigate = useNavigate();
-    const {listings} = useContext(GlobalContext);
+    const { listings } = useContext(GlobalContext);
 
     return (
         <section className={'pt-28 sm:pt-2 pb-2 bg-white'}>
@@ -21,15 +21,22 @@ const UserSearchResult = ({toggleSearch}) => {
                     </div>
                 ) : (
                     <div>
-                        <div className={'flex flex-col sm:flex-row justify-center space-y-4 lg:space-y-0 lg:space-x-4'}>
-                            <h1 className="text-center text-3xl pb-5">Search Result</h1>
-                            <h1 onClick={()=>toggleSearch()}>Clear Search</h1>
-                        </div>
                         <div
-                            className={'grid grid-cols-1 sm:grid-cols-2 md:grid-col-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'}>
-                            {listings.map((feat) => (
+                            className={'flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4 pb-5'}>
+                            <h1 className="text-center text-3xl font-semibold text-gray-800">Search Results</h1>
+                            <p
+                                onClick={() => setSearchResult(false)}
+                                className={'cursor-pointer text-xl text-red-600 font-medium hover:text-red-800 hover:underline transition duration-300'}
+                            >
+                                Clear Search
+                            </p>
+                        </div>
 
-                                <div key={feat.id} className={'border border-gray-200 bg-white p-5 rounded-lg'}>
+                        <div
+                            className={'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'}>
+                            {listings.map((feat) => (
+                                <div key={feat.id}
+                                     className={'border border-gray-200 bg-white p-5 rounded-lg shadow-md'}>
                                     <div className={'flex flex-col gap-3 justify-center'}>
                                         <div className={'relative overflow-hidden rounded-lg h-56'}>
                                             <img
@@ -85,7 +92,7 @@ const UserSearchResult = ({toggleSearch}) => {
                                                     className={'cursor-pointer transition-all duration-300 hover:text-primary'}>Bukola Bliss</span>
                                             </div>
                                             <div>
-                                                <span>Build in: {feat.yearBuilt}</span>
+                                                <span>Built in: {feat.yearBuilt}</span>
                                             </div>
                                         </div>
                                     </div>
