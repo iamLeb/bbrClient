@@ -16,6 +16,8 @@ const ContactTemplate = () => {
     const [errors, setErrors] = useState('');
     const [success, setSuccess] = useState('');
     const [contact, setContact] = useState({name: '', email: '', phone: '', message: ''});
+    const [selectedSlots, setSelectedSlots] = useState([]); // Stores the time slots selected by the user
+
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -26,6 +28,7 @@ const ContactTemplate = () => {
     };
 
     const handleSubmit = async e => {
+        console.log(selectedSlots);
         console.log(contact)
         setLoading(true);
         e.preventDefault();
@@ -176,7 +179,7 @@ const ContactTemplate = () => {
                                 </div>
                             </div>
 
-                            <BookingQuestion />
+                            <BookingQuestion selectedSlots={selectedSlots} setSelectedSlots={setSelectedSlots}/>
                             <div className={'flex-1'}>
                                 <div className={'font-medium pt-2'}>Message</div>
                                 <textarea

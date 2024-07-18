@@ -1,19 +1,15 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { Check } from "lucide-react";
-import ConfirmationPopup from "../../../pages/dashboard/Availability/ConfirmationPopup";
 
 //backend API
 import api from "../../../services/api.js";
 
-const AppointmentCalendar = () => {
+const AppointmentCalendar = ({ selectedSlots, setSelectedSlots }) => {
   // State variables
   const [selectedDate, setSelectedDate] = useState(new Date()); // Stores the date selected by the user
   const [duration] = useState(15); // Duration of each appointment slot in minutes
   const [timeSlots, setTimeSlots] = useState([]); // Stores available time slots for the selected date
-  const [selectedSlots, setSelectedSlots] = useState([]); // Stores the time slots selected by the user
-  const [confirmation, setConfirmation] = useState(null); //confirmation
   const [isLoading, setIsLoading] = useState(false); //spinner animation for acitivity relate
   const [monthAvailability, setMonthAvailability] = useState({}); //to store 3 months avaibality ( previous month,current month ,next month)
 
@@ -61,6 +57,15 @@ const AppointmentCalendar = () => {
 
   //the function is called only when the month view changes--sets monthAvailability intially
   const handleActiveStartDateChange = ({ activeStartDate }) => {
+    // Adjust the selected date when the user changes the month view
+    if (activeStartDate.getMonth() === new Date().getMonth()) {
+      // If the displayed month is the current month, set selected date to today
+      setSelectedDate(new Date());
+    } else {
+      // Otherwise, set selected date to the first day of the displayed month
+      setSelectedDate(activeStartDate);
+    }
+
     fetchMonthAvailability(
       activeStartDate.getFullYear(),
       activeStartDate.getMonth() + 1
@@ -108,15 +113,6 @@ const AppointmentCalendar = () => {
       return { notAvailable: true };
     }
   };
-
-  // Generic function to handle confirmations
-  const handleConfirmation = useCallback((message, onConfirm) => {
-    setConfirmation({ message, onConfirm });
-    setSelectedSlots([]);
-  }, []);
-
-  // Function to clear the confirmation
-  const clearConfirmation = useCallback(() => setConfirmation(null), []);
 
   // Handler for when a new date is selected in the calendar
   const handleDateChange = (date) => {
@@ -209,25 +205,6 @@ const AppointmentCalendar = () => {
     );
   };
 
-  // Handler for confirming the appointment
-  const handleConfirm = () => {
-    if (selectedSlots.length > 0) {
-      let totalDuration = selectedSlots.length * duration;
-      handleConfirmation(
-        "Are you sure you want to confrim the booking?",
-        () => {
-          console.log("Appointment confirmed:", {
-            date: selectedDate,
-            startTime: selectedSlots[0],
-            endTime: selectedSlots[selectedSlots.length - 1],
-            duration: totalDuration,
-          });
-          clearConfirmation();
-        }
-      );
-    }
-  };
-
   // Render the component
   return (
     <div className=" mx-auto p-4">
@@ -284,70 +261,44 @@ const AppointmentCalendar = () => {
                     (Select one or more)
                   </span>
                 </h4>
-                {isLoading ? (
-                  <div className="flex justify-center items-center h-32">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
-                  </div>
-                ) : timeSlots.length === 0 ? (
-                  <div className="flex justify-center items-center h-32 text-gray-500">
-                    No available slots
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 max-h-64 overflow-y-auto">
-                    {timeSlots.map((slot) => (
-                      <button
-                        key={slot.toISOString()}
-                        className={`flex items-center justify-center px-2 py-2 rounded text-sm ${
-                          isSlotSelected(slot)
-                            ? "bg-blue-800 text-white"
-                            : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
-                        }`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleSlotSelect(slot);
-                        }}
-                      >
-                        {slot.toLocaleTimeString([], {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
-                      </button>
-                    ))}
-                  </div>
-                )}
+                <div style={{ minHeight: "256px" }}>
+                  {isLoading ? (
+                    <div className="flex justify-center items-center h-32">
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 "></div>
+                    </div>
+                  ) : timeSlots.length === 0 ? (
+                    <div className="flex justify-center items-center h-32 text-gray-500">
+                      No available slots
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 max-h-64 overflow-y-auto">
+                      {timeSlots.map((slot) => (
+                        <button
+                          key={slot.toISOString()}
+                          className={`flex items-center justify-center px-2 py-2 rounded text-sm ${
+                            isSlotSelected(slot)
+                              ? "bg-blue-800 text-white"
+                              : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
+                          }`}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleSlotSelect(slot);
+                          }}
+                        >
+                          {slot.toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
-
-              {/* Confirm appointment button */}
-              {timeSlots.length > 0 && (
-                <button
-                  className={`w-full py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
-                    selectedSlots.length > 0
-                      ? "bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                      : "bg-gray-300 cursor-not-allowed"
-                  }`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleConfirm();
-                  }}
-                  disabled={selectedSlots.length === 0}
-                >
-                  <div className="flex items-center justify-center">
-                    <Check size={18} className="mr-2" />
-                    Confirm Appointment
-                  </div>
-                </button>
-              )}
             </div>
           </div>
         </div>
       </div>
-      {confirmation && (
-        <ConfirmationPopup
-          message={confirmation.message}
-          onConfirm={confirmation.onConfirm}
-          onCancel={clearConfirmation}
-        />
-      )}
     </div>
   );
 };
