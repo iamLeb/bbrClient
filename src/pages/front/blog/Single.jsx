@@ -5,6 +5,8 @@ import {IoIosArrowRoundForward} from 'react-icons/io';
 import {useNavigate, useParams} from 'react-router-dom';
 import api from '../../../services/api.js';
 import GlobalContext from '../../../context/Global.js';
+import properties from "../../dashboard/property/Properties.jsx";
+import login from "../auth/Login.jsx";
 
 const Single = () => {
     let {id} = useParams();
@@ -16,7 +18,7 @@ const Single = () => {
         url: 'default.png' // Default image URL or empty string as per your needs
     });
     const navigate = useNavigate();
-    const {getName, fetchMedia} = useContext(GlobalContext);
+    const {getName, fetchMedia, format, properties} = useContext(GlobalContext);
     const [loading, setLoading] = useState(true); 
 
     useEffect(() => {
@@ -53,7 +55,7 @@ const Single = () => {
                             <li>
                                 <div className="flex space-x-2 items-center">
                                     <CiCalendar/>
-                                    <span>{new Date(blog.createdAt).toLocaleDateString()}</span>
+                                    <span>{format(blog.createdAt)}</span>
                                 </div>
                             </li>
                         </ul>
@@ -80,11 +82,11 @@ const Single = () => {
                         <h1 className="font-bold text-2xl">Categories</h1>
 
                         <ul>
-                            {[1, 2, 3].map((item, index) => (
+                            {properties.slice(0,3).map((item, index) => (
                                 <li key={index}>
-                                    <div
-                                        className="hover:text-primary flex justify-between space-x-2 items-center border-b">
-                                        <p className="py-3">{getName(blog.category)}</p>
+                                    <div onClick={()=>navigate(`/properties/listing/${item._id}`)}
+                                        className="hover:text-primary flex justify-between space-x-2 items-center border-b cursor-pointer">
+                                        <p className="py-3">{item.title}</p>
                                         <IoIosArrowRoundForward size={28}/>
                                     </div>
                                 </li>

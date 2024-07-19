@@ -1,11 +1,10 @@
 import {FiMenu} from "react-icons/fi";
-import {IoIosArrowDown} from "react-icons/io";
 import {TbHomeDollar} from "react-icons/tb";
 import {PiLineVerticalThin} from "react-icons/pi";
 import {useNavigate} from "react-router-dom";
-import {GoArrowRight} from "react-icons/go";
 import React from "react";
 import {MdOutlineCancel} from "react-icons/md";
+import logo1 from "../../assets/images/logo/logo1.png";
 
 const Header = ({sidebar, toggleSidebar}) => {
     const navigate = useNavigate();
@@ -45,7 +44,7 @@ const Header = ({sidebar, toggleSidebar}) => {
         <header className={'fixed w-full z-20 bg-white shadow-md p-3 py-6 sm:py-3'}>
             <div className={'container mx-auto flex justify-between items-center'}>
                 <div>
-                    <h1 className={'text-3xl text-primary font-bold'}>logo</h1>
+                    <img className={'w-24'} src={logo1} alt="logo"/>
                 </div>
 
                 <div className={'hidden md:block text-md font-medium'}>

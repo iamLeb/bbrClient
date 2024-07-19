@@ -65,7 +65,7 @@ const Sidebar = ({sidebar, toggleSidebar}) => {
         {
             icon: <GrUserManager/>,
             name: "Manage Roles",
-            path: "",
+            path: "addAgent",
             mobile: true,
         },
         {
