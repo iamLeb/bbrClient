@@ -1,23 +1,23 @@
+import {useContext, useState, useEffect} from "react";
 import {IoLocationOutline} from "react-icons/io5";
 import {LiaBedSolid} from "react-icons/lia";
 import {FaShower} from "react-icons/fa";
 import {MdOutlineZoomOutMap} from "react-icons/md";
-import {useContext, useState, useEffect} from "react";
+import {useNavigate} from "react-router-dom";
 import GlobalContext from "../../context/Global.js";
 import ViewMore from "./ViewMore.jsx";
-import {useNavigate} from "react-router-dom";
 import api from "../../services/api.js";
 
 const Featured = () => {
     const navigate = useNavigate();
-    const {categories} = useContext(GlobalContext);
-    const {fetchMedia} = useContext(GlobalContext);
+    const {categories, fetchMedia} = useContext(GlobalContext);
     const [properties, setProperties] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState(null); // State for selected category
 
     const getProperties = async (id) => {
         let res;
-        setLoading(true)
+        setLoading(true);
         if (!id) {
             res = await api.get('property');
         } else {
@@ -26,7 +26,7 @@ const Featured = () => {
 
         const propertiesData = res.data;
 
-        // Fetch media for each blog
+        // Fetch media for each property
         const propertiesWithMedia = await Promise.all(
             propertiesData.map(async (property) => {
                 const mediaResponse = await fetchMedia(property._id);
@@ -35,18 +35,17 @@ const Featured = () => {
             })
         );
 
-        setProperties(propertiesWithMedia);
-        console.log(properties)
-        setLoading(false)
+        // if (propertiesWithMedia.length > 8) {
+        //     propertiesWithMedia.slice(propertiesWithMedia.length - 9, propertiesWithMedia.length - 1);
+        // }
+
+        setProperties(propertiesWithMedia.slice(propertiesWithMedia.length - 9, propertiesWithMedia.length - 1));
+        setLoading(false);
     };
 
-    useEffect(() => {
-        getProperties();
-    }, [fetchMedia]);
-
-    const handleChange = async (id = 'all') => {
-        await getProperties(id)
-    }
+    // useEffect(() => {
+    //     getProperties();
+    // }, [fetchMedia]);
 
     return (
         <section className={'pt-28 sm:py-9 bg-sky-100'}>
@@ -57,14 +56,26 @@ const Featured = () => {
                         the best option for you.</p>
                 </div>
 
-                <div className={'grid grid-cols-3 md:grid-cols-8 gap-4 font-light text-sm text-center justify-center'}>
-                    <button onClick={() => handleChange('')}
-                            className={'tag text-black font-bold'}>
+                <div
+                    className={'grid grid-cols-3 md:grid-cols-6 lg:grid-cols-8 gap-4 font-light text-sm text-center justify-center'}>
+                    <button
+                        onClick={() => {
+                            getProperties('');
+                            setSelectedCategory(null); // Deselect all
+                        }}
+                        className={`tag font-bold ${selectedCategory === null ? 'text-primary' : 'text-black'}`}
+                    >
                         All
                     </button>
                     {categories.slice(0, 8).map(category => (
-                        <button onClick={() => handleChange(category._id)} key={category._id}
-                                className={'tag text-black font-bold'}>
+                        <button
+                            onClick={() => {
+                                getProperties(category._id);
+                                setSelectedCategory(category._id); // Set the selected category
+                            }}
+                            key={category._id}
+                            className={`tag font-bold ${selectedCategory === category._id ? 'text-primary' : 'text-black'}`}
+                        >
                             {category.name}
                         </button>
                     ))}
@@ -80,14 +91,15 @@ const Featured = () => {
                 </div>
             ) : (
                 <div className={'px-3 mt-5'}>
+                    {properties.length === 0 && (
+                        <div className={'flex justify-center items-center py-10'}>
+                            <span className={'text-xl text-center font-semibold'}>No properties found</span>
+                        </div>
+                    )}
+
                     <div
                         className={'grid grid-cols-1 sm:grid-cols-2 md:grid-col-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'}>
-                        {properties.length === 0 && (
-                            <div className={'flex justify-center items-center py-10'}>
-                                <span className={'text-xl font-semibold'}>No properties found</span>
-                            </div>
-                        )}
-                        {properties.slice(properties.length - 9, properties.length - 1).map(feat => (
+                        {properties.map(feat => (
                             <div key={feat._id} className={'border border-gray-200 bg-white p-5 rounded-lg'}>
                                 <div className={'flex flex-col gap-3 justify-center'}>
                                     <div className={'relative overflow-hidden rounded-lg h-56'}>
@@ -122,7 +134,6 @@ const Featured = () => {
                                                 </p>
                                             </div>
                                         </li>
-
                                         <li>
                                             <div className={'flex items-center space-x-2'}>
                                                 <FaShower/>
@@ -131,7 +142,6 @@ const Featured = () => {
                                                 </p>
                                             </div>
                                         </li>
-
                                         <li>
                                             <div className={'flex items-center space-x-2'}>
                                                 <MdOutlineZoomOutMap/>
@@ -147,8 +157,7 @@ const Featured = () => {
                                         <div className={'flex items-center space-x-2'}>
                                             <img className={'w-9 rounded-full'}
                                                  src="https://dreamhomewp.themesflat.com/wp-content/uploads/2023/11/user-1-1.jpg"
-                                                 alt=""
-                                            />
+                                                 alt=""/>
                                             <span
                                                 className={'cursor-pointer transition-all duration-300 hover:text-primary'}>Bukola Bliss</span>
                                         </div>
