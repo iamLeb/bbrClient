@@ -2,10 +2,11 @@ import {IoFolderOpenSharp} from "react-icons/io5";
 import {useNavigate} from "react-router-dom";
 import {useContext} from "react";
 import GlobalContext from "../../context/Global.js";
+
 const BlogLists = () => {
 
     const navigate = useNavigate();
-    const {blogs, getName, loading} = useContext(GlobalContext);
+    const {blogs, getName, loading, format} = useContext(GlobalContext);
 
     return (
         <section className={'container mx-auto'}>
@@ -22,7 +23,7 @@ const BlogLists = () => {
                              alt="photo"/>
                         <div className="p-6">
                             <ul className={'flex space-x-6 pb-2 text-xs'}>
-                                <li>{blog.createdAt}</li>
+                                <li>{format(blog.createdAt)}</li>
                                 <li>
                                     <div className={'flex space-x-2 items-center'}>
                                         <IoFolderOpenSharp/>
@@ -30,7 +31,8 @@ const BlogLists = () => {
                                     </div>
                                 </li>
                             </ul>
-                            <h3 className="font-bold text-2xl">{blog.title}</h3>
+                            <h3 onClick={() => navigate(blog._id)}
+                                className="font-bold text-2xl cursor-pointer">{blog.title}</h3>
                             <p className="overflow-hidden text-ellipsis whitespace-nowrap">{blog.content}</p>
                             <button onClick={() => navigate(blog._id)}
                                     className={'text-primary font-medium pt-5'}>Read

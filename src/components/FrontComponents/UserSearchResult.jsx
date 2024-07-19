@@ -1,14 +1,14 @@
-import { IoLocationOutline } from "react-icons/io5";
-import { LiaBedSolid } from "react-icons/lia";
-import { FaShower } from "react-icons/fa";
-import { MdOutlineZoomOutMap } from "react-icons/md";
-import { useContext } from "react";
+import {IoLocationOutline} from "react-icons/io5";
+import {LiaBedSolid} from "react-icons/lia";
+import {FaShower} from "react-icons/fa";
+import {MdOutlineZoomOutMap} from "react-icons/md";
+import {useContext} from "react";
 import GlobalContext from "../../context/Global.js";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
-const UserSearchResult = ({ setSearchResult }) => {
+const UserSearchResult = ({setSearchResult}) => {
     const navigate = useNavigate();
-    const { listings } = useContext(GlobalContext);
+    const {listings} = useContext(GlobalContext);
 
     return (
         <section className={'pt-28 sm:pt-2 pb-2 bg-white'}>
@@ -24,6 +24,7 @@ const UserSearchResult = ({ setSearchResult }) => {
                         <div
                             className={'flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4 pb-5'}>
                             <h1 className="text-center text-3xl font-semibold text-gray-800">Search Results</h1>
+                            <small>({listings.length} {listings.length>1 ? 'records' : 'record'} found)</small>
                             <p
                                 onClick={() => setSearchResult(false)}
                                 className={'cursor-pointer text-xl text-red-600 font-medium hover:text-red-800 hover:underline transition duration-300'}
@@ -44,6 +45,12 @@ const UserSearchResult = ({ setSearchResult }) => {
                                                 src={feat.url}
                                                 alt={feat.title}
                                             />
+                                            {!feat.status && (
+                                                <div
+                                                    className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 bg-red-500 rounded-lg px-3">
+                                                    <span className="text-white text-6xl font-bold">Sold</span>
+                                                </div>
+                                            )}
                                         </div>
                                         <div className={'cursor-pointer'}
                                              onClick={() => navigate(`/properties/listing/${feat._id}`)}>

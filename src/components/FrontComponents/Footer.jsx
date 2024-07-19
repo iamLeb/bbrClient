@@ -58,17 +58,9 @@ const Footer = () => {
 
                     <ul className={'flex flex-col gap-4 pb-2 px-6'}>
                         <li>
-                            <span className={'text-sm text-[#808081]'}>Head office:</span>
+                            <span className={'text-sm text-neutral-900'}>Head office:</span>
                             <p className={'text-white text-sm'}>2118 Thornridge Cir. Syracuse, Connecticut
                                 35624</p>
-                        </li>
-                        <li>
-                            <span className={'text-sm text-[#808081]'}>Head office:</span>
-                            <p className={'text-white text-sm'}>2118 Thornridge Cir. Syracuse, Connecticut
-                                35624</p>
-                        </li>
-                        <li className={'border-t border-neutral-500'}>
-                            <p className={'text-white text-sm'}>3517 W. Gray St. Utica, Pennsylvania 57867</p>
                         </li>
                     </ul>
                 </div>
@@ -76,14 +68,14 @@ const Footer = () => {
                 <div>
                     <h1 className={'font-bold text-white py-5'}>Contact Information</h1>
 
-                    <ul className={'flex flex-col gap-4 pb-2 px-6'}>
+                    <ul className={'flex flex-col text-neutral-900 gap-4 pb-2 px-6'}>
                         <li>
                             <div className={'flex items-center space-x-4'}>
-                                <LiaPhoneVolumeSolid size={36}/>
+                                <LiaPhoneVolumeSolid className={'text-neutral-800'} size={36}/>
                                 <div>
                                     <p>Hotline:</p>
                                     <span className={'text-white'}>
-                                        <a href="tel:3145559120">(314) 555-9120</a>
+                                        <a href="tel:4319969920">(431) 996-9920</a>
                                     </span>
                                 </div>
                             </div>
@@ -91,11 +83,11 @@ const Footer = () => {
 
                         <li>
                             <div className={'flex items-center space-x-4'}>
-                                <MdOutlineMarkEmailRead size={36}/>
+                                <MdOutlineMarkEmailRead className={'text-neutral-800'} size={36}/>
                                 <div>
                                     <p>Email:</p>
                                     <span className={'text-white'}>
-                                        <a target='_blank' href="mailto:contact@bbr.ca">contact@bbr.ca</a>
+                                        <a target='_blank' href="mailto:Bbliss@sutton.com">Bbliss@sutton.com</a>
                                     </span>
                                 </div>
                             </div>
@@ -156,17 +148,17 @@ const Footer = () => {
                     <h1 className={'text-4xl text-white font-bold'}>logo</h1>
                     <div className={'flex items-center space-x-4'}>
                     <span
-                        className={'border border-neutral-800 hover:bg-primary text-white p-3 rounded-full'}><SlSocialTwitter/></span>
+                        className={'border border-gray-100 hover:bg-gray-500 transition-all duration-300 cursor-pointer text-white p-3 rounded-full'}><SlSocialTwitter/></span>
                         <span
-                            className={'border border-neutral-800 hover:bg-primary text-white p-3 rounded-full'}><FiFacebook/></span>
+                            className={'border border-gray-100 hover:bg-gray-500 transition-all duration-300 cursor-pointer text-white p-3 rounded-full'}><FiFacebook/></span>
                         <span
-                            className={'border border-neutral-800 hover:bg-primary text-white p-3 rounded-full'}><FaInstagram/></span>
+                            className={'border border-gray-100 hover:bg-gray-500 transition-all duration-300 cursor-pointer text-white p-3 rounded-full'}><FaInstagram/></span>
                     </div>
                 </div>
 
                 <hr className={'border-neutral-500'}/>
                 <p className="text-center py-5 text-white text-sm">
-                    Copyright © 2024 Real estate CP. Designed & Developed by Group II
+                    Copyright © 2024 All Rights Reserved, Bukola Bliss Realtor
                 </p>
             </div>
 

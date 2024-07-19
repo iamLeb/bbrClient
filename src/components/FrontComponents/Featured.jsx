@@ -35,17 +35,18 @@ const Featured = () => {
             })
         );
 
-        // if (propertiesWithMedia.length > 8) {
-        //     propertiesWithMedia.slice(propertiesWithMedia.length - 9, propertiesWithMedia.length - 1);
-        // }
+        if (propertiesWithMedia.length > 8) {
+            setProperties(propertiesWithMedia.slice(propertiesWithMedia.length - 9, propertiesWithMedia.length - 1));
+        } else {
+            setProperties(propertiesWithMedia);
+        }
 
-        setProperties(propertiesWithMedia.slice(propertiesWithMedia.length - 9, propertiesWithMedia.length - 1));
         setLoading(false);
     };
 
-    // useEffect(() => {
-    //     getProperties();
-    // }, [fetchMedia]);
+    useEffect(() => {
+        getProperties();
+    }, [fetchMedia]);
 
     return (
         <section className={'pt-28 sm:py-9 bg-sky-100'}>
@@ -57,7 +58,7 @@ const Featured = () => {
                 </div>
 
                 <div
-                    className={'grid grid-cols-3 md:grid-cols-6 lg:grid-cols-8 gap-4 font-light text-sm text-center justify-center'}>
+                    className={'grid grid-cols-3 md:grid-cols-6 lg:grid-cols-8  gap-4 font-light text-sm text-center justify-center'}>
                     <button
                         onClick={() => {
                             getProperties('');
