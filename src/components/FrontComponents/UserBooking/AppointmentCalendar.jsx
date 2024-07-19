@@ -120,27 +120,52 @@ const AppointmentCalendar = ({ selectedSlots, setSelectedSlots }) => {
     setSelectedSlots([]); // Clear selected slots when date changes
   };
 
-  // Generates an array of time slots between start and end times
+  // Main function to generate available time slots
   const generateTimeSlots = (start, end, interval, bookings) => {
+    // Helper function to process bookings and create a sorted array of booked time slots
+    const helper = (bookings, slotDurationMinutes = 15) => {
+      const timeSlots = new Set();
+
+      // Iterate through each booking
+      bookings.forEach((booking) => {
+        const { duration, startTime } = booking;
+        const start = new Date(startTime);
+        const numSlots = Math.ceil(duration / slotDurationMinutes);
+
+        // Create time slots for the duration of the booking
+        for (let i = 0; i < numSlots; i++) {
+          const slotTime = new Date(
+            start.getTime() + i * slotDurationMinutes * 60000
+          );
+          timeSlots.add(slotTime.toISOString());
+        }
+      });
+
+      // Convert Set to sorted Array
+      return Array.from(timeSlots).sort((a, b) => new Date(a) - new Date(b));
+    };
+
     const slots = [];
     let current = new Date(start);
     const endTime = new Date(end);
 
-    while (current < endTime) {
-      // Check if the current slot overlaps with any booking
-      const isBooked = bookings.some((booking) => {
-        const bookingStart = new Date(booking.startTime);
-        const bookingEnd = new Date(booking.endTime);
+    // Sort bookings by start time for efficiency
+    const sortedBookings = helper(bookings);
 
-        // Check for three possible overlap scenarios:
-        return (
-          // 1. Slot start time is within a booking
-          current >= bookingStart && current <= bookingEnd
-        );
+    console.log("Bookings sorted are", sortedBookings);
+
+    // Function to check if a given time is booked
+    const isBooked = (time) => {
+      return sortedBookings.some((booking) => {
+        const bookingTime = new Date(booking);
+        return Math.abs(bookingTime - time) < interval * 60000;
       });
+    };
 
+    // Generate available time slots
+    while (current < endTime) {
       // If the slot is not booked, add it to the available slots
-      if (!isBooked) {
+      if (!isBooked(current)) {
         slots.push(new Date(current));
       }
 
@@ -150,7 +175,6 @@ const AppointmentCalendar = ({ selectedSlots, setSelectedSlots }) => {
 
     return slots;
   };
-
   // Effect hook to update available time slots when selected date changes
   useMemo(() => {
     const updateTimeSlots = async () => {
