@@ -44,7 +44,7 @@ const Header = ({sidebar, toggleSidebar}) => {
         <header className={'fixed w-full z-20 bg-white shadow-md p-3 py-6 sm:py-3'}>
             <div className={'container mx-auto flex justify-between items-center'}>
                 <div>
-                    {/*<img className={'w-40'} src={logo1} alt="logo"/>*/}
+                    <img className={'w-24'} src={logo1} alt="logo"/>
                 </div>
 
                 <div className={'hidden md:block text-md font-medium'}>

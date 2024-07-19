@@ -28,7 +28,11 @@ const BookingQuestion = () => {
     // Outer container with responsive padding
     <div className="w-full py-2 px-2 sm:py-4 sm:px-4">
       {/* Inner container with styling */}
-      <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden transition-all duration-300 ease-in-out transform opacity-100 translate-y-0">
+      <div
+        className={`mx-auto bg-white shadow-lg rounded-lg overflow-hidden transition-all duration-300 ease-in-out transform opacity-100 translate-y-0 ${
+          showCalendar ? "w-full" : "max-w-3xl"
+        }`}
+      >
         {/* Header section */}
         <div className="p-3 sm:p-6 flex justify-between items-center bg-gradient-to-r from-blue-500 to-purple-600 text-white transition-all duration-300 ease-in-out">
           {/* Dynamic header text */}
@@ -36,7 +40,7 @@ const BookingQuestion = () => {
             {showCalendar
               ? "Book Appointment"
               : window.innerWidth < 640
-              ? "Book an appointment"
+              ? "Book Appointment"
               : "Would you like to book an appointment?"}
           </h2>
           {/* Conditional rendering of cancel button or chevron icon */}
@@ -105,10 +109,12 @@ const BookingQuestion = () => {
         {/* Calendar content */}
         <div
           className={`transition-all duration-500 ease-in-out ${
-            showCalendar ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"
+            showCalendar ? "opacity-100" : "max-h-0 opacity-0"
           }`}
         >
-          <AppointmentCalendar />
+          <div className="w-full">
+            <AppointmentCalendar />
+          </div>
         </div>
       </div>
     </div>
