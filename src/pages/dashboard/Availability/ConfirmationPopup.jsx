@@ -1,5 +1,5 @@
 // ConfirmationPopup.js
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 const ConfirmationPopup = ({ message, onConfirm, onCancel }) => (
   <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
@@ -14,7 +14,7 @@ const ConfirmationPopup = ({ message, onConfirm, onCancel }) => (
         </button>
         <button
           onClick={onConfirm}
-          className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         >
           Confirm
         </button>
@@ -25,7 +25,7 @@ const ConfirmationPopup = ({ message, onConfirm, onCancel }) => (
 ConfirmationPopup.propTypes = {
   message: PropTypes.string.isRequired,
   onConfirm: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired
+  onCancel: PropTypes.func.isRequired,
 };
 
 export default ConfirmationPopup;

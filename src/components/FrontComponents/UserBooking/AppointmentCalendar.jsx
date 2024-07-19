@@ -1,7 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { Clock, Check } from "lucide-react";
+import { Check } from "lucide-react";
+import ConfirmationPopup from "../../../pages/dashboard/Availability/ConfirmationPopup";
+
+//backend API
+import api from "../../../services/api.js";
 
 const AppointmentCalendar = () => {
   // State variables
@@ -9,17 +13,110 @@ const AppointmentCalendar = () => {
   const [duration] = useState(15); // Duration of each appointment slot in minutes
   const [timeSlots, setTimeSlots] = useState([]); // Stores available time slots for the selected date
   const [selectedSlots, setSelectedSlots] = useState([]); // Stores the time slots selected by the user
+  const [confirmation, setConfirmation] = useState(null); //confirmation
+  const [isLoading, setIsLoading] = useState(false); //spinner animation for acitivity relate
+  const [monthAvailability, setMonthAvailability] = useState({}); //to store 3 months avaibality ( previous month,current month ,next month)
 
-  // Mock function to fetch availability from a database
-  // In a real application, this would be an API call
-  const fetchAvailability = async () => {
-    // Currently returns fixed start and end times
-    // TODO: Implement actual API call to fetch availability
-    return {
-      startTime: "09:00",
-      endTime: "17:00",
-    };
+  //for changing the dates CSS
+  const tileClassName = ({ date, view }) => {
+    if (view === "month") {
+      // Base class for all tiles to make them circular and add more spacing
+      let baseClass =
+        "rounded-full w-10 h-10 flex items-center justify-center transition duration-200 m-1 ";
+
+      // Check if the date is selected
+      if (date.toDateString() === selectedDate.toDateString()) {
+        return baseClass + "bg-blue-500 text-white cursor-pointer";
+      }
+
+      // Check if the date is in the past
+      if (date < new Date().setHours(0, 0, 0, 0)) {
+        return baseClass + "bg-gray-100 text-gray-400 cursor-not-allowed";
+      }
+
+      // For current and future dates
+      return isDateAvailable(date)
+        ? baseClass + "bg-green-100 "
+        : baseClass + "bg-red-100 ";
+    }
   };
+
+  //for intial active mount
+  useEffect(() => {
+    handleActiveStartDateChange({ activeStartDate: new Date() });
+  }, []);
+
+  //to fetch 3 months avilability  previous month,current month ,next month
+  const fetchMonthAvailability = async (year, month) => {
+    try {
+      setIsLoading(true); // Set loading to true before fetching
+      const response = await api.get(`/availability/month/${year}/${month}`);
+      setMonthAvailability(response.data);
+    } catch (error) {
+      console.error("Error fetching month availability:", error);
+    } finally {
+      setIsLoading(false); // Set loading to true before fetching
+    }
+  };
+
+  //the function is called only when the month view changes--sets monthAvailability intially
+  const handleActiveStartDateChange = ({ activeStartDate }) => {
+    fetchMonthAvailability(
+      activeStartDate.getFullYear(),
+      activeStartDate.getMonth() + 1
+    );
+  };
+
+  //to check if any date is avilable
+  const isDateAvailable = (date) => {
+    const dateString = date.toISOString().split("T")[0];
+    return monthAvailability[dateString] !== undefined;
+  };
+
+  const findAvailability = (date) => {
+    try {
+      const findDate = monthAvailability[date.toISOString().split("T")[0]];
+
+      // Check if the response indicates no availability
+      if (findDate === undefined) {
+        return { notAvailable: true };
+      }
+
+      // Extract startTime and endTime from the response
+      let { startTime, endTime } = findDate;
+
+      // Function to subtract 5 hours from a time string
+      const subtractFiveHours = (timeString) => {
+        const [hours, minutes] = timeString.split(":").map(Number);
+        let newHours = hours - 5;
+        if (newHours < 0) newHours += 24;
+        return `${String(newHours).padStart(2, "0")}:${String(minutes).padStart(
+          2,
+          "0"
+        )}`;
+      };
+
+      // Subtract 5 hours from startTime and endTime
+      startTime = subtractFiveHours(startTime);
+      endTime = subtractFiveHours(endTime);
+
+      // Return an object with startTime, endTime, and notAvailable flag
+      return { startTime, endTime, notAvailable: false };
+    } catch (error) {
+      console.log("Error fetching availability:", error);
+      // If there's an error, return an object indicating no availability
+      return { notAvailable: true };
+    }
+  };
+
+  // Generic function to handle confirmations
+  const handleConfirmation = useCallback((message, onConfirm) => {
+    setConfirmation({ message, onConfirm });
+    setSelectedSlots([]);
+  }, []);
+
+  // Function to clear the confirmation
+  const clearConfirmation = useCallback(() => setConfirmation(null), []);
 
   // Handler for when a new date is selected in the calendar
   const handleDateChange = (date) => {
@@ -42,32 +139,39 @@ const AppointmentCalendar = () => {
   };
 
   // Effect hook to update available time slots when selected date changes
-  useEffect(() => {
+  useMemo(() => {
     const updateTimeSlots = async () => {
       // Fetch availability for the selected date
-      const { startTime, endTime } = await fetchAvailability(selectedDate);
+      const availability = findAvailability(selectedDate);
+      if (availability.notAvailable) {
+        // If not available, set time slots to an empty array
+        setTimeSlots([]);
+      } else {
+        // Fetch availability for the selected date
+        const { startTime, endTime } = availability;
 
-      // Convert start and end times to Date objects
-      const start = new Date(selectedDate);
-      start.setHours(
-        parseInt(startTime.split(":")[0]),
-        parseInt(startTime.split(":")[1]),
-        0
-      );
-      const end = new Date(selectedDate);
-      end.setHours(
-        parseInt(endTime.split(":")[0]),
-        parseInt(endTime.split(":")[1]),
-        0
-      );
+        // Convert start and end times to Date objects
+        const start = new Date(selectedDate);
+        start.setHours(
+          parseInt(startTime.split(":")[0]),
+          parseInt(startTime.split(":")[1]),
+          0
+        );
+        const end = new Date(selectedDate);
+        end.setHours(
+          parseInt(endTime.split(":")[0]),
+          parseInt(endTime.split(":")[1]),
+          0
+        );
 
-      // Generate time slots and update state
-      const slots = generateTimeSlots(start, end, duration);
-      setTimeSlots(slots);
+        // Generate time slots and update state
+        const slots = generateTimeSlots(start, end, duration);
+        setTimeSlots(slots);
+      }
     };
 
     updateTimeSlots();
-  }, [selectedDate, duration]);
+  }, [selectedDate, duration, monthAvailability]);
 
   // Handler for selecting/deselecting time slots
   const handleSlotSelect = (slot) => {
@@ -106,23 +210,27 @@ const AppointmentCalendar = () => {
   };
 
   // Handler for confirming the appointment
-  // TODO: Implement actual appointment confirmation logic
   const handleConfirm = () => {
     if (selectedSlots.length > 0) {
-      const totalDuration = selectedSlots.length * duration;
-      console.log("Appointment confirmed:", {
-        date: selectedDate,
-        startTime: selectedSlots[0],
-        endTime: selectedSlots[selectedSlots.length - 1],
-        duration: totalDuration,
-      });
-      alert(`Appointment confirmed for ${totalDuration} minutes!`);
+      let totalDuration = selectedSlots.length * duration;
+      handleConfirmation(
+        "Are you sure you want to confrim the booking?",
+        () => {
+          console.log("Appointment confirmed:", {
+            date: selectedDate,
+            startTime: selectedSlots[0],
+            endTime: selectedSlots[selectedSlots.length - 1],
+            duration: totalDuration,
+          });
+          clearConfirmation();
+        }
+      );
     }
   };
 
   // Render the component
   return (
-    <div className="max-w-4xl mx-auto p-4">
+    <div className=" mx-auto p-4">
       <div className="bg-white rounded-lg shadow-md overflow-hidden">
         <div className="flex flex-col lg:flex-row">
           {/* Calendar section */}
@@ -141,6 +249,8 @@ const AppointmentCalendar = () => {
               formatShortWeekday={(locale, date) =>
                 date.toLocaleDateString(locale, { weekday: "narrow" })
               }
+              tileClassName={tileClassName}
+              onActiveStartDateChange={handleActiveStartDateChange}
             />
           </div>
           {/* Appointment details section */}
@@ -174,50 +284,70 @@ const AppointmentCalendar = () => {
                     (Select one or more)
                   </span>
                 </h4>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 max-h-64 overflow-y-auto">
-                  {timeSlots.map((slot) => (
-                    <button
-                      key={slot.toISOString()}
-                      className={`flex items-center justify-center px-2 py-2 rounded text-sm ${
-                        isSlotSelected(slot)
-                          ? "bg-indigo-600 text-white"
-                          : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
-                      }`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleSlotSelect(slot);
-                      }}
-                    >
-                      {slot.toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </button>
-                  ))}
-                </div>
+                {isLoading ? (
+                  <div className="flex justify-center items-center h-32">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+                  </div>
+                ) : timeSlots.length === 0 ? (
+                  <div className="flex justify-center items-center h-32 text-gray-500">
+                    No available slots
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 max-h-64 overflow-y-auto">
+                    {timeSlots.map((slot) => (
+                      <button
+                        key={slot.toISOString()}
+                        className={`flex items-center justify-center px-2 py-2 rounded text-sm ${
+                          isSlotSelected(slot)
+                            ? "bg-blue-800 text-white"
+                            : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
+                        }`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleSlotSelect(slot);
+                        }}
+                      >
+                        {slot.toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
+
               {/* Confirm appointment button */}
-              <button
-                className={`w-full py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
-                  selectedSlots.length > 0
-                    ? "bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    : "bg-gray-300 cursor-not-allowed"
-                }`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleConfirm();
-                }}
-                disabled={selectedSlots.length === 0}
-              >
-                <div className="flex items-center justify-center">
-                  <Check size={18} className="mr-2" />
-                  Confirm Appointment
-                </div>
-              </button>
+              {timeSlots.length > 0 && (
+                <button
+                  className={`w-full py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
+                    selectedSlots.length > 0
+                      ? "bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      : "bg-gray-300 cursor-not-allowed"
+                  }`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleConfirm();
+                  }}
+                  disabled={selectedSlots.length === 0}
+                >
+                  <div className="flex items-center justify-center">
+                    <Check size={18} className="mr-2" />
+                    Confirm Appointment
+                  </div>
+                </button>
+              )}
             </div>
           </div>
         </div>
       </div>
+      {confirmation && (
+        <ConfirmationPopup
+          message={confirmation.message}
+          onConfirm={confirmation.onConfirm}
+          onCancel={clearConfirmation}
+        />
+      )}
     </div>
   );
 };
