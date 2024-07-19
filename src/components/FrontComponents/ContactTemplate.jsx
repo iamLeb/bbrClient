@@ -31,26 +31,70 @@ const ContactTemplate = () => {
     });
   };
 
+  // Function to create a booking object from an array of selected time slots
+  function creatBookingObject(selectedSlots) {
+    // Check if the input is a valid non-empty array
+    if (!Array.isArray(selectedSlots) || selectedSlots.length === 0) {
+      // If input is invalid or empty, return a default object
+      return {
+        date: null,
+        startTime: null, // No start time
+        endTime: null, // No end time
+        duration: 0, // Duration is 0 minutes
+      };
+    }
+
+    // Get the start and end times
+    const startTime = selectedSlots[0];
+    const endTime = selectedSlots[selectedSlots.length - 1];
+
+    // Create a new Date object set to midnight of the start date
+    const date = new Date(startTime);
+    date.setHours(0, 0, 0, 0);
+
+    // If input is valid, create and return the booking object
+    return {
+      date: date,
+      startTime: startTime,
+      endTime: endTime,
+      duration: selectedSlots.length * 15, // Duration in minutes (each slot is 15 minutes)
+    };
+  }
+
   const handleSubmit = async (e) => {
-    console.log(selectedSlots);
-    console.log(contact);
-    setLoading(true);
     e.preventDefault();
-    setErrors("");
-    setSuccess("");
+    const newBooking = creatBookingObject(selectedSlots);
+    console.log(newBooking);
+    console.log(contact);
+
+    setLoading(true);
+
     if (!contact.name || !contact.email || !contact.phone || !contact.message) {
       setErrors("All fields are required");
     } else {
       try {
         const res = await api.post("/contact/create", contact);
-        if (res.status === 201) {
-          setSuccess(
-            "We have received your message and we will get back to you soon."
-          );
+        if (res.status === 201 && selectedSlots.length !== 0) {
+          // If contact creation is successful, create booking
+          const bookingRes = await api.post("/booking/create", {
+            ...newBooking,
+            contactId: res.data._id,
+          });
+          //if booking creation is successfull,as w
+          if (bookingRes.status === 201) {
+            console.log("Booking is created!!");
+            setSelectedSlots([]);
+          }
+
           setContact({ name: "", email: "", phone: "", message: "" });
         }
+        setSuccess(
+          "We have received your message and we will get back to you soon."
+        );
       } catch (e) {
-        setErrors(e.response.data.error);
+        setErrors(
+          e.response?.data?.error || "An error occurred. Please try again."
+        );
       }
     }
 

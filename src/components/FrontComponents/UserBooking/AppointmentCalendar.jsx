@@ -87,8 +87,8 @@ const AppointmentCalendar = ({ selectedSlots, setSelectedSlots }) => {
         return { notAvailable: true };
       }
 
-      // Extract startTime and endTime from the response
-      let { startTime, endTime } = findDate;
+      // Extract startTime,endTime and bookings from the response
+      let { startTime, endTime, bookings } = findDate;
 
       // Function to subtract 5 hours from a time string
       const subtractFiveHours = (timeString) => {
@@ -106,7 +106,7 @@ const AppointmentCalendar = ({ selectedSlots, setSelectedSlots }) => {
       endTime = subtractFiveHours(endTime);
 
       // Return an object with startTime, endTime, and notAvailable flag
-      return { startTime, endTime, notAvailable: false };
+      return { startTime, endTime, notAvailable: false, bookings };
     } catch (error) {
       console.log("Error fetching availability:", error);
       // If there's an error, return an object indicating no availability
@@ -121,13 +121,30 @@ const AppointmentCalendar = ({ selectedSlots, setSelectedSlots }) => {
   };
 
   // Generates an array of time slots between start and end times
-  const generateTimeSlots = (start, end, interval) => {
+  const generateTimeSlots = (start, end, interval, bookings) => {
     const slots = [];
     let current = new Date(start);
     const endTime = new Date(end);
 
     while (current < endTime) {
-      slots.push(new Date(current));
+      // Check if the current slot overlaps with any booking
+      const isBooked = bookings.some((booking) => {
+        const bookingStart = new Date(booking.startTime);
+        const bookingEnd = new Date(booking.endTime);
+
+        // Check for three possible overlap scenarios:
+        return (
+          // 1. Slot start time is within a booking
+          current >= bookingStart && current <= bookingEnd
+        );
+      });
+
+      // If the slot is not booked, add it to the available slots
+      if (!isBooked) {
+        slots.push(new Date(current));
+      }
+
+      // Move to the next slot
       current.setMinutes(current.getMinutes() + interval);
     }
 
@@ -144,7 +161,8 @@ const AppointmentCalendar = ({ selectedSlots, setSelectedSlots }) => {
         setTimeSlots([]);
       } else {
         // Fetch availability for the selected date
-        const { startTime, endTime } = availability;
+        //console.log("test new 111",availability);
+        const { startTime, endTime, bookings } = availability;
 
         // Convert start and end times to Date objects
         const start = new Date(selectedDate);
@@ -161,13 +179,19 @@ const AppointmentCalendar = ({ selectedSlots, setSelectedSlots }) => {
         );
 
         // Generate time slots and update state
-        const slots = generateTimeSlots(start, end, duration);
+        const slots = generateTimeSlots(start, end, duration, bookings);
         setTimeSlots(slots);
       }
     };
 
     updateTimeSlots();
-  }, [selectedDate, duration, monthAvailability]);
+  }, [
+    selectedDate,
+    duration,
+    monthAvailability,
+    selectedSlots,
+    setSelectedSlots,
+  ]);
 
   // Handler for selecting/deselecting time slots
   const handleSlotSelect = (slot) => {
