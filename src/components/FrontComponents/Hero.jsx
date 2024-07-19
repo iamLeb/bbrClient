@@ -3,6 +3,7 @@ import {useContext, useState} from "react";
 import GlobalContext from "../../context/Global.js";
 import {useNavigate} from "react-router-dom";
 import api from "../../services/api.js";
+import image from '../../assets/images/BukolaBliss.png';
 
 const Hero = ({searchResult, toggleSearch}) => {
 
@@ -56,22 +57,32 @@ const Hero = ({searchResult, toggleSearch}) => {
         <section className="relative pb-20 py-14">
             <div
 
-                className={'w-full h-[600px] bg-cover bg-center bg-[url("https://tunatheme.com/tf/html/quarter-preview/quarter/img/slider/13.jpg")] relative'}>
+                className={'w-full h-[600px] bg-cover bg-center bg-[url("https://tunatheme.com/tf/html/quarter-preview/quarter/img/slider/13.jpg")] relative '}>
                 {/* Overlay */}
-                {/*<div className="absolute inset-0 bg-neutral-900 opacity-50"></div>*/}
-                <div className={'flex justify-center items-center h-[400px] md:h-[600px] text-white relative '}>
-                    <div className={'flex flex-col gap-2 items-center text-center'}>
+                {/*<div className="absolute inset-0 bg-neutral-900 opacity-10"></div>*/}
+                <div
+                    className={'flex justify-center md:justify-between items-center text-center md:text-start h-[400px] md:h-[600px] text-white '}>
+                    <div className={'flex flex-col gap-2 items-center md:items-start md:w-full px-5'}>
                         <div className={'flex space-x-4 items-center'}>
                             <FaHouseChimney/>
                             <p>Real Estate Agency</p>
                         </div>
-                        <h1 className={'text-4xl md:text-6xl text-center font-bold'}>Find your dream <br/> house by us
+                        <h1 className={'text-4xl md:text-6xl  font-bold'}>Find your dream <br/> house by us
                         </h1>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia quaerat veritatis
                             voluptas?</p>
-                        <button onClick={() => navigate('contact')} className={'bg-primary text-white p-4'}>Schedule
-                            Appointment
-                        </button>
+
+                        <div onClick={() => navigate('contact')}>
+                            <button className={'bg-primary text-white p-4'}>Schedule
+                                Appointment
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <div className={'hidden md:block overflow-hidden h-full w-1/2'}>
+                        <img src={image} className={'relative object-top h-full w-full object-cover'}/>
+                        {/*<div className={'bg-black inset-0 absolute opacity-25'}></div>*/}
                     </div>
                 </div>
 

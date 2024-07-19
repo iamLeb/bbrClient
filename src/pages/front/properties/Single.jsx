@@ -23,7 +23,7 @@ const Single = () => {
             url: 'default.png'
         });
         const [loading, setLoading] = useState(true);
-        const {categories, neighbourhoods, getNeighbourhoodName, getName, fetchMedia} = useContext(GlobalContext);
+        const {fetchMedia} = useContext(GlobalContext);
 
         useEffect(() => {
             const getProperty = async () => {

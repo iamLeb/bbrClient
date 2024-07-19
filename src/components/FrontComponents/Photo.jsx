@@ -46,7 +46,7 @@ const Photo = ({property}) => {
                             <ul className={'flex flex-col md:flex-row gap-2 p-2'}>
                                 <li>
                                     <span
-                                        className={`${property.active ? 'bg-green-500' : 'bg-red-500'} text-white px-2 py-0.5 rounded-md`}>{property.active ? 'For Sale' : 'Sold'}
+                                        className={`${property.status ? 'bg-green-500' : 'bg-red-500'} text-white px-2 py-0.5 rounded-md`}>{property.status ? 'For Sale' : 'Sold'}
                                     </span>
                                 </li>
 
