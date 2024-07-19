@@ -11,40 +11,24 @@ import api from "../../services/api.js";
 const Featured = () => {
     const navigate = useNavigate();
     const {categories} = useContext(GlobalContext);
-    const { fetchMedia} = useContext(GlobalContext);
+    const {fetchMedia} = useContext(GlobalContext);
     const [properties, setProperties] = useState([]);
     const [loading, setLoading] = useState(false);
 
+    const getProperties = async (id) => {
+        let res;
+        setLoading(true)
+        if (!id) {
+            res = await api.get('property');
+        } else {
+            res = await api.get(`/property/category/${id}`);
+        }
 
-    useEffect(() => {
-        const getProperties = async () => {
-            setLoading(true)
-            const res = await api.get('property');
-            const propertiesData = res.data;
-
-            // Fetch media for each blog
-            const propertiesWithMedia = await Promise.all(
-                propertiesData.map(async (property) => {
-                    const mediaResponse = await fetchMedia(property._id);
-                    const url = mediaResponse.data.url ?? 'default.png';
-                    return {...property, url};
-                })
-            );
-
-            setProperties(propertiesWithMedia);
-            setLoading(false)
-        };
-
-        getProperties();
-    }, [fetchMedia]);
-
-    const handleChange = async (id = 'all') => {
-        setLoading(true);
-        const response = await api.get(`/property/category/${id}`);
+        const propertiesData = res.data;
 
         // Fetch media for each blog
         const propertiesWithMedia = await Promise.all(
-            response.data.map(async (property) => {
+            propertiesData.map(async (property) => {
                 const mediaResponse = await fetchMedia(property._id);
                 const url = mediaResponse.data.url ?? 'default.png';
                 return {...property, url};
@@ -52,7 +36,16 @@ const Featured = () => {
         );
 
         setProperties(propertiesWithMedia);
+        console.log(properties)
         setLoading(false)
+    };
+
+    useEffect(() => {
+        getProperties();
+    }, [fetchMedia]);
+
+    const handleChange = async (id = 'all') => {
+        await getProperties(id)
     }
 
     return (
@@ -65,7 +58,7 @@ const Featured = () => {
                 </div>
 
                 <div className={'grid grid-cols-3 md:grid-cols-8 gap-4 font-light text-sm text-center justify-center'}>
-                    <button onClick={() => handleChange('all')}
+                    <button onClick={() => handleChange('')}
                             className={'tag text-black font-bold'}>
                         All
                     </button>
@@ -81,12 +74,19 @@ const Featured = () => {
             {/* Loading State */}
             {loading ? (
                 <div className="flex justify-center items-center py-10">
-                    <span className="text-xl font-semibold">Loading...</span>
+                    <div
+                        className="w-8 h-8 border-4 border-t-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                    <span className="ml-3 text-xl font-semibold">Loading...</span>
                 </div>
             ) : (
                 <div className={'px-3 mt-5'}>
                     <div
                         className={'grid grid-cols-1 sm:grid-cols-2 md:grid-col-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'}>
+                        {properties.length === 0 && (
+                            <div className={'flex justify-center items-center py-10'}>
+                                <span className={'text-xl font-semibold'}>No properties found</span>
+                            </div>
+                        )}
                         {properties.slice(properties.length - 9, properties.length - 1).map(feat => (
                             <div key={feat._id} className={'border border-gray-200 bg-white p-5 rounded-lg'}>
                                 <div className={'flex flex-col gap-3 justify-center'}>
