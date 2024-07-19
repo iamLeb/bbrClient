@@ -1,5 +1,5 @@
-import { useState, useEffect, useContext } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {useState, useEffect, useContext} from "react";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import FrontLayout from "./layouts/FrontLayout.jsx";
 import Home from "./pages/front/Home.jsx";
 import PageNotFound from "./pages/front/errors/PageNotFound.jsx";
@@ -32,59 +32,60 @@ import ScrollToTop from "./components/ScrollToTop.js";
 import Availability from "./pages/dashboard/Availability/Availability.jsx";
 import EditProperty from "./pages/dashboard/property/EditProperty.jsx";
 import Edit from "./pages/dashboard/blog/Edit.jsx";
+
 function App() {
-  const { loading } = useContext(GlobalContext);
-  const [showPreloader, setShowPreloader] = useState(true);
+    const {loading} = useContext(GlobalContext);
+    const [showPreloader, setShowPreloader] = useState(true);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowPreloader(false);
-    }, 1000); // Display preloader for 3 seconds
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setShowPreloader(false);
+        }, 1000); // Display preloader for 3 seconds
 
-    return () => clearTimeout(timer);
-  }, []);
-  return (
-    <BrowserRouter>
-      <ScrollToTop />
-      {loading || showPreloader ? (
-        <Preloader /> // Use Preloader component
-      ) : (
-        <Routes>
-          <Route path="/" element={<FrontLayout />}>
-            <Route index element={<Home />} />
-            <Route path={"/about"} element={<About />} />
-            <Route path={"/blog"} element={<BlogFront />} />
-            <Route path={"/blog/:id"} element={<BlogSingle />} />
-            <Route path={"/contact"} element={<ContactUs />} />
-            <Route path={"/properties/listing"} element={<Index />} />
-            <Route path={"/properties/listing/:id"} element={<Single />} />
-            <Route path={"/auth/login"} element={<Login />} />
-            <Route path={"/auth/forgot"} element={<Forgot />} />
-            <Route path={"/auth/reset"} element={<Reset />} />
-            <Route path={"/auth/register"} element={<Register />} />
-            <Route path={"*"} element={<PageNotFound />} />
-          </Route>
-          <Route path="/secure" element={<DashboardLayout />}>
-            <Route index element={<Admin />} />
-            <Route path={'category'} element={<Categories/>} />
-            <Route path={'blog'} element={<Blog/>} />
-            <Route path={'blog/create'} element={<Create />} />
-            <Route path={'blog/edit/:id'} element={<Edit />} />
-            <Route path={'neighbourhoods'} element={<Neighbourhood/>} />
-            <Route path={'contacts'} element={<Contact/>} />
-            <Route path={'testimonials'} element={<Testimonial/>} />
-            <Route path={'profile'} element={<Profile/>} />
-            <Route path={'availability'} element={<Availability/>} />
-            <Route path={'listings'} element={<Properties/>} />
-            <Route path={'listings/add'} element={<AddProperty />} />
-            <Route path={'listings/edit/:id'} element={<EditProperty />} />
-            <Route path={'addAgent'} element={<AddAgent />} />
-            <Route path={'gallery'} element={<Gallery />} />
-          </Route>
-        </Routes>
-       )}
-    </BrowserRouter>
-  );
+        return () => clearTimeout(timer);
+    }, []);
+    return (
+        <BrowserRouter>
+            <ScrollToTop/>
+            {loading || showPreloader ? (
+                <Preloader/> // Use Preloader component
+            ) : (
+                <Routes>
+                    <Route path="/" element={<FrontLayout/>}>
+                        <Route index element={<Home/>}/>
+                        <Route path={"/about"} element={<About/>}/>
+                        <Route path={"/blog"} element={<BlogFront/>}/>
+                        <Route path={"/blog/:id"} element={<BlogSingle/>}/>
+                        <Route path={"/contact"} element={<ContactUs/>}/>
+                        <Route path={"/properties/listing"} element={<Index/>}/>
+                        <Route path={"/properties/listing/:id"} element={<Single/>}/>
+                        <Route path={"/auth/login"} element={<Login/>}/>
+                        <Route path={"/auth/forgot"} element={<Forgot/>}/>
+                        <Route path={"/auth/reset"} element={<Reset/>}/>
+                        <Route path={"/auth/register"} element={<Register/>}/>
+                        <Route path={"*"} element={<PageNotFound/>}/>
+                    </Route>
+                    <Route path="/secure" element={<DashboardLayout/>}>
+                        <Route index element={<Admin/>}/>
+                        <Route path={'category'} element={<Categories/>}/>
+                        <Route path={'blog'} element={<Blog/>}/>
+                        <Route path={'blog/create'} element={<Create/>}/>
+                        <Route path={'blog/edit/:id'} element={<Edit/>}/>
+                        <Route path={'neighbourhoods'} element={<Neighbourhood/>}/>
+                        <Route path={'contacts'} element={<Contact/>}/>
+                        <Route path={'testimonials'} element={<Testimonial/>}/>
+                        <Route path={'profile'} element={<Profile/>}/>
+                        <Route path={'availability'} element={<Availability/>}/>
+                        <Route path={'listings'} element={<Properties/>}/>
+                        <Route path={'listings/add'} element={<AddProperty/>}/>
+                        <Route path={'listings/edit/:id'} element={<EditProperty/>}/>
+                        <Route path={'addAgent'} element={<AddAgent/>}/>
+                        <Route path={'gallery'} element={<Gallery/>}/>
+                    </Route>
+                </Routes>
+            )}
+        </BrowserRouter>
+    );
 }
 
 export default App;
