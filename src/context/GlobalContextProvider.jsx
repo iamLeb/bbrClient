@@ -154,6 +154,7 @@ const GlobalContextProvider = ({children}) => {
             galleries,
             getNeighbourhoodName,
             properties,
+            setProperties,
             listings,
             setListings,
             fetchMedia

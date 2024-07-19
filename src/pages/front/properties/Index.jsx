@@ -35,6 +35,13 @@ const Index = () => {
                                             className={'object-cover h-full w-full cursor-pointer transition-all duration-300 group-hover:brightness-75 group-hover:scale-105'}
                                             src={property.url}
                                             alt="Property Image"/>
+
+                                        {!property.status && (
+                                            <div
+                                                className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 bg-red-500 rounded-lg px-3">
+                                                <span className="text-white text-6xl font-bold">Sold</span>
+                                            </div>
+                                        )}
                                     </div>
                                     <span
                                         className={'absolute -bottom-6 left-3 text-primary bg-white shadow-2xl rounded-md p-3 text-xl'}>${property.price}</span>

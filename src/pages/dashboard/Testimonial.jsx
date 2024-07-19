@@ -141,7 +141,7 @@ const Testimonials = () => {
                                 <td className="px-4 py-2">
                                     <div className={'flex justify-end sm:justify-center sm:block'}>
                                         <button onClick={() => handleEdit(testimonial)}
-                                                className="px-2 py-1 rounded bg-green-500 text-white text-center">Edit
+                                                className="px-2 py-1 rounded bg-primary text-white text-center">Edit
                                         </button>
                                         <button onClick={() => handleDelete(testimonial._id)} className="ml-2 px-2 py-1 rounded
                                                 bg-red-500 text-white text-center">Remove
