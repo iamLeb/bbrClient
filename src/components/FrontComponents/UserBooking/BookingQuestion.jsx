@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import AppointmentCalendar from "./AppointmentCalendar";
 
-const BookingQuestion = ({ selectedSlots, setSelectedSlots }) => {
+const BookingQuestion = ({ selectedSlots, setSelectedSlots,refreshCalendar }) => {
   // State to control component expansion and calendar visibility
   const [isOpen, setIsOpen] = useState(true);
   const [showCalendar, setShowCalendar] = useState(false);
@@ -116,6 +116,7 @@ const BookingQuestion = ({ selectedSlots, setSelectedSlots }) => {
             <AppointmentCalendar
               selectedSlots={selectedSlots}
               setSelectedSlots={setSelectedSlots}
+              refreshCalendar={refreshCalendar}
             />
           </div>
         </div>
