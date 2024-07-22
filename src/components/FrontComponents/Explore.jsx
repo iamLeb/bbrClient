@@ -1,13 +1,4 @@
-import one from "../../assets/images/neighbourhoodpic.jpg";
-import two from "../../assets/images/testingdiv.jpg";
-import three from "../../assets/images/explore3.jpg";
-import four from "../../assets/images/explore4.jpg";
-import five from "../../assets/images/explore5.jpg";
-import six from "../../assets/images/explore6.jpg";
-import seven from "../../assets/images/explore7.jpg";
-import eight from "../../assets/images/explore8.jpg";
 import { PiPlusThin } from "react-icons/pi";
-import ViewMore from "./ViewMore.jsx";
 import { useContext } from "react";
 import GlobalContext from "../../context/Global.js";
 
