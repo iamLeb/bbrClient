@@ -5,7 +5,11 @@ import "react-calendar/dist/Calendar.css";
 //backend API
 import api from "../../../services/api.js";
 
-const AppointmentCalendar = ({ selectedSlots, setSelectedSlots }) => {
+const AppointmentCalendar = ({
+  selectedSlots,
+  setSelectedSlots,
+  refreshCalendar,
+}) => {
   // State variables
   const [selectedDate, setSelectedDate] = useState(new Date()); // Stores the date selected by the user
   const [duration] = useState(15); // Duration of each appointment slot in minutes
@@ -40,7 +44,7 @@ const AppointmentCalendar = ({ selectedSlots, setSelectedSlots }) => {
   //for intial active mount
   useEffect(() => {
     handleActiveStartDateChange({ activeStartDate: new Date() });
-  }, []);
+  }, [refreshCalendar]);
 
   //to fetch 3 months avilability  previous month,current month ,next month
   const fetchMonthAvailability = async (year, month) => {
@@ -122,58 +126,40 @@ const AppointmentCalendar = ({ selectedSlots, setSelectedSlots }) => {
 
   // Main function to generate available time slots
   const generateTimeSlots = (start, end, interval, bookings) => {
-    // Helper function to process bookings and create a sorted array of booked time slots
-    const helper = (bookings, slotDurationMinutes = 15) => {
-      const timeSlots = new Set();
-
-      // Iterate through each booking
-      bookings.forEach((booking) => {
-        const { duration, startTime } = booking;
-        const start = new Date(startTime);
-        const numSlots = Math.ceil(duration / slotDurationMinutes);
-
-        // Create time slots for the duration of the booking
-        for (let i = 0; i < numSlots; i++) {
-          const slotTime = new Date(
-            start.getTime() + i * slotDurationMinutes * 60000
-          );
-          timeSlots.add(slotTime.toISOString());
-        }
-      });
-
-      // Convert Set to sorted Array
-      return Array.from(timeSlots).sort((a, b) => new Date(a) - new Date(b));
-    };
-
-    const slots = [];
-    let current = new Date(start);
+    // Convert start and end to Date objects
+    const startTime = new Date(start);
     const endTime = new Date(end);
 
-    // Sort bookings by start time for efficiency
-    const sortedBookings = helper(bookings);
+    // Create a Set to store booked time slots
+    const bookedSlots = new Set();
 
-    console.log("Bookings sorted are", sortedBookings);
+    // Process bookings
+    bookings.forEach((booking) => {
+      const bookingStart = new Date(booking.startTime);
+      const bookingEnd = new Date(
+        bookingStart.getTime() + booking.duration * 60000
+      );
 
-    // Function to check if a given time is booked
-    const isBooked = (time) => {
-      return sortedBookings.some((booking) => {
-        const bookingTime = new Date(booking);
-        return Math.abs(bookingTime - time) < interval * 60000;
-      });
-    };
-
-    // Generate available time slots
-    while (current < endTime) {
-      // If the slot is not booked, add it to the available slots
-      if (!isBooked(current)) {
-        slots.push(new Date(current));
+      let current = new Date(bookingStart);
+      while (current < bookingEnd) {
+        bookedSlots.add(current.toISOString().slice(0, 16));
+        current.setMinutes(current.getMinutes() + interval);
       }
+    });
 
-      // Move to the next slot
+    const allSlots = [];
+    let current = new Date(startTime);
+
+    while (current < endTime) {
+      const slotKey = current.toISOString().slice(0, 16);
+      allSlots.push({
+        time: new Date(current),
+        isBooked: bookedSlots.has(slotKey),
+      });
       current.setMinutes(current.getMinutes() + interval);
     }
 
-    return slots;
+    return allSlots;
   };
   // Effect hook to update available time slots when selected date changes
   useMemo(() => {
@@ -322,18 +308,23 @@ const AppointmentCalendar = ({ selectedSlots, setSelectedSlots }) => {
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 max-h-64 overflow-y-auto">
                       {timeSlots.map((slot) => (
                         <button
-                          key={slot.toISOString()}
+                          key={slot.time.toISOString()}
                           className={`flex items-center justify-center px-2 py-2 rounded text-sm ${
-                            isSlotSelected(slot)
+                            slot.isBooked
+                              ? "bg-red-100 text-red-800 cursor-not-allowed opacity-50"
+                              : isSlotSelected(slot.time)
                               ? "bg-blue-800 text-white"
                               : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
                           }`}
                           onClick={(e) => {
                             e.preventDefault();
-                            handleSlotSelect(slot);
+                            if (!slot.isBooked) {
+                              handleSlotSelect(slot.time);
+                            }
                           }}
+                          disabled={slot.isBooked}
                         >
-                          {slot.toLocaleTimeString([], {
+                          {slot.time.toLocaleTimeString([], {
                             hour: "2-digit",
                             minute: "2-digit",
                           })}
