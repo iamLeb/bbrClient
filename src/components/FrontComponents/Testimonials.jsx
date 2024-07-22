@@ -1,9 +1,9 @@
-import { TiMessages } from "react-icons/ti";
-import { useContext, useState, useEffect } from "react";
+import {TiMessages} from "react-icons/ti";
+import {useContext, useState, useEffect} from "react";
 import GlobalContext from "../../context/Global.js";
 
 const Testimonials = () => {
-    const { testimonials } = useContext(GlobalContext);
+    const {testimonials} = useContext(GlobalContext);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isHovered, setIsHovered] = useState(false);
 
@@ -36,7 +36,7 @@ const Testimonials = () => {
                 <p className="font-light text-sm">Hear some reasons why you should choose us</p>
             </div>
 
-            <div className="relative w-full max-w-lg md:max-w-2xl lg:max-w-4xl">
+            <div className="relative max-w-xs md:max-w-md">
                 <div className="overflow-hidden">
                     <div
                         className="flex transition-transform duration-500"
@@ -47,7 +47,7 @@ const Testimonials = () => {
                         {testimonials.map((testimonial) => (
                             <div
                                 key={testimonial._id}
-                                className="min-w-full flex flex-col items-center bg-white rounded-xl shadow-lg p-5 h-96"
+                                className="min-w-full flex flex-col items-center bg-white rounded-xl border shadow-lg p-5 h-80"
                                 onMouseEnter={() => setIsHovered(true)}
                                 onMouseLeave={() => setIsHovered(false)}
                             >
@@ -70,13 +70,13 @@ const Testimonials = () => {
                 </div>
 
                 <button
-                    className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-200 rounded-full p-2"
+                    className="hover:bg-primary absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-200 rounded-full p-2"
                     onClick={prevSlide}
                 >
                     &lt;
                 </button>
                 <button
-                    className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-200 rounded-full p-2"
+                    className="hover:bg-primary absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-200 rounded-full p-2"
                     onClick={nextSlide}
                 >
                     &gt;

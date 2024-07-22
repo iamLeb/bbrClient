@@ -150,9 +150,10 @@ const Footer = () => {
                     <span onClick={() => window.open('https://www.linkedin.com/in/bukola-bliss-b50335b4/', '_blank')}
                           className={'border border-gray-100 hover:bg-gray-500 transition-all duration-300 cursor-pointer text-white p-3 rounded-full'}>
                         <FaLinkedinIn/></span>
+                        <span onClick={() => window.open('https://www.facebook.com/olubukola.akinjo', '_blank')}
+                              className={'border border-gray-100 hover:bg-gray-500 transition-all duration-300 cursor-pointer text-white p-3 rounded-full'}><FiFacebook/></span>
                         <span
-                            className={'border border-gray-100 hover:bg-gray-500 transition-all duration-300 cursor-pointer text-white p-3 rounded-full'}><FiFacebook/></span>
-                        <span
+                            onClick={() => window.open('https://www.instagram.com/olubukolablissrealtor/?locale=id', '_blank')}
                             className={'border border-gray-100 hover:bg-gray-500 transition-all duration-300 cursor-pointer text-white p-3 rounded-full'}><FaInstagram/></span>
                     </div>
                 </div>
@@ -169,9 +170,10 @@ const Footer = () => {
                 <div className={'flex items-center space-x-4'}>
                     <span onClick={() => window.open('https://www.linkedin.com/in/bukola-bliss-b50335b4/', '_blank')}
                           className={'border border-neutral-800 hover:bg-primary text-white p-3 rounded-full'}><FaLinkedinIn/></span>
+                    <span onClick={() => window.open('https://www.facebook.com/olubukola.akinjo', '_blank')}
+                          className={'border border-neutral-800 hover:bg-primary text-white p-3 rounded-full'}><FiFacebook/></span>
                     <span
-                        className={'border border-neutral-800 hover:bg-primary text-white p-3 rounded-full'}><FiFacebook/></span>
-                    <span
+                        onClick={() => window.open('https://www.instagram.com/olubukolablissrealtor/?locale=id', '_blank')}
                         className={'border border-neutral-800 hover:bg-primary text-white p-3 rounded-full'}><FaInstagram/></span>
                 </div>
             </div>
