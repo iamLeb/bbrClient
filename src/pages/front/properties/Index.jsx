@@ -8,6 +8,7 @@ import {useState, useEffect, useContext} from "react";
 import PropertyFilters from "../../../components/FrontComponents/PropertyFilters";
 import {useNavigate} from "react-router-dom";
 import GlobalContext from "../../../context/Global.js";
+import image from "../../../assets/images/BukolaBliss.png";
 
 const Index = () => {
     const navigate = useNavigate();
@@ -18,7 +19,8 @@ const Index = () => {
         <section className={'mt-2'}>
             <div className={'p-3  space-y-2 flex flex-col text-center'}>
                 <h1 className={'font-bold text-3xl sm:text-4xl'}>Property Listings</h1>
-                <p className={'font-light text-sm'}>Explore our property listings to discover the home of your dreams.</p>
+                <p className={'font-light text-sm'}>Explore our property listings to discover the home of your
+                    dreams.</p>
             </div>
 
             {/* Property Listings */}
@@ -83,9 +85,11 @@ const Index = () => {
                                 <span className={'border-b border-gray-100'}></span>
                                 <div className={'flex justify-between items-center font-light text-sm text-gray-500'}>
                                     <div className={'flex items-center space-x-2'}>
-                                        <img className={'w-9 rounded-full'}
-                                             src={'https://dreamhomewp.themesflat.com/wp-content/uploads/2023/11/user-1-1.jpg'}
-                                             alt="Agent Avatar"/>
+                                        <div className={'overflow-hidden w-9 h-9 rounded-full'}>
+                                            <img className={'w-full h-full object-cover object-top'}
+                                                 src={image}
+                                                 alt=""/>
+                                        </div>
                                         <span
                                             className={'cursor-pointer transition-all duration-300 hover:text-primary'}>Bukola Bliss</span>
                                     </div>

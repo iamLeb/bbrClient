@@ -5,6 +5,7 @@ import {MdOutlineZoomOutMap} from "react-icons/md";
 import {useContext} from "react";
 import GlobalContext from "../../context/Global.js";
 import {useNavigate} from "react-router-dom";
+import image from '../../assets/images/BukolaBliss.png';
 
 const UserSearchResult = ({setSearchResult}) => {
     const navigate = useNavigate();
@@ -24,7 +25,7 @@ const UserSearchResult = ({setSearchResult}) => {
                         <div
                             className={'flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4 pb-5'}>
                             <h1 className="text-center text-3xl font-semibold text-gray-800">Search Results</h1>
-                            <small>({listings.length} {listings.length>1 ? 'records' : 'record'} found)</small>
+                            <small>({listings.length} {listings.length > 1 ? 'records' : 'record'} found)</small>
                             <p
                                 onClick={() => setSearchResult(false)}
                                 className={'cursor-pointer text-xl text-red-600 font-medium hover:text-red-800 hover:underline transition duration-300'}
@@ -90,11 +91,11 @@ const UserSearchResult = ({setSearchResult}) => {
                                         <div
                                             className={'flex justify-between items-center font-light text-sm text-gray-500'}>
                                             <div className={'flex items-center space-x-2'}>
-                                                <img
-                                                    className={'w-9 rounded-full'}
-                                                    src="https://dreamhomewp.themesflat.com/wp-content/uploads/2023/11/user-1-1.jpg"
-                                                    alt="user"
-                                                />
+                                                <div className={'overflow-hidden w-9 h-9 rounded-full'}>
+                                                    <img className={'w-full h-full object-cover object-top'}
+                                                         src={image}
+                                                         alt=""/>
+                                                </div>
                                                 <span
                                                     className={'cursor-pointer transition-all duration-300 hover:text-primary'}>Bukola Bliss</span>
                                             </div>
