@@ -7,6 +7,8 @@ import {SlSocialTwitter} from "react-icons/sl";
 import {FiFacebook} from "react-icons/fi";
 import {FaInstagram} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
+import logo1 from "../../assets/images/logo/Bliss logo black white.png";
+
 
 const Footer = () => {
     const navigate = useNavigate();
@@ -51,7 +53,7 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
-            <hr className={'border-neutral-500'}/>
+
             <div className={'container mx-auto hidden lg:flex justify-around py-16'}>
                 <div>
                     <h1 className={'font-bold text-white py-5'}>Office Address</h1>
@@ -139,12 +141,11 @@ const Footer = () => {
                 </div>
             </div>
 
-            <hr className={'border-neutral-500'}/>
-
-            {/*Mobile view*/}
             <div className={'hidden sm:block'}>
                 <div className={'flex justify-around py-9'}>
-                    <h1 className={'text-4xl text-white font-bold'}>logo</h1>
+                    <div>
+                        <img className={'w-24 ml-20'} src={logo1} alt="logo"/>
+                    </div>
                     <div className={'flex items-center space-x-4'}>
                     <span
                         className={'border border-gray-100 hover:bg-gray-500 transition-all duration-300 cursor-pointer text-white p-3 rounded-full'}><SlSocialTwitter/></span>
@@ -155,18 +156,17 @@ const Footer = () => {
                     </div>
                 </div>
 
-                <hr className={'border-neutral-500'}/>
                 <p className="text-center py-5 text-white text-sm">
                     Copyright © 2024 All Rights Reserved, Bukola Bliss Realtor
                 </p>
             </div>
 
-            <div className="lg:hidden text-center py-9">
-                <h1 className={'text-4xl text-white font-bold'}>logo</h1>
-                <p className={'text-xs text-neutral-500 font-light py-5'}>Lorem ipsum dolor sit amet.</p>
-                <div className={'flex items-center justify-center space-x-4'}>
-                    <span
-                        className={'border border-neutral-800 hover:bg-primary text-white p-3 rounded-full'}><SlSocialTwitter/></span>
+            <div className="lg:hidden flex justify-center flex-col items-center py-9">
+                <div className={'pb-6'}>
+                    <img className={'w-24'} src={logo1} alt="logo"/>
+                </div>
+                <div className={'flex items-center space-x-4'}>
+
                     <span
                         className={'border border-neutral-800 hover:bg-primary text-white p-3 rounded-full'}><FiFacebook/></span>
                     <span
