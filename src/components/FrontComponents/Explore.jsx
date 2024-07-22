@@ -18,7 +18,7 @@ const Explore = () => {
         <div className="py-20">
             <div className="flex flex-col justify-between gap-4 text-center pb-9">
                 <h1 className="font-bold text-4xl sm:text-5xl">Discover The Perfect Neighbourhood</h1>
-                <p className="font-light text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda dolorum, error perspiciatis quas tempora velit?</p>
+                <p className="font-light text-sm">Navigate through our detailed neighborhood profiles to find the perfect balance of lifestyle and convenience.</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 h-[100rem] lg:grid-cols-4 md:h-[75rem] lg:h-[35rem] overflow-hidden">

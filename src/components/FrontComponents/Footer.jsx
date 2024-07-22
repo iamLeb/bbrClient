@@ -25,8 +25,8 @@ const Footer = () => {
                                     Tell us your needs, we will give you
                                     thousands of suggestions for the dream home.</p>
                             </div>
-                            <button onClick={()=>navigate('/contact')}
-                                className={'sm:absolute -bottom-7 bg-white px-8 py-4 rounded-md text-primary hover:bg-primary hover:text-white transition-all duration-300 font-bold'}>Contact
+                            <button onClick={() => navigate('/contact')}
+                                    className={'sm:absolute -bottom-7 bg-white px-8 py-4 rounded-md text-primary hover:bg-primary hover:text-white transition-all duration-300 font-bold'}>Contact
                                 Seller
                             </button>
                         </div>
@@ -43,8 +43,8 @@ const Footer = () => {
                                 <p className={'text-xs text-gray-600 w-72'}>We will connect you to thousands of people
                                     who need to buy a home.</p>
                             </div>
-                            <button onClick={()=>navigate('/contact')}
-                                className={'sm:absolute -bottom-7 bg-white px-8 py-4 rounded-md text-primary hover:bg-primary hover:text-white transition-all duration-300 font-bold'}>Contact
+                            <button onClick={() => navigate('/contact')}
+                                    className={'sm:absolute -bottom-7 bg-white px-8 py-4 rounded-md text-primary hover:bg-primary hover:text-white transition-all duration-300 font-bold'}>Contact
                                 Seller
                             </button>
                         </div>
@@ -59,8 +59,7 @@ const Footer = () => {
                     <ul className={'flex flex-col gap-4 pb-2 px-6'}>
                         <li>
                             <span className={'text-sm text-neutral-900'}>Head office:</span>
-                            <p className={'text-white text-sm'}>2118 Thornridge Cir. Syracuse, Connecticut
-                                35624</p>
+                            <p className={'text-white text-sm'}>663-A Stafford Street ,Winnipeg Manitoba, R3M2X7</p>
                         </li>
                     </ul>
                 </div>

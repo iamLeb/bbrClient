@@ -18,7 +18,7 @@ const Index = () => {
         <section className={'mt-2'}>
             <div className={'p-3 gap-4 text-center'}>
                 <h1 className={'font-bold text-3xl sm:text-4xl'}>Property Listings</h1>
-                <p className={'font-light text-sm'}>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                <p className={'font-light text-sm'}>Explore our property listings to discover the home of your dreams.</p>
             </div>
 
             {/* Property Listings */}

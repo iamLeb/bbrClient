@@ -106,7 +106,7 @@ const ContactTemplate = () => {
             <p className={"text-center py-5"}>
                 Become our next customer, and find your dream home{" "}
                 <span className={"text-primary underline"}>
-          Contact us: 314-555-9120
+          Contact us: 431-996-9920
         </span>
             </p>
 
