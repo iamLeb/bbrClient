@@ -10,6 +10,10 @@ import GlobalContext from "../../context/Global.js";
 
 const Overview = ({property}) => {
     const {getName, getNeighbourhoodName} = useContext(GlobalContext);
+
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    };
     return (
         <div className={'flex justify-between items-center gap-6'}>
             <div className={'md:flex justify-between'}>
@@ -17,7 +21,7 @@ const Overview = ({property}) => {
                     <div className={'flex flex-col gap-4 bg-white shadow-lg p-5 my-5 rounded-lg'}>
                         <h1 className={'font-bold pb-2 border-b'}>Overview</h1>
 
-                        <ul className={'grid grid-cols-4 '}>
+                        <ul className={'grid grid-cols-3 '}>
                             <li>
                                 <div className={'flex items-center space-x-2 text-xs p-2'}>
                                     <div
@@ -137,7 +141,7 @@ const Overview = ({property}) => {
 
                             <div>
                                 <h3 className={'font-bold'}>Province/City</h3>
-                                <span>{property.city}</span>
+                                <span>{capitalizeFirstLetter(property.city)}</span>
                             </div>
                         </div>
                     </div>
@@ -146,8 +150,8 @@ const Overview = ({property}) => {
                 <div className="md:w-1/3 p-5">
                     <div className="bg-gray-50 border p-5 rounded-lg flex flex-col gap-4 sticky top-1/2">
                         <h1 className="font-bold text-2xl">Interested?</h1>
-                        <p className="text-xs">Lorem ipsum dolor sit amet, consectetur adipisicing elit.Lorem ipsum
-                            dolor sit amet, consectetur adipisicing elit.</p>
+                        <p className="text-xs">Reach out to us and find out how
+                            we can help you secure your dream home with ease and confidence.</p>
                         <button className="bg-primary text-white font-bold w-full py-5 rounded-lg">Apply Now!</button>
                     </div>
                 </div>
