@@ -140,7 +140,7 @@ const ContactTemplate = () => {
                             </div>
                             <div className={"flex flex-col"}>
                                 <p className={"text-gray-500 text-lg"}>Office address</p>
-                                <p>2715 Ash Dr. San Jose, South Dakota 83475</p>
+                                <p>663-A Stafford Street ,Winnipeg Manitoba, R3M2X7</p>
                             </div>
                         </div>
 
@@ -154,7 +154,7 @@ const ContactTemplate = () => {
                             <div className={"flex flex-col"}>
                                 <p className={"text-gray-500 text-lg"}>Office address</p>
                                 <p className={"text-3xl font-semibold text-primary"}>
-                                    431-996-0123
+                                    431-996-9920
                                 </p>
                             </div>
                         </div>
@@ -169,7 +169,7 @@ const ContactTemplate = () => {
                             <div className={"flex flex-col"}>
                                 <p className={"text-gray-500 text-lg"}>Email us</p>
                                 <p className={"font-semibold text-primary"}>
-                                    hellosupport@gmail.com
+                                    Bbliss@sutton.com
                                 </p>
                             </div>
                         </div>
