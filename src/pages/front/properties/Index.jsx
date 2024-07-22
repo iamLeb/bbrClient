@@ -16,13 +16,13 @@ const Index = () => {
 
     return (
         <section className={'mt-2'}>
-            <div className={'p-3 gap-4 text-center'}>
+            <div className={'p-3  space-y-2 flex flex-col text-center'}>
                 <h1 className={'font-bold text-3xl sm:text-4xl'}>Property Listings</h1>
                 <p className={'font-light text-sm'}>Explore our property listings to discover the home of your dreams.</p>
             </div>
 
             {/* Property Listings */}
-            <div className={'px-3 mt-5 flex justify-evenly p-5'}>
+            <div className={'px-3 mt-3 flex justify-evenly p-5'}>
                 <div className={'grid grid-cols-1 sm:grid-cols-2 md:grid-col-2 lg:grid-cols-3 gap-4'}>
                     {properties.map(property => (
                         <div key={property._id} className={'border border-gray-200 bg-white p-5 rounded-lg group'}>

@@ -54,20 +54,20 @@ const Hero = ({searchResult, toggleSearch}) => {
     }
 
     return (
-        <section className="relative pb-20 py-14">
+        <section className=" pb-20 py-14">
             <div
 
                 className={'w-full h-[600px] bg-cover bg-center bg-[url("https://tunatheme.com/tf/html/quarter-preview/quarter/img/slider/13.jpg")] relative '}>
                 {/* Overlay */}
                 {/*<div className="absolute inset-0 bg-neutral-900 opacity-10"></div>*/}
                 <div
-                    className={'flex justify-center md:justify-between items-center text-center md:text-start h-[400px] md:h-[600px] text-white '}>
+                    className={'flex relative justify-center md:justify-between items-center text-center md:text-start h-[400px] md:h-[600px] text-white '}>
                     <div className={'flex flex-col gap-2 items-center md:ml-20 md:items-start md:w-full px-5'}>
                         <div className={'flex space-x-4 items-center'}>
                             <FaHouseChimney/>
                             <p>Real Estate Agency</p>
                         </div>
-                        <h1 className={'text-4xl md:text-6xl  font-bold'}>Find your dream <br/> house by us
+                        <h1 className={'text-4xl md:text-6xl  font-bold'}>Find your <br/>dream home
                         </h1>
 
                         <div onClick={() => navigate('contact')}>
@@ -78,9 +78,14 @@ const Hero = ({searchResult, toggleSearch}) => {
                     </div>
 
 
-                    <div className={'hidden md:block overflow-hidden h-full w-1/2'}>
+                    <div className={'hidden md:block overflow-hidden md:w-full h-full lg:w-1/2'}>
                         <img src={image} className={'relative object-top h-full w-full object-cover'}/>
                         {/*<div className={'bg-black inset-0 absolute opacity-25'}></div>*/}
+                    </div>
+
+                    <div
+                        className="block md:hidden absolute -bottom-4 right-2 h-24 w-24 rounded-full overflow-hidden border-2 border-white">
+                        <img src={image} className="h-full w-full object-cover object-top"/>
                     </div>
                 </div>
 
