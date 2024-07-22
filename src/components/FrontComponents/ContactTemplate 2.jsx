@@ -22,8 +22,6 @@ const ContactTemplate = () => {
         message: "",
     });
     const [selectedSlots, setSelectedSlots] = useState([]); // Stores the time slots selected by the user
-    const [refreshCalendar, setRefreshCalendar] = useState(0);//To trigger rerender of the Calander when user submits form
-
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -66,6 +64,8 @@ const ContactTemplate = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const newBooking = creatBookingObject(selectedSlots);
+        console.log(newBooking);
+        console.log(contact);
 
         setLoading(true);
 
@@ -82,8 +82,8 @@ const ContactTemplate = () => {
                     });
                     //if booking creation is successfull,as w
                     if (bookingRes.status === 201) {
+                        console.log("Booking is created!!");
                         setSelectedSlots([]);
-                        setRefreshCalendar(prev => prev + 1)// Increment to trigger re-render
                     }
 
                     setContact({ name: "", email: "", phone: "", message: "" });
@@ -295,7 +295,6 @@ const ContactTemplate = () => {
                             <BookingQuestion
                                 selectedSlots={selectedSlots}
                                 setSelectedSlots={setSelectedSlots}
-                                refreshCalendar={refreshCalendar}
                             />
                             <div className={"flex-1"}>
                                 <div className={"font-medium pt-2"}>Message</div>
