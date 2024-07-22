@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Outlet } from 'react-router-dom';
-import UserContext from '../context/UserContext.js';
-import { useNavigate } from 'react-router-dom';
+import {useContext, useEffect, useRef, useState} from 'react';
+import {Outlet, useNavigate} from 'react-router-dom';
 import Header from '../components/DashboardComponents/Header.jsx';
-import Footer from '../components/DashboardComponents/Footer.jsx';
 import Sidebar from '../components/DashboardComponents/Sidebar.jsx';
+import UserContext from "../context/UserContext.js";
 
 const DashboardLayout = () => {
+    const {user} = useContext(UserContext);
     const navigate = useNavigate();
+
     const sidebarRef = useRef(null);
     const [sidebar, setSidebar] = useState(false);
 
@@ -16,6 +16,8 @@ const DashboardLayout = () => {
     };
 
     useEffect(() => {
+
+        if (!user) navigate('/auth/login');
         // Function to handle clicks outside of sidebar
         const handleClickOutside = (e) => {
             if (sidebarRef.current && !sidebarRef.current.contains(e.target)) {
@@ -30,6 +32,8 @@ const DashboardLayout = () => {
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
+
+
     }, []);
 
     return (
