@@ -2,11 +2,13 @@ import {FiMenu} from "react-icons/fi";
 import {TbHomeDollar} from "react-icons/tb";
 import {PiLineVerticalThin} from "react-icons/pi";
 import {useNavigate} from "react-router-dom";
-import React from "react";
+import React, {useContext} from "react";
 import {MdOutlineCancel} from "react-icons/md";
 import logo1 from "../../assets/images/logo/logo1.png";
+import UserContext from "../../context/UserContext.js";
 
 const Header = ({sidebar, toggleSidebar}) => {
+    const {user} = useContext(UserContext);
     const navigate = useNavigate();
 
     const links = [
@@ -73,6 +75,17 @@ const Header = ({sidebar, toggleSidebar}) => {
                                 </li>
                             </ul>
                         </li>
+
+                        {user && (
+                            <li onClick={() => navigate('/secure')}>
+                                <div
+                                    className={`flex items-center space-x-1 hover:cursor-pointer hover:text-primary `}>
+                                    <span>Dashboard</span>
+                                </div>
+
+                            </li>
+                        )}
+
                     </ul>
                 </div>
 
