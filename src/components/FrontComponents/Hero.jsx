@@ -62,7 +62,7 @@ const Hero = ({searchResult, toggleSearch}) => {
                 {/*<div className="absolute inset-0 bg-neutral-900 opacity-10"></div>*/}
                 <div
                     className={'flex justify-center md:justify-between items-center text-center md:text-start h-[400px] md:h-[600px] text-white '}>
-                    <div className={'flex flex-col gap-2 items-center md:items-start md:w-full px-5'}>
+                    <div className={'flex flex-col gap-2 items-center md:ml-20 md:items-start md:w-full px-5'}>
                         <div className={'flex space-x-4 items-center'}>
                             <FaHouseChimney/>
                             <p>Real Estate Agency</p>
