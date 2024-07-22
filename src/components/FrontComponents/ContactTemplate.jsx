@@ -64,8 +64,6 @@ const ContactTemplate = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const newBooking = creatBookingObject(selectedSlots);
-        console.log(newBooking);
-        console.log(contact);
 
         setLoading(true);
 
@@ -82,7 +80,6 @@ const ContactTemplate = () => {
                     });
                     //if booking creation is successfull,as w
                     if (bookingRes.status === 201) {
-                        console.log("Booking is created!!");
                         setSelectedSlots([]);
                     }
 
