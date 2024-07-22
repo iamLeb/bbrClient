@@ -69,8 +69,8 @@ const Hero = ({searchResult, toggleSearch}) => {
                         </div>
                         <h1 className={'text-4xl md:text-6xl  font-bold'}>Find your dream <br/> house by us
                         </h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia quaerat veritatis
-                            voluptas?</p>
+                        <p>Your perfect home awaits. Browse through our collection of beautiful properties and let us
+                            assist you in finding the one that suits you best.</p>
 
                         <div onClick={() => navigate('contact')}>
                             <button className={'bg-primary text-white p-4'}>Schedule
