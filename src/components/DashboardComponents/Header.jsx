@@ -4,7 +4,6 @@ import {useContext} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import UserContext from "../../context/UserContext";
 import {MdOutlineCancel} from "react-icons/md";
-import UserDrop from './UserDrop';
 import { useState } from 'react';
 
 // eslint-disable-next-line react/prop-types
@@ -12,10 +11,6 @@ const Header = ({sidebar, toggleSidebar}) => {
     const navigate = useNavigate();
     const {user} = useContext(UserContext);
     const location = useLocation();
-    const [drop, setDrop] = useState(false);
-    const handleDrop = () => {
-        setDrop(!drop);
-    }
 
     return (
         <header>
@@ -36,7 +31,7 @@ const Header = ({sidebar, toggleSidebar}) => {
                     </button>
 
                     {/* User profile section */}
-                    <div onClick={handleDrop} className="flex space-x-2 items-center cursor-pointer bg-gray-200 p-4 justify-center">
+                    <div className="flex space-x-2 items-center cursor-pointer bg-gray-200 p-4 justify-center">
                         <div className="overflow-hidden w-9 rounded-full">
                             <img
                                 className="object-center object-cover w-full h-full"
@@ -51,11 +46,6 @@ const Header = ({sidebar, toggleSidebar}) => {
                         </div>
                     </div>
                 </div>
-                
-                {drop && 
-                    <UserDrop />
-                }
-                 {/* user drop down when profile is clicked */}
             </div>
 
             {/* Conditional Go Back button */}
