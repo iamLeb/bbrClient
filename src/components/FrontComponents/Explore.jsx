@@ -15,7 +15,7 @@ const Explore = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 h-[100rem] lg:grid-cols-4 md:h-[75rem] lg:h-[35rem] overflow-hidden">
                 {galleries.map(gallery => (
                     <div key={gallery._id} className="group sm:h-full sm:w-full relative overflow-hidden hover:cursor-pointer">
-                        <div className="overflow-hidden w-full bg-black h-full sm:absolute sm:inset-0">
+                        <div className="overflow-hidden w-full bg-black h-96 sm:absolute sm:inset-0">
                             <img
                                 className="object-cover h-full w-full transition-all duration-500 group-hover:scale-110 group-hover:opacity-50"
                                 src={gallery.url}

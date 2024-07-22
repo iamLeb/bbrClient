@@ -1,9 +1,9 @@
-import {TiMessages} from "react-icons/ti";
-import {useContext, useState, useEffect} from "react";
+import { TiMessages } from "react-icons/ti";
+import { useContext, useState, useEffect } from "react";
 import GlobalContext from "../../context/Global.js";
 
 const Testimonials = () => {
-    const {testimonials} = useContext(GlobalContext);
+    const { testimonials } = useContext(GlobalContext);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isHovered, setIsHovered] = useState(false);
 
@@ -13,7 +13,7 @@ const Testimonials = () => {
         if (!isHovered) {
             interval = setInterval(() => {
                 setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
-            }, 2500); // Change slide every 3 seconds
+            }, 2500); // Change slide every 2.5 seconds
         }
 
         return () => clearInterval(interval);
@@ -36,10 +36,10 @@ const Testimonials = () => {
                 <p className="font-light text-sm">Hear some reasons why you should choose us</p>
             </div>
 
-            <div className="relative w-2/5 max-w-4xl">
+            <div className="relative w-full max-w-lg md:max-w-2xl lg:max-w-4xl">
                 <div className="overflow-hidden">
                     <div
-                        className="flex transition-transform duration-500 "
+                        className="flex transition-transform duration-500"
                         style={{
                             transform: `translateX(-${currentIndex * 100}%)`,
                         }}
@@ -47,14 +47,14 @@ const Testimonials = () => {
                         {testimonials.map((testimonial) => (
                             <div
                                 key={testimonial._id}
-                                className="min-w-full flex flex-col items-center bg-white sj rounded-xl  p-5 h-96"
+                                className="min-w-full flex flex-col items-center bg-white rounded-xl shadow-lg p-5 h-96"
                                 onMouseEnter={() => setIsHovered(true)}
                                 onMouseLeave={() => setIsHovered(false)}
                             >
                                 <div className="p-5">
                                     <TiMessages className="text-primary text-3xl"/>
                                 </div>
-                                <div className="w-2/3 text-center pb-5">{testimonial.message}</div>
+                                <div className="w-full text-center pb-5">{testimonial.message}</div>
                                 <div className="flex pt-10 justify-center">
                                     <img
                                         src={`https://ui-avatars.com/api/?name=${testimonial.name}`}

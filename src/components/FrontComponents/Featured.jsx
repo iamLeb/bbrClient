@@ -7,6 +7,7 @@ import {useNavigate} from "react-router-dom";
 import GlobalContext from "../../context/Global.js";
 import ViewMore from "./ViewMore.jsx";
 import api from "../../services/api.js";
+import image from '../../assets/images/BukolaBliss.png';
 
 const Featured = () => {
     const navigate = useNavigate();
@@ -156,9 +157,11 @@ const Featured = () => {
                                     <div
                                         className={'flex justify-between items-center font-light text-sm text-gray-500'}>
                                         <div className={'flex items-center space-x-2'}>
-                                            <img className={'w-9 rounded-full'}
-                                                 src="https://dreamhomewp.themesflat.com/wp-content/uploads/2023/11/user-1-1.jpg"
-                                                 alt=""/>
+                                            <div className={'overflow-hidden w-9 h-9 rounded-full'}>
+                                                <img className={'w-full h-full object-cover object-top'}
+                                                     src={image}
+                                                     alt=""/>
+                                            </div>
                                             <span
                                                 className={'cursor-pointer transition-all duration-300 hover:text-primary'}>Bukola Bliss</span>
                                         </div>
