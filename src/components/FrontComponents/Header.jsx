@@ -4,7 +4,7 @@ import {PiLineVerticalThin} from "react-icons/pi";
 import {useNavigate} from "react-router-dom";
 import React, {useContext} from "react";
 import {MdOutlineCancel} from "react-icons/md";
-import logo1 from "../../assets/images/logo/Bliss logo Gold.png";
+import logo1 from "../../assets/images/logo/Black Bliss Logo.png";
 import UserContext from "../../context/UserContext.js";
 
 const Header = ({sidebar, toggleSidebar}) => {
