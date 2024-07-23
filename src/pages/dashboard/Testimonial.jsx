@@ -99,8 +99,8 @@ const Testimonials = () => {
     };
 
     return (
-        <div className='m-3'>
-            <div className="bg-white border w-full border-gray-100 shadow-2xl">
+        <section className="h-screen m-5 mx-10">
+            <div className="bg-white border border-gray-100 shadow-2xl">
                 <div className="p-4 border-b flex justify-between items-center">
                     {loading ? 'loading...' : ''}
                     <h3 className="font-bold">My Testimonials</h3>
@@ -109,15 +109,6 @@ const Testimonials = () => {
                                 className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>+
                             Add New
                         </button>
-                    </div>
-                </div>
-                <div className="p-3 hidden sm:block">
-                    <div className="sm:flex justify-between items-center">
-                        <div className="relative mt-2 sm:mt-0">
-                            <input
-                                placeholder="Search..."
-                                className="py-2 px-10 w-56 outline-none border rounded text-sm" type="text"/>
-                        </div>
                     </div>
                 </div>
                 <div className="overflow-x-auto">
@@ -203,7 +194,7 @@ const Testimonials = () => {
                                                 className="px-3 py-0 rounded bg-gray-100">Close
                                         </button>
                                         <button type="submit"
-                                                className="px-4 py-2 rounded bg-primary text-white">{selectedTestimonial ? 'Update Category' : 'Create Category'}</button>
+                                                className="px-4 py-2 rounded bg-primary text-white">{selectedTestimonial ? 'Update Testimonial' : 'Create Testimonial'}</button>
                                     </div>
                                 </form>
                             </div>
@@ -211,7 +202,7 @@ const Testimonials = () => {
                     </div>
                 )}
             </div>
-        </div>
+        </section>
     );
 };
 

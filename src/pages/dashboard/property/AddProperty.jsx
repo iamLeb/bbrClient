@@ -9,7 +9,6 @@ const AddProperty = () => {
     const [loading, setLoading] = useState(false);
     const {categories} = useContext(GlobalContext);
     const {neighbourhoods} = useContext(GlobalContext);
-    const [selectedProperty, setSelectedProperty] = useState(null);
 
     const [newProperty, setNewProperty] = useState({
         title: '',
@@ -24,11 +23,9 @@ const AddProperty = () => {
         yearBuilt: '',
         landArea: '',
         description: '',
+        files: [] // For storing multiple files
     });
 
-    const handleCancel = () => {
-        navigate('/secure/listings');
-    }
 
     const handleChange = e => {
         const {name, value} = e.target;
@@ -41,7 +38,7 @@ const AddProperty = () => {
     const handleFileChange = e => {
         setNewProperty(prevValues => ({
             ...prevValues,
-            file: e.target.files[0]
+            files: e.target.files // For multiple files
         }));
     };
 
@@ -61,26 +58,31 @@ const AddProperty = () => {
         formData.append('yearBuilt', newProperty.yearBuilt);
         formData.append('landArea', newProperty.landArea);
         formData.append('description', newProperty.description);
-        formData.append('file', newProperty.file);
+
+        // Append multiple files
+        for (let i = 0; i < newProperty.files.length; i++) {
+            formData.append('files', newProperty.files[i]);
+        }
+
 
         if (!newProperty.title || !newProperty.address || !newProperty.bed || !newProperty.bath || !newProperty.category || !newProperty.city || !newProperty.neighbourhood || !newProperty.description) {
-            setLoading(true)
-            setErrors('All Fields are required');
             setLoading(false);
+            setErrors('All Fields are required');
             return;
         }
 
         try {
-            // Upload the file to AWS
+            // Upload the files to AWS
             const response = await api.post('/file/upload-multiple', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
 
-            const url = response.data.url; // response url
+            const urls = response.data.map(file => file.url); //array of urls
 
-            // Create the gallery
+
+            // Create the property
             const propertyRes = await api.post('/property/create', {
                 title: newProperty.title,
                 address: newProperty.address,
@@ -97,20 +99,23 @@ const AddProperty = () => {
             });
 
             const propertyId = propertyRes.data._id;
+            console.log(urls)
+            // Store the URLs and property ID in the media collection
+            for (const url of urls) {
+                await api.post('/media/create', {
+                    type: 'image',
+                    url,
+                    ownerId: propertyId,
+                    name: 'Property',
+                });
+            }
 
-            // Store the URL and property ID in the media collection
-            await api.post('/media/create', {
-                type: 'image',
-                url,
-                ownerId: propertyId,
-                name: 'Property',
-            });
             setLoading(false);
             navigate('/secure/listings');
 
         } catch (error) {
-            setErrors(error.response.data.error)
-            setLoading(false)
+            setErrors(error.response.data.error);
+            setLoading(false);
         }
     };
 
@@ -118,7 +123,7 @@ const AddProperty = () => {
     return (
         <div className='m-5 border rounded-b-lg'>
             <div className='bg-gray-100 p-3 font-extrabold text-center'>
-              Add new property
+                Add new property
             </div>
             {errors && <p className="text-red-500 pl-3 mt-2">{errors}</p>}
             <form onSubmit={handleSubmit}>
@@ -216,7 +221,7 @@ const AddProperty = () => {
                     </div>
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Image</div>
-                        <input onChange={handleFileChange} type='file' name='file' multiple
+                        <input onChange={handleFileChange} type='file' name='files' multiple
                                className='p-3 border rounded-lg'/>
                     </div>
                     <div className='p-3 flex flex-col'>

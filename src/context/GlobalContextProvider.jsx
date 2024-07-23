@@ -118,7 +118,15 @@ const GlobalContextProvider = ({children}) => {
         }
     };
 
-    
+    const fetchMultipleMedia = async (ownerId) => {
+        try {
+            const response = await api.get(`/media/getMultipleMedia/${ownerId}`);
+            return response.data;
+        } catch (error) {
+            return [];
+        }
+    };
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -135,6 +143,7 @@ const GlobalContextProvider = ({children}) => {
                 setCategories(),
                 getProperties(),
                 fetchMedia(),
+                fetchMultipleMedia(),
             ]);
         };
         fetchData();
@@ -157,7 +166,8 @@ const GlobalContextProvider = ({children}) => {
             setProperties,
             listings,
             setListings,
-            fetchMedia
+            fetchMedia,
+            fetchMultipleMedia,
         }}>
             {children}
         </GlobalContext.Provider>

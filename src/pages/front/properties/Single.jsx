@@ -23,24 +23,29 @@ const Single = () => {
             url: 'default.png'
         });
         const [loading, setLoading] = useState(true);
-        const {fetchMedia} = useContext(GlobalContext);
+        const {fetchMultipleMedia} = useContext(GlobalContext);
+
 
         useEffect(() => {
             const getProperty = async () => {
-                const response = await api.get(`/property/${id}`);
-                const propertyData = response.data;
+                try {
+                    const response = await api.get(`/property/${id}`);
+                    const propertyData = response.data;
 
-                const mediaResponse = await fetchMedia(id);
-                const url = mediaResponse?.data?.url || 'default.png';
+                    const mediaResponse = await fetchMultipleMedia(id);
+                    const url = mediaResponse.length > 0 ? mediaResponse.map(item => item.url) : ['default.png'];
 
-                const propertyWithMedia = {...propertyData, url};
-                setProperty(propertyWithMedia);
-                setLoading(false);
-
+                    const propertyWithMedia = {...propertyData, url};
+                    setProperty(propertyWithMedia);
+                } catch (error) {
+                    console.error('Error fetching property or media:', error);
+                } finally {
+                    setLoading(false);
+                }
             };
 
             getProperty();
-        }, [id, fetchMedia]);
+        }, [id]);
 
         return (
             <div>
