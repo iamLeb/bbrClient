@@ -37,7 +37,7 @@ const Blog = () => {
             setCategories(categoriesMap);
             setBlogs(blogs);
         } catch (error) {
-            console.log(error.message);
+            setErrors('There was an error fetching the blogs: ' + error.message);
         }
     };
 
@@ -123,7 +123,9 @@ const Blog = () => {
                                 </td>
                                 <td className="px-4 py-2">
                                     <div className={'flex justify-end lg:justify-center text-end '}>
-                                        <button onClick={()=> navigate('edit/' + blog._id)} className="px-2 py-1 rounded bg-primary text-white">Edit</button>
+                                        <button onClick={() => navigate('edit/' + blog._id)}
+                                                className="px-2 py-1 rounded bg-primary text-white">Edit
+                                        </button>
                                         <button onClick={() => handleDelete(blog._id)}
                                                 className="ml-2 px-2 py-1 rounded bg-red-500 text-white">Remove
                                         </button>

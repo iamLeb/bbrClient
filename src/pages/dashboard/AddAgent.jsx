@@ -84,15 +84,7 @@ const AddAgent = () => {
         try {
             // send to api
             const res = await api.post('/auth/registeragent', values);
-            console.log(res)
-            if (res.status === 201) {
-                console.log("good");
-                // setErrors(null)
-            } else {
-                console.log('there was an error')
-            }
         } catch (e) {
-            console.log(e.response.data.error)
             const newError = (e.response.data.error);
             setErrors ({
                 ...errors,
