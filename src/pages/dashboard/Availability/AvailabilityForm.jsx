@@ -1,7 +1,7 @@
 // Import necessary dependencies and components
 import { useState } from "react";
 import { format } from "date-fns";
-import { Clock, Calendar as CalendarIcon, Repeat } from "lucide-react";
+import {  Calendar as CalendarIcon, Repeat } from "lucide-react";
 import { generateAvailabilities } from "./availabilityHelpers";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
@@ -110,15 +110,11 @@ const AvailabilityForm = ({
                 Start Time
               </label>
               <div className="relative">
-                <Clock
-                  className="absolute top-3 left-3 text-gray-400"
-                  size={20}
-                />
                 <input
                   type="time"
                   value={startTime}
                   onChange={onStartTimeChange}
-                  className="pl-10 w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                  className="pl-6 w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                   step="60"
                   required
                 />
@@ -129,15 +125,12 @@ const AvailabilityForm = ({
                 End Time
               </label>
               <div className="relative">
-                <Clock
-                  className="absolute top-3 left-3 text-gray-400"
-                  size={20}
-                />
+               
                 <input
                   type="time"
                   value={endTime}
                   onChange={onEndTimeChange}
-                  className="pl-10 w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                  className="pl-6 w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                   step="60"
                   required
                   min={startTime}
