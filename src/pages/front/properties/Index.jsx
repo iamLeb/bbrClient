@@ -2,11 +2,6 @@ import {IoLocationOutline} from "react-icons/io5";
 import {LiaBedSolid} from "react-icons/lia";
 import {FaShower} from "react-icons/fa";
 import {MdOutlineZoomOutMap} from "react-icons/md";
-import {IoIosSearch} from "react-icons/io";
-import {RxMixerVertical} from "react-icons/rx";
-import {useState, useEffect, useContext} from "react";
-import PropertyFilters from "../../../components/FrontComponents/PropertyFilters";
-import {useNavigate} from "react-router-dom";
 import GlobalContext from "../../../context/Global.js";
 import image from "../../../assets/images/BukolaBliss.png";
 
