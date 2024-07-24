@@ -77,6 +77,7 @@ const Sidebar = ({sidebar, toggleSidebar}) => {
             icon: <FaChrome/>,
             name: "Website",
             path: "/",
+            mobile: true,
         },
     ];
 

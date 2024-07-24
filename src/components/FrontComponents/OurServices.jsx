@@ -10,6 +10,7 @@ const OurServices = () => {
             <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8">
                 <div className="relative md:w-1/2 flex items-center justify-center">
                     <img className="w-full h-80 object-cover rounded-lg" src="src/assets/images/img_4.png" alt="Buying" />
+                    <div className={'bg-black inset-0 absolute opacity-25'}></div>
 
                     <div className="absolute bottom-10 left-10 right-10 flex flex-col items-start">
                         <p className="text-3xl font-semibold text-white">Buying</p>
@@ -21,6 +22,7 @@ const OurServices = () => {
 
                 <div className="relative md:w-1/2 flex items-center justify-center">
                     <img className="w-full h-80 object-cover rounded-lg" src="src/assets/images/img_5.png" alt="Selling" />
+                    <div className={'bg-black inset-0 absolute opacity-25'}></div>
 
                     <div className="absolute bottom-10 left-10 right-10 flex flex-col items-start">
                         <p className="text-3xl font-semibold text-white">Selling</p>
