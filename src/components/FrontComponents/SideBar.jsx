@@ -4,13 +4,16 @@ import {IoCameraSharp, IoHome, IoMailOpenSharp} from "react-icons/io5";
 import {CiBoxList} from "react-icons/ci";
 import {FaCircleInfo} from "react-icons/fa6";
 import {TbHomeDollar} from "react-icons/tb";
-import React from "react";
+import React, {useContext} from "react";
 import logo1 from "../../assets/images/logo/Bliss logo black white.png";
+import {AiOutlineDashboard} from "react-icons/ai";
+import UserContext from "../../context/UserContext.js";
 
 
 const SideBar = ({sidebar, toggleSidebar}) => {
     const navigate = useNavigate();
     const location = useLocation();
+    const {user} = useContext(UserContext);
 
     const items = [
         {
@@ -24,7 +27,7 @@ const SideBar = ({sidebar, toggleSidebar}) => {
             id: 1,
             name: 'About',
             onClick: () => navigate('/about'),
-            icon: <FaCircleInfo />,
+            icon: <FaCircleInfo/>,
         },
         {
             id: 2,
@@ -48,8 +51,16 @@ const SideBar = ({sidebar, toggleSidebar}) => {
             id: 5,
             name: 'Buy | Sell',
             onClick: () => navigate('/contact'),
-            icon:  <TbHomeDollar/>,
+            icon: <TbHomeDollar/>,
         },
+        ...(user ? [
+            {
+                id: 6,
+                name: 'Dashboard',
+                onClick: () => navigate('/secure'),
+                icon: <AiOutlineDashboard/>,
+            }
+        ] : []),
     ];
 
     return (

@@ -4,7 +4,7 @@ import {useContext} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import UserContext from "../../context/UserContext";
 import {MdOutlineCancel} from "react-icons/md";
-import { useState } from 'react';
+import {useState} from 'react';
 
 // eslint-disable-next-line react/prop-types
 const Header = ({sidebar, toggleSidebar}) => {
@@ -21,14 +21,22 @@ const Header = ({sidebar, toggleSidebar}) => {
                         {sidebar ? '' : <GoArrowRight size={26}/>}
                     </div>
 
+                    <div className={'flex space-x-4'}>
+                        {/* Manage Roles and Permissions button */}
+                        <button
+                            onClick={() => navigate('/secure/addAgent')}
+                            className="hidden md:block text-sm transition-all duration-300 border border-primary hover:text-white hover:bg-primary text-primary rounded-full py-3 px-5"
+                        >
+                            Manage Roles and Permissions
+                        </button>
 
-                    {/* Manage Roles and Permissions button */}
-                    <button 
-                        onClick={() => navigate('/secure/addAgent')}
-                        className="hidden md:block text-sm transition-all duration-300 border border-primary hover:text-white hover:bg-primary text-primary rounded-full py-3 px-5"
-                    >
-                        Manage Roles and Permissions
-                    </button>
+                        <button
+                            onClick={() => navigate('/')}
+                            className="hidden md:block text-sm transition-all duration-300 border border-primary hover:text-white hover:bg-primary text-primary rounded-full py-3 px-5"
+                        >
+                            Website
+                        </button>
+                    </div>
 
                     {/* User profile section */}
                     <div className="flex space-x-2 items-center cursor-pointer bg-gray-200 p-4 justify-center">
@@ -39,7 +47,7 @@ const Header = ({sidebar, toggleSidebar}) => {
                                 alt="photo"
                             />
                         </div>
-                        
+
                         <div>
                             <p className="text-sm font-medium">{user && user.name}</p>
                             <p className="text-xs font-light">{user && user.type}</p>

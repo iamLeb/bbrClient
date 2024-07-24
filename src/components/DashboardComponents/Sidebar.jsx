@@ -5,7 +5,7 @@ import {IoCameraSharp} from "react-icons/io5";
 import {CiMap} from "react-icons/ci";
 import {IoMailOpenSharp} from "react-icons/io5";
 import {GrGallery} from "react-icons/gr";
-import {FaRegUserCircle} from "react-icons/fa";
+import {FaChrome, FaRegUserCircle} from "react-icons/fa";
 import {useLocation, useNavigate} from "react-router-dom";
 import {FaCalendarAlt} from "react-icons/fa";
 import {MdOutlineCancel} from "react-icons/md";
@@ -58,22 +58,28 @@ const Sidebar = ({sidebar, toggleSidebar}) => {
             path: "testimonials",
         },
         {
-            icon: <FaRegUserCircle/>,
-            name: "My Profile",
-            path: "profile",
-        },
-        {
             icon: <GrUserManager/>,
             name: "Manage Roles",
             path: "addAgent",
             mobile: true,
         },
         {
+            icon: <FaRegUserCircle/>,
+            name: "My Profile",
+            path: "profile",
+        },
+        {
             icon: <FaCalendarAlt/>,
             name: "Create availability",
             path: "availability",
         },
+        {
+            icon: <FaChrome/>,
+            name: "Website",
+            path: "/",
+        },
     ];
+
 
     return (
         <aside
