@@ -9,7 +9,7 @@ const Edit = () => {
 
     // State variables
     const [loading, setLoading] = useState(false);
-    const {categories, getName,fetchMedia} = useContext(GlobalContext);
+    const {categories, getName} = useContext(GlobalContext);
     const [newBlog, setNewBlog] = useState({
         title: '',
         category: '',
@@ -19,14 +19,15 @@ const Edit = () => {
     const [media, setMedia] = useState([]);
     const [errors, setErrors] = useState('');
 
-    // const fetchMedia = async (ownerId) => {
-    //     try {
-    //         const res = await api.get(`/media/getMediaForOwner/${ownerId}`);
-    //         return res.data._id
-    //     } catch (error) {
-    //         return {data: []};
-    //     }
-    // };
+    const fetchMedia = async (ownerId) => {
+        try {
+            const res = await api.get(`/media/getMediaForOwner/${ownerId}`);
+            return res.data._id
+        } catch (error) {
+            return {data: []};
+        }
+    };
+
     const getBlog = async (id) => {
         try {
             setLoading(true);
@@ -86,7 +87,7 @@ const Edit = () => {
                 });
 
                 const url = response.data.url; // response url
-                await api.put(`/media/${media.data._id}`, {
+                await api.put(`/media/${media}`, {
                     type: 'image',
                     url,
                     ownerId: id,
