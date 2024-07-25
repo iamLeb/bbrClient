@@ -4,7 +4,7 @@ import { useState } from "react";
 import AvailabilityForm from "./AvailabilityForm";
 import AvailabilityList from "./AvailabilityList";
 import { useNotifications } from "./useNotifications";
-
+import AvailabilityManager from "./AvailabilityManager";
 const Availability = () => {
   // State to store array of availabilities to be sent to database
   const [availabilities, setAvailabilities] = useState([]);
@@ -14,7 +14,7 @@ const Availability = () => {
     useNotifications();
 
   return (
-    <div className="md:p-8 max-w-6xl mx-auto bg-gray-50 min-h-screen overflow-x-hidden">
+    <div className="p-4 md:p-8 max-w-6xl mx-auto bg-gray-50 min-h-screen overflow-x-hidden">
       {/* Page title */}
       <h1 className="text-3xl md:text-4xl font-bold mb-6 md:mb-8 text-center text-gray-800">
         Availability Management
@@ -30,6 +30,10 @@ const Availability = () => {
           setAvailabilities={setAvailabilities}
           addNotification={addNotification}
         />
+      </div>
+
+      <div className="mb-8 md:mb-12">
+        <AvailabilityManager/>
       </div>
 
       {/* List of existing availabilities not fetched from database  */}
