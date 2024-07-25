@@ -17,8 +17,7 @@ const Index = () => {
                 <p className={'font-light text-sm'}>Explore our property listings to discover the home of your
                     dreams.</p>
             </div>
-
-            {/* Property Listings */}
+            
             <div className={'px-3 mt-3 flex justify-evenly p-5'}>
                 <div className={'grid grid-cols-1 sm:grid-cols-2 md:grid-col-2 lg:grid-cols-3 gap-4'}>
                     {properties.map(property => (
