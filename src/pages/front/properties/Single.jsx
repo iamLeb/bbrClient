@@ -38,7 +38,7 @@ const Single = () => {
                     const propertyWithMedia = {...propertyData, url};
                     setProperty(propertyWithMedia);
                 } catch (error) {
-                    console.error('Error fetching property or media:', error);
+                    console.error(error);
                 } finally {
                     setLoading(false);
                 }

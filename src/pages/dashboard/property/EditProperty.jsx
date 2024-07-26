@@ -140,7 +140,6 @@ const EditProperty = () => {
                 navigate('/secure/listings');
             }
         } catch (error) {
-            console.log(error);
             setErrors(error.response?.data?.error || 'An error occurred');
         } finally {
             setLoading(false);

@@ -112,7 +112,7 @@ const AppointmentCalendar = ({
       // Return an object with startTime, endTime, and notAvailable flag
       return { startTime, endTime, notAvailable: false, bookings };
     } catch (error) {
-      console.log("Error fetching availability:", error);
+        console.log("Error fetching availability:", error);
       // If there's an error, return an object indicating no availability
       return { notAvailable: true };
     }

@@ -50,7 +50,7 @@ const TableComponent = () => {
             setNeighbourhoods(neighbourhoodsMap);
             setProperties(properties);
         } catch (error) {
-            console.log(error.message);
+            setErrors('There was an error fetching properties');
         } finally {
             setLoading(false); // Set loading to false after data is fetched
         }
