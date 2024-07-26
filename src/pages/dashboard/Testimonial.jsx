@@ -77,8 +77,7 @@ const Testimonials = () => {
                 setNewTestimonial({name: '', message: ''});
                 toggleModal();
             } catch (e) {
-                console.log(e)
-                setErrors('There was an error creating/updating the testimonial');
+                setErrors(e.response.data.error);
             }
         }
         setLoading(false)
@@ -98,12 +97,17 @@ const Testimonials = () => {
         setLoading(false)
     };
 
+
+    const getFirstFiveWords = (text) => {
+        return text.split(' ').slice(0, 5).join(' ') + (text.split(' ').length > 5 ? '...' : '');
+    };
+
     return (
         <section className="h-screen m-5 mx-10">
             <div className="bg-white border border-gray-100 shadow-2xl">
                 <div className="p-4 border-b flex justify-between items-center">
-                    {loading ? 'loading...' : ''}
                     <h3 className="font-bold">My Testimonials</h3>
+                    {loading ? 'loading...' : ''}
                     <div>
                         <button onClick={toggleModal}
                                 className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>+
@@ -114,23 +118,20 @@ const Testimonials = () => {
                 <div className="overflow-x-auto">
                     <table className="table-auto w-full">
                         <thead>
-                        <tr className="text-center w-full text-[15px] bg-gray-100">
+                        <tr className="text-sm bg-gray-100">
                             <th className="px-4 py-2 lg:w-1/3 text-center sm:text-wrap">Name</th>
                             <th className="px-4 py-2 md:w-1/4 lg:w-1/3 text-center hidden sm:table-cell">Message</th>
-                            <th className="px-4 py-2 lg:w-1/3 text-center ">Action</th>
+                            <th className="px-4 py-2 lg:w-1/3 text-right ">Action</th>
                         </tr>
                         </thead>
-                    </table>
-                </div>
-                {testimonials.map((testimonial) => (
-                    <div key={testimonial._id} className="m-5">
-                        <table className='w-full'>
-                            <tbody>
-                            <tr className="text-center text-[15px] w-full border-b">
+
+                        <tbody>
+                        {testimonials.map((testimonial) => (
+                            <tr key={testimonial._id} className="text-xs border-b">
                                 <td className="px-4 py-2 lg:w-1/3  sm:text-center">{testimonial.name}</td>
-                                <td className=" py-2 md:w-1/4 lg:w-1/3 text-center hidden sm:table-cell">{testimonial.message}</td>
+                                <td className=" py-2 w-1/3 text-center hidden sm:table-cell">{getFirstFiveWords(testimonial.message)}</td>
                                 <td className="px-4 py-2">
-                                    <div className={'flex justify-end sm:justify-center sm:block'}>
+                                    <div className={'flex text-right justify-end sm:justify-center sm:block'}>
                                         <button onClick={() => handleEdit(testimonial)}
                                                 className="px-2 py-1 rounded bg-primary text-white text-center">Edit
                                         </button>
@@ -140,10 +141,11 @@ const Testimonials = () => {
                                     </div>
                                 </td>
                             </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                ))}
+                        ))}
+                        </tbody>
+                    </table>
+                </div>
+
                 <div className="flex justify-end p-4 space-x-2">
                     <button className="border px-2 py-1 text-sm
                 rounded">Previous
@@ -200,7 +202,8 @@ const Testimonials = () => {
                             </div>
                         </div>
                     </div>
-                )}
+                )
+                }
             </div>
         </section>
     );

@@ -22,13 +22,11 @@ const Header = ({sidebar, toggleSidebar}) => {
             id: 1,
             name: 'About',
             onClick: () => navigate('/about'),
-
         },
         {
             id: 2,
             name: 'Blog',
             onClick: () => navigate('/blog'),
-
         },
         {
             id: 3,
@@ -40,8 +38,12 @@ const Header = ({sidebar, toggleSidebar}) => {
             name: 'Listings',
             onClick: () => navigate('/properties/listing'),
         },
-
     ];
+
+    const handleDashboardClick = () => {
+        window.location.href = '/secure';
+    };
+
     return (
         <header className={'fixed w-full z-20 bg-white shadow-md p-3 py-6 sm:py-3'}>
             <div className={'container mx-auto flex justify-between items-center'}>
@@ -57,7 +59,6 @@ const Header = ({sidebar, toggleSidebar}) => {
                                     className={`flex items-center space-x-1 hover:cursor-pointer hover:text-primary ${link.active && 'text-primary'} `}>
                                     <span>{link.name}</span>
                                 </div>
-
                             </li>
                         ))}
 
@@ -77,15 +78,13 @@ const Header = ({sidebar, toggleSidebar}) => {
                         </li>
 
                         {user && (
-                            <li onClick={() => navigate('/secure')}>
+                            <li onClick={handleDashboardClick}>
                                 <div
                                     className={`flex items-center space-x-1 hover:cursor-pointer hover:text-primary `}>
                                     <span>Dashboard</span>
                                 </div>
-
                             </li>
                         )}
-
                     </ul>
                 </div>
 
@@ -96,8 +95,6 @@ const Header = ({sidebar, toggleSidebar}) => {
                             <FiMenu className={'text-primary'} size={32}/>}
                     </div>
                 </div>
-
-
             </div>
         </header>
     );

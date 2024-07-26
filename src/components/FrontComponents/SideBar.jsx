@@ -9,7 +9,6 @@ import logo1 from "../../assets/images/logo/Bliss logo black white.png";
 import {AiOutlineDashboard} from "react-icons/ai";
 import UserContext from "../../context/UserContext.js";
 
-
 const SideBar = ({sidebar, toggleSidebar}) => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -57,7 +56,9 @@ const SideBar = ({sidebar, toggleSidebar}) => {
             {
                 id: 6,
                 name: 'Dashboard',
-                onClick: () => navigate('/secure'),
+                onClick: () => {
+                    window.location.href = '/secure';
+                },
                 icon: <AiOutlineDashboard/>,
             }
         ] : []),
