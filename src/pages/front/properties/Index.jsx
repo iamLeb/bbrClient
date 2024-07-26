@@ -9,8 +9,17 @@ import React, {useContext} from "react";
 
 const Index = () => {
     const navigate = useNavigate();
-    const {properties} = useContext(GlobalContext);
+    const {properties,loading} = useContext(GlobalContext);
 
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center py-10">
+                <div
+                    className="w-8 h-8 border-4 border-t-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                <span className="ml-3 text-xl font-semibold">Loading...</span>
+            </div>
+        );
+    }
 
     return (
         <section className={'mt-2'}>

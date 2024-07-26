@@ -1,5 +1,5 @@
 import GlobalContext from './Global.js';
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import api from "../services/api.js";
 
 const GlobalContextProvider = ({children}) => {
@@ -171,15 +171,6 @@ const GlobalContextProvider = ({children}) => {
             fetchMedia,
             fetchMultipleMedia,
         }}>
-            {loading ? (
-                <div className="flex justify-center items-center py-10">
-                    <div
-                        className="w-8 h-8 border-4 border-t-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-                    <span className="ml-3 text-xl font-semibold">Loading...</span>
-                </div>
-            ) : (
-                children
-            )}
             {children}
         </GlobalContext.Provider>
     );
