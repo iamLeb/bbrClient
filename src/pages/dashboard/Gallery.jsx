@@ -12,6 +12,7 @@ const Gallery = () => {
 
     // Fetching galleries and neighbourhoods
     const fetchGalleries = async () => {
+        setLoading(true);
         try {
             const res = await api.get('/gallery');
             const galleriesData = res.data;
@@ -23,6 +24,8 @@ const Gallery = () => {
             setGalleries(galleriesWithMedia);
         } catch (error) {
             setErrors('There was an error fetching galleries: ' + error.message);
+        }finally {
+            setLoading(false);
         }
     };
 
@@ -45,10 +48,8 @@ const Gallery = () => {
     };
 
     useEffect(() => {
-        setLoading(true)
         fetchGalleries();
         fetchNeighbourhoods();
-        setLoading(false)
     }, []);
 
     // Handling form changes and submissions

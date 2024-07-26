@@ -5,7 +5,7 @@ import {MdOutlineZoomOutMap} from "react-icons/md";
 import GlobalContext from "../../../context/Global.js";
 import image from "../../../assets/images/BukolaBliss.png";
 import {useNavigate} from "react-router-dom";
-import {useContext} from "react";
+import React, {useContext} from "react";
 
 const Index = () => {
     const navigate = useNavigate();
