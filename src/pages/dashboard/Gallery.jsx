@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import api from "../../services/api";
 
 const Gallery = () => {
@@ -45,8 +45,10 @@ const Gallery = () => {
     };
 
     useEffect(() => {
+        setLoading(true)
         fetchGalleries();
         fetchNeighbourhoods();
+        setLoading(false)
     }, []);
 
     // Handling form changes and submissions
@@ -142,6 +144,16 @@ const Gallery = () => {
     const toggleModal = () => {
         setModal(!modal);
     };
+
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center py-10">
+                <div
+                    className="w-8 h-8 border-4 border-t-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                <span className="ml-3 text-xl font-semibold">Loading...</span>
+            </div>
+        );
+    }
 
     return (
         <section className="h-screen m-5 mx-10">

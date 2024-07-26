@@ -1,5 +1,5 @@
 import {useNavigate} from "react-router-dom";
-import {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import api from "../../../services/api";
 import GlobalContext from "../../../context/Global.js";
 
@@ -10,6 +10,8 @@ const Blog = () => {
     const [blogs, setBlogs] = useState([]);
     const [categories, setCategories] = useState({});
     const [errors, setErrors] = useState('');
+    const [loading, setLoading] = useState(true);
+
     const fetchBlogs = async () => {
         try {
             const response = await api.get('/blog');
@@ -38,6 +40,8 @@ const Blog = () => {
             setBlogs(blogs);
         } catch (error) {
             setErrors('There was an error fetching the blogs: ' + error.message);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -76,6 +80,18 @@ const Blog = () => {
     useEffect(() => {
         fetchBlogs();
     }, []);
+
+
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center py-10">
+                <div
+                    className="w-8 h-8 border-4 border-t-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                <span className="ml-3 text-xl font-semibold">Loading...</span>
+            </div>
+        );
+    }
+
 
     return (
         <section className="h-screen m-5">

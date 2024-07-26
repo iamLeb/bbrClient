@@ -29,7 +29,6 @@ const Photo = ({ property }) => {
     };
 
     useEffect(() => {
-        console.log(property.url);
     }, [property]);
 
     return (

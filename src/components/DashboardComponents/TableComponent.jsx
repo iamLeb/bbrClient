@@ -1,5 +1,4 @@
-import React, {useContext} from 'react';
-import {useState, useEffect} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
 import api from "../../services/api.js";
 import GlobalContext from "../../context/Global.js";
@@ -10,6 +9,7 @@ const TableComponent = () => {
     const [categories, setCategories] = useState({});
     const [neighbourhoods, setNeighbourhoods] = useState({});
     const [errors, setErrors] = useState('');
+    const [loading, setLoading] = useState(true); // Initially set to true
 
     const fetchProperties = async () => {
         try {
@@ -51,6 +51,8 @@ const TableComponent = () => {
             setProperties(properties);
         } catch (error) {
             console.log(error.message);
+        } finally {
+            setLoading(false); // Set loading to false after data is fetched
         }
     };
 
@@ -87,10 +89,19 @@ const TableComponent = () => {
         }
     };
 
-
     useEffect(() => {
-        fetchProperties()
+        fetchProperties();
     }, []);
+
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center py-10">
+                <div
+                    className="w-8 h-8 border-4 border-t-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                <span className="ml-3 text-xl font-semibold">Loading...</span>
+            </div>
+        );
+    }
 
     return (
         <div className="h-screen m-5">

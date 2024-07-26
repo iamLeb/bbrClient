@@ -99,7 +99,6 @@ const AddProperty = () => {
             });
 
             const propertyId = propertyRes.data._id;
-            console.log(urls)
             // Store the URLs and property ID in the media collection
             for (const url of urls) {
                 await api.post('/media/create', {
