@@ -305,14 +305,14 @@ const AvailabilityList = ({
                 type="time"
                 value={format(new Date(availability.startTime), "HH:mm")}
                 onChange={(e) => onEdit(index, "startTime", e.target.value)}
-                className="w-24 px-2 py-1 border rounded text-sm"
+                className="w-24  border rounded text-sm"
               />
-              <span>-</span>
+             
               <input
                 type="time"
                 value={format(new Date(availability.endTime), "HH:mm")}
                 onChange={(e) => onEdit(index, "endTime", e.target.value)}
-                className="w-24 px-2 py-1 border rounded text-sm"
+                className="w-24 border rounded text-sm"
               />
             </div>
           ) : (
