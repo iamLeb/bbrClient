@@ -47,7 +47,7 @@ const Footer = () => {
                             </div>
                             <button onClick={() => navigate('/contact')}
                                     className={'sm:absolute -bottom-7 bg-white px-8 py-4 rounded-md text-primary hover:bg-primary hover:text-white transition-all duration-300 font-bold'}>Contact
-                                Seller
+                                Buyer
                             </button>
                         </div>
                     </div>
@@ -88,7 +88,8 @@ const Footer = () => {
                                 <div>
                                     <p>Email:</p>
                                     <span className={'text-white'}>
-                                        <a target='_blank' href="mailto:Bbliss@sutton.com">Bbliss@sutton.com</a>
+                                    <a target='_blank' href="mailto:babian14@yahoo.co.uk">babian14@yahoo.co.uk</a>
+
                                     </span>
                                 </div>
                             </div>
