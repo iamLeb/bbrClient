@@ -32,8 +32,6 @@ const DashboardLayout = () => {
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-
-
     }, []);
 
     return (
