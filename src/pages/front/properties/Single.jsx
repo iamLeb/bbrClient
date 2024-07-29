@@ -1,7 +1,7 @@
 import Photo from "../../../components/FrontComponents/Photo.jsx";
 import Overview from "../../../components/FrontComponents/Overview.jsx";
 import {useParams} from "react-router-dom";
-import {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import GlobalContext from "../../../context/Global.js";
 import api from "../../../services/api.js";
 

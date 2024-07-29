@@ -7,9 +7,11 @@ import {MdOutlineCategory} from "react-icons/md";
 import {GiHomeGarage} from "react-icons/gi";
 import {useContext} from "react";
 import GlobalContext from "../../context/Global.js";
+import {useNavigate} from "react-router-dom";
 
 const Overview = ({property}) => {
     const {getName, getNeighbourhoodName} = useContext(GlobalContext);
+    const navigate = useNavigate();
 
     const capitalizeFirstLetter = (string) => {
         return string.charAt(0).toUpperCase() + string.slice(1);
@@ -152,7 +154,7 @@ const Overview = ({property}) => {
                         <h1 className="font-bold text-2xl">Interested?</h1>
                         <p className="text-xs">Reach out to us and find out how
                             we can help you secure your dream home with ease and confidence.</p>
-                        <button className="bg-primary text-white font-bold w-full py-5 rounded-lg">Apply Now!</button>
+                        <button onClick={()=>navigate('/contact')} className="bg-primary text-white font-bold w-full py-5 rounded-lg">Apply Now!</button>
                     </div>
                 </div>
 
