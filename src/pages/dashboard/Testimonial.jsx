@@ -11,6 +11,8 @@ const Testimonials = () => {
     const [selectedTestimonial, setSelectedTestiomnial] = useState(null); // State for the selected testimonial
     const [modal, setModal] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const testimonialsPerPage = 5;
 
     const toggleModal = () => {
         setModal(!modal);
@@ -102,6 +104,22 @@ const Testimonials = () => {
         return text.split(' ').slice(0, 5).join(' ') + (text.split(' ').length > 5 ? '...' : '');
     };
 
+    const indexOfLastTestimonial = currentPage * testimonialsPerPage;
+    const indexOfFirstTestimonial = indexOfLastTestimonial - testimonialsPerPage;
+    const currentTestimonials = testimonials.slice(indexOfFirstTestimonial, indexOfLastTestimonial);
+
+    const handleNext = () => {
+        if (indexOfLastTestimonial < testimonials.length) {
+            setCurrentPage(prevPage => prevPage + 1);
+        }
+    };
+
+    const handlePrevious = () => {
+        if (currentPage > 1) {
+            setCurrentPage(prevPage => prevPage - 1);
+        }
+    };
+
     return (
         <section className="h-screen m-5 mx-10">
             <div className="bg-white border border-gray-100 shadow-2xl">
@@ -126,7 +144,7 @@ const Testimonials = () => {
                         </thead>
 
                         <tbody>
-                        {testimonials.map((testimonial) => (
+                        {currentTestimonials.map((testimonial) => (
                             <tr key={testimonial._id} className="text-xs border-b">
                                 <td className="px-4 py-2 lg:w-1/3  sm:text-center">{testimonial.name}</td>
                                 <td className=" py-2 w-1/3 text-center hidden sm:table-cell">{getFirstFiveWords(testimonial.message)}</td>
@@ -147,14 +165,12 @@ const Testimonials = () => {
                 </div>
 
                 <div className="flex justify-end p-4 space-x-2">
-                    <button className="border px-2 py-1 text-sm
-                rounded">Previous
+                    <button onClick={handlePrevious} disabled={currentPage === 1}
+                            className="border px-2 py-1 text-sm rounded">Previous
                     </button>
-                    <button className="border px-2 py-1 text-white bg-purple-900
-                text-sm rounded">1
-                    </button>
-                    <button className="border px-2 py-1 text-sm
-                rounded">Next
+                    <span className="border px-2 py-1 text-sm rounded">{currentPage}</span>
+                    <button onClick={handleNext} disabled={indexOfLastTestimonial >= testimonials.length}
+                            className="border px-2 py-1 text-sm rounded">Next
                     </button>
                 </div>
                 {modal && (

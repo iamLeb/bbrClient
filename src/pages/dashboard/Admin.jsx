@@ -1,11 +1,12 @@
 import {useContext} from "react";
 import UserContext from "../../context/UserContext.js";
-import {IoCalendarOutline, IoLayersOutline} from "react-icons/io5";
-import {CiCircleList, CiCirclePlus} from "react-icons/ci";
-import {FaRegComments} from "react-icons/fa";
+import {IoLayersOutline} from "react-icons/io5";
+import {CiCircleList} from "react-icons/ci";
+import {FaBlog} from "react-icons/fa";
 import {TbUsersGroup} from "react-icons/tb";
 import GlobalContext from "../../context/Global.js";
 import {useNavigate} from "react-router-dom";
+import {RiCommunityFill} from "react-icons/ri";
 
 const Admin = () => {
     const {user} = useContext(UserContext);
@@ -14,6 +15,7 @@ const Admin = () => {
     const {properties} = useContext(GlobalContext);
     const {neighbourhoods} = useContext(GlobalContext);
     const {contacts} = useContext(GlobalContext);
+    const {blogs} = useContext(GlobalContext);
 
     const boxes = [
         {
@@ -42,7 +44,7 @@ const Admin = () => {
             count: neighbourhoods.length,
             linkLabel: 'View Neighbourhoods',
             path: "neighbourhoods",
-            icon: <FaRegComments/>,
+            icon: <RiCommunityFill />,
             color: 'bg-green-200'
         },
 
@@ -54,6 +56,15 @@ const Admin = () => {
             path: "contacts",
             icon: <TbUsersGroup/>,
             color: 'bg-blue-200'
+        },
+        {
+            id: 5,
+            title: 'Total Blogs',
+            count: blogs.length,
+            linkLabel: 'View blogs',
+            path: "blogs",
+            icon: <FaBlog/>,
+            color: 'bg-red-200'
         }
     ];
 

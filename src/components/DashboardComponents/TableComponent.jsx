@@ -1,5 +1,5 @@
-import React, {useContext, useState, useEffect} from 'react';
-import {useLocation, useNavigate} from "react-router-dom";
+import React, { useContext, useState, useEffect } from 'react';
+import { useLocation, useNavigate } from "react-router-dom";
 import api from "../../services/api.js";
 import GlobalContext from "../../context/Global.js";
 
@@ -10,6 +10,8 @@ const TableComponent = () => {
     const [neighbourhoods, setNeighbourhoods] = useState({});
     const [errors, setErrors] = useState('');
     const [loading, setLoading] = useState(true); // Initially set to true
+    const [currentPage, setCurrentPage] = useState(1);
+    const propertiesPerPage = 5;
 
     const fetchProperties = async () => {
         try {
@@ -70,7 +72,7 @@ const TableComponent = () => {
         try {
             return await api.get(`/media/getMediaForOwner/${ownerId}`);
         } catch (error) {
-            return {data: []};
+            return { data: [] };
         }
     };
 
@@ -93,11 +95,26 @@ const TableComponent = () => {
         fetchProperties();
     }, []);
 
+    const indexOfLastProperty = currentPage * propertiesPerPage;
+    const indexOfFirstProperty = indexOfLastProperty - propertiesPerPage;
+    const currentProperties = properties.slice(indexOfFirstProperty, indexOfLastProperty);
+
+    const handleNext = () => {
+        if (indexOfLastProperty < properties.length) {
+            setCurrentPage(prevPage => prevPage + 1);
+        }
+    };
+
+    const handlePrevious = () => {
+        if (currentPage > 1) {
+            setCurrentPage(prevPage => prevPage - 1);
+        }
+    };
+
     if (loading) {
         return (
             <div className="flex justify-center items-center py-10">
-                <div
-                    className="w-8 h-8 border-4 border-t-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                <div className="w-8 h-8 border-4 border-t-4 border-primary border-t-transparent rounded-full animate-spin"></div>
                 <span className="ml-3 text-xl font-semibold">Loading...</span>
             </div>
         );
@@ -110,8 +127,8 @@ const TableComponent = () => {
                 <div className="p-3">
                     <div className="sm:flex justify-between items-center">
                         <button onClick={() => navigate('add')}
-                                className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>+
-                            Create New Property
+                                className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>
+                            + Create New Property
                         </button>
                     </div>
                 </div>
@@ -130,14 +147,14 @@ const TableComponent = () => {
                         </thead>
 
                         <tbody>
-                        {properties.map((property) => (
+                        {currentProperties.map((property) => (
                             <tr key={property._id} className="text-left lg:text-center text-xs border-b">
                                 <td className="px-4 py-2">{property.title}</td>
                                 <td className="px-4 py-2 truncate hidden lg:table-cell">{property.address}</td>
                                 <td className="px-4 py-2 hidden lg:table-cell">{property.price}</td>
                                 <td className="px-4 py-2 hidden lg:table-cell">
                                     <img src={property.media.url} alt="Property Image"
-                                         className="w-10 h-10 object-cover rounded-lg"/>
+                                         className="w-10 h-10 object-cover rounded-lg" />
                                 </td>
                                 <td className={`px-4 py-2 hidden lg:table-cell font-bold ${property.status === true ? 'text-green-500' : 'text-red-500'}`}>
                                     {property.status === true ? 'Active' : 'Sold'}
@@ -159,14 +176,13 @@ const TableComponent = () => {
                     </table>
                 </div>
                 <div className="flex justify-end p-4 space-x-2">
-                    <button className="border px-2 py-1 text-sm rounded">Previous</button>
-                    <button className="border px-2 py-1 text-white bg-purple-900 text-sm rounded">1</button>
-                    <button className="border px-2 py-1 text-sm rounded">Next</button>
+                    <button onClick={handlePrevious} disabled={currentPage === 1} className="border px-2 py-1 text-sm rounded">Previous</button>
+                    <span className="border px-2 py-1 text-sm rounded">{currentPage}</span>
+                    <button onClick={handleNext} disabled={indexOfLastProperty >= properties.length} className="border px-2 py-1 text-sm rounded">Next</button>
                 </div>
             </div>
         </div>
     );
-
 };
 
 export default TableComponent;

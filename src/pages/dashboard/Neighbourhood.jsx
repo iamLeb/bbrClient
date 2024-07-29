@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import api from "../../services/api.js";
 
 const Neighbourhood = () => {
@@ -8,6 +8,8 @@ const Neighbourhood = () => {
     const [selectedNeighbourhood, setSelectedNeighbourhood] = useState(null); // State for the selected neighbourhood
     const [modal, setModal] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const neighbourhoodPerPage = 5;
 
     const toggleModal = () => {
         setModal(!modal);
@@ -94,6 +96,23 @@ const Neighbourhood = () => {
         setLoading(false)
     };
 
+
+    const indexOfLastNeighbourhood = currentPage * neighbourhoodPerPage;
+    const indexOfFirstNeighbourhood = indexOfLastNeighbourhood - neighbourhoodPerPage;
+    const currentNeighbourhood = neighbourhoods.slice(indexOfFirstNeighbourhood, indexOfLastNeighbourhood);
+
+    const handleNext = () => {
+        if (indexOfLastNeighbourhood < neighbourhoods.length) {
+            setCurrentPage(prevPage => prevPage + 1);
+        }
+    };
+
+    const handlePrevious = () => {
+        if (currentPage > 1) {
+            setCurrentPage(prevPage => prevPage - 1);
+        }
+    };
+
     return (
         <section className="h-screen m-5 mx-10">
             <div className="bg-white border border-gray-100 shadow-2xl">
@@ -118,7 +137,7 @@ const Neighbourhood = () => {
                         </thead>
 
                         <tbody>
-                        {neighbourhoods.map((neighbourhood) => (
+                        {currentNeighbourhood.map((neighbourhood) => (
                             <tr className="text-xs border-b" key={neighbourhood._id}>
                                 <td className="px-4 py-2 text-left">{neighbourhood.name}</td>
                                 <td className="px-4 py-2">
@@ -138,9 +157,13 @@ const Neighbourhood = () => {
                 </div>
 
                 <div className="flex justify-end p-4 space-x-2">
-                    <button className="border px-2 py-1 text-sm rounded">Previous</button>
-                    <button className="border px-2 py-1 text-white bg-purple-900 text-sm rounded">1</button>
-                    <button className="border px-2 py-1 text-sm rounded">Next</button>
+                    <button onClick={handlePrevious} disabled={currentPage === 1}
+                            className="border px-2 py-1 text-sm rounded">Previous
+                    </button>
+                    <span className="border px-2 py-1 text-sm rounded">{currentPage}</span>
+                    <button onClick={handleNext} disabled={indexOfLastNeighbourhood >= neighbourhoods.length}
+                            className="border px-2 py-1 text-sm rounded">Next
+                    </button>
                 </div>
             </div>
 
@@ -166,13 +189,13 @@ const Neighbourhood = () => {
                                         className="w-full p-2 border rounded"
                                     />
                                 </div>
-
-                                <div className="flex justify-end space-x-2 text-xs">
-                                    <button type="button" onClick={handleClose}
-                                            className="px-3 py-0 rounded bg-gray-100">Close
+                                <div className="flex justify-end p-4 space-x-2">
+                                    <button onClick={handlePrevious} disabled={currentPage === 1}
+                                            className="border px-2 py-1 text-sm rounded">Previous
                                     </button>
-                                    <button type="submit"
-                                            className="px-4 py-2 rounded bg-primary text-white">{selectedNeighbourhood ? 'Update Neighbourhood' : 'Create Neighbourhood'}
+                                    <span className="border px-2 py-1 text-sm rounded">{currentPage}</span>
+                                    <button onClick={handleNext} disabled={indexOfLastNeighbourhood >= neighbourhoods.length}
+                                            className="border px-2 py-1 text-sm rounded">Next
                                     </button>
                                 </div>
                             </form>
