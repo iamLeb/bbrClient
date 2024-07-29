@@ -72,7 +72,7 @@ const Admin = () => {
             id: 6,
             title: 'Total Bookings',
             count:bookings.length,
-            linkLabel: 'View availability',
+            linkLabel: 'View bookings',
             path: "availability",
             icon: <MdEventAvailable/>,
             color: 'bg-purple-200'
