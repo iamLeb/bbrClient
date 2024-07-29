@@ -10,8 +10,9 @@ const TableComponent = () => {
     const [neighbourhoods, setNeighbourhoods] = useState({});
     const [errors, setErrors] = useState('');
     const [loading, setLoading] = useState(true); // Initially set to true
-    const [currentPage, setCurrentPage] = useState(1);
-    const propertiesPerPage = 5;
+    const location = useLocation();
+
+    const [currentPage, setCurrentPage] = useState(location.state?.currentPage || 1);    const propertiesPerPage = 5;
 
     const fetchProperties = async () => {
         try {
@@ -111,6 +112,7 @@ const TableComponent = () => {
         }
     };
 
+
     if (loading) {
         return (
             <div className="flex justify-center items-center py-10">
@@ -162,7 +164,7 @@ const TableComponent = () => {
 
                                 <td className="px-4 py-2">
                                     <div className="flex justify-end lg:justify-center text-end">
-                                        <button onClick={() => navigate('edit/' + property._id)}
+                                        <button onClick={() => navigate('edit/' + property._id, { state: { currentPage } })}
                                                 className="px-2 py-1 rounded bg-primary text-white">Edit
                                         </button>
                                         <button onClick={() => handleDelete(property._id)}

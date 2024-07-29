@@ -98,13 +98,13 @@ const Sidebar = ({sidebar, toggleSidebar}) => {
             className={`overflow-y-auto no-scrollbar fixed lg:static top-0 left-0 bg-neutral-800 text-white h-screen w-80 sm:w-[500px] lg:w-80 transition-transform duration-500 ease-in-out 
             ${sidebar ? 'translate-x-0' : '-translate-x-full'} lg:transform-none`}>
 
-            <div className="py-5 border-b border-gray-50 flex items-center space-x-20">
+            <div className="pt-5 flex items-center space-x-20">
                 <div className={'text-white pl-6 lg:hidden'} onClick={toggleSidebar}>
                     {sidebar ? <MdOutlineCancel size={26}/> : ''}
                 </div>
 
                 <div>
-                    <img className={'w-24 ml-4'} src={logo1} alt="logo"/>
+                    <img className={'w-16 ml-4'} src={logo1} alt="logo"/>
                 </div>
 
             </div>

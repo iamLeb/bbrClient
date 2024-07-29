@@ -1,12 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {useNavigate, useParams} from 'react-router-dom';
+import {useLocation, useNavigate, useParams} from 'react-router-dom';
 import api from "../../../services/api.js";
 import GlobalContext from "../../../context/Global.js";
 
 const EditProperty = () => {
     let {id} = useParams();
     const navigate = useNavigate();
-
+    const location = useLocation();
     // State variables
     const [loading, setLoading] = useState(false);
     const {categories, neighbourhoods, getNeighbourhoodName, getName} = useContext(GlobalContext);
@@ -31,6 +31,7 @@ const EditProperty = () => {
         {value: true, label: 'Active'},
         {value: false, label: 'Sold'}
     ];
+    const currentPage = location.state?.currentPage;
 
     const fetchMedias = async (ownerId) => {
         setLoading(true);
@@ -137,7 +138,7 @@ const EditProperty = () => {
             // Update property
             const res = await api.put(`/property/${id}`, newProperty);
             if (res.status === 200) {
-                navigate('/secure/listings');
+                navigate('/secure/listings', {state: {currentPage}});
             }
         } catch (error) {
             setErrors(error.response?.data?.error || 'An error occurred');

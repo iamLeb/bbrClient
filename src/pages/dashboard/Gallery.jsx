@@ -108,6 +108,7 @@ const Gallery = () => {
             fetchGalleries(); // Refresh the galleries list
             setLoading(false);
             handleClose()
+            lastPage()
         } catch (error) {
             setErrors('There was a problem creating the gallery: ' + error.message);
         }
@@ -162,6 +163,16 @@ const Gallery = () => {
         if (currentPage > 1) {
             setCurrentPage(prevPage => prevPage - 1);
         }
+    };
+
+    const calculateLastPage = (total, PerPage) => {
+        return Math.ceil(total / PerPage);
+    };
+
+
+    const lastPage = () => {
+        const lastPage = calculateLastPage(neighbourhoods.length, 5);
+        setCurrentPage(lastPage);
     };
 
     if (loading) {

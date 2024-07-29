@@ -79,6 +79,8 @@ const CategoryForm = () => {
                 }
                 setNewCategory({name: ''});
                 toggleModal();
+                lastPage();
+
             } catch (e) {
                 setErrors(e.response.data.error);
             }
@@ -114,6 +116,16 @@ const CategoryForm = () => {
         if (currentPage > 1) {
             setCurrentPage(prevPage => prevPage - 1);
         }
+    };
+
+    const calculateLastPage = (totalCategories, categoriesPerPage) => {
+        return Math.ceil(totalCategories / categoriesPerPage);
+    };
+
+
+    const lastPage = () => {
+        const lastPage = calculateLastPage(categories.length, 5);
+        setCurrentPage(lastPage);
     };
 
     return (

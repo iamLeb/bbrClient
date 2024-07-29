@@ -81,6 +81,7 @@ const Neighbourhood = () => {
                 }
                 setNewNeighbourhood({name: ''});
                 toggleModal();
+                lastPage()
             } catch (e) {
                 setErrors(e.response.data.error);
             }
@@ -111,6 +112,16 @@ const Neighbourhood = () => {
         if (currentPage > 1) {
             setCurrentPage(prevPage => prevPage - 1);
         }
+    };
+
+    const calculateLastPage = (total, PerPage) => {
+        return Math.ceil(total / PerPage);
+    };
+
+
+    const lastPage = () => {
+        const lastPage = calculateLastPage(neighbourhoods.length, 5);
+        setCurrentPage(lastPage);
     };
 
     return (
@@ -189,14 +200,12 @@ const Neighbourhood = () => {
                                         className="w-full p-2 border rounded"
                                     />
                                 </div>
-                                <div className="flex justify-end p-4 space-x-2">
-                                    <button onClick={handlePrevious} disabled={currentPage === 1}
-                                            className="border px-2 py-1 text-sm rounded">Previous
+                                <div className="flex justify-end space-x-2 text-xs">
+                                    <button type="button" onClick={handleClose}
+                                            className="px-3 py-0 rounded bg-gray-100">Close
                                     </button>
-                                    <span className="border px-2 py-1 text-sm rounded">{currentPage}</span>
-                                    <button onClick={handleNext} disabled={indexOfLastNeighbourhood >= neighbourhoods.length}
-                                            className="border px-2 py-1 text-sm rounded">Next
-                                    </button>
+                                    <button type="submit"
+                                            className="px-4 py-2 rounded bg-primary text-white">{selectedNeighbourhood ? 'Update Neighbourhood' : 'Create Neighbourhood'}</button>
                                 </div>
                             </form>
                         </div>
