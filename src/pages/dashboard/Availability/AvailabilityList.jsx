@@ -227,12 +227,19 @@ const AvailabilityList = ({
             "Failed to connect to database";
 
           // Categorize the error based on its content
+          // Categorize the error based on its content
           const rejectionReason = errorMessage.includes(
             "Duplicate availability"
           )
             ? "existing-availability"
             : errorMessage.includes("covers this time range already exists")
             ? "overlapping-availability"
+            : errorMessage.includes("Start time must be before end time")
+            ? "start time must be greater than end time"
+            : errorMessage.includes(
+                "Time difference must be a multiple of 15 minutes"
+              )
+            ? "only 15 minutes intervals allowed"
             : "unknown-error";
 
           // Return the availability with updated status and reason
@@ -307,7 +314,7 @@ const AvailabilityList = ({
                 onChange={(e) => onEdit(index, "startTime", e.target.value)}
                 className="w-24  border rounded text-sm"
               />
-             
+
               <input
                 type="time"
                 value={format(new Date(availability.endTime), "HH:mm")}

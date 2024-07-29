@@ -14,6 +14,7 @@ import {
   Search,
 } from "lucide-react";
 import api from "../../../services/api";
+import EditForm from "./EditForm"; // Adjust the import path as needed
 
 const AvailabilityManager = () => {
   const [availabilities, setAvailabilities] = useState([]); // Stores all availabilities
@@ -24,7 +25,8 @@ const AvailabilityManager = () => {
   const [sortDirection, setSortDirection] = useState("asc"); // Controls the sort direction of availabilities
   const [expandedAvailabilities, setExpandedAvailabilities] = useState({}); // Tracks which availabilities are expanded to show bookings
   const [timeFilter, setTimeFilter] = useState("week"); // Filters availabilities by time period (all, week, month)
-
+  const [isEditFormOpen, setIsEditFormOpen] = useState(false);
+  const [itemToEdit, setItemToEdit] = useState({});
   // Fetch availabilities when the component mounts
   useEffect(() => {
     fetchAvailabilities();
@@ -136,15 +138,49 @@ const AvailabilityManager = () => {
   };
 
   // Placeholder functions for CRUD operations (to be implemented)
-  const handleEditAvailability = (id) =>
-    console.log(`Edit availability with id: ${id}`);
+  const handleEditAvailability = (availability) => {
+    setItemToEdit({ ...availability, type: "availability" });
+    setIsEditFormOpen(true);
+  };
+
+  const handleEditBooking = (booking) => {
+    setItemToEdit({ ...booking, type: "booking" });
+    setIsEditFormOpen(true);
+  };
+
+  const handleSaveEdit = (editedItem) => {
+    if (editedItem.type === "availability") {
+      console.log("In handleSaveEdit ", editedItem);
+      // Update availability in state
+      setAvailabilities((prevAvailabilities) =>
+        prevAvailabilities.map((avail) =>
+          avail._id === editedItem._id ? { ...avail, ...editedItem } : avail
+        )
+      );
+    } else {
+      // Update booking in state
+      setAvailabilities((prevAvailabilities) =>
+        prevAvailabilities.map((avail) =>
+          avail._id === editedItem.availability
+            ? {
+                ...avail,
+                bookings: avail.bookings.map((booking) =>
+                  booking._id === editedItem._id
+                    ? { ...booking, ...editedItem }
+                    : booking
+                ),
+              }
+            : avail
+        )
+      );
+    }
+    // Here you would also make an API call to update the item on the server
+  };
+
   const handleDeleteAvailability = (id) =>
     console.log(`Delete availability with id: ${id}`);
-  const handleEditBooking = (availabilityId, bookingId) =>
-    console.log(
-      `Edit booking with id: ${bookingId} for availability: ${availabilityId}`
-    );
-  const handleDeleteBooking = (availabilityId, bookingId) =>
+
+  const handleDeleteBooking = (bookingId) =>
     console.log(
       `Delete booking with id: ${bookingId} for availability: ${availabilityId}`
     );
@@ -276,7 +312,7 @@ const AvailabilityManager = () => {
                     </div>
                     <div className="flex space-x-2 sm:justify-end ">
                       <button
-                        onClick={() => handleEditBooking(availability._id)}
+                        onClick={() => handleEditAvailability(availability)}
                         className="p-1 hover:bg-gray-100 rounded-full"
                       >
                         <Edit className="text-blue-600" />
@@ -303,20 +339,11 @@ const AvailabilityManager = () => {
                               <span className="font-medium flex items-center">
                                 <Clock className="mr-2" />
                                 {formatTime(booking.startTime)} -{" "}
-                                {formatTime(
-                                  // Add 15 minutes to end time for display purposes
-                                  new Date(booking.endTime).getTime() +
-                                    15 * 60000
-                                )}
+                                {formatTime(new Date(booking.endTime))}
                               </span>
                               <div className="flex space-x-2 sm:justify-end">
                                 <button
-                                  onClick={() =>
-                                    handleEditBooking(
-                                      availability._id,
-                                      booking._id
-                                    )
-                                  }
+                                  onClick={() => handleEditBooking(booking)}
                                   className="p-1 hover:bg-blue-100 rounded-full"
                                 >
                                   <Edit className="text-blue-600" />
@@ -374,6 +401,13 @@ const AvailabilityManager = () => {
           </div>
         </div>
       )}
+
+      <EditForm
+        isOpen={isEditFormOpen}
+        onClose={() => setIsEditFormOpen(false)}
+        onSave={handleSaveEdit}
+        itemToEdit={itemToEdit}
+      />
     </div>
   );
 };
