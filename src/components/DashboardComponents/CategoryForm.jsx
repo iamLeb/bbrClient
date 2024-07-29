@@ -1,17 +1,16 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import GlobalContext from "../../context/Global.js";
 import api from "../../services/api.js";
 
 const CategoryForm = () => {
-    const {categories, setCategories} = useContext(GlobalContext);
+    const { categories, setCategories } = useContext(GlobalContext);
     const [errors, setErrors] = useState('');
-
-    const [newCategory, setNewCategory] = useState({name: ''});
-    const [selectedCategory, setSelectedCategory] = useState(null); // State for the selected category
+    const [newCategory, setNewCategory] = useState({ name: '' });
+    const [selectedCategory, setSelectedCategory] = useState(null);
     const [modal, setModal] = useState(false);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const categoryPerPage = 5;
+    const [categoriesPerPage, setCategoriesPerPage] = useState(5);
 
     const toggleModal = () => {
         setModal(!modal);
@@ -32,7 +31,7 @@ const CategoryForm = () => {
     }, []);
 
     const handleChange = e => {
-        const {name, value} = e.target;
+        const { name, value } = e.target;
         setNewCategory({
             ...newCategory,
             [name]: value
@@ -46,12 +45,12 @@ const CategoryForm = () => {
                 const res = await api.delete(`/category/${id}`);
                 if (res.status === 200) {
                     setLoading(false);
-                  fetchCategories()
+                    fetchCategories();
                 }
             } catch (e) {
                 setErrors('There was an error deleting the category');
             }
-            setLoading(false)
+            setLoading(false);
         }
     };
 
@@ -73,11 +72,10 @@ const CategoryForm = () => {
                     // Create category
                     const res = await api.post('/category/create', newCategory);
                     if (res.status === 201) {
-
                         setCategories([...categories, res.data]);
                     }
                 }
-                setNewCategory({name: ''});
+                setNewCategory({ name: '' });
                 toggleModal();
                 lastPage();
 
@@ -85,25 +83,26 @@ const CategoryForm = () => {
                 setErrors(e.response.data.error);
             }
         }
-        setLoading(false)
+        setLoading(false);
     };
 
     const handleEdit = category => {
-        setLoading(true)
+        setLoading(true);
         setSelectedCategory(category);
-        setNewCategory({name: category.name});
+        setNewCategory({ name: category.name });
         toggleModal();
-        setLoading(false)
+        setLoading(false);
     };
 
     const handleClose = () => {
-        setSelectedCategory(null)
-        setNewCategory({name: ''});
+        setSelectedCategory(null);
+        setNewCategory({ name: '' });
         toggleModal();
     };
 
-    const indexOfLastCategory = currentPage * categoryPerPage;
-    const indexOfFirstCategory = indexOfLastCategory - categoryPerPage;
+    // Update pagination logic to use categoriesPerPage
+    const indexOfLastCategory = currentPage * categoriesPerPage;
+    const indexOfFirstCategory = indexOfLastCategory - categoriesPerPage;
     const currentCategories = categories.slice(indexOfFirstCategory, indexOfLastCategory);
 
     const handleNext = () => {
@@ -122,10 +121,14 @@ const CategoryForm = () => {
         return Math.ceil(totalCategories / categoriesPerPage);
     };
 
-
     const lastPage = () => {
-        const lastPage = calculateLastPage(categories.length, 5);
+        const lastPage = calculateLastPage(categories.length, categoriesPerPage);
         setCurrentPage(lastPage);
+    };
+
+    const handleCategoriesPerPageChange = e => {
+        setCategoriesPerPage(Number(e.target.value));
+        setCurrentPage(1); // Reset to first page on change
     };
 
     return (
@@ -140,6 +143,20 @@ const CategoryForm = () => {
                             Add New Category
                         </button>
                     </div>
+                </div>
+                <div className="p-4">
+                    <label className="block text-sm font-bold mb-2">Categories Per Page:</label>
+                    <select
+                        value={categoriesPerPage}
+                        onChange={handleCategoriesPerPageChange}
+                        className="border p-1 rounded"
+                    >
+                        {[5, 10, 15, 20].map(option => (
+                            <option key={option} value={option}>
+                                {option}
+                            </option>
+                        ))}
+                    </select>
                 </div>
                 <div className="overflow-x-auto">
                     <table className="table-auto w-full">

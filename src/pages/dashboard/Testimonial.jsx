@@ -78,6 +78,7 @@ const Testimonials = () => {
                 }
                 setNewTestimonial({name: '', message: ''});
                 toggleModal();
+                lastPage()
             } catch (e) {
                 setErrors(e.response.data.error);
             }
@@ -118,6 +119,16 @@ const Testimonials = () => {
         if (currentPage > 1) {
             setCurrentPage(prevPage => prevPage - 1);
         }
+    };
+
+    const calculateLastPage = (total, PerPage) => {
+        return Math.ceil(total / PerPage);
+    };
+
+
+    const lastPage = () => {
+        const lastPage = calculateLastPage(testimonials.length, 5);
+        setCurrentPage(lastPage);
     };
 
     return (
