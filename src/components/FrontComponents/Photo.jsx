@@ -152,8 +152,8 @@ const Photo = ({ property }) => {
                         </button>
                         <Carousel selectedItem={selectedImageIndex} showThumbs={false}>
                             {images.map((image, index) => (
-                                <div key={index}>
-                                    <img src={image} alt={`Slide ${index}`} />
+                                <div className={'overflow-hidden h-96'} key={index}>
+                                    <img className={'w-full h-full object-cover'} src={image} alt={`Slide ${index}`} />
                                 </div>
                             ))}
                         </Carousel>
