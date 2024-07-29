@@ -7,6 +7,7 @@ import {TbUsersGroup} from "react-icons/tb";
 import GlobalContext from "../../context/Global.js";
 import {useNavigate} from "react-router-dom";
 import {RiCommunityFill} from "react-icons/ri";
+import {MdEventAvailable} from "react-icons/md";
 
 const Admin = () => {
     const {user} = useContext(UserContext);
@@ -16,6 +17,7 @@ const Admin = () => {
     const {neighbourhoods} = useContext(GlobalContext);
     const {contacts} = useContext(GlobalContext);
     const {blogs} = useContext(GlobalContext);
+    const {bookings} = useContext(GlobalContext);
 
     const boxes = [
         {
@@ -44,7 +46,7 @@ const Admin = () => {
             count: neighbourhoods.length,
             linkLabel: 'View Neighbourhoods',
             path: "neighbourhoods",
-            icon: <RiCommunityFill />,
+            icon: <RiCommunityFill/>,
             color: 'bg-green-200'
         },
 
@@ -62,9 +64,18 @@ const Admin = () => {
             title: 'Total Blogs',
             count: blogs.length,
             linkLabel: 'View blogs',
-            path: "blogs",
+            path: "blog",
             icon: <FaBlog/>,
             color: 'bg-red-200'
+        },
+        {
+            id: 6,
+            title: 'Total Bookings',
+            count:bookings.length,
+            linkLabel: 'View availability',
+            path: "availability",
+            icon: <MdEventAvailable/>,
+            color: 'bg-purple-200'
         }
     ];
 

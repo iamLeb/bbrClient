@@ -13,6 +13,7 @@ const GlobalContextProvider = ({children}) => {
     const [galleries, setGalleries] = useState([]);
     const [properties, setProperties] = useState([]);
     const [listings, setListings] = useState([]);
+    const [bookings, setBookings] = useState([]);
 
     const getCategories = async () => {
         const res = await api.get('category');
@@ -127,6 +128,11 @@ const GlobalContextProvider = ({children}) => {
         }
     };
 
+    const getBookings = async () => {
+        const res = await api.get('booking');
+        setBookings(res.data);
+    }
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -145,6 +151,7 @@ const GlobalContextProvider = ({children}) => {
                 getProperties(),
                 fetchMedia(),
                 fetchMultipleMedia(),
+                getBookings(),
             ]);
             setLoading(false);
         };
@@ -170,6 +177,7 @@ const GlobalContextProvider = ({children}) => {
             setListings,
             fetchMedia,
             fetchMultipleMedia,
+            bookings,
         }}>
             {children}
         </GlobalContext.Provider>
