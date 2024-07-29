@@ -10,9 +10,10 @@ const BlogLists = () => {
 
     return (
         <section className={'container mx-auto'}>
-            <div className={'p-3 gap-4 text-center'}>
+            <div className={'p-3 flex flex-col space-y-2 text-center'}>
                 <h1 className={'font-bold text-3xl sm:text-4xl'}>Blogs</h1>
-                <p className={'font-light text-sm'}>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                <p className={'font-light text-sm'}>Dive into our blog for the latest news, tips, and stories about home
+                    buying and selling.</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-5">

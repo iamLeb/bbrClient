@@ -2,11 +2,13 @@ import React from 'react';
 import {LiaPhoneVolumeSolid} from "react-icons/lia";
 import {MdOutlineMarkEmailRead} from "react-icons/md";
 import {RxCaretRight} from "react-icons/rx";
-import {HiOutlineArrowNarrowRight} from "react-icons/hi";
 import {SlSocialTwitter} from "react-icons/sl";
+import {FaLinkedinIn} from "react-icons/fa";
 import {FiFacebook} from "react-icons/fi";
 import {FaInstagram} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
+import logo1 from "../../assets/images/logo/Bliss logo black white.png";
+
 
 const Footer = () => {
     const navigate = useNavigate();
@@ -25,8 +27,8 @@ const Footer = () => {
                                     Tell us your needs, we will give you
                                     thousands of suggestions for the dream home.</p>
                             </div>
-                            <button onClick={()=>navigate('/contact')}
-                                className={'sm:absolute -bottom-7 bg-white px-8 py-4 rounded-md text-primary hover:bg-primary hover:text-white transition-all duration-300 font-bold'}>Contact
+                            <button onClick={() => navigate('/contact')}
+                                    className={'sm:absolute -bottom-7 bg-white px-8 py-4 rounded-md text-primary hover:bg-primary hover:text-white transition-all duration-300 font-bold'}>Contact
                                 Seller
                             </button>
                         </div>
@@ -43,15 +45,15 @@ const Footer = () => {
                                 <p className={'text-xs text-gray-600 w-72'}>We will connect you to thousands of people
                                     who need to buy a home.</p>
                             </div>
-                            <button onClick={()=>navigate('/contact')}
-                                className={'sm:absolute -bottom-7 bg-white px-8 py-4 rounded-md text-primary hover:bg-primary hover:text-white transition-all duration-300 font-bold'}>Contact
-                                Seller
+                            <button onClick={() => navigate('/contact')}
+                                    className={'sm:absolute -bottom-7 bg-white px-8 py-4 rounded-md text-primary hover:bg-primary hover:text-white transition-all duration-300 font-bold'}>Contact
+                                Buyer
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <hr className={'border-neutral-500'}/>
+
             <div className={'container mx-auto hidden lg:flex justify-around py-16'}>
                 <div>
                     <h1 className={'font-bold text-white py-5'}>Office Address</h1>
@@ -59,8 +61,11 @@ const Footer = () => {
                     <ul className={'flex flex-col gap-4 pb-2 px-6'}>
                         <li>
                             <span className={'text-sm text-neutral-900'}>Head office:</span>
-                            <p className={'text-white text-sm'}>2118 Thornridge Cir. Syracuse, Connecticut
-                                35624</p>
+                            <p className={'text-white text-sm'}>
+                                <a className={'hover:cursor-pointer'} target={"_blank"}
+                                   href="https://maps.app.goo.gl/mDKMgohdvE6Ns1Kb7">663-A
+                                    Stafford Street ,Winnipeg Manitoba, R3M 2X7</a>
+                            </p>
                         </li>
                     </ul>
                 </div>
@@ -87,7 +92,8 @@ const Footer = () => {
                                 <div>
                                     <p>Email:</p>
                                     <span className={'text-white'}>
-                                        <a target='_blank' href="mailto:Bbliss@sutton.com">Bbliss@sutton.com</a>
+                                    <a target='_blank' href="mailto:babian14@yahoo.co.uk">babian14@yahoo.co.uk</a>
+
                                     </span>
                                 </div>
                             </div>
@@ -140,37 +146,39 @@ const Footer = () => {
                 </div>
             </div>
 
-            <hr className={'border-neutral-500'}/>
-
-            {/*Mobile view*/}
             <div className={'hidden sm:block'}>
                 <div className={'flex justify-around py-9'}>
-                    <h1 className={'text-4xl text-white font-bold'}>logo</h1>
+                    <div>
+                        <img className={'w-24 ml-20'} src={logo1} alt="logo"/>
+                    </div>
                     <div className={'flex items-center space-x-4'}>
-                    <span
-                        className={'border border-gray-100 hover:bg-gray-500 transition-all duration-300 cursor-pointer text-white p-3 rounded-full'}><SlSocialTwitter/></span>
+                    <span onClick={() => window.open('https://www.linkedin.com/in/bukola-bliss-b50335b4/', '_blank')}
+                          className={'border border-gray-100 hover:bg-gray-500 transition-all duration-300 cursor-pointer text-white p-3 rounded-full'}>
+                        <FaLinkedinIn/></span>
+                        <span onClick={() => window.open('https://www.facebook.com/bukkyrealtor', '_blank')}
+                              className={'border border-gray-100 hover:bg-gray-500 transition-all duration-300 cursor-pointer text-white p-3 rounded-full'}><FiFacebook/></span>
                         <span
-                            className={'border border-gray-100 hover:bg-gray-500 transition-all duration-300 cursor-pointer text-white p-3 rounded-full'}><FiFacebook/></span>
-                        <span
+                            onClick={() => window.open('https://www.instagram.com/olubukolablissrealtor/', '_blank')}
                             className={'border border-gray-100 hover:bg-gray-500 transition-all duration-300 cursor-pointer text-white p-3 rounded-full'}><FaInstagram/></span>
                     </div>
                 </div>
 
-                <hr className={'border-neutral-500'}/>
                 <p className="text-center py-5 text-white text-sm">
                     Copyright © 2024 All Rights Reserved, Bukola Bliss Realtor
                 </p>
             </div>
 
-            <div className="lg:hidden text-center py-9">
-                <h1 className={'text-4xl text-white font-bold'}>logo</h1>
-                <p className={'text-xs text-neutral-500 font-light py-5'}>Lorem ipsum dolor sit amet.</p>
-                <div className={'flex items-center justify-center space-x-4'}>
+            <div className="lg:hidden flex justify-center flex-col items-center py-9">
+                <div className={'pb-6'}>
+                    <img className={'w-24'} src={logo1} alt="logo"/>
+                </div>
+                <div className={'flex items-center space-x-4'}>
+                    <span onClick={() => window.open('https://www.linkedin.com/in/bukola-bliss-b50335b4/', '_blank')}
+                          className={'border border-neutral-800 hover:bg-primary text-white p-3 rounded-full'}><FaLinkedinIn/></span>
+                    <span onClick={() => window.open('https://www.facebook.com/bukkyrealtor', '_blank')}
+                          className={'border border-neutral-800 hover:bg-primary text-white p-3 rounded-full'}><FiFacebook/></span>
                     <span
-                        className={'border border-neutral-800 hover:bg-primary text-white p-3 rounded-full'}><SlSocialTwitter/></span>
-                    <span
-                        className={'border border-neutral-800 hover:bg-primary text-white p-3 rounded-full'}><FiFacebook/></span>
-                    <span
+                        onClick={() => window.open('https://www.instagram.com/olubukolablissrealtor/', '_blank')}
                         className={'border border-neutral-800 hover:bg-primary text-white p-3 rounded-full'}><FaInstagram/></span>
                 </div>
             </div>

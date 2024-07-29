@@ -14,10 +14,10 @@ const UserContextProvider = ({ children }) => {
         }
     }
 
-
     useEffect(() => {
         getUser();
     }, []);
+
 
 
     return (

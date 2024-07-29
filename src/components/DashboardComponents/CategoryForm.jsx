@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import GlobalContext from "../../context/Global.js";
 import api from "../../services/api.js";
 
@@ -10,6 +10,8 @@ const CategoryForm = () => {
     const [selectedCategory, setSelectedCategory] = useState(null); // State for the selected category
     const [modal, setModal] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const categoryPerPage = 5;
 
     const toggleModal = () => {
         setModal(!modal);
@@ -98,6 +100,22 @@ const CategoryForm = () => {
         toggleModal();
     };
 
+    const indexOfLastCategory = currentPage * categoryPerPage;
+    const indexOfFirstCategory = indexOfLastCategory - categoryPerPage;
+    const currentCategories = categories.slice(indexOfFirstCategory, indexOfLastCategory);
+
+    const handleNext = () => {
+        if (indexOfLastCategory < categories.length) {
+            setCurrentPage(prevPage => prevPage + 1);
+        }
+    };
+
+    const handlePrevious = () => {
+        if (currentPage > 1) {
+            setCurrentPage(prevPage => prevPage - 1);
+        }
+    };
+
     return (
         <section className="h-screen m-5 mx-10">
             <div className="bg-white border border-gray-100 shadow-2xl">
@@ -120,7 +138,7 @@ const CategoryForm = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        {categories.map((category) => (
+                        {currentCategories.map((category) => (
                             <tr className="text-xs border-b" key={category._id}>
                                 <td className="text-left px-4 py-2">{category.name}</td>
                                 <td className="px-4 py-2">
@@ -139,9 +157,13 @@ const CategoryForm = () => {
                     </table>
                 </div>
                 <div className="flex justify-end p-4 space-x-2">
-                    <button className="border px-2 py-1 text-sm rounded">Previous</button>
-                    <button className="border px-2 py-1 text-white bg-purple-900 text-sm rounded">1</button>
-                    <button className="border px-2 py-1 text-sm rounded">Next</button>
+                    <button onClick={handlePrevious} disabled={currentPage === 1}
+                            className="border px-2 py-1 text-sm rounded">Previous
+                    </button>
+                    <span className="border px-2 py-1 text-sm rounded">{currentPage}</span>
+                    <button onClick={handleNext} disabled={indexOfLastCategory >= categories.length}
+                            className="border px-2 py-1 text-sm rounded">Next
+                    </button>
                 </div>
             </div>
             {modal && (

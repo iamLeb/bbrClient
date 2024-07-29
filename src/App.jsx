@@ -40,7 +40,7 @@ function App() {
     useEffect(() => {
         const timer = setTimeout(() => {
             setShowPreloader(false);
-        }, 1000); // Display preloader for 3 seconds
+        }, 1500); // Display preloader for 3 seconds
 
         return () => clearTimeout(timer);
     }, []);

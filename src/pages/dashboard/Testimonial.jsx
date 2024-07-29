@@ -11,6 +11,8 @@ const Testimonials = () => {
     const [selectedTestimonial, setSelectedTestiomnial] = useState(null); // State for the selected testimonial
     const [modal, setModal] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const testimonialsPerPage = 5;
 
     const toggleModal = () => {
         setModal(!modal);
@@ -77,8 +79,7 @@ const Testimonials = () => {
                 setNewTestimonial({name: '', message: ''});
                 toggleModal();
             } catch (e) {
-                console.log(e)
-                setErrors('There was an error creating/updating the testimonial');
+                setErrors(e.response.data.error);
             }
         }
         setLoading(false)
@@ -98,12 +99,33 @@ const Testimonials = () => {
         setLoading(false)
     };
 
+
+    const getFirstFiveWords = (text) => {
+        return text.split(' ').slice(0, 5).join(' ') + (text.split(' ').length > 5 ? '...' : '');
+    };
+
+    const indexOfLastTestimonial = currentPage * testimonialsPerPage;
+    const indexOfFirstTestimonial = indexOfLastTestimonial - testimonialsPerPage;
+    const currentTestimonials = testimonials.slice(indexOfFirstTestimonial, indexOfLastTestimonial);
+
+    const handleNext = () => {
+        if (indexOfLastTestimonial < testimonials.length) {
+            setCurrentPage(prevPage => prevPage + 1);
+        }
+    };
+
+    const handlePrevious = () => {
+        if (currentPage > 1) {
+            setCurrentPage(prevPage => prevPage - 1);
+        }
+    };
+
     return (
-        <div className='m-3'>
-            <div className="bg-white border w-full border-gray-100 shadow-2xl">
+        <section className="h-screen m-5 mx-10">
+            <div className="bg-white border border-gray-100 shadow-2xl">
                 <div className="p-4 border-b flex justify-between items-center">
-                    {loading ? 'loading...' : ''}
                     <h3 className="font-bold">My Testimonials</h3>
+                    {loading ? 'loading...' : ''}
                     <div>
                         <button onClick={toggleModal}
                                 className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>+
@@ -111,35 +133,23 @@ const Testimonials = () => {
                         </button>
                     </div>
                 </div>
-                <div className="p-3 hidden sm:block">
-                    <div className="sm:flex justify-between items-center">
-                        <div className="relative mt-2 sm:mt-0">
-                            <input
-                                placeholder="Search..."
-                                className="py-2 px-10 w-56 outline-none border rounded text-sm" type="text"/>
-                        </div>
-                    </div>
-                </div>
                 <div className="overflow-x-auto">
                     <table className="table-auto w-full">
                         <thead>
-                        <tr className="text-center w-full text-[15px] bg-gray-100">
+                        <tr className="text-sm bg-gray-100">
                             <th className="px-4 py-2 lg:w-1/3 text-center sm:text-wrap">Name</th>
                             <th className="px-4 py-2 md:w-1/4 lg:w-1/3 text-center hidden sm:table-cell">Message</th>
-                            <th className="px-4 py-2 lg:w-1/3 text-center ">Action</th>
+                            <th className="px-4 py-2 lg:w-1/3 text-right ">Action</th>
                         </tr>
                         </thead>
-                    </table>
-                </div>
-                {testimonials.map((testimonial) => (
-                    <div key={testimonial._id} className="m-5">
-                        <table className='w-full'>
-                            <tbody>
-                            <tr className="text-center text-[15px] w-full border-b">
+
+                        <tbody>
+                        {currentTestimonials.map((testimonial) => (
+                            <tr key={testimonial._id} className="text-xs border-b">
                                 <td className="px-4 py-2 lg:w-1/3  sm:text-center">{testimonial.name}</td>
-                                <td className=" py-2 md:w-1/4 lg:w-1/3 text-center hidden sm:table-cell">{testimonial.message}</td>
+                                <td className=" py-2 w-1/3 text-center hidden sm:table-cell">{getFirstFiveWords(testimonial.message)}</td>
                                 <td className="px-4 py-2">
-                                    <div className={'flex justify-end sm:justify-center sm:block'}>
+                                    <div className={'flex text-right justify-end sm:justify-center sm:block'}>
                                         <button onClick={() => handleEdit(testimonial)}
                                                 className="px-2 py-1 rounded bg-primary text-white text-center">Edit
                                         </button>
@@ -149,19 +159,18 @@ const Testimonials = () => {
                                     </div>
                                 </td>
                             </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                ))}
+                        ))}
+                        </tbody>
+                    </table>
+                </div>
+
                 <div className="flex justify-end p-4 space-x-2">
-                    <button className="border px-2 py-1 text-sm
-                rounded">Previous
+                    <button onClick={handlePrevious} disabled={currentPage === 1}
+                            className="border px-2 py-1 text-sm rounded">Previous
                     </button>
-                    <button className="border px-2 py-1 text-white bg-purple-900
-                text-sm rounded">1
-                    </button>
-                    <button className="border px-2 py-1 text-sm
-                rounded">Next
+                    <span className="border px-2 py-1 text-sm rounded">{currentPage}</span>
+                    <button onClick={handleNext} disabled={indexOfLastTestimonial >= testimonials.length}
+                            className="border px-2 py-1 text-sm rounded">Next
                     </button>
                 </div>
                 {modal && (
@@ -203,15 +212,16 @@ const Testimonials = () => {
                                                 className="px-3 py-0 rounded bg-gray-100">Close
                                         </button>
                                         <button type="submit"
-                                                className="px-4 py-2 rounded bg-primary text-white">{selectedTestimonial ? 'Update Category' : 'Create Category'}</button>
+                                                className="px-4 py-2 rounded bg-primary text-white">{selectedTestimonial ? 'Update Testimonial' : 'Create Testimonial'}</button>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
-                )}
+                )
+                }
             </div>
-        </div>
+        </section>
     );
 };
 

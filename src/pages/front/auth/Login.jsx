@@ -30,6 +30,10 @@ const Login = () => {
         }
     }
 
+    useEffect(() => {
+        if (user) navigate("/secure");
+    }, []);
+
     const handleLogin = async e => {
         e.preventDefault();
 

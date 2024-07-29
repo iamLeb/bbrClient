@@ -1,43 +1,55 @@
-import {useNavigate} from "react-router-dom";
-import {useContext, useEffect, useState} from "react";
+import { useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
 import api from "../../../services/api";
 import GlobalContext from "../../../context/Global.js";
 
 const Blog = () => {
     const navigate = useNavigate();
-    const {format} = useContext(GlobalContext);
+    const { format } = useContext(GlobalContext);
 
     const [blogs, setBlogs] = useState([]);
     const [categories, setCategories] = useState({});
     const [errors, setErrors] = useState('');
-    const fetchBlogs = async () => {
+    const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const blogsPerPage = 5; // Display five blogs per page
+
+    const fetchBlogs = async (page = 1) => {
         try {
             const response = await api.get('/blog');
-            const blogs = response.data;
+            const allBlogs = response.data;
+            setTotalPages(Math.ceil(allBlogs.length / blogsPerPage));
+
+            const start = (page - 1) * blogsPerPage;
+            const end = start + blogsPerPage;
+            const currentBlogs = allBlogs.slice(start, end);
 
             // Fetch categories for each blog
-            const categoryPromises = blogs.map(blog => fetchCategoryName(blog.category));
+            const categoryPromises = currentBlogs.map(blog => fetchCategoryName(blog.category));
             const categoryResponses = await Promise.all(categoryPromises);
 
             // Create a map of category IDs to category names
             const categoriesMap = {};
             categoryResponses.forEach((response, index) => {
-                const categoryId = blogs[index].category;
+                const categoryId = currentBlogs[index].category;
                 categoriesMap[categoryId] = response.data;
             });
 
             // Fetch media for each blog
-            const mediaPromises = blogs.map(blog => fetchMedia(blog._id));
+            const mediaPromises = currentBlogs.map(blog => fetchMedia(blog._id));
             const mediaResponses = await Promise.all(mediaPromises);
 
-            blogs.forEach((blog, index) => {
+            currentBlogs.forEach((blog, index) => {
                 blog.media = mediaResponses[index].data; // Attach media data to each blog
             });
 
             setCategories(categoriesMap);
-            setBlogs(blogs);
+            setBlogs(currentBlogs);
         } catch (error) {
-            console.log(error.message);
+            setErrors('There was an error fetching the blogs: ' + error.message);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -50,7 +62,7 @@ const Blog = () => {
         try {
             return await api.get(`/media/getMediaForOwner/${ownerId}`);
         } catch (error) {
-            return {data: []};
+            return { data: [] };
         }
     };
 
@@ -74,8 +86,29 @@ const Blog = () => {
     };
 
     useEffect(() => {
-        fetchBlogs();
-    }, []);
+        fetchBlogs(currentPage);
+    }, [currentPage]);
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center py-10">
+                <div className="w-8 h-8 border-4 border-t-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                <span className="ml-3 text-xl font-semibold">Loading...</span>
+            </div>
+        );
+    }
 
     return (
         <section className="h-screen m-5">
@@ -123,7 +156,9 @@ const Blog = () => {
                                 </td>
                                 <td className="px-4 py-2">
                                     <div className={'flex justify-end lg:justify-center text-end '}>
-                                        <button onClick={()=> navigate('edit/' + blog._id)} className="px-2 py-1 rounded bg-primary text-white">Edit</button>
+                                        <button onClick={() => navigate('edit/' + blog._id)}
+                                                className="px-2 py-1 rounded bg-primary text-white">Edit
+                                        </button>
                                         <button onClick={() => handleDelete(blog._id)}
                                                 className="ml-2 px-2 py-1 rounded bg-red-500 text-white">Remove
                                         </button>
@@ -135,9 +170,21 @@ const Blog = () => {
                     </table>
                 </div>
                 <div className="flex justify-end p-4 space-x-2">
-                    <button className="border px-2 py-1 text-sm rounded">Previous</button>
-                    <button className="border px-2 py-1 text-white bg-purple-900 text-sm rounded">1</button>
-                    <button className="border px-2 py-1 text-sm rounded">Next</button>
+                    <button
+                        onClick={handlePreviousPage}
+                        className="border px-2 py-1 text-sm rounded"
+                        disabled={currentPage === 1}
+                    >
+                        Previous
+                    </button>
+                    <span className="border px-2 py-1 text-sm rounded">{currentPage}</span>
+                    <button
+                        onClick={handleNextPage}
+                        className="border px-2 py-1 text-sm rounded"
+                        disabled={currentPage === totalPages}
+                    >
+                        Next
+                    </button>
                 </div>
             </div>
         </section>

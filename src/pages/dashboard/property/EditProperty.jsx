@@ -22,19 +22,36 @@ const EditProperty = () => {
         sqft: '',
         yearBuilt: '',
         landArea: '',
-        description: ''
+        description: '',
+        files: []
     });
+    const [medias, setMedias] = useState([]);
     const [errors, setErrors] = useState('');
     const statusOptions = [
         {value: true, label: 'Active'},
         {value: false, label: 'Sold'}
     ];
 
+    const fetchMedias = async (ownerId) => {
+        setLoading(true);
+        try {
+            const res = await api.get(`/media/getMultipleMedia/${ownerId}`);
+            setLoading(false);
+            return res.data.map(media => media._id); // Return an array of media IDs
+        } catch (error) {
+            setLoading(false);
+            console.error('Error fetching medias:', error);
+            return [];
+        }
+    };
+
     const getProperty = async (id) => {
         try {
             setLoading(true);
             const res = await api.get(`/property/${id}`);
             setNewProperty(res.data);
+            const mediaIds = await fetchMedias(id);
+            setMedias(mediaIds);
             setLoading(false);
         } catch (error) {
             console.error('Error fetching property:', error);
@@ -42,6 +59,9 @@ const EditProperty = () => {
         }
     };
 
+    useEffect(() => {
+        getProperty(id);
+    }, [id]);
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -54,11 +74,10 @@ const EditProperty = () => {
     const handleFileChange = e => {
         setNewProperty(prevValues => ({
             ...prevValues,
-            file: e.target.files[0]
+            files: e.target.files
         }));
     };
 
-    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -71,21 +90,61 @@ const EditProperty = () => {
         }
 
         try {
+            if (newProperty.files && medias.length > 0) {
+                const formData = new FormData();
+                formData.append('title', newProperty.title);
+                formData.append('address', newProperty.address);
+                formData.append('price', newProperty.price);
+                formData.append('bed', newProperty.bed);
+                formData.append('bath', newProperty.bath);
+                formData.append('category', newProperty.category);
+                formData.append('city', newProperty.city);
+                formData.append('neighbourhood', newProperty.neighbourhood);
+                formData.append('sqft', newProperty.sqft);
+                formData.append('yearBuilt', newProperty.yearBuilt);
+                formData.append('landArea', newProperty.landArea);
+                formData.append('description', newProperty.description);
+
+                // Append multiple files
+                for (let i = 0; i < newProperty.files.length; i++) {
+                    formData.append('files', newProperty.files[i]);
+                }
+
+                const response = await api.post('/file/upload-multiple', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+
+                const urls = response.data.map(file => file.url); // array of URLs
+
+                // Delete existing media entries
+                for (let i = 0; i < medias.length; i++) {
+                    await api.delete(`/media/${medias[i]}`);
+                }
+
+                // Create new media entries
+                for (const url of urls) {
+                    await api.post('/media/create', {
+                        type: 'image',
+                        url,
+                        ownerId: id,
+                        name: 'Property',
+                    });
+                }
+            }
+
             // Update property
             const res = await api.put(`/property/${id}`, newProperty);
             if (res.status === 200) {
                 navigate('/secure/listings');
             }
         } catch (error) {
-            setErrors(error.response.data.error);
+            setErrors(error.response?.data?.error || 'An error occurred');
         } finally {
             setLoading(false);
         }
     };
-
-    useEffect(() => {
-        getProperty(id);
-    }, [id]);
 
     return (
         <div className='m-5 border rounded-lg'>

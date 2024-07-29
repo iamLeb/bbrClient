@@ -84,15 +84,7 @@ const AddAgent = () => {
         try {
             // send to api
             const res = await api.post('/auth/registeragent', values);
-            console.log(res)
-            if (res.status === 201) {
-                console.log("good");
-                // setErrors(null)
-            } else {
-                console.log('there was an error')
-            }
         } catch (e) {
-            console.log(e.response.data.error)
             const newError = (e.response.data.error);
             setErrors ({
                 ...errors,
@@ -141,8 +133,8 @@ const AddAgent = () => {
                         {errors.type && <p className="text-red-500">{errors.type}</p>}
                     </div>
                     <div className="flex justify-center">
-                        <button type='submit' className="w-1/3 bg-primary p-3 flex justify-center rounded-lg text-bold text-white">
-                            Add agent
+                        <button type='submit' className=" bg-primary p-4 flex justify-center rounded-lg text-bold text-white">
+                            Add Agent
                         </button>
                     </div>
                 </form>

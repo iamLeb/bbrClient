@@ -13,7 +13,7 @@ const Testimonials = () => {
         if (!isHovered) {
             interval = setInterval(() => {
                 setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
-            }, 2500); // Change slide every 3 seconds
+            }, 2500); // Change slide every 2.5 seconds
         }
 
         return () => clearInterval(interval);
@@ -36,10 +36,10 @@ const Testimonials = () => {
                 <p className="font-light text-sm">Hear some reasons why you should choose us</p>
             </div>
 
-            <div className="relative w-2/5 max-w-4xl">
+            <div className="relative max-w-xs md:max-w-md">
                 <div className="overflow-hidden">
                     <div
-                        className="flex transition-transform duration-500 "
+                        className="flex transition-transform duration-500"
                         style={{
                             transform: `translateX(-${currentIndex * 100}%)`,
                         }}
@@ -47,14 +47,14 @@ const Testimonials = () => {
                         {testimonials.map((testimonial) => (
                             <div
                                 key={testimonial._id}
-                                className="min-w-full flex flex-col items-center bg-white sj rounded-xl  p-5 h-96"
+                                className="min-w-full flex flex-col items-center bg-white rounded-xl border shadow-lg p-5 h-80"
                                 onMouseEnter={() => setIsHovered(true)}
                                 onMouseLeave={() => setIsHovered(false)}
                             >
                                 <div className="p-5">
                                     <TiMessages className="text-primary text-3xl"/>
                                 </div>
-                                <div className="w-2/3 text-center pb-5">{testimonial.message}</div>
+                                <div className="w-full text-center pb-5">{testimonial.message}</div>
                                 <div className="flex pt-10 justify-center">
                                     <img
                                         src={`https://ui-avatars.com/api/?name=${testimonial.name}`}
@@ -70,13 +70,13 @@ const Testimonials = () => {
                 </div>
 
                 <button
-                    className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-200 rounded-full p-2"
+                    className="hover:bg-primary absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-200 rounded-full p-2"
                     onClick={prevSlide}
                 >
                     &lt;
                 </button>
                 <button
-                    className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-200 rounded-full p-2"
+                    className="hover:bg-primary absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-200 rounded-full p-2"
                     onClick={nextSlide}
                 >
                     &gt;

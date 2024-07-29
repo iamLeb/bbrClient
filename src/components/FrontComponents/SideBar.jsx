@@ -4,11 +4,15 @@ import {IoCameraSharp, IoHome, IoMailOpenSharp} from "react-icons/io5";
 import {CiBoxList} from "react-icons/ci";
 import {FaCircleInfo} from "react-icons/fa6";
 import {TbHomeDollar} from "react-icons/tb";
-import React from "react";
+import React, {useContext} from "react";
+import logo1 from "../../assets/images/logo/Bliss logo black white.png";
+import {AiOutlineDashboard} from "react-icons/ai";
+import UserContext from "../../context/UserContext.js";
 
 const SideBar = ({sidebar, toggleSidebar}) => {
     const navigate = useNavigate();
     const location = useLocation();
+    const {user} = useContext(UserContext);
 
     const items = [
         {
@@ -22,7 +26,7 @@ const SideBar = ({sidebar, toggleSidebar}) => {
             id: 1,
             name: 'About',
             onClick: () => navigate('/about'),
-            icon: <FaCircleInfo />,
+            icon: <FaCircleInfo/>,
         },
         {
             id: 2,
@@ -46,8 +50,18 @@ const SideBar = ({sidebar, toggleSidebar}) => {
             id: 5,
             name: 'Buy | Sell',
             onClick: () => navigate('/contact'),
-            icon:  <TbHomeDollar/>,
+            icon: <TbHomeDollar/>,
         },
+        ...(user ? [
+            {
+                id: 6,
+                name: 'Dashboard',
+                onClick: () => {
+                    window.location.href = '/secure';
+                },
+                icon: <AiOutlineDashboard/>,
+            }
+        ] : []),
     ];
 
     return (
@@ -55,9 +69,9 @@ const SideBar = ({sidebar, toggleSidebar}) => {
             className={`overflow-y-auto fixed lg:static lg:hidden top-0 left-0 bg-neutral-800 text-white h-screen w-80 sm:w-[500px] lg:w-80 transition-transform duration-300 ease-in-out py-2
             ${sidebar ? 'translate-x-0' : '-translate-x-full'} lg:transform-none`}>
 
-            <div className="py-5 text-center  flex items-center space-x-20">
-                <div className={'text-center text-3xl text-primary font-bold px-3'}>
-                    <h1 className="text-3xl text-primary font-bold">logo</h1>
+            <div className="py-5 text-center flex items-center space-x-20">
+                <div>
+                    <img className={'w-24 ml-4'} src={logo1} alt="logo"/>
                 </div>
             </div>
 

@@ -2,11 +2,13 @@ import {FiMenu} from "react-icons/fi";
 import {TbHomeDollar} from "react-icons/tb";
 import {PiLineVerticalThin} from "react-icons/pi";
 import {useNavigate} from "react-router-dom";
-import React from "react";
+import React, {useContext} from "react";
 import {MdOutlineCancel} from "react-icons/md";
-import logo1 from "../../assets/images/logo/logo1.png";
+import logo1 from "../../assets/images/logo/Black Bliss Logo.png";
+import UserContext from "../../context/UserContext.js";
 
 const Header = ({sidebar, toggleSidebar}) => {
+    const {user} = useContext(UserContext);
     const navigate = useNavigate();
 
     const links = [
@@ -20,13 +22,11 @@ const Header = ({sidebar, toggleSidebar}) => {
             id: 1,
             name: 'About',
             onClick: () => navigate('/about'),
-
         },
         {
             id: 2,
             name: 'Blog',
             onClick: () => navigate('/blog'),
-
         },
         {
             id: 3,
@@ -38,13 +38,17 @@ const Header = ({sidebar, toggleSidebar}) => {
             name: 'Listings',
             onClick: () => navigate('/properties/listing'),
         },
-
     ];
+
+    const handleDashboardClick = () => {
+        window.location.href = '/secure';
+    };
+
     return (
         <header className={'fixed w-full z-20 bg-white shadow-md p-3 py-6 sm:py-3'}>
             <div className={'container mx-auto flex justify-between items-center'}>
                 <div>
-                    <img className={'w-24'} src={logo1} alt="logo"/>
+                    <img className={'w-12 md:w-24 md:ml-10'} src={logo1} alt="logo"/>
                 </div>
 
                 <div className={'hidden md:block text-md font-medium'}>
@@ -55,7 +59,6 @@ const Header = ({sidebar, toggleSidebar}) => {
                                     className={`flex items-center space-x-1 hover:cursor-pointer hover:text-primary ${link.active && 'text-primary'} `}>
                                     <span>{link.name}</span>
                                 </div>
-
                             </li>
                         ))}
 
@@ -73,6 +76,15 @@ const Header = ({sidebar, toggleSidebar}) => {
                                 </li>
                             </ul>
                         </li>
+
+                        {user && (
+                            <li onClick={handleDashboardClick}>
+                                <div
+                                    className={`flex items-center space-x-1 hover:cursor-pointer hover:text-primary `}>
+                                    <span>Dashboard</span>
+                                </div>
+                            </li>
+                        )}
                     </ul>
                 </div>
 
@@ -83,8 +95,6 @@ const Header = ({sidebar, toggleSidebar}) => {
                             <FiMenu className={'text-primary'} size={32}/>}
                     </div>
                 </div>
-
-
             </div>
         </header>
     );

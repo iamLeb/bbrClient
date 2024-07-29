@@ -1,11 +1,13 @@
 import {useContext} from "react";
 import UserContext from "../../context/UserContext.js";
-import {IoCalendarOutline, IoLayersOutline} from "react-icons/io5";
-import {CiCircleList, CiCirclePlus} from "react-icons/ci";
-import {FaRegComments} from "react-icons/fa";
+import {IoLayersOutline} from "react-icons/io5";
+import {CiCircleList} from "react-icons/ci";
+import {FaBlog} from "react-icons/fa";
 import {TbUsersGroup} from "react-icons/tb";
 import GlobalContext from "../../context/Global.js";
 import {useNavigate} from "react-router-dom";
+import {RiCommunityFill} from "react-icons/ri";
+import {MdEventAvailable} from "react-icons/md";
 
 const Admin = () => {
     const {user} = useContext(UserContext);
@@ -14,6 +16,8 @@ const Admin = () => {
     const {properties} = useContext(GlobalContext);
     const {neighbourhoods} = useContext(GlobalContext);
     const {contacts} = useContext(GlobalContext);
+    const {blogs} = useContext(GlobalContext);
+    const {bookings} = useContext(GlobalContext);
 
     const boxes = [
         {
@@ -22,7 +26,6 @@ const Admin = () => {
             count: properties.length,
             linkLabel: 'View all Listings',
             path: "listings",
-            increase: '+16.24',
             icon: <CiCircleList/>,
             color: 'bg-yellow-600'
         },
@@ -33,7 +36,6 @@ const Admin = () => {
             count: categories.length,
             linkLabel: 'View categories',
             path: "category",
-            increase: '+16.24',
             icon: <IoLayersOutline/>,
             color: 'bg-purple-200'
         },
@@ -44,8 +46,7 @@ const Admin = () => {
             count: neighbourhoods.length,
             linkLabel: 'View Neighbourhoods',
             path: "neighbourhoods",
-            increase: '+16.24',
-            icon: <FaRegComments/>,
+            icon: <RiCommunityFill/>,
             color: 'bg-green-200'
         },
 
@@ -55,9 +56,26 @@ const Admin = () => {
             count: contacts.length,
             linkLabel: 'View contacts',
             path: "contacts",
-            increase: '+16.24',
             icon: <TbUsersGroup/>,
             color: 'bg-blue-200'
+        },
+        {
+            id: 5,
+            title: 'Total Blogs',
+            count: blogs.length,
+            linkLabel: 'View blogs',
+            path: "blog",
+            icon: <FaBlog/>,
+            color: 'bg-red-200'
+        },
+        {
+            id: 6,
+            title: 'Total Bookings',
+            count:bookings.length,
+            linkLabel: 'View availability',
+            path: "availability",
+            icon: <MdEventAvailable/>,
+            color: 'bg-purple-200'
         }
     ];
 
@@ -76,7 +94,6 @@ const Admin = () => {
                     <div key={box.id} className={'bg-white p-4 rounded-md shadow-md flex-1 duration-300'}>
                         <div className={'flex justify-between'}>
                             <h3 className={'font-light'}>{box.title}</h3>
-                            <span className={'font-bold text-primary'}>{box.increase}</span>
                         </div>
 
                         <h1 className={'font-extrabold mt-3 text-xl'}>{box.count}</h1>

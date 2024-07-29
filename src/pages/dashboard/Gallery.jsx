@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import api from "../../services/api";
 
 const Gallery = () => {
@@ -9,9 +9,12 @@ const Gallery = () => {
     const [errors, setErrors] = useState('');
     const [modal, setModal] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const galleriesPerPage = 5;
 
     // Fetching galleries and neighbourhoods
     const fetchGalleries = async () => {
+        setLoading(true);
         try {
             const res = await api.get('/gallery');
             const galleriesData = res.data;
@@ -23,6 +26,8 @@ const Gallery = () => {
             setGalleries(galleriesWithMedia);
         } catch (error) {
             setErrors('There was an error fetching galleries: ' + error.message);
+        }finally {
+            setLoading(false);
         }
     };
 
@@ -143,6 +148,32 @@ const Gallery = () => {
         setModal(!modal);
     };
 
+    const indexOfLastGallery = currentPage * galleriesPerPage;
+    const indexOfFirstGallery = indexOfLastGallery - galleriesPerPage;
+    const currentGalleries = galleries.slice(indexOfFirstGallery, indexOfLastGallery);
+
+    const handleNext = () => {
+        if (indexOfLastGallery < galleries.length) {
+            setCurrentPage(prevPage => prevPage + 1);
+        }
+    };
+
+    const handlePrevious = () => {
+        if (currentPage > 1) {
+            setCurrentPage(prevPage => prevPage - 1);
+        }
+    };
+
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center py-10">
+                <div
+                    className="w-8 h-8 border-4 border-t-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                <span className="ml-3 text-xl font-semibold">Loading...</span>
+            </div>
+        );
+    }
+
     return (
         <section className="h-screen m-5 mx-10">
             <div className="bg-white border border-gray-100 shadow-2xl">
@@ -163,7 +194,7 @@ const Gallery = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        {galleries.map((gallery) => (
+                        {currentGalleries.map((gallery) => (
                             <tr className="text-xs border-b" key={gallery._id}>
                                 <td className="px-4 py-2 text-left">
                                     <div className="overflow-hidden h-9">
@@ -188,9 +219,13 @@ const Gallery = () => {
                     </table>
                 </div>
                 <div className="flex justify-end p-4 space-x-2">
-                    <button className="border px-2 py-1 text-sm rounded">Previous</button>
-                    <button className="border px-2 py-1 text-white bg-purple-900 text-sm rounded">1</button>
-                    <button className="border px-2 py-1 text-sm rounded">Next</button>
+                    <button onClick={handlePrevious} disabled={currentPage === 1}
+                            className="border px-2 py-1 text-sm rounded">Previous
+                    </button>
+                    <span className="border px-2 py-1 text-sm rounded">{currentPage}</span>
+                    <button onClick={handleNext} disabled={indexOfLastGallery >= galleries.length}
+                            className="border px-2 py-1 text-sm rounded">Next
+                    </button>
                 </div>
             </div>
             {modal && (
@@ -200,7 +235,7 @@ const Gallery = () => {
                             <h2 className="font-extrabold">Create New Gallery</h2>
                         </div>
                         <div className="p-3">
-                            <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit}>
                                 <div className="mb-4">
                                     {errors && <p className="text-red-500 text-xs mt-2">{errors}</p>}
                                     <label className="block text-sm font-bold mb-2">Image</label>

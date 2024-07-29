@@ -2,27 +2,34 @@ import {IoLocationOutline} from "react-icons/io5";
 import {LiaBedSolid} from "react-icons/lia";
 import {FaShower} from "react-icons/fa";
 import {MdOutlineZoomOutMap} from "react-icons/md";
-import {IoIosSearch} from "react-icons/io";
-import {RxMixerVertical} from "react-icons/rx";
-import {useState, useEffect, useContext} from "react";
-import PropertyFilters from "../../../components/FrontComponents/PropertyFilters";
-import {useNavigate} from "react-router-dom";
 import GlobalContext from "../../../context/Global.js";
+import image from "../../../assets/images/BukolaBliss.png";
+import {useNavigate} from "react-router-dom";
+import React, {useContext} from "react";
 
 const Index = () => {
     const navigate = useNavigate();
-    const {properties} = useContext(GlobalContext);
+    const {properties,loading} = useContext(GlobalContext);
 
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center py-10">
+                <div
+                    className="w-8 h-8 border-4 border-t-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                <span className="ml-3 text-xl font-semibold">Loading...</span>
+            </div>
+        );
+    }
 
     return (
         <section className={'mt-2'}>
-            <div className={'p-3 gap-4 text-center'}>
+            <div className={'p-3  space-y-2 flex flex-col text-center'}>
                 <h1 className={'font-bold text-3xl sm:text-4xl'}>Property Listings</h1>
-                <p className={'font-light text-sm'}>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                <p className={'font-light text-sm'}>Explore our property listings to discover the home of your
+                    dreams.</p>
             </div>
 
-            {/* Property Listings */}
-            <div className={'px-3 mt-5 flex justify-evenly p-5'}>
+            <div className={'px-3 mt-3 flex justify-evenly p-5'}>
                 <div className={'grid grid-cols-1 sm:grid-cols-2 md:grid-col-2 lg:grid-cols-3 gap-4'}>
                     {properties.map(property => (
                         <div key={property._id} className={'border border-gray-200 bg-white p-5 rounded-lg group'}>
@@ -83,9 +90,11 @@ const Index = () => {
                                 <span className={'border-b border-gray-100'}></span>
                                 <div className={'flex justify-between items-center font-light text-sm text-gray-500'}>
                                     <div className={'flex items-center space-x-2'}>
-                                        <img className={'w-9 rounded-full'}
-                                             src={'https://dreamhomewp.themesflat.com/wp-content/uploads/2023/11/user-1-1.jpg'}
-                                             alt="Agent Avatar"/>
+                                        <div className={'overflow-hidden w-9 h-9 rounded-full'}>
+                                            <img className={'w-full h-full object-cover object-top'}
+                                                 src={image}
+                                                 alt=""/>
+                                        </div>
                                         <span
                                             className={'cursor-pointer transition-all duration-300 hover:text-primary'}>Bukola Bliss</span>
                                     </div>
