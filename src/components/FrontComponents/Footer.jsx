@@ -47,7 +47,7 @@ const Footer = () => {
                             </div>
                             <button onClick={() => navigate('/contact')}
                                     className={'sm:absolute -bottom-7 bg-white px-8 py-4 rounded-md text-primary hover:bg-primary hover:text-white transition-all duration-300 font-bold'}>Contact
-                                Seller
+                                Buyer
                             </button>
                         </div>
                     </div>
@@ -61,7 +61,11 @@ const Footer = () => {
                     <ul className={'flex flex-col gap-4 pb-2 px-6'}>
                         <li>
                             <span className={'text-sm text-neutral-900'}>Head office:</span>
-                            <p className={'text-white text-sm'}>663-A Stafford Street ,Winnipeg Manitoba, R3M2X7</p>
+                            <p className={'text-white text-sm'}>
+                                <a className={'hover:cursor-pointer'} target={"_blank"}
+                                   href="https://maps.app.goo.gl/mDKMgohdvE6Ns1Kb7">663-A
+                                    Stafford Street ,Winnipeg Manitoba, R3M 2X7</a>
+                            </p>
                         </li>
                     </ul>
                 </div>
@@ -88,7 +92,8 @@ const Footer = () => {
                                 <div>
                                     <p>Email:</p>
                                     <span className={'text-white'}>
-                                        <a target='_blank' href="mailto:Bbliss@sutton.com">Bbliss@sutton.com</a>
+                                    <a target='_blank' href="mailto:babian14@yahoo.co.uk">babian14@yahoo.co.uk</a>
+
                                     </span>
                                 </div>
                             </div>
