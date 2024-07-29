@@ -14,9 +14,7 @@ const UserContextProvider = ({ children }) => {
         }
     }
 
-
     useEffect(() => {
-        console.log(user)
         getUser();
     }, []);
 
