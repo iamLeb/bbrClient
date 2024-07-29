@@ -1,14 +1,14 @@
-import { IoChatboxEllipsesOutline } from "react-icons/io5";
+import {IoChatboxEllipsesOutline} from "react-icons/io5";
 import PropertyType from "./PropertyType.jsx";
-import { FaRegUser } from "react-icons/fa";
-import { MdOutlineEmail } from "react-icons/md";
-import { FaPhoneAlt } from "react-icons/fa";
-import { GrMapLocation } from "react-icons/gr";
-import { RxSlash } from "react-icons/rx";
-import { MdOutlinePermPhoneMsg } from "react-icons/md";
-import { RiMailSendLine } from "react-icons/ri";
+import {FaRegUser} from "react-icons/fa";
+import {MdOutlineEmail} from "react-icons/md";
+import {FaPhoneAlt} from "react-icons/fa";
+import {GrMapLocation} from "react-icons/gr";
+import {RxSlash} from "react-icons/rx";
+import {MdOutlinePermPhoneMsg} from "react-icons/md";
+import {RiMailSendLine} from "react-icons/ri";
 import api from "../../services/api.js";
-import { useState } from "react";
+import React, {useState} from "react";
 import BookingQuestion from "./UserBooking/BookingQuestion.jsx";
 
 const ContactTemplate = () => {
@@ -26,7 +26,7 @@ const ContactTemplate = () => {
 
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setContact({
             ...contact,
             [name]: value,
@@ -86,7 +86,7 @@ const ContactTemplate = () => {
                         setRefreshCalendar(prev => prev + 1)// Increment to trigger re-render
                     }
 
-                    setContact({ name: "", email: "", phone: "", message: "" });
+                    setContact({name: "", email: "", phone: "", message: ""});
                 }
                 setSuccess(
                     "We have received your message and we will get back to you soon."
@@ -105,8 +105,8 @@ const ContactTemplate = () => {
         <section className={"bg-sky-100 px-5"}>
             <p className={"text-center py-5"}>
                 Become our next customer, and find your dream home{" "}
-                <span className={"text-primary underline"}>
-          Contact us: 431-996-9920
+                <span className={"text-primary underline hover:cursor-pointer"}>
+                      <a href="tel:4319969920">Contact us: 431-996-9920</a>
         </span>
             </p>
 
@@ -133,43 +133,43 @@ const ContactTemplate = () => {
                     <div className={"flex flex-col space-y-2"}>
                         <div className={"flex flex-row"}>
                             <div>
-                                <GrMapLocation size={36} />
+                                <GrMapLocation size={36}/>
                             </div>
                             <div>
-                                <RxSlash size={36} />
+                                <RxSlash size={36}/>
                             </div>
                             <div className={"flex flex-col"}>
                                 <p className={"text-gray-500 text-lg"}>Office address</p>
-                                <p>663-A Stafford Street ,Winnipeg Manitoba, R3M2X7</p>
+                                <a className={'hover:cursor-pointer'} target={"_blank"} href="https://maps.app.goo.gl/mDKMgohdvE6Ns1Kb7">663-A Stafford Street ,Winnipeg Manitoba, R3M 2X7</a>
                             </div>
                         </div>
 
                         <div className={"flex flex-row"}>
                             <div>
-                                <MdOutlinePermPhoneMsg size={36} />
+                                <MdOutlinePermPhoneMsg size={36}/>
                             </div>
                             <div>
-                                <RxSlash size={36} />
+                                <RxSlash size={36}/>
                             </div>
                             <div className={"flex flex-col"}>
                                 <p className={"text-gray-500 text-lg"}>Office address</p>
-                                <p className={"text-3xl font-semibold text-primary"}>
-                                    431-996-9920
+                                <p className={"text-3xl font-semibold text-primary hover:cursor-pointer"}>
+                                    <a href="tel:4319969920">431-996-9920</a>
                                 </p>
                             </div>
                         </div>
 
                         <div className={"flex flex-row"}>
                             <div>
-                                <RiMailSendLine size={36} />
+                                <RiMailSendLine size={36}/>
                             </div>
                             <div>
-                                <RxSlash size={36} />
+                                <RxSlash size={36}/>
                             </div>
                             <div className={"flex flex-col"}>
                                 <p className={"text-gray-500 text-lg"}>Email us</p>
-                                <p className={"font-semibold text-primary"}>
-                                    Bbliss@sutton.com
+                                <p className={"font-semibold text-primary hover:cursor-pointer"}>
+                                    <a target='_blank' href="mailto:babian14@yahoo.co.uk">babian14@yahoo.co.uk</a>
                                 </p>
                             </div>
                         </div>
@@ -179,7 +179,8 @@ const ContactTemplate = () => {
                 <div className={"flex-1 w-full"}>
                     <div className={"bg-white rounded-lg shadow-2xl p-10 relative"}>
                         {(success || errors) && (
-                            <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-95 z-10 rounded-lg">
+                            <div
+                                className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-95 z-10 rounded-lg">
                                 <div
                                     className={`text-center p-6 rounded-lg shadow-lg border max-w-md mx-4 ${
                                         success
@@ -216,7 +217,7 @@ const ContactTemplate = () => {
                                     We will respond as soon as we receive your message.
                                 </p>
                             </div>
-                            <IoChatboxEllipsesOutline className={"text-primary "} size={32} />
+                            <IoChatboxEllipsesOutline className={"text-primary "} size={32}/>
                         </div>
 
                         <form onSubmit={handleSubmit} className={"flex flex-col gap-2"}>
@@ -229,7 +230,7 @@ const ContactTemplate = () => {
                       }
                   >
                     {" "}
-                      <FaRegUser size={18} />
+                      <FaRegUser size={18}/>
                   </span>
                                     <input
                                         className={
@@ -253,7 +254,7 @@ const ContactTemplate = () => {
                       }
                   >
                     {" "}
-                      <MdOutlineEmail size={18} />
+                      <MdOutlineEmail size={18}/>
                   </span>
                                     <input
                                         className={
@@ -277,7 +278,7 @@ const ContactTemplate = () => {
                       }
                   >
                     {" "}
-                      <FaPhoneAlt size={18} />
+                      <FaPhoneAlt size={18}/>
                   </span>
                                     <input
                                         className={
@@ -320,7 +321,8 @@ const ContactTemplate = () => {
                                 >
                                     <span>Send Message</span>
                                     {loading && (
-                                        <span className="ml-2 animate-spin border-2 border-t-2 border-white border-t-transparent rounded-full w-4 h-4"></span>
+                                        <span
+                                            className="ml-2 animate-spin border-2 border-t-2 border-white border-t-transparent rounded-full w-4 h-4"></span>
                                     )}
                                 </button>
                             </div>
