@@ -118,6 +118,8 @@ const AppointmentCalendar = ({
     }
   };
 
+  
+
   // Handler for when a new date is selected in the calendar
   const handleDateChange = (date) => {
     setSelectedDate(date);

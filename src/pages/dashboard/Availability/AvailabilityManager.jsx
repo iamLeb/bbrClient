@@ -12,6 +12,7 @@ import {
   Edit,
   Trash2,
   Search,
+  MessageSquare
 } from "lucide-react";
 import api from "../../../services/api";
 import EditForm from "./EditForm"; // Adjust the import path as needed
@@ -41,6 +42,7 @@ const AvailabilityManager = () => {
     searchTerm,
     availabilities,
     sortDirection,
+    
   ]);
 
   // Fetch all availabilities from the API
@@ -55,7 +57,7 @@ const AvailabilityManager = () => {
 
   // Filter and sort availabilities based on user-selected criteria
   const filterAvailabilities = () => {
-    let filtered = availabilities;
+    let filtered = [...availabilities];
 
     // If any filters are applied, go through the filtering process
     if (timeFilter !== "all" || showOnlyWithBookings || searchTerm !== "") {
@@ -126,8 +128,10 @@ const AvailabilityManager = () => {
 
   // Toggle functions for various UI elements
   const toggleDropdown = () => setIsExpanded(!isExpanded);
-  const toggleSortDirection = () =>
+  const toggleSortDirection = () =>{
     setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
+    filterAvailabilities();
+  }
   const toggleExpand = (id) =>
     setExpandedAvailabilities((prev) => ({ ...prev, [id]: !prev[id] }));
 
@@ -284,12 +288,12 @@ const AvailabilityManager = () => {
 
           {/* Availability list */}
           <div>
-            <h2 className="text-2xl font-bold mb-4">Availability Schedule</h2>
-            <div className="bg-white rounded-lg shadow-md divide-y divide-gray-200">
+            <h2 className="text-2xl font-bold mb-4  ">Availability Schedule</h2>
+            <div className="bg-gray-150 rounded-lg border shadow-md  divide-gray-200">
               {filteredAvailabilities.map((availability) => (
-                <div key={availability._id} className="hover:bg-gray-50">
+                <div key={availability._id} className="hover:bg-gray-200">
                   {/* Availability summary */}
-                  <div className="grid sm:grid-cols-4 gap-4 p-4 items-center">
+                  <div className="grid border  sm:grid-cols-4 gap-4 p-4 items-center">
                     <div className="font-medium">
                       {formatDate(availability.date)}
                     </div>
@@ -327,15 +331,15 @@ const AvailabilityManager = () => {
                   </div>
                   {/* Expanded booking details */}
                   {expandedAvailabilities[availability._id] && (
-                    <div className="p-4 bg-gray-50 border-t border-gray-200">
+                    <div className="p-4 bg-gray-50 border-t border ">
                       {availability.bookings.length > 0 ? (
                         availability.bookings.map((booking) => (
                           <div
                             key={booking._id}
-                            className="bg-white rounded-md shadow-sm p-4 mb-4 hover:shadow"
+                            className="bg-white rounded-md shadow-sm p-4 mb-4 hover:shadow border  border-blue-700"
                           >
                             {/* Booking time and action buttons */}
-                            <div className="grid sm:grid-cols-2 gap-4 mb-2">
+                            <div className="grid sm:grid-cols-2 gap-4 mb-2 ">
                               <span className="font-medium flex items-center">
                                 <Clock className="mr-2" />
                                 {formatTime(booking.startTime)} -{" "}
@@ -362,7 +366,7 @@ const AvailabilityManager = () => {
                               </div>
                             </div>
                             {/* Booking contact information */}
-                            <div className="text-sm text-gray-700 space-y-2">
+                            <div className="text-sm text-gray-700 space-y-2 ">
                               <p className="flex items-center">
                                 <User className="mr-2" />
                                 {booking.contact.name}
@@ -371,7 +375,7 @@ const AvailabilityManager = () => {
                                 <Mail className="mr-2" />
                                 <a
                                   href={`mailto:${booking.contact.email}`}
-                                  className="hover:underline text-blue-600"
+                                  className="hover:underline text-gray-700 "
                                 >
                                   {booking.contact.email}
                                 </a>
@@ -380,9 +384,18 @@ const AvailabilityManager = () => {
                                 <Phone className="mr-2" />
                                 <a
                                   href={`tel:${booking.contact.phone}`}
-                                  className="hover:underline text-blue-600"
+                                  className="hover:underline text-gray-700 "
                                 >
                                   {booking.contact.phone}
+                                </a>
+                              </p>
+                              <p className="flex items-center">
+                                <MessageSquare className="mr-2" />
+                                <a
+              
+                                  className=" text-gray-700 "
+                                >
+                                  {booking.contact.message}
                                 </a>
                               </p>
                             </div>
