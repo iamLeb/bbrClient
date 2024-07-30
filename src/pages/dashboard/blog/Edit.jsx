@@ -1,12 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {useNavigate, useParams} from 'react-router-dom';
+import {useLocation, useNavigate, useParams} from 'react-router-dom';
 import api from "../../../services/api.js";
 import GlobalContext from "../../../context/Global.js";
 
 const Edit = () => {
     let {id} = useParams();
     const navigate = useNavigate();
-
+    const location = useLocation();
     // State variables
     const [loading, setLoading] = useState(false);
     const {categories, getName} = useContext(GlobalContext);
@@ -14,10 +14,11 @@ const Edit = () => {
         title: '',
         category: '',
         content: '',
-        file:null
+        file: null
     });
     const [media, setMedia] = useState([]);
     const [errors, setErrors] = useState('');
+    const currentPage = location.state?.currentPage;
 
     const fetchMedia = async (ownerId) => {
         try {
@@ -98,7 +99,7 @@ const Edit = () => {
             // Update blog
             const res = await api.put(`/blog/${id}`, newBlog);
             if (res.status === 200) {
-                navigate('/secure/blog');
+                navigate('/secure/blog', {state: {currentPage}});
             }
         } catch (error) {
             setErrors(error.response.data.error);

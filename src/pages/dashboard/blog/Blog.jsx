@@ -1,51 +1,45 @@
-import { useNavigate } from "react-router-dom";
-import React, { useContext, useEffect, useState } from "react";
+import {useLocation, useNavigate} from "react-router-dom";
+import React, {useContext, useEffect, useState} from "react";
 import api from "../../../services/api";
 import GlobalContext from "../../../context/Global.js";
 
 const Blog = () => {
     const navigate = useNavigate();
-    const { format } = useContext(GlobalContext);
-
+    const {format} = useContext(GlobalContext);
+    const location = useLocation();
     const [blogs, setBlogs] = useState([]);
     const [categories, setCategories] = useState({});
     const [errors, setErrors] = useState('');
     const [loading, setLoading] = useState(true);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-    const blogsPerPage = 5; // Display five blogs per page
+    const [currentPage, setCurrentPage] = useState(location.state?.currentPage || 1);
+    const [blogsPerPage, setBlogsPerPage] = useState(5);
 
     const fetchBlogs = async (page = 1) => {
         try {
             const response = await api.get('/blog');
-            const allBlogs = response.data;
-            setTotalPages(Math.ceil(allBlogs.length / blogsPerPage));
-
-            const start = (page - 1) * blogsPerPage;
-            const end = start + blogsPerPage;
-            const currentBlogs = allBlogs.slice(start, end);
+            const blogs = response.data;
 
             // Fetch categories for each blog
-            const categoryPromises = currentBlogs.map(blog => fetchCategoryName(blog.category));
+            const categoryPromises = blogs.map(blog => fetchCategoryName(blog.category));
             const categoryResponses = await Promise.all(categoryPromises);
 
             // Create a map of category IDs to category names
             const categoriesMap = {};
             categoryResponses.forEach((response, index) => {
-                const categoryId = currentBlogs[index].category;
+                const categoryId = blogs[index].category;
                 categoriesMap[categoryId] = response.data;
             });
 
             // Fetch media for each blog
-            const mediaPromises = currentBlogs.map(blog => fetchMedia(blog._id));
+            const mediaPromises = blogs.map(blog => fetchMedia(blog._id));
             const mediaResponses = await Promise.all(mediaPromises);
 
-            currentBlogs.forEach((blog, index) => {
+            blogs.forEach((blog, index) => {
                 blog.media = mediaResponses[index].data; // Attach media data to each blog
             });
 
             setCategories(categoriesMap);
-            setBlogs(currentBlogs);
+            setBlogs(blogs);
         } catch (error) {
             setErrors('There was an error fetching the blogs: ' + error.message);
         } finally {
@@ -54,15 +48,14 @@ const Blog = () => {
     };
 
     const fetchCategoryName = async id => {
-        const response = await api.get(`/category/${id}`);
-        return response;
+        return await api.get(`/category/${id}`);
     };
 
     const fetchMedia = async (ownerId) => {
         try {
             return await api.get(`/media/getMediaForOwner/${ownerId}`);
         } catch (error) {
-            return { data: [] };
+            return {data: []};
         }
     };
 
@@ -89,22 +82,37 @@ const Blog = () => {
         fetchBlogs(currentPage);
     }, [currentPage]);
 
-    const handlePreviousPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
+    const indexOfLastBlog = currentPage * blogsPerPage;
+    const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
+    const currentBlogs = blogs.slice(indexOfFirstBlog, indexOfLastBlog);
+
+    const handleNext = () => {
+        if (indexOfLastBlog < blogs.length) {
+            setCurrentPage(prevPage => prevPage + 1);
         }
     };
 
-    const handleNextPage = () => {
-        if (currentPage < totalPages) {
-            setCurrentPage(currentPage + 1);
+    const handlePrevious = () => {
+        if (currentPage > 1) {
+            setCurrentPage(prevPage => prevPage - 1);
         }
     };
+
+    const handleBlogsPerPage = e => {
+        setBlogsPerPage(Number(e.target.value));
+        setCurrentPage(1);
+    };
+
+    const calculateLastPage = (total, PerPage) => {
+        return Math.ceil(total / PerPage);
+    };
+
 
     if (loading) {
         return (
             <div className="flex justify-center items-center py-10">
-                <div className="w-8 h-8 border-4 border-t-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                <div
+                    className="w-8 h-8 border-4 border-t-4 border-primary border-t-transparent rounded-full animate-spin"></div>
                 <span className="ml-3 text-xl font-semibold">Loading...</span>
             </div>
         );
@@ -116,8 +124,9 @@ const Blog = () => {
                 <div className="p-4 border-b"><h3 className="font-bold">Add, Edit & Remove</h3></div>
                 <div className="p-3">
                     <div className="sm:flex justify-between items-center">
-                        <button onClick={() => navigate('create')}
-                                className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>+
+                        <button
+                            onClick={() => navigate('create', {state: {lastPage: calculateLastPage(blogs.length + 1, blogsPerPage)}})}
+                            className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>+
                             Create New Blog
                         </button>
                     </div>
@@ -135,7 +144,7 @@ const Blog = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        {blogs.map((blog) => (
+                        {currentBlogs.map((blog) => (
 
                             <tr key={blog._id} className="text-left lg:text-center text-xs border-b ">
                                 <td className="px-4 py-2">{getFirstFiveWords(blog.title)}</td>
@@ -156,7 +165,7 @@ const Blog = () => {
                                 </td>
                                 <td className="px-4 py-2">
                                     <div className={'flex justify-end lg:justify-center text-end '}>
-                                        <button onClick={() => navigate('edit/' + blog._id)}
+                                        <button onClick={() => navigate('edit/' + blog._id, {state: {currentPage}})}
                                                 className="px-2 py-1 rounded bg-primary text-white">Edit
                                         </button>
                                         <button onClick={() => handleDelete(blog._id)}
@@ -169,22 +178,29 @@ const Blog = () => {
                         </tbody>
                     </table>
                 </div>
-                <div className="flex justify-end p-4 space-x-2">
-                    <button
-                        onClick={handlePreviousPage}
-                        className="border px-2 py-1 text-sm rounded"
-                        disabled={currentPage === 1}
-                    >
-                        Previous
-                    </button>
-                    <span className="border px-2 py-1 text-sm rounded">{currentPage}</span>
-                    <button
-                        onClick={handleNextPage}
-                        className="border px-2 py-1 text-sm rounded"
-                        disabled={currentPage === totalPages}
-                    >
-                        Next
-                    </button>
+                <div className={'flex justify-end'}>
+                    <div className="p-4 flex items-center space-x-3">
+                        <select
+                            value={blogsPerPage}
+                            onChange={handleBlogsPerPage}
+                            className="border p-1 rounded"
+                        >
+                            {[5, 10, 15, 20].map(option => (
+                                <option key={option} value={option}>
+                                    {option + ' per page'}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="flex justify-end p-4 space-x-2">
+                        <button onClick={handlePrevious} disabled={currentPage === 1}
+                                className="border px-2 py-1 text-sm rounded">Previous
+                        </button>
+                        <span className="border px-2 py-1 text-sm rounded">{currentPage}</span>
+                        <button onClick={handleNext} disabled={indexOfLastBlog >= blogs.length}
+                                className="border px-2 py-1 text-sm rounded">Next
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>

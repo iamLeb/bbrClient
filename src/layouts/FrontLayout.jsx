@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Outlet, useLocation } from "react-router-dom";
+import {Outlet, useLocation, useNavigate} from "react-router-dom";
 import Header from "../components/FrontComponents/Header.jsx";
 import Footer from "../components/FrontComponents/Footer.jsx";
 import { RxCaretRight } from "react-icons/rx";
@@ -12,6 +12,7 @@ const FrontLayout = () => {
     const firstDirectory = pathSegments[1];
     const [sidebar, setSidebar] = useState(false);
     const sidebarRef = useRef(null);
+    const navigate = useNavigate();
 
     const toggleSidebar = () => {
         setSidebar(!sidebar);
@@ -56,7 +57,7 @@ const FrontLayout = () => {
                                         </div>
                                     </li>
                                     <li>
-                                        <span>{firstDirectory}</span>
+                                        <a href={'/' + firstDirectory} className={'cursor-pointer'}>{firstDirectory}</a>
                                     </li>
                                 </ul>
                             </div>

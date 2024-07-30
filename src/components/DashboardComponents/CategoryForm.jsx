@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import GlobalContext from "../../context/Global.js";
 import api from "../../services/api.js";
 
 const CategoryForm = () => {
-    const { categories, setCategories } = useContext(GlobalContext);
+    const {categories, setCategories} = useContext(GlobalContext);
     const [errors, setErrors] = useState('');
-    const [newCategory, setNewCategory] = useState({ name: '' });
+    const [newCategory, setNewCategory] = useState({name: ''});
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [modal, setModal] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -31,7 +31,7 @@ const CategoryForm = () => {
     }, []);
 
     const handleChange = e => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setNewCategory({
             ...newCategory,
             [name]: value
@@ -75,7 +75,7 @@ const CategoryForm = () => {
                         setCategories([...categories, res.data]);
                     }
                 }
-                setNewCategory({ name: '' });
+                setNewCategory({name: ''});
                 toggleModal();
                 lastPage();
 
@@ -89,14 +89,14 @@ const CategoryForm = () => {
     const handleEdit = category => {
         setLoading(true);
         setSelectedCategory(category);
-        setNewCategory({ name: category.name });
+        setNewCategory({name: category.name});
         toggleModal();
         setLoading(false);
     };
 
     const handleClose = () => {
         setSelectedCategory(null);
-        setNewCategory({ name: '' });
+        setNewCategory({name: ''});
         toggleModal();
     };
 
@@ -128,7 +128,7 @@ const CategoryForm = () => {
 
     const handleCategoriesPerPageChange = e => {
         setCategoriesPerPage(Number(e.target.value));
-        setCurrentPage(1); // Reset to first page on change
+        setCurrentPage(1);
     };
 
     return (
@@ -143,20 +143,6 @@ const CategoryForm = () => {
                             Add New Category
                         </button>
                     </div>
-                </div>
-                <div className="p-4">
-                    <label className="block text-sm font-bold mb-2">Categories Per Page:</label>
-                    <select
-                        value={categoriesPerPage}
-                        onChange={handleCategoriesPerPageChange}
-                        className="border p-1 rounded"
-                    >
-                        {[5, 10, 15, 20].map(option => (
-                            <option key={option} value={option}>
-                                {option}
-                            </option>
-                        ))}
-                    </select>
                 </div>
                 <div className="overflow-x-auto">
                     <table className="table-auto w-full">
@@ -185,14 +171,31 @@ const CategoryForm = () => {
                         </tbody>
                     </table>
                 </div>
-                <div className="flex justify-end p-4 space-x-2">
-                    <button onClick={handlePrevious} disabled={currentPage === 1}
-                            className="border px-2 py-1 text-sm rounded">Previous
-                    </button>
-                    <span className="border px-2 py-1 text-sm rounded">{currentPage}</span>
-                    <button onClick={handleNext} disabled={indexOfLastCategory >= categories.length}
-                            className="border px-2 py-1 text-sm rounded">Next
-                    </button>
+
+                <div className={'flex justify-end'}>
+                    <div className="p-4 flex items-center space-x-3">
+                        <select
+                            value={categoriesPerPage}
+                            onChange={handleCategoriesPerPageChange}
+                            className="border p-1 rounded"
+                        >
+                            {[5, 10, 15, 20].map(option => (
+                                <option key={option} value={option}>
+                                    {option + ' per page'}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className="flex justify-end p-4 space-x-2">
+                        <button onClick={handlePrevious} disabled={currentPage === 1}
+                                className="border px-2 py-1 text-sm rounded">Previous
+                        </button>
+                        <span className="border px-2 py-1 text-sm rounded">{currentPage}</span>
+                        <button onClick={handleNext} disabled={indexOfLastCategory >= categories.length}
+                                className="border px-2 py-1 text-sm rounded">Next
+                        </button>
+                    </div>
                 </div>
             </div>
             {modal && (

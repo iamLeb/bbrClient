@@ -1,11 +1,13 @@
 import {useContext, useEffect, useState} from 'react';
 import GlobalContext from "../../../context/Global.js";
 import api from '../../../services/api';
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 const Create = () => {
     const navigate = useNavigate();
     const [errors, setErrors] = useState('');
+    const location = useLocation();
+    const lastPage = location.state?.lastPage || 1;
     const [loading, setLoading] = useState(false);
     const {categories} = useContext(GlobalContext);
 
@@ -74,7 +76,7 @@ const Create = () => {
                 name: 'Blog',
             });
             setLoading(false);
-            navigate('/secure/blog');
+            navigate('/secure/blog', { state: { currentPage: lastPage } });
 
         } catch (error) {
             setErrors(error.response.data.error)

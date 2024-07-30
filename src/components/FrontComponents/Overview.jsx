@@ -5,7 +5,7 @@ import {PiDoorOpenThin} from "react-icons/pi";
 import {CiCalendar} from "react-icons/ci";
 import {MdOutlineCategory} from "react-icons/md";
 import {GiHomeGarage} from "react-icons/gi";
-import {useContext} from "react";
+import React, {useContext} from "react";
 import GlobalContext from "../../context/Global.js";
 import {useNavigate} from "react-router-dom";
 
@@ -124,8 +124,14 @@ const Overview = ({property}) => {
 
                     <div className={'flex flex-col gap-4 bg-white shadow-lg p-5  my-5 rounded-lg'}>
                         <h1 className={'font-bold pb-2 border-b'}>Description</h1>
-                        <p className={'text-sm md:text-md pb-5'}>{property.description}</p>
-                        {/*<span className={'font-medium cursor-pointer hover:text-primary'}>Show More</span>*/}
+                        <p className={'text-sm md:text-md pb-5'}>
+                            {property.description.split('\n').map((line, index) => (
+                                <p key={index} className="font-medium text-gray-700 leading-relaxed">
+                                    {line}
+                                    <br/>
+                                </p>
+                            ))}
+                        </p>
                     </div>
 
                     <div className={'flex flex-col gap-4 bg-white shadow-lg p-5  my-5 rounded-lg'}>
@@ -154,7 +160,9 @@ const Overview = ({property}) => {
                         <h1 className="font-bold text-2xl">Interested?</h1>
                         <p className="text-xs">Reach out to us and find out how
                             we can help you secure your dream home with ease and confidence.</p>
-                        <button onClick={()=>navigate('/contact')} className="bg-primary text-white font-bold w-full py-5 rounded-lg">Apply Now!</button>
+                        <button onClick={() => navigate('/contact')}
+                                className="bg-primary text-white font-bold w-full py-5 rounded-lg">Apply Now!
+                        </button>
                     </div>
                 </div>
 

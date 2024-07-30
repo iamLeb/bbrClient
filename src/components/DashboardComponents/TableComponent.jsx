@@ -1,7 +1,6 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { useLocation, useNavigate } from "react-router-dom";
+import React, {useEffect, useState} from 'react';
+import {useLocation, useNavigate} from "react-router-dom";
 import api from "../../services/api.js";
-import GlobalContext from "../../context/Global.js";
 
 const TableComponent = () => {
     const navigate = useNavigate();
@@ -12,7 +11,8 @@ const TableComponent = () => {
     const [loading, setLoading] = useState(true); // Initially set to true
     const location = useLocation();
 
-    const [currentPage, setCurrentPage] = useState(location.state?.currentPage || 1);    const propertiesPerPage = 5;
+    const [currentPage, setCurrentPage] = useState(location.state?.currentPage || 1);
+    const [propertiesPerPage, setPropertiesPerPage] = useState(5);
 
     const fetchProperties = async () => {
         try {
@@ -55,25 +55,23 @@ const TableComponent = () => {
         } catch (error) {
             setErrors('There was an error fetching properties');
         } finally {
-            setLoading(false); // Set loading to false after data is fetched
+            setLoading(false);
         }
     };
 
     const fetchCategoryName = async id => {
-        const response = await api.get(`/category/${id}`);
-        return response;
+        return await api.get(`/category/${id}`);
     };
 
     const fetchNeighbourhoodName = async id => {
-        const response = await api.get(`/neighbourhood/${id}`);
-        return response;
+        return await api.get(`/neighbourhood/${id}`);
     };
 
     const fetchMedia = async (ownerId) => {
         try {
             return await api.get(`/media/getMediaForOwner/${ownerId}`);
         } catch (error) {
-            return { data: [] };
+            return {data: []};
         }
     };
 
@@ -112,11 +110,21 @@ const TableComponent = () => {
         }
     };
 
+    const handlePropertiesPerPage = e => {
+        setPropertiesPerPage(Number(e.target.value));
+        setCurrentPage(1);
+    };
+
+    const calculateLastPage = (total, PerPage) => {
+        return Math.ceil(total / PerPage);
+    };
+
 
     if (loading) {
         return (
             <div className="flex justify-center items-center py-10">
-                <div className="w-8 h-8 border-4 border-t-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                <div
+                    className="w-8 h-8 border-4 border-t-4 border-primary border-t-transparent rounded-full animate-spin"></div>
                 <span className="ml-3 text-xl font-semibold">Loading...</span>
             </div>
         );
@@ -128,8 +136,9 @@ const TableComponent = () => {
                 <div className="p-4 border-b"><h3 className="font-bold">Add, Edit & Remove</h3></div>
                 <div className="p-3">
                     <div className="sm:flex justify-between items-center">
-                        <button onClick={() => navigate('add')}
-                                className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>
+                        <button
+                            onClick={() => navigate('add', {state: {lastPage: calculateLastPage(properties.length + 1, propertiesPerPage)}})}
+                            className={'bg-primary rounded-lg text-white text-sm px-3 py-2 hover:cursor-pointer'}>
                             + Create New Property
                         </button>
                     </div>
@@ -156,7 +165,7 @@ const TableComponent = () => {
                                 <td className="px-4 py-2 hidden lg:table-cell">{property.price}</td>
                                 <td className="px-4 py-2 hidden lg:table-cell">
                                     <img src={property.media.url} alt="Property Image"
-                                         className="w-10 h-10 object-cover rounded-lg" />
+                                         className="w-10 h-10 object-cover rounded-lg"/>
                                 </td>
                                 <td className={`px-4 py-2 hidden lg:table-cell font-bold ${property.status === true ? 'text-green-500' : 'text-red-500'}`}>
                                     {property.status === true ? 'Active' : 'Sold'}
@@ -164,7 +173,7 @@ const TableComponent = () => {
 
                                 <td className="px-4 py-2">
                                     <div className="flex justify-end lg:justify-center text-end">
-                                        <button onClick={() => navigate('edit/' + property._id, { state: { currentPage } })}
+                                        <button onClick={() => navigate('edit/' + property._id, {state: {currentPage}})}
                                                 className="px-2 py-1 rounded bg-primary text-white">Edit
                                         </button>
                                         <button onClick={() => handleDelete(property._id)}
@@ -177,10 +186,30 @@ const TableComponent = () => {
                         </tbody>
                     </table>
                 </div>
-                <div className="flex justify-end p-4 space-x-2">
-                    <button onClick={handlePrevious} disabled={currentPage === 1} className="border px-2 py-1 text-sm rounded">Previous</button>
-                    <span className="border px-2 py-1 text-sm rounded">{currentPage}</span>
-                    <button onClick={handleNext} disabled={indexOfLastProperty >= properties.length} className="border px-2 py-1 text-sm rounded">Next</button>
+
+                <div className={'flex justify-end'}>
+                    <div className="p-4 flex items-center space-x-3">
+                        <select
+                            value={propertiesPerPage}
+                            onChange={handlePropertiesPerPage}
+                            className="border p-1 rounded"
+                        >
+                            {[5, 10, 15, 20].map(option => (
+                                <option key={option} value={option}>
+                                    {option + ' per page'}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="flex justify-end p-4 space-x-2">
+                        <button onClick={handlePrevious} disabled={currentPage === 1}
+                                className="border px-2 py-1 text-sm rounded">Previous
+                        </button>
+                        <span className="border px-2 py-1 text-sm rounded">{currentPage}</span>
+                        <button onClick={handleNext} disabled={indexOfLastProperty >= properties.length}
+                                className="border px-2 py-1 text-sm rounded">Next
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
