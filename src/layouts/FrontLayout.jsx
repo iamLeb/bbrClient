@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {Outlet, useLocation, useNavigate} from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Header from "../components/FrontComponents/Header.jsx";
 import Footer from "../components/FrontComponents/Footer.jsx";
 import { RxCaretRight } from "react-icons/rx";
@@ -35,16 +35,24 @@ const FrontLayout = () => {
         };
     }, []);
 
+    const handleBreadcrumbClick = () => {
+        if (firstDirectory === 'properties') {
+            navigate('/properties/listing');
+        } else {
+            navigate(`/${firstDirectory}`);
+        }
+    };
+
     return (
         <>
             <div className="relative lg:static flex">
                 <div className="fixed z-50 lg:static lg:z-auto" ref={sidebarRef}>
-                    <SideBar sidebar={sidebar} toggleSidebar={toggleSidebar}/>
+                    <SideBar sidebar={sidebar} toggleSidebar={toggleSidebar} />
                 </div>
 
                 <div className="flex-1 lg:z-auto">
                     <div className={'mb-6'}>
-                        <Header sidebar={sidebar} toggleSidebar={toggleSidebar}/>
+                        <Header sidebar={sidebar} toggleSidebar={toggleSidebar} />
                     </div>
                     {location.pathname !== '/' && (
                         <div className="mt-[100px]">
@@ -53,20 +61,22 @@ const FrontLayout = () => {
                                     <li>
                                         <div className={'flex items-center space-x-2 text-primary cursor-pointer'}>
                                             <a href={'/'}>Home</a>
-                                            <RxCaretRight/>
+                                            <RxCaretRight />
                                         </div>
                                     </li>
                                     <li>
-                                        <a href={'/' + firstDirectory} className={'cursor-pointer'}>{firstDirectory}</a>
+                                        <span onClick={handleBreadcrumbClick} className={'cursor-pointer'}>
+                                            {firstDirectory}
+                                        </span>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     )}
-                    <Outlet/> {/* This is the children that will inherit the header & footer */}
+                    <Outlet /> {/* This is the children that will inherit the header & footer */}
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </>
     );
 };
