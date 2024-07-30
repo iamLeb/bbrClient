@@ -122,7 +122,7 @@ const CategoryForm = () => {
     };
 
     const lastPage = () => {
-        const lastPage = calculateLastPage(categories.length, categoriesPerPage);
+        const lastPage = calculateLastPage(categories.length+1, categoriesPerPage);
         setCurrentPage(lastPage);
     };
 

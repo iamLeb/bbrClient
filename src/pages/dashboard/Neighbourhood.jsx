@@ -9,7 +9,7 @@ const Neighbourhood = () => {
     const [modal, setModal] = useState(false);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const neighbourhoodPerPage = 5;
+    const [neighbourhoodPerPage, setNeighbourhoodPerPage] = useState(5);
 
     const toggleModal = () => {
         setModal(!modal);
@@ -120,8 +120,13 @@ const Neighbourhood = () => {
 
 
     const lastPage = () => {
-        const lastPage = calculateLastPage(neighbourhoods.length, 5);
+        const lastPage = calculateLastPage(neighbourhoods.length+1, neighbourhoodPerPage);
         setCurrentPage(lastPage);
+    };
+
+    const handleNeighbourhoodPerPage = e => {
+        setNeighbourhoodPerPage(Number(e.target.value));
+        setCurrentPage(1);
     };
 
     return (
@@ -167,14 +172,29 @@ const Neighbourhood = () => {
                     </table>
                 </div>
 
-                <div className="flex justify-end p-4 space-x-2">
-                    <button onClick={handlePrevious} disabled={currentPage === 1}
-                            className="border px-2 py-1 text-sm rounded">Previous
-                    </button>
-                    <span className="border px-2 py-1 text-sm rounded">{currentPage}</span>
-                    <button onClick={handleNext} disabled={indexOfLastNeighbourhood >= neighbourhoods.length}
-                            className="border px-2 py-1 text-sm rounded">Next
-                    </button>
+                <div className={'flex justify-end'}>
+                    <div className="p-4 flex items-center space-x-3">
+                        <select
+                            value={neighbourhoodPerPage}
+                            onChange={handleNeighbourhoodPerPage}
+                            className="border p-1 rounded"
+                        >
+                            {[5, 10, 15, 20].map(option => (
+                                <option key={option} value={option}>
+                                    {option + ' per page'}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="flex justify-end p-4 space-x-2">
+                        <button onClick={handlePrevious} disabled={currentPage === 1}
+                                className="border px-2 py-1 text-sm rounded">Previous
+                        </button>
+                        <span className="border px-2 py-1 text-sm rounded">{currentPage}</span>
+                        <button onClick={handleNext} disabled={indexOfLastNeighbourhood >= neighbourhoods.length}
+                                className="border px-2 py-1 text-sm rounded">Next
+                        </button>
+                    </div>
                 </div>
             </div>
 
