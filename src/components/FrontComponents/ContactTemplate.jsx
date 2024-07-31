@@ -85,6 +85,19 @@ const ContactTemplate = () => {
                         setSelectedSlots([]);
                         setRefreshCalendar(prev => prev + 1)// Increment to trigger re-render
                     }
+                    // Send confirmation email
+                    try {
+                        await api.post("/email/send-confirmation", {
+                            name: contact.name,
+                            email: contact.email,
+                            bookingDetails: newBooking
+                        });
+                        console.log("Confirmation email sent successfully");
+                        setSuccess("Your booking has been confirmed and a confirmation email has been sent.");
+                    } catch (emailError) {
+                        console.error("Error sending confirmation email:", emailError);
+                        setErrors("Booking created, but there was an issue sending the confirmation email.");
+                    }
 
                     setContact({name: "", email: "", phone: "", message: ""});
                 }
