@@ -205,7 +205,7 @@ const AvailabilityManager = () => {
           prevAvailabilities.filter((avail) => avail._id !== item._id)
         );
       } else if (item.type === "booking") {
-        await api.delete(`/booking/${item._id}`);
+        await api.delete(`/booking/delete/${item._id}`);
         setAvailabilities((prevAvailabilities) =>
           prevAvailabilities.map((avail) =>
             avail._id === item.availabilityId
