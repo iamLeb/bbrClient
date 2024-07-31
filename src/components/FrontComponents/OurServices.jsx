@@ -16,9 +16,9 @@ const OurServices = () => {
 
                     <div className="absolute bottom-10 left-10 right-10 flex flex-col items-start">
                         <p className="text-3xl font-semibold text-white">Buying</p>
-                        <button className="mt-2 bg-neutral-50 rounded-lg px-4 py-2 text-primary font-medium">
-                            Learn more
-                        </button>
+                        {/*<button className="mt-2 bg-neutral-50 rounded-lg px-4 py-2 text-primary font-medium">*/}
+                        {/*    Learn more*/}
+                        {/*</button>*/}
                     </div>
                 </div>
 
@@ -28,9 +28,9 @@ const OurServices = () => {
 
                     <div className="absolute bottom-10 left-10 right-10 flex flex-col items-start">
                         <p className="text-3xl font-semibold text-white">Selling</p>
-                        <button className="mt-2 bg-neutral-50 rounded-lg px-4 py-2 text-primary font-medium">
-                            Learn more
-                        </button>
+                        {/*<button className="mt-2 bg-neutral-50 rounded-lg px-4 py-2 text-primary font-medium">*/}
+                        {/*    Learn more*/}
+                        {/*</button>*/}
                     </div>
                 </div>
             </div>
