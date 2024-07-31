@@ -46,13 +46,11 @@ const SimpleEditForm = ({ isOpen, onClose, onSave, itemToEdit }) => {
   };
 
   const handleChange = (e) => {
-    console.log("In handle Change");
+  
     let { name, value } = e.target;
 
     if (name === "date") {
-      console.log("In handle date", formData.date);
-
-      console.log("Form data type", formData.type);
+   
       value = new Date(value + "T00:00:00");
       value = value.toISOString();
     } else if (name === "startTime") {
@@ -61,8 +59,7 @@ const SimpleEditForm = ({ isOpen, onClose, onSave, itemToEdit }) => {
       value = updateTimeInISO(formData.endTime, value);
     }
 
-    console.log("The name is ", name);
-    console.log("The value is ", value);
+    
 
     if (name === "endTime" && formData.type !== "availability") {
       setFormData((prev) => ({ ...prev, [name]: value }));
@@ -77,7 +74,7 @@ const SimpleEditForm = ({ isOpen, onClose, onSave, itemToEdit }) => {
   };
 
   const handleSubmit = async (e) => {
-    console.log("Im handle Submit");
+   
     e.preventDefault();
     setError(null);
 
@@ -89,6 +86,8 @@ const SimpleEditForm = ({ isOpen, onClose, onSave, itemToEdit }) => {
         date.setHours(0, 0, 0, 0);
         let startTime = new Date(formData.startTime);
         let endTime = new Date(formData.endTime);
+
+     
 
         const new_availability = {
           date: formData.date,
@@ -115,8 +114,7 @@ const SimpleEditForm = ({ isOpen, onClose, onSave, itemToEdit }) => {
           endTime: endTime.toISOString(),
         };
 
-        console.log("submitted data", submittedData);
-        console.log("response", response);
+     
 
         if (
           !submittedData.date ||
@@ -127,7 +125,7 @@ const SimpleEditForm = ({ isOpen, onClose, onSave, itemToEdit }) => {
         }
       } else {
         // For bookings
-        console.log("Love you");
+    
 
         const currentDate = new Date();
         currentDate.setHours(0, 0, 0, 0);
@@ -141,9 +139,14 @@ const SimpleEditForm = ({ isOpen, onClose, onSave, itemToEdit }) => {
           startTime: formData.startTime,
           endTime: formData.endTime,
           id: itemToEdit._id,
+          name:formData.contact.name,
+          email:formData.contact.email,
+          phone:formData.contact.phone,
+          message:formData.contact.message
+          
         };
 
-        console.log("new booking", new_booking);
+  
 
         const response = await api.put("/booking/update", new_booking);
 
