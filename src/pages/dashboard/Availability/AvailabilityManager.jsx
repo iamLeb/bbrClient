@@ -12,10 +12,11 @@ import {
   Edit,
   Trash2,
   Search,
-  MessageSquare
+  MessageSquare,
 } from "lucide-react";
 import api from "../../../services/api";
-import EditForm from "./EditForm"; // Adjust the import path as needed
+import EditForm from "./EditForm";
+import DeleteForm from "./DeleteForm";
 
 const AvailabilityManager = () => {
   const [availabilities, setAvailabilities] = useState([]); // Stores all availabilities
@@ -28,6 +29,8 @@ const AvailabilityManager = () => {
   const [timeFilter, setTimeFilter] = useState("week"); // Filters availabilities by time period (all, week, month)
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
   const [itemToEdit, setItemToEdit] = useState({});
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
   // Fetch availabilities when the component mounts
   useEffect(() => {
     fetchAvailabilities();
@@ -42,8 +45,7 @@ const AvailabilityManager = () => {
     searchTerm,
     availabilities,
     sortDirection,
-    availabilities
-    
+    availabilities,
   ]);
 
   // Fetch all availabilities from the API
@@ -129,10 +131,10 @@ const AvailabilityManager = () => {
 
   // Toggle functions for various UI elements
   const toggleDropdown = () => setIsExpanded(!isExpanded);
-  const toggleSortDirection = () =>{
+  const toggleSortDirection = () => {
     setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
     filterAvailabilities();
-  }
+  };
   const toggleExpand = (id) =>
     setExpandedAvailabilities((prev) => ({ ...prev, [id]: !prev[id] }));
 
@@ -149,7 +151,7 @@ const AvailabilityManager = () => {
   };
 
   const handleEditBooking = (booking) => {
-    setItemToEdit({ ...booking, type: "booking" ,contact_id: booking.contact});
+    setItemToEdit({ ...booking, type: "booking", contact_id: booking.contact });
     setIsEditFormOpen(true);
   };
 
@@ -162,7 +164,6 @@ const AvailabilityManager = () => {
         )
       );
     } else {
-
       // Update booking in state
       setAvailabilities((prevAvailabilities) =>
         prevAvailabilities.map((avail) =>
@@ -181,13 +182,48 @@ const AvailabilityManager = () => {
     }
   };
 
-  const handleDeleteAvailability = (id) =>
-    console.log(`Delete availability with id: ${id}`);
+  const handleDeleteAvailability = (availability) => {
+    setItemToDelete({ ...availability, type: "availability" });
+    setIsDeleteModalOpen(true);
+  };
 
-  const handleDeleteBooking = (bookingId) =>
-    console.log(
-      `Delete booking with id: ${bookingId} for availability: ${availabilityId}`
-    );
+  const handleDeleteBooking = (availability, booking) => {
+    setItemToDelete({
+      ...booking,
+      type: "booking",
+      availabilityId: availability._id,
+    });
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleConfirmDelete = async (item) => {
+    try {
+      if (item.type === "availability") {
+      
+        await api.delete(`/availability/delete/${item._id}`);
+        setAvailabilities((prevAvailabilities) =>
+          prevAvailabilities.filter((avail) => avail._id !== item._id)
+        );
+      } else if (item.type === "booking") {
+        await api.delete(`/booking/${item._id}`);
+        setAvailabilities((prevAvailabilities) =>
+          prevAvailabilities.map((avail) =>
+            avail._id === item.availabilityId
+              ? {
+                  ...avail,
+                  bookings: avail.bookings.filter(
+                    (booking) => booking._id !== item._id
+                  ),
+                }
+              : avail
+          )
+        );
+      }
+    } catch (error) {
+      console.error("Error deleting item:", error);
+      // Handle error (e.g., show an error message to the user)
+    }
+  };
 
   // Helper functions to format date and time
   const formatDate = (isoString) =>
@@ -322,7 +358,7 @@ const AvailabilityManager = () => {
                         <Edit className="text-blue-600" />
                       </button>
                       <button
-                        onClick={() => handleDeleteBooking(availability._id)}
+                        onClick={() => handleDeleteAvailability(availability)}
                         className="p-1 hover:bg-gray-100 rounded-full"
                       >
                         <Trash2 className="text-red-600" />
@@ -354,10 +390,7 @@ const AvailabilityManager = () => {
                                 </button>
                                 <button
                                   onClick={() =>
-                                    handleDeleteBooking(
-                                      availability._id,
-                                      booking._id
-                                    )
+                                    handleDeleteBooking(availability, booking)
                                   }
                                   className="p-1 hover:bg-red-100 rounded-full"
                                 >
@@ -391,10 +424,7 @@ const AvailabilityManager = () => {
                               </p>
                               <p className="flex items-center">
                                 <MessageSquare className="mr-2" />
-                                <a
-              
-                                  className=" text-gray-700 "
-                                >
+                                <a className=" text-gray-700 ">
                                   {booking.contact.message}
                                 </a>
                               </p>
@@ -420,6 +450,12 @@ const AvailabilityManager = () => {
         onClose={() => setIsEditFormOpen(false)}
         onSave={handleSaveEdit}
         itemToEdit={itemToEdit}
+      />
+      <DeleteForm
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        onConfirm={handleConfirmDelete}
+        itemToDelete={itemToDelete}
       />
     </div>
   );
