@@ -87,7 +87,7 @@ const ContactTemplate = () => {
                     }
                     // Send confirmation email
                     try {
-                        await api.post("/email/send-confirmation", {
+                        await api.post("/email/send", {
                             name: contact.name,
                             email: contact.email,
                             bookingDetails: newBooking
