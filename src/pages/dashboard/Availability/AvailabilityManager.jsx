@@ -31,7 +31,7 @@ const AvailabilityManager = () => {
   // Fetch availabilities when the component mounts
   useEffect(() => {
     fetchAvailabilities();
-  }, []);
+  }, [availabilities]);
 
   // Apply filters whenever relevant state changes
   useEffect(() => {
@@ -42,6 +42,7 @@ const AvailabilityManager = () => {
     searchTerm,
     availabilities,
     sortDirection,
+    availabilities
     
   ]);
 
@@ -148,13 +149,12 @@ const AvailabilityManager = () => {
   };
 
   const handleEditBooking = (booking) => {
-    setItemToEdit({ ...booking, type: "booking" });
+    setItemToEdit({ ...booking, type: "booking" ,contact_id: booking.contact});
     setIsEditFormOpen(true);
   };
 
   const handleSaveEdit = (editedItem) => {
     if (editedItem.type === "availability") {
-      console.log("In handleSaveEdit ", editedItem);
       // Update availability in state
       setAvailabilities((prevAvailabilities) =>
         prevAvailabilities.map((avail) =>
@@ -162,6 +162,7 @@ const AvailabilityManager = () => {
         )
       );
     } else {
+
       // Update booking in state
       setAvailabilities((prevAvailabilities) =>
         prevAvailabilities.map((avail) =>
@@ -178,7 +179,6 @@ const AvailabilityManager = () => {
         )
       );
     }
-    // Here you would also make an API call to update the item on the server
   };
 
   const handleDeleteAvailability = (id) =>

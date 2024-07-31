@@ -9,8 +9,7 @@ const SimpleEditForm = ({ isOpen, onClose, onSave, itemToEdit }) => {
 
   useEffect(() => {
     setFormData(itemToEdit);
-    setError(null)
-    console.log("Inside use Effect", formData);
+    setError(null);
   }, [itemToEdit]);
 
   // Convert ISO date string to YYYY-MM-DD format
@@ -98,23 +97,26 @@ const SimpleEditForm = ({ isOpen, onClose, onSave, itemToEdit }) => {
           oldDate: itemToEdit.date,
         };
 
-        console.log(new_availability);
-
         const response = await api.put(
           "/availability/update",
           new_availability
         );
 
-        console.log("The status is", response.status);
-        
-        
+        //fetcha and populate boookings though availability
 
+
+
+
+        
         submittedData = {
           ...formData,
           date: date.toISOString(),
           startTime: startTime.toISOString(),
           endTime: endTime.toISOString(),
         };
+
+        console.log("submitted data", submittedData);
+        console.log("response", response);
 
         if (
           !submittedData.date ||
@@ -125,12 +127,25 @@ const SimpleEditForm = ({ isOpen, onClose, onSave, itemToEdit }) => {
         }
       } else {
         // For bookings
+        console.log("Love you");
+
         const currentDate = new Date();
         currentDate.setHours(0, 0, 0, 0);
 
         let startTime = new Date(formData.startTime);
 
         let endTime = new Date(formData.endTime);
+
+        const new_booking = {
+          availability: itemToEdit.availability,
+          startTime: formData.startTime,
+          endTime: formData.endTime,
+          id: itemToEdit._id,
+        };
+
+        console.log("new booking", new_booking);
+
+        const response = await api.put("/booking/update", new_booking);
 
         submittedData = {
           ...formData,
@@ -140,6 +155,7 @@ const SimpleEditForm = ({ isOpen, onClose, onSave, itemToEdit }) => {
             name: formData.contact?.name || "",
             email: formData.contact?.email || "",
             phone: formData.contact?.phone || "",
+            message: formData.contact?.message || "",
           },
         };
 
@@ -147,18 +163,16 @@ const SimpleEditForm = ({ isOpen, onClose, onSave, itemToEdit }) => {
           throw new Error("Invalid time while editing booking");
         }
       }
-
-      console.log("Inside submit", submittedData);
       onSave(submittedData);
       onClose();
     } catch (error) {
-      console.log(error);
       if (error.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
-        const errorMessage = error.response.data && error.response.data.message
-          ? error.response.data.message
-          : "An unknown error occurred";
+        const errorMessage =
+          error.response.data && error.response.data.message
+            ? error.response.data.message
+            : "An unknown error occurred";
         setError(errorMessage);
       } else if (error.request) {
         // The request was made but no response was received
