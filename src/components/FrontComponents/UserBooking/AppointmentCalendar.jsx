@@ -112,13 +112,11 @@ const AppointmentCalendar = ({
       // Return an object with startTime, endTime, and notAvailable flag
       return { startTime, endTime, notAvailable: false, bookings };
     } catch (error) {
-        console.log("Error fetching availability:", error);
+      console.log("Error fetching availability:", error);
       // If there's an error, return an object indicating no availability
       return { notAvailable: true };
     }
   };
-
-  
 
   // Handler for when a new date is selected in the calendar
   const handleDateChange = (date) => {
@@ -167,6 +165,7 @@ const AppointmentCalendar = ({
   useMemo(() => {
     const updateTimeSlots = async () => {
       // Fetch availability for the selected date
+      selectedDate.setHours(0, 0, 0, 0);
       const availability = findAvailability(selectedDate);
       if (availability.notAvailable) {
         // If not available, set time slots to an empty array
