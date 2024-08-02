@@ -7,14 +7,14 @@ const CoreValues = () => {
 
             <div className="px-5 flex flex-col space-y-4 md:space-y-12">
                 <div className="flex flex-col space-y-4 md:space-y-2 md:flex-row md:space-x-20">
-                    <div className="bg-primary p-10 rounded-lg md:w-1/2">
+                    <div className="bg-[#57737F] p-10 rounded-lg md:w-1/2">
                         <p className="text-white">Customer Satisfaction</p>
                         <p className="text-black">
                             We are committed to delivering exceptional service and exceeding our clients' expectations at every touchpoint.
                         </p>
                     </div>
 
-                    <div className="bg-primary p-10 rounded-lg md:w-1/2">
+                    <div className="bg-[#57737F] p-10 rounded-lg md:w-1/2">
                         <p className="text-white">Integrity</p>
                         <p className="text-black">
                             Honesty, transparency, and ethical conduct are the cornerstones of our business practices.
@@ -23,14 +23,14 @@ const CoreValues = () => {
                 </div>
 
                 <div className="flex flex-col space-y-2 md:flex-row md:space-x-20">
-                    <div className="bg-primary p-10 rounded-lg md:w-1/2">
+                    <div className="bg-[#57737F] p-10 rounded-lg md:w-1/2">
                         <p className="text-white">Collaboration</p>
                         <p className="text-black">
                             We work together to achieve common goals, fostering a culture of mutual respect and teamwork.
                         </p>
                     </div>
 
-                    <div className="bg-primary p-10 rounded-lg md:w-1/2">
+                    <div className="bg-[#57737F] p-10 rounded-lg md:w-1/2">
                         <p className="text-white">Innovation</p>
                         <p className="text-black">
                             Embracing technology and innovation enables us to streamline processes, enhance efficiency, and deliver superior results.

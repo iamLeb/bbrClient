@@ -1,14 +1,16 @@
-import React, {useState, useEffect, useContext} from 'react';
-import {useNavigate} from 'react-router-dom';
-import api from "../../../services/api.js";
-import GlobalContext from "../../../context/Global.js";
+import React, { useState, useContext } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import api from '../../../services/api.js';
+import GlobalContext from '../../../context/Global.js';
 
 const AddProperty = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const lastPage = location.state?.lastPage || 1;
     const [errors, setErrors] = useState('');
     const [loading, setLoading] = useState(false);
-    const {categories} = useContext(GlobalContext);
-    const {neighbourhoods} = useContext(GlobalContext);
+    const { categories } = useContext(GlobalContext);
+    const { neighbourhoods } = useContext(GlobalContext);
 
     const [newProperty, setNewProperty] = useState({
         title: '',
@@ -26,9 +28,8 @@ const AddProperty = () => {
         files: [] // For storing multiple files
     });
 
-
     const handleChange = e => {
-        const {name, value} = e.target;
+        const { name, value } = e.target;
         setNewProperty(prevValues => ({
             ...prevValues,
             [name]: value,
@@ -64,7 +65,6 @@ const AddProperty = () => {
             formData.append('files', newProperty.files[i]);
         }
 
-
         if (!newProperty.title || !newProperty.address || !newProperty.bed || !newProperty.bath || !newProperty.category || !newProperty.city || !newProperty.neighbourhood || !newProperty.description) {
             setLoading(false);
             setErrors('All Fields are required');
@@ -79,8 +79,7 @@ const AddProperty = () => {
                 }
             });
 
-            const urls = response.data.map(file => file.url); //array of urls
-
+            const urls = response.data.map(file => file.url); // Array of URLs
 
             // Create the property
             const propertyRes = await api.post('/property/create', {
@@ -110,14 +109,13 @@ const AddProperty = () => {
             }
 
             setLoading(false);
-            navigate('/secure/listings');
+            navigate('/secure/listings', { state: { currentPage: lastPage } });
 
         } catch (error) {
             setErrors(error.response.data.error);
             setLoading(false);
         }
     };
-
 
     return (
         <div className='m-5 border rounded-b-lg'>
@@ -131,31 +129,31 @@ const AddProperty = () => {
                         <div className='font-bold mb-3'>Title</div>
                         <input value={newProperty.title} name='title'
                                onChange={handleChange} type='text'
-                               placeholder='Enter the title of the property' className='p-3 border rounded-lg'/>
+                               placeholder='Enter the title of the property' className='p-3 border rounded-lg' />
                     </div>
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Address</div>
                         <input value={newProperty.address} name='address'
                                onChange={handleChange} type='text'
-                               placeholder='Enter the address of the property' className='p-3 border rounded-lg'/>
+                               placeholder='Enter the address of the property' className='p-3 border rounded-lg' />
                     </div>
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Price</div>
                         <input value={newProperty.price} name='price'
                                onChange={handleChange} type='text'
-                               placeholder='Enter the price of the property' className='p-3 border rounded-lg'/>
+                               placeholder='Enter the price of the property' className='p-3 border rounded-lg' />
                     </div>
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Beds</div>
                         <input value={newProperty.bed} name='bed'
                                onChange={handleChange} type='number'
-                               placeholder='Enter how many beds the property has' className='p-3 border rounded-lg'/>
+                               placeholder='Enter how many beds the property has' className='p-3 border rounded-lg' />
                     </div>
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Baths</div>
                         <input value={newProperty.bath} name='bath'
                                onChange={handleChange} type='number'
-                               placeholder='Enter how many baths the property has' className='p-3 border rounded-lg'/>
+                               placeholder='Enter how many baths the property has' className='p-3 border rounded-lg' />
                     </div>
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Category</div>
@@ -204,31 +202,31 @@ const AddProperty = () => {
                         <div className='font-bold mb-3'>Sqft</div>
                         <input value={newProperty.sqft} name='sqft'
                                onChange={handleChange} type='text'
-                               placeholder='Enter the size of the property' className='p-3 border rounded-lg'/>
+                               placeholder='Enter the size of the property' className='p-3 border rounded-lg' />
                     </div>
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Year Built</div>
                         <input value={newProperty.yearBuilt} name='yearBuilt'
                                onChange={handleChange} type='text'
-                               placeholder='Year the property was built' className='p-3 border rounded-lg'/>
+                               placeholder='Year the property was built' className='p-3 border rounded-lg' />
                     </div>
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Land Area</div>
                         <input value={newProperty.landArea} name='landArea'
                                onChange={handleChange} type='text'
-                               placeholder='Land area of the property' className='p-3 border rounded-lg'/>
+                               placeholder='Land area of the property' className='p-3 border rounded-lg' />
                     </div>
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Image</div>
                         <input onChange={handleFileChange} type='file' name='files' multiple
-                               className='p-3 border rounded-lg'/>
+                               className='p-3 border rounded-lg' />
                     </div>
                     <div className='p-3 flex flex-col'>
                         <div className='font-bold mb-3'>Description</div>
                         <textarea value={newProperty.description} name='description' cols="30"
                                   rows="5"
                                   onChange={handleChange} placeholder='Enter description of the property'
-                                  className='resize-none p-3 border rounded-lg'/>
+                                  className='resize-none p-3 border rounded-lg' />
                     </div>
                 </div>
                 <div className="p-5 flex justify-center space-x-5 text-xs">
@@ -243,7 +241,6 @@ const AddProperty = () => {
             </form>
         </div>
     );
-
 };
 
 export default AddProperty;

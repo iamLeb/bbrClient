@@ -1,18 +1,16 @@
 import React from 'react';
-import {useNavigate} from 'react-router-dom';
 import api from "../../services/api.js";
 import {useEffect, useState} from "react";
 
 const Testimonials = () => {
-    const navigate = useNavigate();
     const [errors, setErrors] = useState('');
     const [testimonials, setTestimonials] = useState([]);
     const [newTestimonial, setNewTestimonial] = useState({name: '', message: ''});
-    const [selectedTestimonial, setSelectedTestiomnial] = useState(null); // State for the selected testimonial
+    const [selectedTestimonial, setSelectedTestimonial] = useState(null); // State for the selected testimonial
     const [modal, setModal] = useState(false);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const testimonialsPerPage = 5;
+    const [testimonialsPerPage,setTestimonialsPerPage] = useState(5);
 
     const toggleModal = () => {
         setModal(!modal);
@@ -67,7 +65,7 @@ const Testimonials = () => {
                     const res = await api.put(`/testimonial/${selectedTestimonial._id}`, newTestimonial);
                     if (res.status === 200) {
                         setTestimonials(testimonials.map(testimonial => testimonial._id === selectedTestimonial._id ? res.data : testimonial));
-                        setSelectedTestiomnial(null);
+                        setSelectedTestimonial(null);
                     }
                 } else {
                     // Create testimonial
@@ -78,6 +76,7 @@ const Testimonials = () => {
                 }
                 setNewTestimonial({name: '', message: ''});
                 toggleModal();
+                lastPage()
             } catch (e) {
                 setErrors(e.response.data.error);
             }
@@ -87,13 +86,13 @@ const Testimonials = () => {
 
     const closeModal = () => {
         setNewTestimonial({name: '', message: ''});
-        setSelectedTestiomnial(null);
+        setSelectedTestimonial(null);
         toggleModal();
     }
 
     const handleEdit = testimonial => {
         setLoading(true)
-        setSelectedTestiomnial(testimonial);
+        setSelectedTestimonial(testimonial);
         setNewTestimonial({name: testimonial.name, message: testimonial.message});
         toggleModal();
         setLoading(false)
@@ -118,6 +117,21 @@ const Testimonials = () => {
         if (currentPage > 1) {
             setCurrentPage(prevPage => prevPage - 1);
         }
+    };
+
+    const calculateLastPage = (total, PerPage) => {
+        return Math.ceil(total / PerPage);
+    };
+
+
+    const lastPage = () => {
+        const lastPage = calculateLastPage(testimonials.length+1, testimonialsPerPage);
+        setCurrentPage(lastPage);
+    };
+
+    const handleTestimonialsPerPage = e => {
+        setTestimonialsPerPage(Number(e.target.value));
+        setCurrentPage(1);
     };
 
     return (
@@ -164,14 +178,29 @@ const Testimonials = () => {
                     </table>
                 </div>
 
-                <div className="flex justify-end p-4 space-x-2">
-                    <button onClick={handlePrevious} disabled={currentPage === 1}
-                            className="border px-2 py-1 text-sm rounded">Previous
-                    </button>
-                    <span className="border px-2 py-1 text-sm rounded">{currentPage}</span>
-                    <button onClick={handleNext} disabled={indexOfLastTestimonial >= testimonials.length}
-                            className="border px-2 py-1 text-sm rounded">Next
-                    </button>
+                <div className={'flex justify-end'}>
+                    <div className="p-4 flex items-center space-x-3">
+                        <select
+                            value={testimonialsPerPage}
+                            onChange={handleTestimonialsPerPage}
+                            className="border p-1 rounded"
+                        >
+                            {[5, 10, 15, 20].map(option => (
+                                <option key={option} value={option}>
+                                    {option + ' per page'}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="flex justify-end p-4 space-x-2">
+                        <button onClick={handlePrevious} disabled={currentPage === 1}
+                                className="border px-2 py-1 text-sm rounded">Previous
+                        </button>
+                        <span className="border px-2 py-1 text-sm rounded">{currentPage}</span>
+                        <button onClick={handleNext} disabled={indexOfLastTestimonial >= testimonials.length}
+                                className="border px-2 py-1 text-sm rounded">Next
+                        </button>
+                    </div>
                 </div>
                 {modal && (
                     <div

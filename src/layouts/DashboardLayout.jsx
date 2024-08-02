@@ -3,6 +3,7 @@ import {Outlet, useNavigate} from 'react-router-dom';
 import Header from '../components/DashboardComponents/Header.jsx';
 import Sidebar from '../components/DashboardComponents/Sidebar.jsx';
 import UserContext from "../context/UserContext.js";
+import Footer from "../components/DashboardComponents/Footer.jsx";
 
 const DashboardLayout = () => {
     const {user} = useContext(UserContext);
@@ -35,14 +36,14 @@ const DashboardLayout = () => {
     }, []);
 
     return (
-        <div className="relative lg:static flex">
+        <div className="relative lg:static flex h-screen">
             <div className="fixed z-10 lg:static lg:z-auto" ref={sidebarRef}>
                 <Sidebar sidebar={sidebar} toggleSidebar={toggleSidebar} />
             </div>
-            <div className="flex-1 z-0 lg:z-auto">
+            <div className="flex-1 z-0 lg:z-auto overflow-auto">
                 <Header sidebar={sidebar} toggleSidebar={toggleSidebar} />
                 <Outlet />
-                {/* <Footer /> */}
+                 {/*<Footer />*/}
             </div>
         </div>
     );

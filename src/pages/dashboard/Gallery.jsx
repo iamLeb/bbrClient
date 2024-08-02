@@ -10,7 +10,7 @@ const Gallery = () => {
     const [modal, setModal] = useState(false);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const galleriesPerPage = 5;
+    const [galleriesPerPage,setGalleriesPerPage] = useState(5);
 
     // Fetching galleries and neighbourhoods
     const fetchGalleries = async () => {
@@ -108,6 +108,7 @@ const Gallery = () => {
             fetchGalleries(); // Refresh the galleries list
             setLoading(false);
             handleClose()
+            lastPage()
         } catch (error) {
             setErrors('There was a problem creating the gallery: ' + error.message);
         }
@@ -164,6 +165,21 @@ const Gallery = () => {
         }
     };
 
+    const calculateLastPage = (total, PerPage) => {
+        return Math.ceil(total / PerPage);
+    };
+
+
+    const lastPage = () => {
+        const lastPage = calculateLastPage(neighbourhoods.length, galleriesPerPage);
+        setCurrentPage(lastPage);
+    };
+
+    const handleGalleryPerPage = e => {
+        setGalleriesPerPage(Number(e.target.value));
+        setCurrentPage(1);
+    };
+
     if (loading) {
         return (
             <div className="flex justify-center items-center py-10">
@@ -218,15 +234,31 @@ const Gallery = () => {
                         </tbody>
                     </table>
                 </div>
-                <div className="flex justify-end p-4 space-x-2">
-                    <button onClick={handlePrevious} disabled={currentPage === 1}
-                            className="border px-2 py-1 text-sm rounded">Previous
-                    </button>
-                    <span className="border px-2 py-1 text-sm rounded">{currentPage}</span>
-                    <button onClick={handleNext} disabled={indexOfLastGallery >= galleries.length}
-                            className="border px-2 py-1 text-sm rounded">Next
-                    </button>
+                <div className={'flex justify-end'}>
+                    <div className="p-4 flex items-center space-x-3">
+                        <select
+                            value={galleriesPerPage}
+                            onChange={handleGalleryPerPage}
+                            className="border p-1 rounded"
+                        >
+                            {[5, 10, 15, 20].map(option => (
+                                <option key={option} value={option}>
+                                    {option + ' per page'}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="flex justify-end p-4 space-x-2">
+                        <button onClick={handlePrevious} disabled={currentPage === 1}
+                                className="border px-2 py-1 text-sm rounded">Previous
+                        </button>
+                        <span className="border px-2 py-1 text-sm rounded">{currentPage}</span>
+                        <button onClick={handleNext} disabled={indexOfLastGallery >= galleries.length}
+                                className="border px-2 py-1 text-sm rounded">Next
+                        </button>
+                    </div>
                 </div>
+
             </div>
             {modal && (
                 <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
@@ -235,7 +267,7 @@ const Gallery = () => {
                             <h2 className="font-extrabold">Create New Gallery</h2>
                         </div>
                         <div className="p-3">
-                        <form onSubmit={handleSubmit}>
+                            <form onSubmit={handleSubmit}>
                                 <div className="mb-4">
                                     {errors && <p className="text-red-500 text-xs mt-2">{errors}</p>}
                                     <label className="block text-sm font-bold mb-2">Image</label>

@@ -5,13 +5,12 @@ import api from "../../services/api.js";
 const CategoryForm = () => {
     const {categories, setCategories} = useContext(GlobalContext);
     const [errors, setErrors] = useState('');
-
     const [newCategory, setNewCategory] = useState({name: ''});
-    const [selectedCategory, setSelectedCategory] = useState(null); // State for the selected category
+    const [selectedCategory, setSelectedCategory] = useState(null);
     const [modal, setModal] = useState(false);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const categoryPerPage = 5;
+    const [categoriesPerPage, setCategoriesPerPage] = useState(5);
 
     const toggleModal = () => {
         setModal(!modal);
@@ -46,12 +45,12 @@ const CategoryForm = () => {
                 const res = await api.delete(`/category/${id}`);
                 if (res.status === 200) {
                     setLoading(false);
-                  fetchCategories()
+                    fetchCategories();
                 }
             } catch (e) {
                 setErrors('There was an error deleting the category');
             }
-            setLoading(false)
+            setLoading(false);
         }
     };
 
@@ -73,35 +72,37 @@ const CategoryForm = () => {
                     // Create category
                     const res = await api.post('/category/create', newCategory);
                     if (res.status === 201) {
-
                         setCategories([...categories, res.data]);
                     }
                 }
                 setNewCategory({name: ''});
                 toggleModal();
+                lastPage();
+
             } catch (e) {
                 setErrors(e.response.data.error);
             }
         }
-        setLoading(false)
+        setLoading(false);
     };
 
     const handleEdit = category => {
-        setLoading(true)
+        setLoading(true);
         setSelectedCategory(category);
         setNewCategory({name: category.name});
         toggleModal();
-        setLoading(false)
+        setLoading(false);
     };
 
     const handleClose = () => {
-        setSelectedCategory(null)
+        setSelectedCategory(null);
         setNewCategory({name: ''});
         toggleModal();
     };
 
-    const indexOfLastCategory = currentPage * categoryPerPage;
-    const indexOfFirstCategory = indexOfLastCategory - categoryPerPage;
+    // Update pagination logic to use categoriesPerPage
+    const indexOfLastCategory = currentPage * categoriesPerPage;
+    const indexOfFirstCategory = indexOfLastCategory - categoriesPerPage;
     const currentCategories = categories.slice(indexOfFirstCategory, indexOfLastCategory);
 
     const handleNext = () => {
@@ -114,6 +115,20 @@ const CategoryForm = () => {
         if (currentPage > 1) {
             setCurrentPage(prevPage => prevPage - 1);
         }
+    };
+
+    const calculateLastPage = (totalCategories, categoriesPerPage) => {
+        return Math.ceil(totalCategories / categoriesPerPage);
+    };
+
+    const lastPage = () => {
+        const lastPage = calculateLastPage(categories.length+1, categoriesPerPage);
+        setCurrentPage(lastPage);
+    };
+
+    const handleCategoriesPerPageChange = e => {
+        setCategoriesPerPage(Number(e.target.value));
+        setCurrentPage(1);
     };
 
     return (
@@ -156,14 +171,31 @@ const CategoryForm = () => {
                         </tbody>
                     </table>
                 </div>
-                <div className="flex justify-end p-4 space-x-2">
-                    <button onClick={handlePrevious} disabled={currentPage === 1}
-                            className="border px-2 py-1 text-sm rounded">Previous
-                    </button>
-                    <span className="border px-2 py-1 text-sm rounded">{currentPage}</span>
-                    <button onClick={handleNext} disabled={indexOfLastCategory >= categories.length}
-                            className="border px-2 py-1 text-sm rounded">Next
-                    </button>
+
+                <div className={'flex justify-end'}>
+                    <div className="p-4 flex items-center space-x-3">
+                        <select
+                            value={categoriesPerPage}
+                            onChange={handleCategoriesPerPageChange}
+                            className="border p-1 rounded"
+                        >
+                            {[5, 10, 15, 20].map(option => (
+                                <option key={option} value={option}>
+                                    {option + ' per page'}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className="flex justify-end p-4 space-x-2">
+                        <button onClick={handlePrevious} disabled={currentPage === 1}
+                                className="border px-2 py-1 text-sm rounded">Previous
+                        </button>
+                        <span className="border px-2 py-1 text-sm rounded">{currentPage}</span>
+                        <button onClick={handleNext} disabled={indexOfLastCategory >= categories.length}
+                                className="border px-2 py-1 text-sm rounded">Next
+                        </button>
+                    </div>
                 </div>
             </div>
             {modal && (
